@@ -1,6 +1,6 @@
 [submodule "src/components/Wap"]
 	path = src/components/Wap
-	url = https://gitlab+deploy-token-729540:uMEFZgbsUQ6TEasLGgEX@gitlab.com/inwoker/tgs/tgs-wap-temp-2.git
+	url = https://gitlab+deploy-token-2419026:i7sEyMydvP6HBfCqbAd6@gitlab.com/inwoker/tgs/tgs-wap-temp-5.git
 	branch = develop
 [submodule "src/api-services"]
 	path = src/api-services
