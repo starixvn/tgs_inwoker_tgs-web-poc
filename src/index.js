@@ -30,7 +30,7 @@ import { SnackbarProvider } from "notistack";
 import styled from "styled-components";
 import Config from "./config/config";
 import {
-  createMuiTheme,
+  createTheme,
   MuiThemeProvider,
   StylesProvider,
 } from "@material-ui/core/styles";
@@ -123,7 +123,7 @@ var muiThemeMode = isMobileOnly
   ? themeList[Config.brand] || themeList[Config.theme]
   : themeList[Config.theme];
 muiThemeMode.lang = i18n.language;
-const muiTheme = createMuiTheme({
+const muiTheme = createTheme({
   palette: {
     primary: {
       main: muiThemeMode.primary,
