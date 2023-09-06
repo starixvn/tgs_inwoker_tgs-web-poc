@@ -12,7 +12,7 @@ import * as serviceWorker from "./utils/serviceWorker";
 import { isMobileOnly } from "react-device-detect";
 import { Provider } from "react-redux";
 //import store from "./store/index";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 
 import thunk from "redux-thunk";
 import InterceptorService from "./api-services/services/InterceptorService";
@@ -40,6 +40,7 @@ import SuccessPNG from "../src/assets/images/success.png";
 import { makeStyles } from "@material-ui/core";
 import i18n from "./utils/i18n";
 import rootReducer from "./api-services/reducers/rootReducer";
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import Common from "./utils/Common";
 import { ThemeProvider } from "styled-components";
@@ -52,7 +53,11 @@ import AudioPlayer from "./components/Share/audioplayer";
 import config from "./config/config";
 
 require("es6-promise").polyfill();
-const store = createStore(rootReducer, applyMiddleware(thunk));
+
+// TODO: hide on production
+const store = createStore(rootReducer, composeWithDevTools(
+  applyMiddleware(thunk)
+));
 InterceptorService.setupInterceptors(store);
 const notistackRef = React.createRef();
 const onClickDismiss = (key) => () => {
