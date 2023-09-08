@@ -52,7 +52,7 @@ const CustomPopover = ({ children, open, anchorEl, handleClose, height }) => {
   return (
     <div>
       <CustomPopoverThing
-        elevation="0"
+        elevation={0}
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
