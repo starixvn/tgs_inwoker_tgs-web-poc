@@ -63,6 +63,7 @@ const featureList = {
     MenuItem_Sorting_PB: false,
     MenuItem_Sorting_GMO: false,
     MenuItem_Sorting_BUNNY: false,
+    MenuItem_Sorting_PISO: false,
     VIP_CustomLevel_BUNNY: false,
 
     LiveGame_Sorting_SKY: false,
@@ -113,9 +114,8 @@ const featureList = {
     InitPhone_WithoutVerify: false,
     RouletteNewFlow: false,
     HaveVIPFeature: true,
-    DepositCustomPaymentNames: [
-    ], 
-    Withdrawal_WalletTransfer: false, 
+    DepositCustomPaymentNames: [],
+    Withdrawal_WalletTransfer: false,
     Deposit_ManualDepositPassPhone: false,
   },
 };
