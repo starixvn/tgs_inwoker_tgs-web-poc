@@ -1,5 +1,5 @@
 import type { StorybookConfig } from "@storybook/react-webpack5";
-import globalWebpackConfig from "../webpack.config.js"
+import globalWebpackConfig from "../webpack.config.js";
 
 const config: StorybookConfig = {
     stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
@@ -21,7 +21,7 @@ const config: StorybookConfig = {
     webpackFinal: async (config, { configType }) => {
         config.resolve.modules = ["node_modules", "src"];
         config.resolve.alias = globalWebpackConfig.resolve.alias;
-        
+
         config.module.rules.push(
             // babel loader
             {
@@ -42,6 +42,16 @@ const config: StorybookConfig = {
                 exclude: /node_modules/
             },
         );
+
+        const imageRule = config.module.rules.find(
+            (rule) => rule.test && rule.test.test(".svg")
+        );
+        imageRule.exclude = /\.svg$/;
+
+        config.module.rules.push({
+            test: /\.svg$/,
+            use: ["@svgr/webpack"]
+        });
 
         return config
     },

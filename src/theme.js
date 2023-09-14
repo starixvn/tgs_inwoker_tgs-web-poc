@@ -586,6 +586,21 @@ export const darkTheme = {
     text: "white",
 };
 
+export const mobileT18 = {
+    primary: "#6152DD",
+    primaryDark: "#0E131B", //BG
+    primaryMiddle: "#181F2B", //Sub BG
+    primaryLight: "#181F2B", //Main_Blue
+    secondary: "#E7415A",
+    tertiary: "#596578", //Gray1
+    tertiaryMiddle: "#6A768B",  //Gray2
+    tertiaryLight: "#B2C3EC",  //Gray3
+    tertiaryDark: "#212937",  //Gray4
+    white: "#FFFFFF",
+    yellow: "#F3DE4B",
+    green: "#33AD4E",
+};
+
 export const themeList = {
     red: themeRed,
     blue: themeBlue,
@@ -605,4 +620,5 @@ export const themeList = {
     wapT13: wapT13,
     light: lightTheme,
     dark: darkTheme,
+    mobileT18: mobileT18,
 };
