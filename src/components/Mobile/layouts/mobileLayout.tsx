@@ -1,4 +1,6 @@
 import React, { ReactElement } from "react";
+import Header from "@/components/Mobile/components/Header";
+import BottomAppBar from "@/components/Mobile/components/BottomAppBar";
 
 type Props = {
   children: ReactElement;
@@ -6,9 +8,9 @@ type Props = {
 const MobileLayout = ({ children }: Props) => {
   return (
     <div>
-      <h1>I am Header</h1>
+      <Header />
       {children}
-      <div>I am Footer</div>
+      <BottomAppBar />
     </div>
   );
 };

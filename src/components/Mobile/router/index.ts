@@ -1,6 +1,4 @@
-import Login from "../components/Login";
 import config from "../../../config/config";
-import Transfer from "../components/Transfer";
 import Main from "@/components/Mobile/pages/Main";
 
 interface Route {
@@ -37,11 +35,11 @@ const routes: Route[] = [
     popup: true,
     navigate: true,
   },
-  {
-    path: "/login",
-    component: Login,
-    alert: true,
-  },
+  // {
+  //   path: "/login",
+  //   component: Login,
+  //   alert: true,
+  // },
   // {
   //   path: "/a/:promotionid",
   //   component: Login,
@@ -350,12 +348,12 @@ const routes: Route[] = [
 ];
 
 if (!config.features.NewTransferUI) {
-  routes.push({
-    path: "/transfer",
-    component: Transfer,
-    alert: true,
-    navigate: true,
-  });
+  // routes.push({
+  //   path: "/transfer",
+  //   component: Transfer,
+  //   alert: true,
+  //   navigate: true,
+  // });
 }
 
 export { routes };
