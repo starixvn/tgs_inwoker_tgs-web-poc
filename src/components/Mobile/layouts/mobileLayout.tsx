@@ -5,11 +5,11 @@ type Props = {
 };
 const MobileLayout = ({ children }: Props) => {
   return (
-    <>
+    <div>
       <h1>I am Header</h1>
       {children}
       <div>I am Footer</div>
-    </>
+    </div>
   );
 };
 

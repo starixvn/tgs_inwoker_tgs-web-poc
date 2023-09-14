@@ -210,9 +210,7 @@ code {
     min-height: 100%;
   }
 
-  #root {
-    min-width: 750px;
-  }
+
 
   /* Required styles */
   .swipe-to-delete {
