@@ -7,10 +7,20 @@ import cardVip from "@/assets/images/header/card_vip.png";
 import cardPromotions from "@/assets/images/header/card_promotions.png";
 
 const CustomDrawer = styled(Drawer)`
+  height: calc(100% - 70px);
+  top: 80px !important;
+
   & .MuiPaper-root {
     background: linear-gradient(90deg, #181f2b 100%, #131922 100%) !important;
     padding: 12px 22px;
     width: 234px;
+    height: calc(100% - 70px);
+    top: 80px !important;
+  }
+
+  & .MuiBackdrop-root {
+    height: calc(100% - 70px);
+    top: 80px !important;
   }
 `;
 const DrawerCard = styled.div`
