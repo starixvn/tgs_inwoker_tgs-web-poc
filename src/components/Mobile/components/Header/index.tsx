@@ -1,8 +1,9 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
 import Button from "@/components/Mobile/components/Button";
-import menuIcon from "@/assets/images/header/icon_menu.png";
 import MenuButton from "@/components/Mobile/components/Header/MenuButton";
+import { useHistory } from "react-router";
+import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
 
 const HeaderContainer = styled.div`
   background: #181f2b;
@@ -25,7 +26,12 @@ const ButtonContainer = styled.div`
 
 type Props = {};
 const Header = (props: Props) => {
-  const handleClick = useCallback(() => {}, []);
+  const history = useHistory();
+  const { toggleLoginDialog, toggleRegisterDialog } = useAuthDialog();
+
+  const handleClick = useCallback((path: string) => {
+    history.push(path);
+  }, []);
 
   return (
     <HeaderContainer>
@@ -36,15 +42,19 @@ const Header = (props: Props) => {
 
         <ButtonContainer>
           <Button
-            label={"Login"}
-            handleClick={handleClick}
-            style={{ marginRight: "20px" }}
-          />
+            onClick={() => toggleLoginDialog(true)}
+            style={{ marginRight: "20px", background: "#5D50E0" }}
+          >
+            Login
+          </Button>
+
           <Button
-            label={"Register"}
-            color={"#E7415A"}
-            handleClick={handleClick}
-          />
+            color={"primary"}
+            onClick={() => toggleRegisterDialog(true)}
+            style={{ background: "#E7415A" }}
+          >
+            Register
+          </Button>
         </ButtonContainer>
       </HeaderWrapper>
     </HeaderContainer>
