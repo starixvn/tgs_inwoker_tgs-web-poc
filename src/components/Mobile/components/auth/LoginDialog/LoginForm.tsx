@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@/components/Mobile/components/TextField";
 import Checkbox from "@/components/Mobile/components/Checkbox";
 import Button from "@/components/Mobile/components/Button";
 import styled from "styled-components";
-import { useFormik } from "formik";
+import { FormikValues, useFormik } from "formik";
 import * as Yup from "yup";
+import { CircularProgress } from "@material-ui/core";
 
 const RememberMeContainer = styled.div`
   width: 100%;
@@ -32,7 +33,7 @@ const formInputList = [
   },
 ];
 
-const initialValues: { [key in string]: any } = {};
+const initialValues: FormikValues = {};
 const validationSchemaSpec: { [key in string]: any } = {};
 
 formInputList.forEach((loginInput) => {
@@ -41,14 +42,25 @@ formInputList.forEach((loginInput) => {
   validationSchemaSpec[name] = validationSchema;
 });
 
-const LoginForm = () => {
+type Props = {
+  isLoading: boolean;
+  handleClickLogin: (
+    username: string,
+    password: string,
+    needToRemember?: boolean
+  ) => Promise<void>;
+};
+const LoginForm = ({ isLoading, handleClickLogin }: Props) => {
   const formik = useFormik({
     initialValues,
     validationSchema: Yup.object(validationSchemaSpec),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      const { username, password } = values;
+      await handleClickLogin(username, password, needToRemember);
     },
   });
+
+  const [needToRemember, setNeedToRemember] = useState(false);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -72,14 +84,18 @@ const LoginForm = () => {
       })}
 
       <RememberMeContainer>
-        <Checkbox />
+        <Checkbox
+          value={needToRemember}
+          onChange={() => setNeedToRemember((prevState) => !prevState)}
+        />
         Remember Me
       </RememberMeContainer>
 
       <Button
         fullWidth={true}
-        style={{ background: "#5D50E0", marginBottom: "21px" }}
+        style={{ marginBottom: "21px" }}
         type={"submit"}
+        disabled={isLoading}
       >
         Sign in
       </Button>
