@@ -1,9 +1,9 @@
 import React, { CSSProperties } from "react";
 import styled from "styled-components";
+import { Button as MuiButton, ButtonProps } from "@material-ui/core";
 
-const ButtonContainer = styled.div<{ color?: string }>`
+const StyledButton = styled(MuiButton)`
   padding: 12px 20px;
-  background: ${({ color }) => color || "#5D50E0"};
   color: #ffffff;
   border-radius: 12px;
   border: 0;
@@ -13,22 +13,9 @@ const ButtonContainer = styled.div<{ color?: string }>`
   cursor: pointer;
 `;
 
-type Props = {
-  label: string;
-  handleClick: () => void;
-  color?: string;
-  style?: CSSProperties;
-};
-const Button = ({ label, handleClick, color, style }: Props) => {
-  return (
-    <ButtonContainer
-      onClick={handleClick}
-      color={color as string}
-      style={style}
-    >
-      {label}
-    </ButtonContainer>
-  );
+const Button = (props: ButtonProps) => {
+  // @ts-ignore
+  return <StyledButton {...props}>{props.children}</StyledButton>;
 };
 
 export default Button;
