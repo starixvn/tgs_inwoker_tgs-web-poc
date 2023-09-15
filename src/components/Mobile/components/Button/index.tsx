@@ -11,11 +11,16 @@ const StyledButton = styled(MuiButton)`
   font-weight: 500;
   line-height: 1.318rem;
   cursor: pointer;
+  background: #5d50e0;
 `;
 
 const Button = (props: ButtonProps) => {
   // @ts-ignore
-  return <StyledButton {...props}>{props.children}</StyledButton>;
+  return (
+    <StyledButton {...props} color="primary">
+      {props.children}
+    </StyledButton>
+  );
 };
 
 export default Button;

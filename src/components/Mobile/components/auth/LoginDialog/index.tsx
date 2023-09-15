@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import TextField from "@/components/Mobile/components/TextField";
-import Checkbox from "@/components/Mobile/components/Checkbox";
-import Button from "@/components/Mobile/components/Button";
 import { Dialog, IconButton, Slide } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions";
 import CloseIcon from "@material-ui/icons/Close";
 import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
+import LoginForm from "@/components/Mobile/components/auth/LoginDialog/LoginForm";
+import { useDispatch } from "react-redux";
+import { accountAction } from "@/api-services/actions/accountAction";
+import i18n from "@/utils/i18n";
+import { useHistory } from "react-router";
+import { useLogin } from "@/components/Mobile/components/auth/hooks/useLogin";
 
 const LoginDialogContainer = styled(Dialog)`
   background: #181f2b;
@@ -38,15 +41,6 @@ const TitleContainer = styled.div`
     height: 5px;
     background: #6152dd;
   }
-`;
-
-const RememberMeContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  color: #6152dd;
-  font-size: 0.937rem;
-  margin: 8px 0;
 `;
 
 const ForgotPasswordContainer = styled.a`
@@ -85,10 +79,12 @@ const LoginDialog = () => {
   const { isLoginOpen, toggleLoginDialog, toggleRegisterDialog } =
     useAuthDialog();
 
-  const handleRedirectToRegister = () => {
+  const { loginState, handleClickLogin } = useLogin();
+
+  const handleRedirectToRegister = useCallback(() => {
     toggleLoginDialog();
     toggleRegisterDialog();
-  };
+  }, []);
 
   return (
     <LoginDialogContainer
@@ -111,25 +107,10 @@ const LoginDialog = () => {
         <div className="bottom-border" />
       </TitleContainer>
 
-      <TextField
-        label={"username"}
-        variant={"outlined"}
-        fullWidth
-        style={{ marginBottom: "21px" }}
+      <LoginForm
+        handleClickLogin={handleClickLogin}
+        isLoading={loginState.isLoading}
       />
-      <TextField label={"password"} variant={"outlined"} fullWidth />
-
-      <RememberMeContainer>
-        <Checkbox />
-        Remember Me
-      </RememberMeContainer>
-
-      <Button
-        fullWidth={true}
-        style={{ background: "#5D50E0", marginBottom: "21px" }}
-      >
-        Sign in
-      </Button>
 
       <ForgotPasswordContainer>Forgot Password?</ForgotPasswordContainer>
 

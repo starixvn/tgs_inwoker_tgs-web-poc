@@ -1,9 +1,10 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
-import Button from "@/components/Mobile/components/Button";
 import MenuButton from "@/components/Mobile/components/Header/MenuButton";
 import { useHistory } from "react-router";
-import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
+import { useAccount } from "@/components/Mobile/hooks/useAccount";
+import AnonymousHeaderContent from "@/components/Mobile/components/Header/AnonymousHeaderContent";
+import AccountHeaderContent from "@/components/Mobile/components/Header/AccountHeaderContent";
 
 const HeaderContainer = styled.div`
   background: #181f2b;
@@ -20,18 +21,13 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-`;
-
 type Props = {};
 const Header = (props: Props) => {
   const history = useHistory();
-  const { toggleLoginDialog, toggleRegisterDialog } = useAuthDialog();
 
-  const handleClick = useCallback((path: string) => {
-    history.push(path);
-  }, []);
+  const { account } = useAccount();
+
+  const noLoginAccount = account.token !== account.info.token;
 
   return (
     <HeaderContainer>
@@ -40,25 +36,10 @@ const Header = (props: Props) => {
 
         <h3>Logo</h3>
 
-        <ButtonContainer>
-          <Button
-            onClick={toggleLoginDialog}
-            style={{ marginRight: "20px", background: "#5D50E0" }}
-          >
-            Login
-          </Button>
-
-          <Button
-            color={"primary"}
-            onClick={toggleRegisterDialog}
-            style={{ background: "#E7415A" }}
-          >
-            Register
-          </Button>
-        </ButtonContainer>
+        {noLoginAccount ? <AnonymousHeaderContent /> : <AccountHeaderContent />}
       </HeaderWrapper>
     </HeaderContainer>
   );
 };
 
-export default Header;
+export default React.memo(Header);

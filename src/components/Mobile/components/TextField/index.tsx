@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { TextField as MuiTextField, TextFieldProps } from "@material-ui/core";
 
 const StyledTextField = styled(MuiTextField)`
-  background: #212937;
   overflow: visible;
   border-radius: 8px;
 
   & input {
-    color: #ffffff;
+    background: #212937;
+    color: white !important;
   }
 
   & .MuiFormLabel-root {
