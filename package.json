@@ -16,6 +16,7 @@
         "copy-to-clipboard": "^3.3.1",
         "date-fns": "^2.23.0",
         "es6-promise": "^4.2.8",
+        "formik": "^2.4.4",
         "i18next": "^19.9.2",
         "i18next-browser-languagedetector": "^4.3.1",
         "i18next-http-backend": "^2.1.1",
@@ -50,7 +51,8 @@
         "redux-devtools-extension": "^2.13.9",
         "redux-thunk": "^2.3.0",
         "slick-carousel": "^1.8.1",
-        "styled-components": "^4.4.1"
+        "styled-components": "^4.4.1",
+        "yup": "^1.2.0"
     },
     "scripts": {
         "get:submodule": "git submodule update --init --recursive",

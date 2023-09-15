@@ -7,6 +7,9 @@ import { Dialog, IconButton, Slide } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions";
 import CloseIcon from "@material-ui/icons/Close";
 import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import LoginForm from "@/components/Mobile/components/auth/LoginDialog/LoginForm";
 
 const LoginDialogContainer = styled(Dialog)`
   background: #181f2b;
@@ -81,6 +84,16 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const initialValues = {
+  username: "",
+  password: "",
+};
+
+const validationSchema = Yup.object({
+  username: Yup.string().required("Username is required"),
+  password: Yup.string().required("Password is required"),
+});
+
 const LoginDialog = () => {
   const { isLoginOpen, toggleLoginDialog, toggleRegisterDialog } =
     useAuthDialog();
@@ -111,25 +124,7 @@ const LoginDialog = () => {
         <div className="bottom-border" />
       </TitleContainer>
 
-      <TextField
-        label={"username"}
-        variant={"outlined"}
-        fullWidth
-        style={{ marginBottom: "21px" }}
-      />
-      <TextField label={"password"} variant={"outlined"} fullWidth />
-
-      <RememberMeContainer>
-        <Checkbox />
-        Remember Me
-      </RememberMeContainer>
-
-      <Button
-        fullWidth={true}
-        style={{ background: "#5D50E0", marginBottom: "21px" }}
-      >
-        Sign in
-      </Button>
+      <LoginForm />
 
       <ForgotPasswordContainer>Forgot Password?</ForgotPasswordContainer>
 
