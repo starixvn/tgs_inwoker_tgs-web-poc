@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 const StyledCheckbox = styled(MuiCheckbox)`
   color: white;
+  padding: 0 8px !important;
   &.Mui-checked {
     color: #6152dd;
   }

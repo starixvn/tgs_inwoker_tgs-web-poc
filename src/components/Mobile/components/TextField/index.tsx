@@ -5,6 +5,7 @@ import { TextField as MuiTextField, TextFieldProps } from "@material-ui/core";
 const StyledTextField = styled(MuiTextField)`
   background: #212937;
   overflow: visible;
+  border-radius: 8px;
 
   & input {
     color: #ffffff;
@@ -16,7 +17,7 @@ const StyledTextField = styled(MuiTextField)`
 `;
 const TextField = (props: TextFieldProps) => {
   // @ts-ignore
-  return <StyledTextField {...props} />;
+  return <StyledTextField {...props} variant={"outlined"} />;
 };
 
 export default TextField;

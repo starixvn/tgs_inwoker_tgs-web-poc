@@ -42,7 +42,7 @@ const Header = (props: Props) => {
 
         <ButtonContainer>
           <Button
-            onClick={() => toggleLoginDialog(true)}
+            onClick={toggleLoginDialog}
             style={{ marginRight: "20px", background: "#5D50E0" }}
           >
             Login
@@ -50,7 +50,7 @@ const Header = (props: Props) => {
 
           <Button
             color={"primary"}
-            onClick={() => toggleRegisterDialog(true)}
+            onClick={toggleRegisterDialog}
             style={{ background: "#E7415A" }}
           >
             Register

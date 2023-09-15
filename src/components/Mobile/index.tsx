@@ -4,6 +4,7 @@ import { Redirect, Route, Router, Switch } from "react-router";
 import { AppHistory } from "@/history/History";
 import { routes } from "@/components/Mobile/router";
 import LoginDialog from "@/components/Mobile/components/auth/LoginDialog";
+import RegisterDialog from "@/components/Mobile/components/auth/RegisterDialog";
 
 type Props = {};
 const Mobile = (props: Props) => {
@@ -48,6 +49,7 @@ const Mobile = (props: Props) => {
       </MobileLayout>
 
       <LoginDialog />
+      <RegisterDialog />
     </>
   );
 };

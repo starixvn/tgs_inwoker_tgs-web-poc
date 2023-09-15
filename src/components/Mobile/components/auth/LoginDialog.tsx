@@ -67,7 +67,7 @@ const CreateAccountContainer = styled.div`
   display: flex;
   align-items: center;
 
-  a {
+  & .register {
     color: #5d50e0;
     margin-left: 12px;
   }
@@ -82,7 +82,13 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const LoginDialog = () => {
-  const { isLoginOpen, toggleLoginDialog } = useAuthDialog();
+  const { isLoginOpen, toggleLoginDialog, toggleRegisterDialog } =
+    useAuthDialog();
+
+  const handleRedirectToRegister = () => {
+    toggleLoginDialog();
+    toggleRegisterDialog();
+  };
 
   return (
     <LoginDialogContainer
@@ -122,14 +128,16 @@ const LoginDialog = () => {
         fullWidth={true}
         style={{ background: "#5D50E0", marginBottom: "21px" }}
       >
-        Login
+        Sign in
       </Button>
 
       <ForgotPasswordContainer>Forgot Password?</ForgotPasswordContainer>
 
       <CreateAccountContainer>
         <span>Don't have an account?</span>
-        <a>Create Account</a>
+        <span className="register" onClick={handleRedirectToRegister}>
+          Create Account
+        </span>
       </CreateAccountContainer>
     </LoginDialogContainer>
   );
