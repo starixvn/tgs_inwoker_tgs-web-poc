@@ -26,7 +26,7 @@ export function useLogin() {
       try {
         setLoginState((prevState) => ({ ...prevState, isLoading: true }));
 
-        const result = await dispatch(
+        const result: any = await dispatch(
           accountAction.accountLogin(username, password)
         );
 
@@ -49,7 +49,7 @@ export function useLogin() {
           throw new Error(i18n.t("common.msgInvalidUsername"));
         }
 
-        await handleLoginSuccess(needToRemember);
+        await handleLoginSuccess(username, needToRemember);
         setLoginState({ isLoading: false, data: result.data, error: null });
         toggleLoginDialog();
       } catch (error: any) {
@@ -70,8 +70,11 @@ export function useLogin() {
     []
   );
 
-  const handleLoginSuccess = async (needToRemember?: boolean) => {
-    const response = await dispatch(accountAction.getAccountInfo());
+  const handleLoginSuccess = async (
+    username: string,
+    needToRemember?: boolean
+  ) => {
+    const response: any = await dispatch(accountAction.getAccountInfo());
 
     if (!response.IsSuccess) throw new Error("Fetching account info fail");
 
@@ -124,7 +127,7 @@ export function useLogin() {
 
       if (needToRemember) {
         localStorage.setItem("remember", "true");
-        localStorage.setItem("username", this.state.username);
+        localStorage.setItem("username", `${username}`);
       } else {
         localStorage.removeItem("remember");
         localStorage.removeItem("username");

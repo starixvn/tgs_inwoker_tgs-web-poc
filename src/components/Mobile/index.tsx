@@ -28,10 +28,14 @@ const Mobile = (props: Props) => {
       account.info.token === "";
 
     if (NEED_TO_REFRESH_TOKEN) {
-      const responseToken = await dispatch(accountAction.checkTokenIsValid());
+      const responseToken: any = await dispatch(
+        accountAction.checkTokenIsValid()
+      );
       if (!responseToken.IsSuccess) return;
 
-      const response = await dispatch(accountAction.getAccountProfile(true));
+      const response: any = await dispatch(
+        accountAction.getAccountProfile(true)
+      );
       const bankInfoAuthentication = response.data?.bankinfoauthentication;
       const isPhoneNull = response.data.phone === null;
       const isEmailNull = response.data.email === null;
@@ -41,7 +45,8 @@ const Mobile = (props: Props) => {
     }
   };
   useEffect(() => {
-    validateTokenState().then();
+    // validateTokenState().then();
+    setIsLoading(false);
   }, []);
 
   // const isSiteInitializing =

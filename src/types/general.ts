@@ -2,6 +2,7 @@ export interface GeneralState {
   banner: any[];
   brand: {
     hasInvitationCode: boolean;
+    loadingUrl: string;
   };
   brandLanguage: {
     culturecode: string;
