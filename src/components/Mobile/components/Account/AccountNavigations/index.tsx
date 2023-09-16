@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import infoImg from "@/assets/images/account/icon_info.png";
-import NavCard from "@/components/Mobile/components/Account/AccountNavigations/NavCard";
+import NavCard, {
+  NavCardItem,
+} from "@/components/Mobile/components/Account/AccountNavigations/NavCard";
+import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloadButton";
 
 const AccountNavigationsContainer = styled.div`
   display: flex;
@@ -9,12 +12,7 @@ const AccountNavigationsContainer = styled.div`
   gap: 8px;
 `;
 
-export interface AccountNavigation {
-  label: string;
-  iconUrl: string;
-}
-
-const accountNavigationList: AccountNavigation[] = [
+const navCardItemList: NavCardItem[] = [
   {
     label: "Account",
     iconUrl: infoImg,
@@ -49,15 +47,22 @@ const accountNavigationList: AccountNavigation[] = [
   },
 ];
 
-type Props = {};
+const AccountNavigations = () => {
+  const handleClickNav = useCallback((navCardItem: NavCardItem) => {}, []);
 
-const AccountNavigations = (props: Props) => {
   return (
     <AccountNavigationsContainer>
-      {accountNavigationList.map((accountNavigation) => {
-        const { label, iconUrl } = accountNavigation;
-        return <NavCard label={label} iconUrl={iconUrl} />;
+      {navCardItemList.map((navCardItem, index) => {
+        return (
+          <NavCard
+            key={index}
+            navCardItem={navCardItem}
+            handleClick={handleClickNav}
+          />
+        );
       })}
+
+      <AppDownloadButton />
     </AccountNavigationsContainer>
   );
 };

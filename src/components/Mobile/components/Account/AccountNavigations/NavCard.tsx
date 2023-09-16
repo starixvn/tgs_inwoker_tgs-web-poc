@@ -16,6 +16,7 @@ const NavCardContainer = styled.div`
   color: ${theme.tertiary};
   font-size: 0.875rem;
   font-weight: 700;
+  cursor: pointer;
 `;
 
 const LogoContainer = styled.div`
@@ -28,15 +29,20 @@ const LogoContainer = styled.div`
   }
 `;
 
-type Props = {
+export interface NavCardItem {
   label: string;
   iconUrl: string;
+}
+
+type Props = {
+  navCardItem: NavCardItem;
+  handleClick: (navCardItem: NavCardItem) => void;
 };
-const NavCard = ({ label, iconUrl }: Props) => {
+const NavCard = ({ navCardItem, handleClick }: Props) => {
   return (
-    <NavCardContainer>
+    <NavCardContainer onClick={() => handleClick(navCardItem)}>
       <LogoContainer>
-        <img src={iconUrl} alt={label} />
+        <img src={navCardItem.iconUrl} alt={navCardItem.label} />
       </LogoContainer>
 
       <span>label</span>

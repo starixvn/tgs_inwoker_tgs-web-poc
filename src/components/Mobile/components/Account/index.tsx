@@ -7,6 +7,7 @@ import accountImg from "@/assets/images/account/icon_account.png";
 import infoImg from "@/assets/images/account/icon_info.png";
 import BalanceTracker from "@/components/Mobile/components/BalanceTracker";
 import AccountNavigations from "@/components/Mobile/components/Account/AccountNavigations";
+import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloadButton";
 
 const theme = themeList["mobileT18"];
 
