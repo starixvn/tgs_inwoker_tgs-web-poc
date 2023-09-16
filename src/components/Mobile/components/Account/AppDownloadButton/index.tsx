@@ -29,8 +29,7 @@ const LogoContainer = styled.span`
   }
 `;
 
-type Props = {};
-const AppDownloadButton = (props: Props) => {
+const AppDownloadButton = () => {
   return (
     <AppDownloadButtonContainer>
       <LogoContainer>

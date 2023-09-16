@@ -1,10 +1,11 @@
-import React, { useCallback } from "react";
+import React, { CSSProperties, useCallback } from "react";
 import styled from "styled-components";
 import infoImg from "@/assets/images/account/icon_info.png";
 import NavCard, {
   NavCardItem,
 } from "@/components/Mobile/components/Account/AccountNavigations/NavCard";
 import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloadButton";
+import { ReactI18NextChild } from "react-i18next";
 
 const AccountNavigationsContainer = styled.div`
   display: flex;
@@ -47,11 +48,11 @@ const navCardItemList: NavCardItem[] = [
   },
 ];
 
-const AccountNavigations = () => {
+const AccountNavigations = (props: any) => {
   const handleClickNav = useCallback((navCardItem: NavCardItem) => {}, []);
 
   return (
-    <AccountNavigationsContainer>
+    <AccountNavigationsContainer {...props}>
       {navCardItemList.map((navCardItem, index) => {
         return (
           <NavCard

@@ -8,6 +8,7 @@ import infoImg from "@/assets/images/account/icon_info.png";
 import BalanceTracker from "@/components/Mobile/components/BalanceTracker";
 import AccountNavigations from "@/components/Mobile/components/Account/AccountNavigations";
 import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloadButton";
+import Button from "@/components/Mobile/components/Button";
 
 const theme = themeList["mobileT18"];
 
@@ -56,7 +57,9 @@ const Account = (props: Props) => {
 
       <BalanceTracker />
 
-      <AccountNavigations />
+      <AccountNavigations style={{ marginBottom: "8px" }} />
+
+      <Button fullWidth>Logout</Button>
     </AccountContainer>
   );
 };

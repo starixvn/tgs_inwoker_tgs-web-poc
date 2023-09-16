@@ -55,10 +55,6 @@ interface InfoItem {
   logoImg: string;
 }
 
-type Props = {
-  style?: CSSProperties;
-};
-
 const InfoCard = (props: any) => {
   const infoItemList: InfoItem[] = useMemo(() => {
     return [
