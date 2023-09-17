@@ -11,6 +11,7 @@ import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloa
 import Button from "@/components/Mobile/components/Button";
 import LanguageSwitch from "@/components/Mobile/components/LanguageSwitch";
 import AccountLevelInfoCard from "@/components/Mobile/components/Account/AccountLevelInfoCard";
+import { NavCardItem } from "@/components/Mobile/components/Account/AccountNavigations/NavCard";
 
 const theme = themeList["mobileT18"];
 
@@ -57,6 +58,8 @@ const tabList: TabItem[] = [
 type Props = {};
 const Account = (props: Props) => {
   const [selectedTab, setSelectedTab] = useState<TabItem>(tabList[0]);
+  const [selectedNavCardItem, setSelectedNavCardItem] =
+    useState<NavCardItem | null>(null);
 
   const handleTabChange = useCallback(
     (_event: React.ChangeEvent<{}>, newValue: TabItem) => {
@@ -64,6 +67,10 @@ const Account = (props: Props) => {
     },
     []
   );
+
+  const handleClickNav = useCallback((navCardItem: NavCardItem) => {
+    setSelectedNavCardItem(navCardItem);
+  }, []);
 
   return (
     <AccountContainer>
@@ -78,7 +85,7 @@ const Account = (props: Props) => {
       {selectedTab.value === "account" && (
         <AccountNavContainer>
           <BalanceTracker />
-          <AccountNavigations />
+          <AccountNavigations handleClickNav={handleClickNav} />
           <LanguageSwitch />
           <Button fullWidth>Logout</Button>
         </AccountNavContainer>

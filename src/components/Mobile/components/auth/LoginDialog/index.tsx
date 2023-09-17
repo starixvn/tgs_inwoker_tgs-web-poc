@@ -1,26 +1,11 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import { Dialog, IconButton, Slide } from "@material-ui/core";
+import { Slide } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions";
-import CloseIcon from "@material-ui/icons/Close";
 import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
 import LoginForm from "@/components/Mobile/components/auth/LoginDialog/LoginForm";
 import { useLogin } from "@/components/Mobile/components/auth/hooks/useLogin";
-
-const LoginDialogContainer = styled(Dialog)`
-  background: #181f2b;
-  font-family: Roboto;
-
-  & .MuiPaper-root {
-    position: relative;
-    padding: 15px;
-    background: #181f2b;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-`;
+import Dialog from "@/components/Mobile/components/Dialog";
 
 const TitleContainer = styled.div`
   font-size: 3rem !important;
@@ -63,14 +48,6 @@ const CreateAccountContainer = styled.div`
   }
 `;
 
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & { children?: React.ReactElement },
-  ref: React.Ref<unknown>
-) {
-  // @ts-ignore
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
 const LoginDialog = () => {
   const { isLoginOpen, toggleLoginDialog, toggleRegisterDialog } =
     useAuthDialog();
@@ -83,21 +60,7 @@ const LoginDialog = () => {
   }, []);
 
   return (
-    <LoginDialogContainer
-      fullScreen
-      open={isLoginOpen}
-      TransitionComponent={Transition}
-    >
-      <CloseIcon
-        onClick={toggleLoginDialog}
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          color: "white",
-        }}
-      />
-
+    <Dialog isOpen={isLoginOpen} toggleDialog={toggleLoginDialog}>
       <TitleContainer>
         LOGIN
         <div className="bottom-border" />
@@ -116,7 +79,7 @@ const LoginDialog = () => {
           Create Account
         </span>
       </CreateAccountContainer>
-    </LoginDialogContainer>
+    </Dialog>
   );
 };
 

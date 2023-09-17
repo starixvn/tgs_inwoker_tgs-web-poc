@@ -5,6 +5,7 @@ import { themeList } from "@/theme";
 const theme = themeList["mobileT18"];
 
 const NavCardContainer = styled.div`
+  position: relative;
   border-radius: 10px;
   background: ${theme.primaryMiddle};
   display: flex;
@@ -18,6 +19,10 @@ const NavCardContainer = styled.div`
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
+  transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  overflow: visible;
+}
 `;
 
 const LogoContainer = styled.div`

@@ -3,26 +3,12 @@ import styled from "styled-components";
 import TextField from "@/components/Mobile/components/TextField";
 import Checkbox from "@/components/Mobile/components/Checkbox";
 import Button from "@/components/Mobile/components/Button";
-import { Dialog, IconButton, Slide } from "@material-ui/core";
+import { Slide } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions";
 import CloseIcon from "@material-ui/icons/Close";
 import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
 import Select from "@/components/Mobile/components/Select";
-
-const RegisterDialogContainer = styled(Dialog)`
-  background: #181f2b;
-  font-family: Roboto;
-
-  & .MuiPaper-root {
-    position: relative;
-    padding: 15px;
-    background: #181f2b;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-`;
+import Dialog from "@/components/Mobile/components/Dialog";
 
 const TitleContainer = styled.div`
   font-size: 3rem !important;
@@ -77,14 +63,6 @@ const CreateAccountContainer = styled.div`
   }
 `;
 
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & { children?: React.ReactElement },
-  ref: React.Ref<unknown>
-) {
-  // @ts-ignore
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
 const RegisterDialog = () => {
   const { isRegisterOpen, toggleRegisterDialog, toggleLoginDialog } =
     useAuthDialog();
@@ -95,21 +73,7 @@ const RegisterDialog = () => {
   };
 
   return (
-    <RegisterDialogContainer
-      fullScreen
-      open={isRegisterOpen}
-      TransitionComponent={Transition}
-    >
-      <CloseIcon
-        onClick={toggleRegisterDialog}
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          color: "white",
-        }}
-      />
-
+    <Dialog isOpen={isRegisterOpen} toggleDialog={toggleRegisterDialog}>
       <TitleContainer>
         REGISTER
         <div className="bottom-border" />
@@ -154,7 +118,7 @@ const RegisterDialog = () => {
           Login
         </span>
       </CreateAccountContainer>
-    </RegisterDialogContainer>
+    </Dialog>
   );
 };
 

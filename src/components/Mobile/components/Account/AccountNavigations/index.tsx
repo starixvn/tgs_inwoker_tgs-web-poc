@@ -1,4 +1,4 @@
-import React, { CSSProperties, useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
 import NavCard, {
   NavCardItem,
@@ -61,9 +61,10 @@ const navCardItemList: NavCardItem[] = [
   },
 ];
 
-const AccountNavigations = () => {
-  const handleClickNav = useCallback((navCardItem: NavCardItem) => {}, []);
-
+type Props = {
+  handleClickNav: (navCardItem: NavCardItem) => void;
+};
+const AccountNavigations = ({ handleClickNav }: Props) => {
   return (
     <AccountNavigationsContainer>
       {navCardItemList.map((navCardItem) => {
