@@ -1,8 +1,10 @@
 import React, { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
-import HeaderDialog from "@/components/Mobile/components/UI/Dialog/HeaderDialog";
+import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import NameDialog from "@/components/Mobile/components/Account/ProfileDialog/NameDialog";
+import { useDialogOpenState } from "@/components/Mobile/components/Account/hooks/useDialogOpenState";
 
 const theme = themeList["mobileT18"];
 
@@ -46,13 +48,21 @@ const ProfileItemContainer = styled.div`
 
 type ProfileItemProps = {
   profileItem?: ProfileItem;
+  handleClick: (newProfileItem: ProfileItem) => void;
 };
-const ProfileRow = ({ profileItem }: ProfileItemProps) => {
+
+const ProfileRow = ({ profileItem, handleClick }: ProfileItemProps) => {
   if (!profileItem) return null;
 
   const { label, status } = profileItem;
+
   return (
-    <ProfileItemContainer>
+    <ProfileItemContainer
+      onClick={() => {
+        if (!profileItem) return;
+        handleClick(profileItem);
+      }}
+    >
       <div>
         <div className={"label"}>{label}</div>
         <div className={"status"}>{status}</div>
@@ -65,7 +75,7 @@ const ProfileRow = ({ profileItem }: ProfileItemProps) => {
 
 type Props = {
   isOpen: boolean;
-  toggleDialog: () => void;
+  handleCloseDialog: () => void;
 };
 
 interface ProfileItem {
@@ -74,7 +84,7 @@ interface ProfileItem {
   status: string;
 }
 
-const ProfileDialog = ({ isOpen, toggleDialog }: Props) => {
+const ProfileDialog = ({ isOpen, handleCloseDialog }: Props) => {
   const profileItemDictionary = useMemo(() => {
     return {
       name: {
@@ -114,28 +124,68 @@ const ProfileDialog = ({ isOpen, toggleDialog }: Props) => {
       },
     };
   }, []);
+
+  const { dialogOpenState, handleToggleDialog } =
+    useDialogOpenState<ProfileItem>(profileItemDictionary);
+
+  const handleClickProfileItem = useCallback((newProfileItem: ProfileItem) => {
+    handleToggleDialog(newProfileItem.key);
+  }, []);
+
   return (
-    <HeaderDialog
-      isOpen={isOpen}
-      toggleDialog={toggleDialog}
-      dialogHeaderTitle={"Account"}
-    >
-      <ProfileCard>
-        <ProfileRow profileItem={profileItemDictionary["name"]} />
-        <ProfileRow profileItem={profileItemDictionary["phone"]} />
-        <ProfileRow profileItem={profileItemDictionary["email"]} />
-        <ProfileRow profileItem={profileItemDictionary["birth"]} />
-      </ProfileCard>
+    <>
+      <DialogWithHeader
+        isOpen={isOpen}
+        handleCloseDialog={handleCloseDialog}
+        dialogHeaderTitle={"Account"}
+      >
+        <>
+          <ProfileCard>
+            <ProfileRow
+              profileItem={profileItemDictionary["name"]}
+              handleClick={handleClickProfileItem}
+            />
+            <ProfileRow
+              profileItem={profileItemDictionary["phone"]}
+              handleClick={handleClickProfileItem}
+            />
+            <ProfileRow
+              profileItem={profileItemDictionary["email"]}
+              handleClick={handleClickProfileItem}
+            />
+            <ProfileRow
+              profileItem={profileItemDictionary["birth"]}
+              handleClick={handleClickProfileItem}
+            />
+          </ProfileCard>
 
-      <ProfileCard>
-        <ProfileRow profileItem={profileItemDictionary["qq"]} />
-        <ProfileRow profileItem={profileItemDictionary["wechat"]} />
-      </ProfileCard>
+          <ProfileCard>
+            <ProfileRow
+              profileItem={profileItemDictionary["qq"]}
+              handleClick={handleClickProfileItem}
+            />
+            <ProfileRow
+              profileItem={profileItemDictionary["wechat"]}
+              handleClick={handleClickProfileItem}
+            />
+          </ProfileCard>
 
-      <ProfileCard>
-        <ProfileRow profileItem={profileItemDictionary["password"]} />
-      </ProfileCard>
-    </HeaderDialog>
+          <ProfileCard>
+            <ProfileRow
+              profileItem={profileItemDictionary["password"]}
+              handleClick={handleClickProfileItem}
+            />
+          </ProfileCard>
+        </>
+      </DialogWithHeader>
+
+      {dialogOpenState["name"] && (
+        <NameDialog
+          isOpen={dialogOpenState["name"]}
+          handleCloseDialog={handleToggleDialog}
+        />
+      )}
+    </>
   );
 };
 

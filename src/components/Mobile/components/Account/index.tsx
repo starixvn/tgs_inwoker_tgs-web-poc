@@ -5,13 +5,11 @@ import InfoCard from "@/components/Mobile/components/Account/InfoCard";
 import Tabs, { TabItem } from "@/components/Mobile/components/UI/Tabs";
 import accountImg from "@/assets/images/account/icon_account.png";
 import infoImg from "@/assets/images/account/icon_info.png";
-import BalanceTracker from "@/components/Mobile/components/BalanceTracker";
-import AccountNavigations from "@/components/Mobile/components/Account/AccountNavigations";
-import Button from "@/components/Mobile/components/UI/Button";
-import LanguageSwitch from "@/components/Mobile/components/LanguageSwitch";
 import AccountLevelInfoCard from "@/components/Mobile/components/Account/AccountLevelInfoCard";
-import { NavCardItem } from "@/components/Mobile/components/Account/AccountNavigations/NavCard";
+import { NavCardItem } from "@/components/Mobile/components/Account/AccountNavs/NavCard";
 import ProfileDialog from "@/components/Mobile/components/Account/ProfileDialog";
+import { useTab } from "@/components/Mobile/components/Account/hooks/useTab";
+import AccountNavs from "@/components/Mobile/components/Account/AccountNavs";
 
 const theme = themeList["mobileT18"];
 
@@ -57,28 +55,7 @@ const tabList: TabItem[] = [
 
 type Props = {};
 const Account = (props: Props) => {
-  const [selectedTab, setSelectedTab] = useState<TabItem>(tabList[0]);
-  const [selectedNavCardItem, setSelectedNavCardItem] =
-    useState<NavCardItem | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const handleTabChange = useCallback(
-    (_event: React.ChangeEvent<{}>, newValue: TabItem) => {
-      setSelectedTab(newValue);
-    },
-    []
-  );
-
-  const handleClickNav = useCallback((navCardItem: NavCardItem) => {
-    console.log(navCardItem);
-    setSelectedNavCardItem(navCardItem);
-    toggleDialog();
-  }, []);
-
-  const toggleDialog = useCallback(() => {
-    setIsDialogOpen((prevState) => !prevState);
-  }, []);
-
+  const { selectedTab, handleTabChange } = useTab(tabList);
   return (
     <>
       <AccountContainer>
@@ -90,16 +67,7 @@ const Account = (props: Props) => {
           handleChange={handleTabChange}
         />
 
-        {selectedTab.value === "account" && (
-          <>
-            <AccountNavContainer>
-              <BalanceTracker />
-              <AccountNavigations handleClickNav={handleClickNav} />
-              <LanguageSwitch />
-              <Button fullWidth>Logout</Button>
-            </AccountNavContainer>
-          </>
-        )}
+        {selectedTab.value === "account" && <AccountNavs />}
 
         {selectedTab.value === "info" && (
           <AccountLevelInfoContainer>
@@ -107,9 +75,6 @@ const Account = (props: Props) => {
           </AccountLevelInfoContainer>
         )}
       </AccountContainer>
-
-      {/* Dialogs */}
-      <ProfileDialog isOpen={isDialogOpen} toggleDialog={toggleDialog} />
     </>
   );
 };

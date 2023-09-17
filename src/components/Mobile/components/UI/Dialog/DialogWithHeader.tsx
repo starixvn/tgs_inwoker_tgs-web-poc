@@ -1,10 +1,17 @@
-import React, { CSSProperties, useCallback, useState } from "react";
+import React, {
+  CSSProperties,
+  ForwardRefExoticComponent,
+  PropsWithoutRef,
+  RefAttributes,
+  useCallback,
+  useState,
+} from "react";
 import styled from "styled-components";
 import { Dialog as MuiDialog, Slide } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions";
 import CloseIcon from "@material-ui/icons/Close";
 import { themeList } from "@/theme";
-import { Transition } from "@/components/Mobile/components/UI/Dialog/Transition";
+import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
 
 const theme = themeList["mobileT18"];
 
@@ -54,23 +61,28 @@ const ChildContainer = styled.div`
 
 type Props = {
   isOpen: boolean;
-  toggleDialog: () => void;
+  handleCloseDialog: () => void;
   children: React.ReactElement;
   dialogHeaderTitle?: string;
   style?: CSSProperties;
+  transitionComponent?: ForwardRefExoticComponent<
+    PropsWithoutRef<TransitionProps & { children?: React.ReactElement }> &
+      RefAttributes<unknown>
+  >;
 };
-const Dialog = ({
+const DialogWithHeader = ({
   isOpen,
-  toggleDialog,
+  handleCloseDialog,
   children,
   dialogHeaderTitle,
   style,
+  transitionComponent,
 }: Props) => {
   return (
     <DialogContainer
       fullScreen
       open={isOpen}
-      TransitionComponent={Transition}
+      TransitionComponent={transitionComponent || UpTransition}
       style={style}
     >
       <DialogHeaderContainer>
@@ -78,7 +90,7 @@ const Dialog = ({
 
         <CloseIconContainer>
           <CloseIcon
-            onClick={toggleDialog}
+            onClick={handleCloseDialog}
             style={{
               color: "white",
               transform: "scale(1.6)",
@@ -92,4 +104,4 @@ const Dialog = ({
   );
 };
 
-export default React.memo(Dialog);
+export default React.memo(DialogWithHeader);

@@ -73,51 +73,54 @@ const RegisterDialog = () => {
   };
 
   return (
-    <Dialog isOpen={isRegisterOpen} toggleDialog={toggleRegisterDialog}>
-      <TitleContainer>
-        REGISTER
-        <div className="bottom-border" />
-      </TitleContainer>
+    <Dialog isOpen={isRegisterOpen} handleCloseDialog={toggleRegisterDialog}>
+      <>
+        <TitleContainer>
+          REGISTER
+          <div className="bottom-border" />
+        </TitleContainer>
 
-      <FormContainer>
-        <TextField label={"Username"} fullWidth />
-        <TextField label={"Password"} fullWidth />
-        <TextField label={"Confirm Password"} fullWidth />
+        <FormContainer>
+          <TextField label={"Username"} fullWidth />
+          <TextField label={"Password"} fullWidth />
+          <TextField label={"Confirm Password"} fullWidth />
 
-        <PhoneValidationContainer>
-          <Select
-            label={"+852"}
-            value={""}
-            handleChange={() => {}}
-            selectItemList={[]}
-          />
-          <TextField label={"Please Enter Phone Number"} fullWidth />
-        </PhoneValidationContainer>
+          <PhoneValidationContainer>
+            <Select
+              label={"+852"}
+              value={""}
+              handleChange={() => {}}
+              selectItemList={[]}
+            />
+            <TextField label={"Please Enter Phone Number"} fullWidth />
+          </PhoneValidationContainer>
 
-        <TextField label={"Invitation Code"} fullWidth />
+          <TextField label={"Invitation Code"} fullWidth />
 
-        <VerifyAgeContainer>
-          <Checkbox />
-          <span>
-            I confirm that I am at least 18 years old and have read and accepted
-            the policy statement, terms and conditions of this website.
+          <VerifyAgeContainer>
+            <Checkbox />
+            <span>
+              I confirm that I am at least 18 years old and have read and
+              accepted the policy statement, terms and conditions of this
+              website.
+            </span>
+          </VerifyAgeContainer>
+        </FormContainer>
+
+        <Button
+          fullWidth={true}
+          style={{ background: "#5D50E0", marginBottom: "21px" }}
+        >
+          Sign up
+        </Button>
+
+        <CreateAccountContainer>
+          <span>Already Have An Account?</span>
+          <span className={"login"} onClick={handleRedirectToLogin}>
+            Login
           </span>
-        </VerifyAgeContainer>
-      </FormContainer>
-
-      <Button
-        fullWidth={true}
-        style={{ background: "#5D50E0", marginBottom: "21px" }}
-      >
-        Sign up
-      </Button>
-
-      <CreateAccountContainer>
-        <span>Already Have An Account?</span>
-        <span className={"login"} onClick={handleRedirectToLogin}>
-          Login
-        </span>
-      </CreateAccountContainer>
+        </CreateAccountContainer>
+      </>
     </Dialog>
   );
 };

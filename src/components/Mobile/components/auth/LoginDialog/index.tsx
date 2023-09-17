@@ -63,29 +63,27 @@ const LoginDialog = () => {
   }, []);
 
   return (
-    <Dialog
-      isOpen={isLoginOpen}
-      toggleDialog={toggleLoginDialog}
-      style={{ background: "red" }}
-    >
-      <TitleContainer>
-        LOGIN
-        <div className="bottom-border" />
-      </TitleContainer>
+    <Dialog isOpen={isLoginOpen} handleCloseDialog={toggleLoginDialog}>
+      <>
+        <TitleContainer>
+          LOGIN
+          <div className="bottom-border" />
+        </TitleContainer>
 
-      <LoginForm
-        handleClickLogin={handleClickLogin}
-        isLoading={loginState.isLoading}
-      />
+        <LoginForm
+          handleClickLogin={handleClickLogin}
+          isLoading={loginState.isLoading}
+        />
 
-      <ForgotPasswordContainer>Forgot Password?</ForgotPasswordContainer>
+        <ForgotPasswordContainer>Forgot Password?</ForgotPasswordContainer>
 
-      <CreateAccountContainer>
-        <span>Don't have an account?</span>
-        <span className="register" onClick={handleRedirectToRegister}>
-          Create Account
-        </span>
-      </CreateAccountContainer>
+        <CreateAccountContainer>
+          <span>Don't have an account?</span>
+          <span className="register" onClick={handleRedirectToRegister}>
+            Create Account
+          </span>
+        </CreateAccountContainer>
+      </>
     </Dialog>
   );
 };

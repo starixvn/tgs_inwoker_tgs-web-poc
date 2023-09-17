@@ -6,6 +6,7 @@ import {
   Table as MuiTable,
   TableBody,
   TableCell as MuiTableCell,
+  TableCellProps,
   TableHead,
   TableRow as MuiTableRow,
 } from "@material-ui/core";
@@ -41,7 +42,7 @@ const StyledTable = styled(MuiTable)`
 const StyledTableRow = styled(MuiTableRow)`
   height: 36px;
 `;
-const StyledTableCell = styled(MuiTableCell)`
+const StyledTableCell = styled(MuiTableCell)<TableCellProps>`
   border-bottom: none;
   padding: 0;
   height: 36px !important;
@@ -146,17 +147,16 @@ const AccountLevelInfoCard = (props: AccountLevelInfoCardProps) => {
       <StyledTable>
         <TableHead>
           <MuiTableRow>
-            <StyledTableCell></StyledTableCell>
+            <StyledTableCell />
             <StyledTableCell align={"center"}>
               <LevelCard
                 style={{ background: theme.green }}
               >{`Current${levelItemList[0].current.label}`}</LevelCard>
             </StyledTableCell>
             <StyledTableCell></StyledTableCell>
-            <StyledTableCell>
+            <StyledTableCell align={"center"}>
               <LevelCard
                 style={{ background: "#FF9A02" }}
-                align={"center"}
               >{`Next${levelItemList[0].next.label}`}</LevelCard>
             </StyledTableCell>
           </MuiTableRow>
