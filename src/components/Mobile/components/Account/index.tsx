@@ -7,11 +7,11 @@ import accountImg from "@/assets/images/account/icon_account.png";
 import infoImg from "@/assets/images/account/icon_info.png";
 import BalanceTracker from "@/components/Mobile/components/BalanceTracker";
 import AccountNavigations from "@/components/Mobile/components/Account/AccountNavigations";
-import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloadButton";
 import Button from "@/components/Mobile/components/UI/Button";
 import LanguageSwitch from "@/components/Mobile/components/LanguageSwitch";
 import AccountLevelInfoCard from "@/components/Mobile/components/Account/AccountLevelInfoCard";
 import { NavCardItem } from "@/components/Mobile/components/Account/AccountNavigations/NavCard";
+import ProfileDialog from "@/components/Mobile/components/Account/ProfileDialog";
 
 const theme = themeList["mobileT18"];
 
@@ -60,6 +60,7 @@ const Account = (props: Props) => {
   const [selectedTab, setSelectedTab] = useState<TabItem>(tabList[0]);
   const [selectedNavCardItem, setSelectedNavCardItem] =
     useState<NavCardItem | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleTabChange = useCallback(
     (_event: React.ChangeEvent<{}>, newValue: TabItem) => {
@@ -69,34 +70,47 @@ const Account = (props: Props) => {
   );
 
   const handleClickNav = useCallback((navCardItem: NavCardItem) => {
+    console.log(navCardItem);
     setSelectedNavCardItem(navCardItem);
+    toggleDialog();
+  }, []);
+
+  const toggleDialog = useCallback(() => {
+    setIsDialogOpen((prevState) => !prevState);
   }, []);
 
   return (
-    <AccountContainer>
-      <InfoCard style={{ marginBottom: "50px" }} />
+    <>
+      <AccountContainer>
+        <InfoCard style={{ marginBottom: "50px" }} />
 
-      <Tabs
-        tabItemList={tabList}
-        value={selectedTab}
-        handleChange={handleTabChange}
-      />
+        <Tabs
+          tabItemList={tabList}
+          value={selectedTab}
+          handleChange={handleTabChange}
+        />
 
-      {selectedTab.value === "account" && (
-        <AccountNavContainer>
-          <BalanceTracker />
-          <AccountNavigations handleClickNav={handleClickNav} />
-          <LanguageSwitch />
-          <Button fullWidth>Logout</Button>
-        </AccountNavContainer>
-      )}
+        {selectedTab.value === "account" && (
+          <>
+            <AccountNavContainer>
+              <BalanceTracker />
+              <AccountNavigations handleClickNav={handleClickNav} />
+              <LanguageSwitch />
+              <Button fullWidth>Logout</Button>
+            </AccountNavContainer>
+          </>
+        )}
 
-      {selectedTab.value === "info" && (
-        <AccountLevelInfoContainer>
-          <AccountLevelInfoCard />
-        </AccountLevelInfoContainer>
-      )}
-    </AccountContainer>
+        {selectedTab.value === "info" && (
+          <AccountLevelInfoContainer>
+            <AccountLevelInfoCard />
+          </AccountLevelInfoContainer>
+        )}
+      </AccountContainer>
+
+      {/* Dialogs */}
+      <ProfileDialog isOpen={isDialogOpen} toggleDialog={toggleDialog} />
+    </>
   );
 };
 

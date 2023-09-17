@@ -3,12 +3,12 @@ import styled from "styled-components";
 import TextField from "@/components/Mobile/components/UI/TextField";
 import Checkbox from "@/components/Mobile/components/UI/Checkbox";
 import Button from "@/components/Mobile/components/UI/Button";
-import { Slide } from "@material-ui/core";
-import { TransitionProps } from "@material-ui/core/transitions";
-import CloseIcon from "@material-ui/icons/Close";
 import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
 import Select from "@/components/Mobile/components/UI/Select";
-import Dialog from "@/components/Mobile/components/UI/Dialog";
+import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
+import { themeList } from "@/theme";
+
+const theme = themeList["mobileT18"];
 
 const TitleContainer = styled.div`
   font-size: 3rem !important;

@@ -5,7 +5,10 @@ import { TransitionProps } from "@material-ui/core/transitions";
 import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
 import LoginForm from "@/components/Mobile/components/auth/LoginDialog/LoginForm";
 import { useLogin } from "@/components/Mobile/components/auth/hooks/useLogin";
-import Dialog from "@/components/Mobile/components/UI/Dialog";
+import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
+import { themeList } from "@/theme";
+
+const theme = themeList["mobileT18"];
 
 const TitleContainer = styled.div`
   font-size: 3rem !important;
@@ -60,7 +63,11 @@ const LoginDialog = () => {
   }, []);
 
   return (
-    <Dialog isOpen={isLoginOpen} toggleDialog={toggleLoginDialog}>
+    <Dialog
+      isOpen={isLoginOpen}
+      toggleDialog={toggleLoginDialog}
+      style={{ background: "red" }}
+    >
       <TitleContainer>
         LOGIN
         <div className="bottom-border" />
