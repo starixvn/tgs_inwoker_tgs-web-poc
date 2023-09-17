@@ -10,12 +10,31 @@ import AccountNavigations from "@/components/Mobile/components/Account/AccountNa
 import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloadButton";
 import Button from "@/components/Mobile/components/Button";
 import LanguageSwitch from "@/components/Mobile/components/LanguageSwitch";
+import AccountLevelInfoCard from "@/components/Mobile/components/Account/AccountLevelInfoCard";
 
 const theme = themeList["mobileT18"];
 
 const AccountContainer = styled.div`
   background: ${theme.primaryDark};
   padding: 40px 15px;
+`;
+
+const AccountNavContainer = styled.div`
+  padding: 15px 0 0;
+  & > * {
+    margin-bottom: 8px;
+  }
+  & > *:first-child {
+    margin-bottom: 16px;
+  }
+`;
+
+const AccountLevelInfoContainer = styled.div`
+  padding: 15px 0 0;
+
+  & > * {
+    margin-bottom: 8px;
+  }
 `;
 
 const AccountIcon = () => {
@@ -56,12 +75,20 @@ const Account = (props: Props) => {
         handleChange={handleTabChange}
       />
 
-      <BalanceTracker />
+      {selectedTab.value === "account" && (
+        <AccountNavContainer>
+          <BalanceTracker />
+          <AccountNavigations />
+          <LanguageSwitch />
+          <Button fullWidth>Logout</Button>
+        </AccountNavContainer>
+      )}
 
-      <AccountNavigations style={{ marginBottom: "8px" }} />
-
-      <LanguageSwitch style={{ marginBottom: "8px" }} />
-      <Button fullWidth>Logout</Button>
+      {selectedTab.value === "info" && (
+        <AccountLevelInfoContainer>
+          <AccountLevelInfoCard />
+        </AccountLevelInfoContainer>
+      )}
     </AccountContainer>
   );
 };

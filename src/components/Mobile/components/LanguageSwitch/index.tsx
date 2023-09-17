@@ -1,8 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
   FormControl as MuiFormControl,
-  FormControlProps,
-  InputLabel,
   MenuItem as MuiMenuItem,
   Select as MuiSelect,
 } from "@material-ui/core";
@@ -69,7 +67,7 @@ interface languageItem {
   icon: string;
 }
 
-const LanguageSwitch = (props: FormControlProps) => {
+const LanguageSwitch = () => {
   const languageList = useMemo<languageItem[]>(() => {
     return [
       {
@@ -97,15 +95,10 @@ const LanguageSwitch = (props: FormControlProps) => {
     setCurrentLanguage(selectedLanguage || null);
   };
 
-  const { label, value, icon } = currentLanguage || {
-    label: "",
-    value: "",
-    icon: "",
-  };
+  const value = currentLanguage?.value || "";
 
   return (
-    //@ts-ignore
-    <StyledFormControl variant="outlined" {...props}>
+    <StyledFormControl variant="outlined">
       {/*<InputLabel id="demo-simple-select-outlined-label">Language</InputLabel>*/}
       <StyledSelect
         labelId="demo-simple-select-outlined-label"
@@ -128,4 +121,4 @@ const LanguageSwitch = (props: FormControlProps) => {
   );
 };
 
-export default LanguageSwitch;
+export default React.memo(LanguageSwitch);

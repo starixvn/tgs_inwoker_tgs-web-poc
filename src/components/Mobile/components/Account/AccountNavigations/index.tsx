@@ -20,48 +20,56 @@ const AccountNavigationsContainer = styled.div`
 
 const navCardItemList: NavCardItem[] = [
   {
+    key: "account",
     label: "Account",
     iconUrl: accountImg,
   },
   {
+    key: "deposit",
     label: "Deposit",
     iconUrl: depositImg,
   },
   {
+    key: "withdraw",
     label: "Withdraw",
     iconUrl: withdrawImg,
   },
   {
+    key: "transfer",
     label: "Transfer",
     iconUrl: transferImg,
   },
   {
+    key: "report",
     label: "Report",
     iconUrl: reportImg,
   },
   {
+    key: "inbox",
     label: "Inbox",
     iconUrl: inboxImg,
   },
   {
+    key: "affiliate",
     label: "Affiliate",
     iconUrl: affiliateImg,
   },
   {
+    key: "contactUs",
     label: "Contact Us",
     iconUrl: accountImg,
   },
 ];
 
-const AccountNavigations = (props: any) => {
+const AccountNavigations = () => {
   const handleClickNav = useCallback((navCardItem: NavCardItem) => {}, []);
 
   return (
-    <AccountNavigationsContainer {...props}>
-      {navCardItemList.map((navCardItem, index) => {
+    <AccountNavigationsContainer>
+      {navCardItemList.map((navCardItem) => {
         return (
           <NavCard
-            key={index}
+            key={navCardItem.key}
             navCardItem={navCardItem}
             handleClick={handleClickNav}
           />
@@ -73,4 +81,4 @@ const AccountNavigations = (props: any) => {
   );
 };
 
-export default AccountNavigations;
+export default React.memo(AccountNavigations);

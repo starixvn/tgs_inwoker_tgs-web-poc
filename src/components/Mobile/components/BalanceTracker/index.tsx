@@ -14,7 +14,6 @@ const BalanceTrackerContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 25px 0;
 `;
 
 const BalanceContainer = styled.div`
@@ -45,16 +44,15 @@ const DepositButton = () => {
   );
 };
 
-type Props = {};
-const BalanceTracker = (props: Props) => {
-  const currentbalance = 0;
+const BalanceTracker = () => {
+  const currentBalance = `R$ 0.00`;
 
   return (
     <BalanceTrackerContainer>
       <span>Balance</span>
 
       <BalanceContainer>
-        <span>R$ 0.00</span>
+        <span>{currentBalance}</span>
         <DepositButton />
       </BalanceContainer>
     </BalanceTrackerContainer>

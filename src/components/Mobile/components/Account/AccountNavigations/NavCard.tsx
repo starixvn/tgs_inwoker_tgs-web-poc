@@ -31,6 +31,7 @@ const LogoContainer = styled.div`
 `;
 
 export interface NavCardItem {
+  key: string;
   label: string;
   iconUrl: string;
 }
