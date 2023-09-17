@@ -5,10 +5,6 @@ import { TransitionProps } from "@material-ui/core/transitions";
 import CloseIcon from "@material-ui/icons/Close";
 import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
 import LoginForm from "@/components/Mobile/components/auth/LoginDialog/LoginForm";
-import { useDispatch } from "react-redux";
-import { accountAction } from "@/api-services/actions/accountAction";
-import i18n from "@/utils/i18n";
-import { useHistory } from "react-router";
 import { useLogin } from "@/components/Mobile/components/auth/hooks/useLogin";
 
 const LoginDialogContainer = styled(Dialog)`

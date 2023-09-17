@@ -59,8 +59,8 @@ const Mobile = (props: Props) => {
 
   return (
     <>
-      <MobileLayout>
-        <Router history={AppHistory}>
+      <Router history={AppHistory}>
+        <MobileLayout>
           <Switch>
             {routes.map((route, index) => {
               // add correspond method via config
@@ -94,8 +94,8 @@ const Mobile = (props: Props) => {
             })}{" "}
             <Redirect to="/" />
           </Switch>
-        </Router>
-      </MobileLayout>
+        </MobileLayout>
+      </Router>
 
       <LoginDialog />
       <RegisterDialog />
