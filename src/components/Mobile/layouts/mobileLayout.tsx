@@ -6,6 +6,7 @@ import { themeList } from "@/theme";
 const theme = themeList["mobileT18"];
 
 const MobileLayoutContainer = styled.div`
+  position: relative;
   background: ${theme.primaryDark};
 `;
 

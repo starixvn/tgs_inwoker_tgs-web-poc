@@ -44,8 +44,9 @@ const StyledTableRow = styled(MuiTableRow)`
 const StyledTableCell = styled(MuiTableCell)`
   border-bottom: none;
   padding: 0;
-  height: 32px;
+  height: 36px !important;
   font-weight: 700;
+  line-height: 1;
   min-width: 35px;
 `;
 

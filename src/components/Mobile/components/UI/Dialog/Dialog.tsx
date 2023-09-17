@@ -8,13 +8,9 @@ import { Transition } from "@/components/Mobile/components/UI/Dialog/Transition"
 const theme = themeList["mobileT18"];
 
 const DialogContainer = styled(MuiDialog)`
-  & * {
-    color: ${theme.white};
-  }
-
   & .MuiPaper-root {
     position: relative;
-    padding: 15px;
+    padding: 73px 0 82px; // header/footer
     background: ${theme.primaryMiddle};
     display: flex;
     flex-direction: column;
@@ -29,6 +25,13 @@ const CloseIconContainer = styled.div`
   right: 20px;
   display: flex;
   align-items: center;
+`;
+
+const ChildContainer = styled.div`
+  width: 100%;
+  height: auto;
+  overflow: scroll;
+  padding: 21px 22px;
 `;
 
 type Props = {
@@ -50,7 +53,7 @@ const Dialog = ({ isOpen, toggleDialog, children }: Props) => {
         />
       </CloseIconContainer>
 
-      {children}
+      <ChildContainer>{children}</ChildContainer>
     </DialogContainer>
   );
 };

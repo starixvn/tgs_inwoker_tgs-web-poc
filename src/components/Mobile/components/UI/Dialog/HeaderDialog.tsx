@@ -9,13 +9,10 @@ import { Transition } from "@/components/Mobile/components/UI/Dialog/Transition"
 const theme = themeList["mobileT18"];
 
 const DialogContainer = styled(MuiDialog)`
-  & * {
-    color: ${theme.white};
-  }
-
+  z-index: 999 !important; // can't overlap footer(which z-index is 1000)
   & .MuiPaper-root {
     position: relative;
-    padding: 73px;
+    padding: 73px 0 82px; // header/footer
     background: ${theme.primaryDark};
     display: flex;
     flex-direction: column;
@@ -33,7 +30,7 @@ const DialogHeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
+  color: ${theme.white};
   font-size: 1.25rem;
   font-weight: 400;
   margin: 0;
@@ -46,6 +43,13 @@ const CloseIconContainer = styled.div`
   transform: translateY(-50%);
   display: flex;
   align-items: center;
+`;
+
+const ChildContainer = styled.div`
+  width: 100%;
+  height: auto;
+  overflow: scroll;
+  padding: 21px 22px;
 `;
 
 type Props = {
@@ -83,7 +87,7 @@ const Dialog = ({
         </CloseIconContainer>
       </DialogHeaderContainer>
 
-      {children}
+      <ChildContainer>{children}</ChildContainer>
     </DialogContainer>
   );
 };

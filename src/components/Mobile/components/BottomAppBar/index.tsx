@@ -16,6 +16,7 @@ const BottomAppBarContainer = styled.div`
   align-items: stretch;
   justify-content: space-around;
   padding: 10px 0;
+  z-index: 1000; // cant be grater then 1300 or will block Dialog
 `;
 
 const bottomNavItemList: BottomNavItem[] = [
