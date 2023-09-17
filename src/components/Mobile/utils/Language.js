@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import Header from "../components/Share/Header";
+import Header from "../components/UI/Header";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -12,7 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import CheckIcon from "@material-ui/icons/Check";
 import i18n from "../../../utils/i18n";
 import { withStyles } from "@material-ui/core/styles";
-import CustomButton from "../components/Share/Button";
+import CustomButton from "../components/UI/Button";
 import config from "../../../config/config";
 
 import { generalAction } from "../../../api-services/actions/generalAction";

@@ -5,7 +5,7 @@ import { TransitionProps } from "@material-ui/core/transitions";
 import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
 import LoginForm from "@/components/Mobile/components/auth/LoginDialog/LoginForm";
 import { useLogin } from "@/components/Mobile/components/auth/hooks/useLogin";
-import Dialog from "@/components/Mobile/components/Dialog";
+import Dialog from "@/components/Mobile/components/UI/Dialog";
 
 const TitleContainer = styled.div`
   font-size: 3rem !important;

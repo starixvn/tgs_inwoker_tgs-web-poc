@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import TextField from "@/components/Mobile/components/TextField";
-import Checkbox from "@/components/Mobile/components/Checkbox";
-import Button from "@/components/Mobile/components/Button";
+import TextField from "@/components/Mobile/components/UI/TextField";
+import Checkbox from "@/components/Mobile/components/UI/Checkbox";
+import Button from "@/components/Mobile/components/UI/Button";
 import styled from "styled-components";
 import { FormikValues, useFormik } from "formik";
 import * as Yup from "yup";

@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import TextField from "@/components/Mobile/components/TextField";
-import Checkbox from "@/components/Mobile/components/Checkbox";
-import Button from "@/components/Mobile/components/Button";
+import TextField from "@/components/Mobile/components/UI/TextField";
+import Checkbox from "@/components/Mobile/components/UI/Checkbox";
+import Button from "@/components/Mobile/components/UI/Button";
 import { Slide } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions";
 import CloseIcon from "@material-ui/icons/Close";
 import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
-import Select from "@/components/Mobile/components/Select";
-import Dialog from "@/components/Mobile/components/Dialog";
+import Select from "@/components/Mobile/components/UI/Select";
+import Dialog from "@/components/Mobile/components/UI/Dialog";
 
 const TitleContainer = styled.div`
   font-size: 3rem !important;
