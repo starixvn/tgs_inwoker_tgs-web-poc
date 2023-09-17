@@ -9,6 +9,7 @@ import BalanceTracker from "@/components/Mobile/components/BalanceTracker";
 import AccountNavigations from "@/components/Mobile/components/Account/AccountNavigations";
 import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloadButton";
 import Button from "@/components/Mobile/components/Button";
+import LanguageSwitch from "@/components/Mobile/components/LanguageSwitch";
 
 const theme = themeList["mobileT18"];
 
@@ -59,6 +60,7 @@ const Account = (props: Props) => {
 
       <AccountNavigations style={{ marginBottom: "8px" }} />
 
+      <LanguageSwitch style={{ marginBottom: "8px" }} />
       <Button fullWidth>Logout</Button>
     </AccountContainer>
   );

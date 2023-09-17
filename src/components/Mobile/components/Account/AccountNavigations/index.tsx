@@ -1,11 +1,16 @@
 import React, { CSSProperties, useCallback } from "react";
 import styled from "styled-components";
-import infoImg from "@/assets/images/account/icon_info.png";
 import NavCard, {
   NavCardItem,
 } from "@/components/Mobile/components/Account/AccountNavigations/NavCard";
 import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloadButton";
-import { ReactI18NextChild } from "react-i18next";
+import accountImg from "@/assets/images/account/icon_account.svg";
+import depositImg from "@/assets/images/account/icon_deposit.svg";
+import withdrawImg from "@/assets/images/account/icon_withdraw.svg";
+import transferImg from "@/assets/images/account/icon_transfer.svg";
+import reportImg from "@/assets/images/account/icon_report.svg";
+import inboxImg from "@/assets/images/account/icon_inbox.svg";
+import affiliateImg from "@/assets/images/account/icon_affiliate.svg";
 
 const AccountNavigationsContainer = styled.div`
   display: flex;
@@ -16,35 +21,35 @@ const AccountNavigationsContainer = styled.div`
 const navCardItemList: NavCardItem[] = [
   {
     label: "Account",
-    iconUrl: infoImg,
+    iconUrl: accountImg,
   },
   {
-    label: "Account",
-    iconUrl: infoImg,
+    label: "Deposit",
+    iconUrl: depositImg,
   },
   {
-    label: "Account",
-    iconUrl: infoImg,
+    label: "Withdraw",
+    iconUrl: withdrawImg,
   },
   {
-    label: "Account",
-    iconUrl: infoImg,
+    label: "Transfer",
+    iconUrl: transferImg,
   },
   {
-    label: "Account",
-    iconUrl: infoImg,
+    label: "Report",
+    iconUrl: reportImg,
   },
   {
-    label: "Account",
-    iconUrl: infoImg,
+    label: "Inbox",
+    iconUrl: inboxImg,
   },
   {
-    label: "Account",
-    iconUrl: infoImg,
+    label: "Affiliate",
+    iconUrl: affiliateImg,
   },
   {
-    label: "Account",
-    iconUrl: infoImg,
+    label: "Contact Us",
+    iconUrl: accountImg,
   },
 ];
 

@@ -36,7 +36,7 @@ const AppDownloadButton = () => {
         <img src={downloadImg} alt={"download"} />
       </LogoContainer>
 
-      <span>download</span>
+      <span>App Download</span>
     </AppDownloadButtonContainer>
   );
 };

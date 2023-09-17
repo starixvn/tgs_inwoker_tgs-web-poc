@@ -17,6 +17,7 @@ const NavCardContainer = styled.div`
   font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
+  white-space: nowrap;
 `;
 
 const LogoContainer = styled.div`
@@ -39,13 +40,14 @@ type Props = {
   handleClick: (navCardItem: NavCardItem) => void;
 };
 const NavCard = ({ navCardItem, handleClick }: Props) => {
+  const { label, iconUrl } = navCardItem;
   return (
     <NavCardContainer onClick={() => handleClick(navCardItem)}>
       <LogoContainer>
-        <img src={navCardItem.iconUrl} alt={navCardItem.label} />
+        <img src={iconUrl} alt={label} />
       </LogoContainer>
 
-      <span>label</span>
+      <span>{label}</span>
     </NavCardContainer>
   );
 };
