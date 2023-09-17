@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "@/components/Mobile/components/Button";
+import Button from "@/components/Mobile/components/UI/Button";
 import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
 
 const ButtonContainer = styled.div`

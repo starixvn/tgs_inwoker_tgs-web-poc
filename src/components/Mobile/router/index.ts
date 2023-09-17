@@ -2,6 +2,7 @@ import config from "../../../config/config";
 import Main from "@/components/Mobile/pages/Main";
 import LoginDialog from "@/components/Mobile/components/auth/LoginDialog";
 import RegisterDialog from "@/components/Mobile/components/auth/RegisterDialog";
+import Account from "@/components/Mobile/components/Account";
 
 interface Route {
   path: string;
@@ -38,16 +39,21 @@ const routes: Route[] = [
     navigate: true,
   },
   {
-    path: "/login",
-    component: LoginDialog,
+    path: "/account",
+    component: Account,
     alert: true,
   },
-  {
-    path: "/register",
-    // path: "/register&visitor_id=:subid",
-    component: RegisterDialog,
-    alert: true,
-  },
+  // {
+  //   path: "/login",
+  //   component: LoginDialog,
+  //   alert: true,
+  // },
+  // {
+  //   path: "/register",
+  //   // path: "/register&visitor_id=:subid",
+  //   component: RegisterDialog,
+  //   alert: true,
+  // },
   // {
   //   path: "/a/:promotionid",
   //   component: Login,

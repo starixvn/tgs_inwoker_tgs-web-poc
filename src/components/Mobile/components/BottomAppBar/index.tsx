@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BottomNav, { BottomNavItem } from "./BottomNav";
+import { useHistory, useLocation } from "react-router-dom";
+import { AppHistory } from "@/history/History";
 
 const BottomAppBarContainer = styled.div`
   position: fixed;
@@ -14,6 +16,7 @@ const BottomAppBarContainer = styled.div`
   align-items: stretch;
   justify-content: space-around;
   padding: 10px 0;
+  z-index: 1000; // cant be grater then 1300 or will block Dialog
 `;
 
 const bottomNavItemList: BottomNavItem[] = [
@@ -70,15 +73,27 @@ const bottomNavItemList: BottomNavItem[] = [
     iconActiveUrl:
       process.env.PUBLIC_URL +
       `/assets/images/mobile/bottomAppBar/icon_mine_active.svg`,
-    routePath: "/main/profile",
+    routePath: "/account",
   },
 ];
 
 const BottomAppBar = () => {
   const [selectedBottomNavItem, setSelectedBottomNavItem] =
     useState<null | BottomNavItem>(null);
+  const history = useHistory();
+
+  useEffect(() => {
+    const currentPathname = history.location.pathname;
+    const matchNavItem = bottomNavItemList.find(
+      (bottomNavItem) => bottomNavItem.routePath === currentPathname
+    );
+
+    setSelectedBottomNavItem(matchNavItem || null);
+  }, []);
+
   const handleClick = (appBarItem: BottomNavItem) => {
     setSelectedBottomNavItem(appBarItem);
+    AppHistory.push(appBarItem.routePath);
   };
 
   return (

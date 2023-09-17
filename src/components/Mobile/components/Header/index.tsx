@@ -7,6 +7,9 @@ import AnonymousHeaderContent from "@/components/Mobile/components/Header/Anonym
 import AccountHeaderContent from "@/components/Mobile/components/Header/AccountHeaderContent";
 
 const HeaderContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
   background: #181f2b;
   height: 80px;
   width: 100%;

@@ -12,6 +12,7 @@ const StyledButton = styled(MuiButton)`
   line-height: 1.318rem;
   cursor: pointer;
   background: #5d50e0;
+  text-transform: none;
 `;
 
 const Button = (props: ButtonProps) => {
