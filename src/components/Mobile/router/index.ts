@@ -1,6 +1,8 @@
-import config from "../../../config/config";
+import React from "react";
+import config from "@/config/config";
 import Main from "@/components/Mobile/pages/Main";
-import Mine from "@/components/Mobile/components/Mine";
+
+const Mine = React.lazy(() => import("@/components/Mobile/components/Mine"));
 
 interface Route {
   path: string;

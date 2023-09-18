@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import MobileLayout from "@/components/Mobile/layouts/mobileLayout";
 import { Redirect, Route, Router, Switch } from "react-router";
 import { AppHistory } from "@/history/History";
@@ -87,11 +87,15 @@ const Mobile = (props: Props) => {
                   key={index}
                   path={route.path}
                   render={(props) => {
-                    return <route.component></route.component>;
+                    return (
+                      <Suspense fallback={<Loading opacity={0} />}>
+                        <route.component />;
+                      </Suspense>
+                    );
                   }}
                 />
               );
-            })}{" "}
+            })}
             <Redirect to="/" />
           </Switch>
         </MobileLayout>
