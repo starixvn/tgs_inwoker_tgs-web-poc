@@ -9,7 +9,7 @@ import { useAccount } from "@/components/Mobile/hooks/useAccount";
 import { useDispatch } from "react-redux";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { useGeneral } from "@/components/Mobile/hooks/useGeneral";
-import Loading from "@/components/Wap/components/Share/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 
 type Props = {};
 const Mobile = (props: Props) => {
@@ -54,7 +54,7 @@ const Mobile = (props: Props) => {
   //   general.isMaintenance === false;
 
   if (isLoading) {
-    return <Loading show={isLoading}></Loading>;
+    return <Loading />;
   }
 
   return (
