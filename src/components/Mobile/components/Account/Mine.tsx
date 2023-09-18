@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { themeList } from "@/theme";
 import InfoCard from "@/components/Mobile/components/Account/InfoCard";
@@ -8,6 +8,7 @@ import infoImg from "@/assets/images/account/icon_info.png";
 import AccountLevelInfoCard from "@/components/Mobile/components/Account/AccountLevelInfoCard";
 import { useTab } from "@/components/Mobile/hooks/account/useTab";
 import AccountNavigations from "@/components/Mobile/components/Account/AccountNavigations";
+import { useHistory } from "react-router-dom";
 
 const theme = themeList["mobileT18"];
 

@@ -84,8 +84,8 @@ const BottomAppBar = () => {
 
   useEffect(() => {
     const currentPathname = history.location.pathname;
-    const matchNavItem = bottomNavItemList.find(
-      (bottomNavItem) => bottomNavItem.routePath === currentPathname
+    const matchNavItem = bottomNavItemList.find((bottomNavItem) =>
+      currentPathname.includes(bottomNavItem.routePath)
     );
 
     setSelectedBottomNavItem(matchNavItem || null);

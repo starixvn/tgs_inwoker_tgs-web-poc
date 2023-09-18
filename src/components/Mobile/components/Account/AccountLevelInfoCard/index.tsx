@@ -200,4 +200,4 @@ const AccountLevelInfoCard = (props: AccountLevelInfoCardProps) => {
   );
 };
 
-export default AccountLevelInfoCard;
+export default React.memo(AccountLevelInfoCard);

@@ -39,6 +39,8 @@ export interface NavCardItem {
   key: string;
   label: string;
   iconUrl: string;
+  routePath: string;
+  isOpenInDialog?: boolean;
 }
 
 type Props = {

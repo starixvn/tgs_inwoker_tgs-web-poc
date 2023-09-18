@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import BalanceTracker from "@/components/Mobile/components/BalanceTracker";
 import LanguageSwitch from "@/components/Mobile/components/LanguageSwitch";
 import Button from "@/components/Mobile/components/UI/Button";
@@ -6,16 +6,11 @@ import styled from "styled-components";
 import NavCard, {
   NavCardItem,
 } from "@/components/Mobile/components/Account/AccountNavigations/NavCard";
-import profileImg from "@/assets/images/account/icon_profile.svg";
-import depositImg from "@/assets/images/account/icon_deposit.svg";
-import withdrawImg from "@/assets/images/account/icon_withdraw.svg";
-import transferImg from "@/assets/images/account/icon_transfer.svg";
-import reportImg from "@/assets/images/account/icon_report.svg";
-import inboxImg from "@/assets/images/account/icon_inbox.svg";
-import affiliateImg from "@/assets/images/account/icon_affiliate.svg";
 import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloadButton";
 import { useDialogOpenState } from "@/components/Mobile/hooks/account/useDialogOpenState";
 import AccountDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog";
+import { useHistory } from "react-router-dom";
+import { useAccountNavigations } from "@/components/Mobile/hooks/account/useAccountNavigations";
 
 const AccountNavsContainer = styled.div`
   padding: 15px 0 0;
@@ -35,65 +30,36 @@ const AccountNavigationsContainer = styled.div`
 
 type Props = {};
 const AccountNavigations = (props: Props) => {
-  const navCardItemList: NavCardItem[] = useMemo(() => {
-    return [
-      {
-        key: "profile",
-        label: "Account",
-        iconUrl: profileImg,
-      },
-      {
-        key: "deposit",
-        label: "Deposit",
-        iconUrl: depositImg,
-      },
-      {
-        key: "withdraw",
-        label: "Withdraw",
-        iconUrl: withdrawImg,
-      },
-      {
-        key: "transfer",
-        label: "Transfer",
-        iconUrl: transferImg,
-      },
-      {
-        key: "report",
-        label: "Report",
-        iconUrl: reportImg,
-      },
-      {
-        key: "inbox",
-        label: "Inbox",
-        iconUrl: inboxImg,
-      },
-      {
-        key: "affiliate",
-        label: "Affiliate",
-        iconUrl: affiliateImg,
-      },
-      {
-        key: "contactUs",
-        label: "Contact Us",
-        iconUrl: profileImg,
-      },
-    ];
-  }, []);
-
-  const navCardDictionary = useMemo(() => {
-    const dictionary: { [key in string]: NavCardItem } = {};
-    navCardItemList.forEach((navCardItem) => {
-      dictionary[navCardItem.key] = navCardItem;
-    });
-
-    return dictionary;
-  }, []);
+  const history = useHistory();
+  const { navCardItemList, navCardDictionary, openInDialogDictionary } =
+    useAccountNavigations();
 
   const { dialogOpenState, handleToggleDialog } =
     useDialogOpenState<NavCardItem>(navCardDictionary);
 
   const handleClickNav = useCallback((navCardItem: NavCardItem) => {
-    handleToggleDialog(navCardItem.key);
+    if (openInDialogDictionary[navCardItem.key]) {
+      handleToggleDialog(navCardItem.key);
+      history.push(navCardItem.routePath);
+      return;
+    }
+    history.push(navCardItem.routePath);
+  }, []);
+
+  const handleCloseNav = useCallback(() => {
+    handleToggleDialog();
+    history.push("/account");
+  }, []);
+
+  useEffect(() => {
+    // open correspond dialog via url
+    const { pathname, search } = history.location;
+    const matchedNavCardItem = navCardItemList.find((navCardItem) => {
+      return navCardItem.routePath === `${pathname}${search}`;
+    });
+
+    if (!matchedNavCardItem) return;
+    handleClickNav(matchedNavCardItem);
   }, []);
 
   return (
@@ -120,10 +86,10 @@ const AccountNavigations = (props: Props) => {
       {/* Dialogs */}
       <AccountDialog
         isOpen={dialogOpenState["profile"]}
-        handleCloseDialog={handleToggleDialog}
+        handleCloseDialog={handleCloseNav}
       />
     </>
   );
 };
 
-export default AccountNavigations;
+export default React.memo(AccountNavigations);
