@@ -3,8 +3,8 @@ import styled from "styled-components";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import NameDialog from "@/components/Mobile/components/Account/ProfileDialog/NameDialog";
-import { useDialogOpenState } from "@/components/Mobile/components/Account/hooks/useDialogOpenState";
+import NameDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/NameDialog";
+import { useDialogOpenState } from "@/components/Mobile/hooks/account/useDialogOpenState";
 
 const theme = themeList["mobileT18"];
 
@@ -84,7 +84,7 @@ interface ProfileItem {
   status: string;
 }
 
-const ProfileDialog = ({ isOpen, handleCloseDialog }: Props) => {
+const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
   const profileItemDictionary = useMemo(() => {
     return {
       name: {
@@ -189,4 +189,4 @@ const ProfileDialog = ({ isOpen, handleCloseDialog }: Props) => {
   );
 };
 
-export default React.memo(ProfileDialog);
+export default React.memo(AccountDialog);

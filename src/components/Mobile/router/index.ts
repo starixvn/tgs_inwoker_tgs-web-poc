@@ -1,8 +1,6 @@
 import config from "../../../config/config";
 import Main from "@/components/Mobile/pages/Main";
-import LoginDialog from "@/components/Mobile/components/auth/LoginDialog";
-import RegisterDialog from "@/components/Mobile/components/auth/RegisterDialog";
-import Account from "@/components/Mobile/components/Account";
+import Mine from "@/components/Mobile/components/Mine";
 
 interface Route {
   path: string;
@@ -40,7 +38,7 @@ const routes: Route[] = [
   },
   {
     path: "/account",
-    component: Account,
+    component: Mine,
     alert: true,
   },
   // {
