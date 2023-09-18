@@ -1,17 +1,15 @@
-import React, {
-  CSSProperties,
-  ForwardRefExoticComponent,
-  PropsWithoutRef,
-  RefAttributes,
-  useCallback,
-  useState,
-} from "react";
-import styled from "styled-components";
-import { Dialog as MuiDialog, Slide } from "@material-ui/core";
+import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
+import { themeList } from "@/theme";
+import { Dialog as MuiDialog } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions";
 import CloseIcon from "@material-ui/icons/Close";
-import { themeList } from "@/theme";
-import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
+import React, {
+    CSSProperties,
+    ForwardRefExoticComponent,
+    PropsWithoutRef,
+    RefAttributes
+} from "react";
+import styled from "styled-components";
 
 const theme = themeList["mobileT18"];
 
@@ -33,7 +31,7 @@ const DialogHeaderContainer = styled.div`
   height: 73px;
   top: 0;
   left: 0;
-  background: ${theme.primaryMiddle};
+  background: ${theme.primaryLight};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,48 +58,48 @@ const ChildContainer = styled.div`
 `;
 
 type Props = {
-  isOpen: boolean;
-  handleCloseDialog: () => void;
-  children: React.ReactElement;
-  dialogHeaderTitle?: string;
-  style?: CSSProperties;
-  transitionComponent?: ForwardRefExoticComponent<
-    PropsWithoutRef<TransitionProps & { children?: React.ReactElement }> &
-      RefAttributes<unknown>
-  >;
+    isOpen: boolean;
+    handleCloseDialog: () => void;
+    children: React.ReactElement;
+    dialogHeaderTitle?: string;
+    style?: CSSProperties;
+    transitionComponent?: ForwardRefExoticComponent<
+        PropsWithoutRef<TransitionProps & { children?: React.ReactElement }> &
+        RefAttributes<unknown>
+    >;
 };
 const DialogWithHeader = ({
-  isOpen,
-  handleCloseDialog,
-  children,
-  dialogHeaderTitle,
-  style,
-  transitionComponent,
+    isOpen,
+    handleCloseDialog,
+    children,
+    dialogHeaderTitle,
+    style,
+    transitionComponent,
 }: Props) => {
-  return (
-    <DialogContainer
-      fullScreen
-      open={isOpen}
-      TransitionComponent={transitionComponent || UpTransition}
-      style={style}
-    >
-      <DialogHeaderContainer>
-        {dialogHeaderTitle}
+    return (
+        <DialogContainer
+            fullScreen
+            open={isOpen}
+            TransitionComponent={transitionComponent || UpTransition}
+            style={style}
+        >
+            <DialogHeaderContainer>
+                {dialogHeaderTitle}
 
-        <CloseIconContainer>
-          <CloseIcon
-            onClick={handleCloseDialog}
-            style={{
-              color: "white",
-              transform: "scale(1.6)",
-            }}
-          />
-        </CloseIconContainer>
-      </DialogHeaderContainer>
+                <CloseIconContainer>
+                    <CloseIcon
+                        onClick={handleCloseDialog}
+                        style={{
+                            color: "white",
+                            transform: "scale(1.6)",
+                        }}
+                    />
+                </CloseIconContainer>
+            </DialogHeaderContainer>
 
-      <ChildContainer>{children}</ChildContainer>
-    </DialogContainer>
-  );
+            <ChildContainer>{children}</ChildContainer>
+        </DialogContainer>
+    );
 };
 
 export default React.memo(DialogWithHeader);

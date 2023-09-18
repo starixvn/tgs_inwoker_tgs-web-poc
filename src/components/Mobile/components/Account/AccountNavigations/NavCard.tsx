@@ -1,13 +1,12 @@
-import React from "react";
-import styled from "styled-components";
 import { themeList } from "@/theme";
+import styled from "styled-components";
 
 const theme = themeList["mobileT18"];
 
 const NavCardContainer = styled.div`
   position: relative;
   border-radius: 10px;
-  background: ${theme.primaryMiddle};
+  background: ${theme.primaryLight};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,20 +43,20 @@ export interface NavCardItem {
 }
 
 type Props = {
-  navCardItem: NavCardItem;
-  handleClick: (navCardItem: NavCardItem) => void;
+    navCardItem: NavCardItem;
+    handleClick: (navCardItem: NavCardItem) => void;
 };
 const NavCard = ({ navCardItem, handleClick }: Props) => {
-  const { label, iconUrl } = navCardItem;
-  return (
-    <NavCardContainer onClick={() => handleClick(navCardItem)}>
-      <LogoContainer>
-        <img src={iconUrl} alt={label} />
-      </LogoContainer>
+    const { label, iconUrl } = navCardItem;
+    return (
+        <NavCardContainer onClick={() => handleClick(navCardItem)}>
+            <LogoContainer>
+                <img src={iconUrl} alt={label} />
+            </LogoContainer>
 
-      <span>{label}</span>
-    </NavCardContainer>
-  );
+            <span>{label}</span>
+        </NavCardContainer>
+    );
 };
 
 export default NavCard;

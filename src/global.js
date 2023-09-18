@@ -4,18 +4,18 @@ import "./assets/fonts/notosans/notosans-tc/css.css";
 import i18n from "./utils/i18n";
 
 const languageSwitcher = (language) => {
-  switch (language) {
-    case "en-US":
-      return `Roboto sans-serif`;
-    case "zh-CN":
-      return `'Noto Sans SC', Microsoft Yahei, '微软雅黑', STXihei, '华文细黑'`;
-    case "zh-TW":
-      return `'Noto Sans TC', Tahoma, Helvetica, Arial, sans-serif, '微軟正黑粗'`;
-    case "th-TH":
-      return ``;
-    default:
-      return `Roboto sans-serif`;
-  }
+    switch (language) {
+        case "en-US":
+            return `'Roboto',sans-serif`;
+        case "zh-CN":
+            return `'Roboto', 'Noto Sans SC', Microsoft Yahei, '微软雅黑', STXihei, '华文细黑'`;
+        case "zh-TW":
+            return `'Roboto', 'Noto Sans TC', Tahoma, Helvetica, Arial, sans-serif, '微軟正黑粗'`;
+        case "th-TH":
+            return ``;
+        default:
+            return `'Roboto',sans-serif`;
+    }
 };
 export const GlobalStyles = createGlobalStyle`
   * {
