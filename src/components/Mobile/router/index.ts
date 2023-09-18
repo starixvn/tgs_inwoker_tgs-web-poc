@@ -1,6 +1,8 @@
 import React from "react";
 import config from "@/config/config";
 import Main from "@/components/Mobile/pages/Main";
+import Deposit from "@/components/Mobile/components/Account/Deposit";
+import Withdraw from "@/components/Mobile/components/Account/Withdraw";
 
 const Mine = React.lazy(
   () => import("@/components/Mobile/components/Account/Mine")
@@ -43,6 +45,16 @@ const routes: Route[] = [
   {
     path: "/account",
     component: Mine,
+    alert: true,
+  },
+  {
+    path: "/account/deposit",
+    component: Deposit,
+    alert: true,
+  },
+  {
+    path: "/account/withdraw",
+    component: Withdraw,
     alert: true,
   },
   // {
