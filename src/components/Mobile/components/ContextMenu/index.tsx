@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ContextMenuItem from "./ContextMenuItem";
+import AvatarLevel from "@/components/Mobile/components/UI/AvatarLevel";
 
 const contextMenuList = [
   {
@@ -20,24 +21,29 @@ const contextMenuList = [
 ]
 
 const ContextMenuContainer = styled.div`
-    width: 272px;
-    padding: 22px 12px;
-    background: #212937;
-    border-radius: 10px;
-    position: fixed;
-    top: 75px;
-    right: 5px;
-    z-index: 99;
+  width: 272px;
+  padding: 22px 12px;
+  background: #212937;
+  border-radius: 10px;
+  position: fixed;
+  top: 75px;
+  right: 5px;
+  z-index: 99;
 `
 const ContextMenuItemWrapper = styled.div`
-    display: grid;
-    gap: 10px;
+  display: grid;
+  gap: 10px;
 `
 const VersionTagContainer = styled.div`
   color: #ffffff;
   text-align: center;
   font-size: 0.75rem;
   margin-top: 10px;
+`
+const AvatarLevelWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 `
 
 const ContextMenu = () => {
@@ -48,6 +54,10 @@ const ContextMenu = () => {
     
   return (
     <ContextMenuContainer>
+      <AvatarLevelWrapper>
+        {/* TODO: fake data */}
+        <AvatarLevel level="V0"/>
+      </AvatarLevelWrapper>
       <ContextMenuItemWrapper>
         {contextMenuList.map((contextMenuItem) => {
             const { label, iconUrl, routePath } = contextMenuItem;
