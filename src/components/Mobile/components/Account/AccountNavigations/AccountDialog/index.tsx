@@ -3,14 +3,14 @@ import styled from "styled-components";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import NameDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/NameDialog";
+import NameDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/NameDialog";
 import { useDialogOpenState } from "@/components/Mobile/hooks/account/useDialogOpenState";
-import PhoneDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/PhoneDialog";
-import EmailDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/EmailDialog";
-import BirthDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/BirthDialog";
-import QQDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/QQDialog";
-import WechatDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/WechatDialog";
-import PasswordDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/PasswordDialog";
+import PhoneDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/PhoneDialog";
+import EmailDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/EmailDialog";
+import BirthDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/BirthDialog";
+import QQDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/QQDialog";
+import WechatDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/WechatDialog";
+import PasswordDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/PasswordDialog";
 
 const theme = themeList["mobileT18"];
 
