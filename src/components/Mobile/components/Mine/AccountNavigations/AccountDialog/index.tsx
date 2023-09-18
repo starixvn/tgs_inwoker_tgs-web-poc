@@ -5,6 +5,12 @@ import { themeList } from "@/theme";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NameDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/NameDialog";
 import { useDialogOpenState } from "@/components/Mobile/hooks/account/useDialogOpenState";
+import PhoneDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/PhoneDialog";
+import EmailDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/EmailDialog";
+import BirthDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/BirthDialog";
+import QQDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/QQDialog";
+import WechatDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/WechatDialog";
+import PasswordDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog/PasswordDialog";
 
 const theme = themeList["mobileT18"];
 
@@ -132,6 +138,10 @@ const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
     handleToggleDialog(newProfileItem.key);
   }, []);
 
+  const handleCloseProfileItem = useCallback(() => {
+    handleToggleDialog();
+  }, []);
+
   return (
     <>
       <DialogWithHeader
@@ -179,12 +189,35 @@ const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
         </>
       </DialogWithHeader>
 
-      {dialogOpenState["name"] && (
-        <NameDialog
-          isOpen={dialogOpenState["name"]}
-          handleCloseDialog={handleToggleDialog}
-        />
-      )}
+      {/* Dialogs */}
+      <NameDialog
+        isOpen={dialogOpenState["name"]}
+        handleCloseDialog={handleCloseProfileItem}
+      />
+      <PhoneDialog
+        isOpen={dialogOpenState["phone"]}
+        handleCloseDialog={handleCloseProfileItem}
+      />
+      <EmailDialog
+        isOpen={dialogOpenState["email"]}
+        handleCloseDialog={handleCloseProfileItem}
+      />
+      <BirthDialog
+        isOpen={dialogOpenState["birth"]}
+        handleCloseDialog={handleCloseProfileItem}
+      />
+      <QQDialog
+        isOpen={dialogOpenState["qq"]}
+        handleCloseDialog={handleCloseProfileItem}
+      />
+      <WechatDialog
+        isOpen={dialogOpenState["wechat"]}
+        handleCloseDialog={handleCloseProfileItem}
+      />
+      <PasswordDialog
+        isOpen={dialogOpenState["password"]}
+        handleCloseDialog={handleCloseProfileItem}
+      />
     </>
   );
 };

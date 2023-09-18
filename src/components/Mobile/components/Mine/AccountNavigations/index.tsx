@@ -14,8 +14,8 @@ import reportImg from "@/assets/images/account/icon_report.svg";
 import inboxImg from "@/assets/images/account/icon_inbox.svg";
 import affiliateImg from "@/assets/images/account/icon_affiliate.svg";
 import AppDownloadButton from "@/components/Mobile/components/Mine/AppDownloadButton";
-import AccountDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog";
 import { useDialogOpenState } from "@/components/Mobile/hooks/account/useDialogOpenState";
+import AccountDialog from "@/components/Mobile/components/Mine/AccountNavigations/AccountDialog";
 
 const AccountNavsContainer = styled.div`
   padding: 15px 0 0;
@@ -118,12 +118,10 @@ const AccountNavigations = (props: Props) => {
       </AccountNavsContainer>
 
       {/* Dialogs */}
-      {dialogOpenState["profile"] && (
-        <AccountDialog
-          isOpen={dialogOpenState["profile"]}
-          handleCloseDialog={handleToggleDialog}
-        />
-      )}
+      <AccountDialog
+        isOpen={dialogOpenState["profile"]}
+        handleCloseDialog={handleToggleDialog}
+      />
     </>
   );
 };

@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import config from "../../../../config/config";
 import { useGeneral } from "@/components/Mobile/hooks/useGeneral";
+import { themeList } from "@/theme";
+
+const theme = themeList["mobileT18"];
 
 const LoadingContainer = styled.div`
   width: 100%;
@@ -34,15 +36,16 @@ type Props = {
 const Loading = ({ opacity }: Props) => {
   const { general } = useGeneral();
 
+  const backgroundOpacity = typeof opacity === "number" ? opacity : 0.5;
+
   return (
-    <LoadingContainer opacity={opacity || 0.5}>
+    <LoadingContainer opacity={backgroundOpacity}>
       <Inner>
         <LogoImg src={general.brand && general.brand.loadingUrl} />
         <div className="clear"></div>
         <CircularProgress
           size={80}
-          color={"primary"}
-          style={{ margin: "30px 0 0 80px" }}
+          style={{ margin: "30px 0 0 80px", color: theme.primary }}
         ></CircularProgress>
       </Inner>
     </LoadingContainer>
