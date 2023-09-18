@@ -2,7 +2,9 @@ import React from "react";
 import config from "@/config/config";
 import Main from "@/components/Mobile/pages/Main";
 
-const Mine = React.lazy(() => import("@/components/Mobile/components/Mine"));
+const Mine = React.lazy(
+  () => import("@/components/Mobile/components/Account/Mine")
+);
 
 interface Route {
   path: string;
