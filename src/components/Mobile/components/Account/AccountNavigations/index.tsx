@@ -11,6 +11,11 @@ import { useDialogOpenState } from "@/components/Mobile/hooks/account/useDialogO
 import AccountDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog";
 import { useHistory } from "react-router-dom";
 import { useAccountNavigations } from "@/components/Mobile/hooks/account/useAccountNavigations";
+import AffiliateDialog from "@/components/Mobile/components/Account/AccountNavigations/AffiliateDialog";
+import TransferDialog from "@/components/Mobile/components/Account/AccountNavigations/TransferDialog";
+import ReportDialog from "@/components/Mobile/components/Account/AccountNavigations/ReportDialog";
+import InboxDialog from "@/components/Mobile/components/Account/AccountNavigations/InboxDialog";
+import ContactUsDialog from "@/components/Mobile/components/Account/AccountNavigations/ContactUsDialog";
 
 const AccountNavsContainer = styled.div`
   padding: 15px 0 0;
@@ -80,12 +85,34 @@ const AccountNavigations = (props: Props) => {
           <AppDownloadButton />
         </AccountNavigationsContainer>
         <LanguageSwitch />
-        <Button fullWidth>Logout</Button>
+        <Button fullWidth variant={"contained"} color={"primary"}>
+          Logout
+        </Button>
       </AccountNavsContainer>
 
       {/* Dialogs */}
       <AccountDialog
         isOpen={dialogOpenState["profile"]}
+        handleCloseDialog={handleCloseNav}
+      />
+      <TransferDialog
+        isOpen={dialogOpenState["transfer"]}
+        handleCloseDialog={handleCloseNav}
+      />
+      <ReportDialog
+        isOpen={dialogOpenState["report"]}
+        handleCloseDialog={handleCloseNav}
+      />
+      <InboxDialog
+        isOpen={dialogOpenState["inbox"]}
+        handleCloseDialog={handleCloseNav}
+      />
+      <AffiliateDialog
+        isOpen={dialogOpenState["affiliate"]}
+        handleCloseDialog={handleCloseNav}
+      />
+      <ContactUsDialog
+        isOpen={dialogOpenState["contactUs"]}
         handleCloseDialog={handleCloseNav}
       />
     </>
