@@ -1,124 +1,43 @@
-import cardgame from "@/assets/images/home/mobile/tab/card_game.svg";
-import egame from "@/assets/images/home/mobile/tab/egame.svg";
-import esports from "@/assets/images/home/mobile/tab/esports.svg";
-import favorite from "@/assets/images/home/mobile/tab/favorite.svg";
-import fishing from "@/assets/images/home/mobile/tab/fishing.svg";
-import horse from "@/assets/images/home/mobile/tab/horse.svg";
-import live from "@/assets/images/home/mobile/tab/live_casino.svg";
-import lobby from "@/assets/images/home/mobile/tab/lobby.svg";
-import lottery from "@/assets/images/home/mobile/tab/lottery.svg";
-import sabong from "@/assets/images/home/mobile/tab/sabong.svg";
-import slot from "@/assets/images/home/mobile/tab/slot.svg";
-import sports from "@/assets/images/home/mobile/tab/sports.svg";
-import { useState } from "react";
 import styled from 'styled-components';
-import Tab from "./tab";
 
-const tabIconList = [
-    {
-        key: "Lobby",
-        iconUrl: lobby,
-        text: "Lobby",
-        fontSize: "small" as const
-    },
-    {
-        key: "slots",
-        iconUrl: slot,
-        text: "Slots",
-        fontSize: "small" as const
-    },
-    {
-        key: "Live",
-        iconUrl: live,
-        text: "Live Casino",
-        fontSize: "smaller" as const
-    },
-    {
-        key: "lottery",
-        iconUrl: lottery,
-        text: "Lottery",
-        fontSize: "small" as const
-    },
-    {
-        key: "fishing",
-        iconUrl: fishing,
-        text: "Fishing",
-        fontSize: "small" as const
-    },
-    {
-        key: "sports",
-        iconUrl: sports,
-        text: "Sports",
-        fontSize: "small" as const
-    },
-    {
-        key: "horse",
-        iconUrl: horse,
-        text: "Horse",
-        fontSize: "small" as const
-    },
-    {
-        key: "sabong",
-        iconUrl: sabong,
-        text: "Sabong",
-        fontSize: "small" as const
-    },
-    {
-        key: "egame",
-        iconUrl: egame,
-        text: "Egame",
-        fontSize: "small" as const
-    },
-    {
-        key: "cardgame",
-        iconUrl: cardgame,
-        text: "Card Game",
-        fontSize: "smaller" as const
-    },
-    {
-        key: "esports",
-        iconUrl: esports,
-        text: "Esports",
-        fontSize: "smaller" as const
-    },
-    {
-        key: "Favorite",
-        iconUrl: favorite,
-        text: "favorite",
-        fontSize: "small" as const
-    }
-]
+type Props = {
+    imageUrl: string;
+    text: string;
+    isActive: boolean;
+    fontSize: 'small' | 'smaller' | string;
+    onClick: () => void;
+}
 
-const Container = styled.div`
-    margin-bottom: 15px;
-    overflow-x: auto;
-    white-space: nowrap;
-    scroll-behavior: smooth;
-    width: 100%;
-    -webkit-overflow-scrolling: touch;
-    /* Enable smooth scrolling on iOS */
+const Wrapper = styled.div<{ imageUrl: string, text: string, isActive: boolean }>`
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 77px;
+    border-radius: 12px;
+    background-color: ${(props) =>
+        props.isActive ? props.theme.primary : props.theme.primaryLight};
+    margin-right: 12px;
+    cursor: pointer;
+    user-select: none;
 `;
 
-const TabContainer = () => {
-    const [selectedTab, setSelectedTab] = useState("Lobby");
-    const handleClick = (item: string) => {
-        setSelectedTab(item);
+const Text = styled.div<{ fontSize: string, isActive: boolean }>`
+      color: ${(props) =>
+        props.isActive ? props.theme.white : props.theme.tertiary};
+    font-size: ${(props) =>
+        props.fontSize === 'small' ? '0.875rem' : '0.6875rem'
     };
+`;
 
+const Tab = ({ imageUrl, text, isActive, fontSize, onClick }: Props) => {
     return (
-        <Container>
-            {tabIconList.map(item => (
-                <Tab
-                    key={item.key}
-                    imageUrl={item.iconUrl}
-                    text={item.text}
-                    isActive={item.text === selectedTab}
-                    fontSize={item.fontSize}
-                    onClick={() => handleClick(item.text)}
-                />
-            ))}
-        </Container>
+        <Wrapper isActive={isActive} imageUrl={imageUrl} text={text} onClick={onClick}>
+            <img src={imageUrl} alt={text} />
+            <Text isActive={isActive} fontSize={fontSize}>{text}</Text>
+        </Wrapper>
     );
 };
 
-export default TabContainer;
+export default Tab;

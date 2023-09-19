@@ -1,17 +1,23 @@
 import banner from "@/assets/images/home/mobile/banner_1.png";
+import dislikeIcon from "@/assets/images/home/mobile/dislike.png";
+import likeIcon from "@/assets/images/home/mobile/like.png";
 import searchIcon from "@/assets/images/home/mobile/search.svg";
 import CardPrompt from "@/components/Mobile/components/CardPrompt";
 import Category from "@/components/Mobile/components/Category";
-import Games from "@/components/Mobile/components/Games";
 import Input from "@/components/Mobile/components/Input";
 import Tab from "@/components/Mobile/components/Tab";
 import Tag from "@/components/Mobile/components/Tag";
 import { ChangeEvent, useState } from 'react';
 import styled from "styled-components";
+import { gamesList } from "../constants/games";
+import { tabIconList } from "../constants/tab";
+
+type Props = {
+    imageUrl: string;
+};
 
 const MainWrapper = styled.div`
     width: 100%;
-    /* height: 100vh; */
     padding: 22px;
     display: flex;
     flex-direction: column;
@@ -32,9 +38,54 @@ const Banner = styled.div`
     border-radius: 12px;
 `;
 
-type Props = {};
+const TabContainer = styled.div`
+    margin-bottom: 15px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    /* Enable smooth scrolling on iOS */
+`;
+
+const GameCardContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 16px;
+    width: 100%;
+    margin: 15px 0;
+`;
+
+const GameCard = styled.div`
+    width: calc(50% - 8px);
+    padding-top: calc(50% - 8px);
+    background-image: url(${(props: Props) => props.imageUrl});
+    background-size: cover;
+    box-sizing: border-box;
+    position: relative;
+`;
+
+const LikeIcon = styled.div`
+    width: 30px;
+    height: 30px;
+    background-image: url(${(props: Props) => props.imageUrl});
+    background-size: cover;
+    box-sizing: border-box;
+    position: absolute;
+    top: 6px;
+    right: 8px;
+`;
+
+
 const Main = (props: Props) => {
+    const [selectedTab, setSelectedTab] = useState("Lobby");
     const [searchString, setSearchString] = useState("");
+
+    const handleClick = (item: string) => {
+        setSelectedTab(item);
+    };
+
     const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setSearchString(value);
@@ -43,12 +94,45 @@ const Main = (props: Props) => {
     return <MainWrapper>
         <Banner></Banner>
         <CardPrompt />
-        <Tab />
-        <Tag />
-        <Input placeholder={"Search"} imageUrl={searchIcon} handleChange={handleSearch} value={searchString} />
 
-        <Category />
-        <Games />
+        <TabContainer>
+            {tabIconList.map((item: { key: string; iconUrl: string; text: string; fontSize: string; }) => (
+                <Tab
+                    key={item.key}
+                    imageUrl={item.iconUrl}
+                    text={item.text}
+                    isActive={item.text === selectedTab}
+                    fontSize={item.fontSize}
+                    onClick={() => handleClick(item.text)}
+                />
+            ))}
+        </TabContainer>
+
+        {(selectedTab === "Slots" || selectedTab === "Fishing" || selectedTab === "Egame") ?
+            <>
+                <Tag />
+                <Input placeholder={"Search"} imageUrl={searchIcon} handleChange={handleSearch} value={searchString} />
+                <GameCardContainer>
+                    {gamesList.map((item: {
+                        isFavorite: any; key: string; iconUrl: string;
+                    }) => (
+                        <>
+                            <GameCard
+                                key={item.key}
+                                imageUrl={item.iconUrl}
+                            >
+                                {item.isFavorite ? <LikeIcon
+                                    imageUrl={likeIcon}
+                                /> : <LikeIcon
+                                    imageUrl={dislikeIcon}
+                                />}
+                            </GameCard>
+                        </>
+                    ))}
+                </GameCardContainer>
+            </>
+            : <Category />
+        }
     </MainWrapper>
 };
 
