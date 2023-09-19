@@ -3,6 +3,8 @@ import config from "@/config/config";
 import Main from "@/components/Mobile/pages/Main";
 import Deposit from "@/components/Mobile/components/Account/Deposit";
 import Withdraw from "@/components/Mobile/components/Account/Withdraw";
+import Promotion from "@/components/Mobile/pages/Promotion";
+import PromotionDetail from "@/components/Mobile/components/Promotion/PromotionDetail";
 
 const Mine = React.lazy(
   () => import("@/components/Mobile/components/Account/Mine")
@@ -41,6 +43,19 @@ const routes: Route[] = [
     alert: true,
     popup: true,
     navigate: true,
+  },
+  {
+    path: "/promotion-list",
+    component: Promotion,
+    alert: true,
+    navigate: true
+  },
+  {
+    path: "/promotion/:id?",
+    component: PromotionDetail,
+    alert: true,
+    navigate: true,
+    promoProps: true
   },
   {
     path: "/account",
