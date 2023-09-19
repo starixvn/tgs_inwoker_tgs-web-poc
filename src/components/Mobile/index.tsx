@@ -15,7 +15,7 @@ import PopupAnnouncement from "@/components/Mobile/components/Popup/PopupAnnounc
 type Props = {};
 const Mobile = (props: Props) => {
   const [isLoading, setIsLoading] = useState(true);
-  const { account } = useAccountStore();
+  const accountStore = useAccountStore();
   const { general } = useGeneralStore();
 
   const dispatch = useDispatch();
@@ -25,17 +25,17 @@ const Mobile = (props: Props) => {
 
     const NEED_TO_REFRESH_TOKEN =
       localStorageToken != null &&
-      account.token == null &&
-      account.info.token === "";
+      accountStore.account.token == null &&
+      accountStore.account.info.token === "";
 
     if (NEED_TO_REFRESH_TOKEN) {
       const responseToken: any = await dispatch(
-        accountAction.checkTokenIsValid()
+        accountStore.checkTokenIsValid()
       );
       if (!responseToken.IsSuccess) return;
 
       const response: any = await dispatch(
-        accountAction.getAccountProfile(true)
+        accountStore.getAccountProfile(true)
       );
       const bankInfoAuthentication = response.data?.bankinfoauthentication;
       const isPhoneNull = response.data.phone === null;
@@ -46,7 +46,7 @@ const Mobile = (props: Props) => {
     }
   };
   useEffect(() => {
-    // validateTokenState().then();
+    validateTokenState().then();
     setIsLoading(false);
   }, []);
 
@@ -102,11 +102,11 @@ const Mobile = (props: Props) => {
         </MobileLayout>
       </Router>
 
-            <LoginDialog />
-            <RegisterDialog />
-            <PopupAnnouncement />
-        </>
-    );
+      <LoginDialog />
+      <RegisterDialog />
+      <PopupAnnouncement />
+    </>
+  );
 };
 
 export default Mobile;

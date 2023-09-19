@@ -156,68 +156,65 @@ export function useAccountStore() {
     return response;
   }, []);
 
-  const getAccountInfo = useCallback(() => {
+  const getAccountInfo = useCallback(async () => {
     dispatch({
       type: GETACCOUNT_BEGIN,
       loading: true,
     });
-    const result = AccountService.GetMemberInfo()
-      .then((response) => {
-        if (response.IsSuccess) {
-          dispatch({
-            type: GETACCOUNT_SUCCESS,
-            payload: response,
-            loading: true,
-          });
+    try {
+      const result = await AccountService.GetMemberInfo();
+      if (result.IsSuccess) {
+        dispatch({
+          type: GETACCOUNT_SUCCESS,
+          payload: result,
+          loading: true,
+        });
 
-          // AppHistory.push("/");
-        } else {
-          dispatch({
-            type: GETACCOUNT_FAILURE,
-            payload: response,
-            loading: false,
-          });
-        }
-        return response;
-      })
-      .catch((error) => {
+        // AppHistory.push("/");
+      } else {
         dispatch({
           type: GETACCOUNT_FAILURE,
-          payload: error,
+          payload: result,
           loading: false,
         });
+      }
+
+      return result;
+    } catch (e) {
+      dispatch({
+        type: GETACCOUNT_FAILURE,
+        payload: e,
+        loading: false,
       });
-    return result;
+    }
   }, []);
 
-  const getAccountProfile = useCallback((showVip: boolean) => {
-    const result = AccountService.GetMemberInfo()
-      .then((response) => {
-        if (response.IsSuccess) {
-          dispatch({
-            type: showVip === true ? GETACCOUNT_SUCCESS : GETBALANCE_SUCCESS,
-            payload: response,
-            loading: false,
-          });
-
-          // AppHistory.push("/");
-        } else {
-          dispatch({
-            type: GETACCOUNT_FAILURE,
-            payload: response,
-            loading: false,
-          });
-        }
-        return response;
-      })
-      .catch((error) => {
+  const getAccountProfile = useCallback(async (showVip: boolean) => {
+    try {
+      const response = await AccountService.GetMemberInfo();
+      if (response.IsSuccess) {
         dispatch({
-          type: GETACCOUNT_FAILURE,
-          payload: error,
+          type: showVip ? GETACCOUNT_SUCCESS : GETBALANCE_SUCCESS,
+          payload: response,
           loading: false,
         });
+
+        // AppHistory.push("/");
+      } else {
+        dispatch({
+          type: GETACCOUNT_FAILURE,
+          payload: response,
+          loading: false,
+        });
+      }
+      return response;
+    } catch (e) {
+      dispatch({
+        type: GETACCOUNT_FAILURE,
+        payload: e,
+        loading: false,
       });
-    return result;
+    }
   }, []);
 
   const registerAccount = useCallback(
@@ -228,62 +225,56 @@ export function useAccountStore() {
       invitationcode = "",
       upper: string
     ) => {
-      const result = await AccountService.Register(
-        username,
-        pwd,
-        confirmpwd,
-        invitationcode,
-        upper
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-          }
-          return response;
-        })
-        .catch((error) => {
-          dispatch({
-            type: GETACCOUNT_FAILURE,
-            payload: error,
-            loading: false,
-          });
+      try {
+        return await AccountService.Register(
+          username,
+          pwd,
+          confirmpwd,
+          invitationcode,
+          upper
+        );
+      } catch (e) {
+        dispatch({
+          type: GETACCOUNT_FAILURE,
+          payload: e,
+          loading: false,
         });
-      return result;
+      }
     },
     []
   );
 
-  const getIDCardNo = useCallback(() => {
+  const getIDCardNo = useCallback(async () => {
     dispatch({
       type: GETIDCARDNO_BEGIN,
       loading: true,
     });
-    var result = AccountService.GetIDCardNo();
-    result
-      .then((response) => {
-        if (response.IsSuccess) {
-          dispatch({
-            type: GETIDCARDNO_SUCCESS,
-            payload: response,
-            loading: true,
-          });
+    try {
+      const result = await AccountService.GetIDCardNo();
+      if (result.IsSuccess) {
+        dispatch({
+          type: GETIDCARDNO_SUCCESS,
+          payload: result,
+          loading: true,
+        });
 
-          // AppHistory.push("/");
-        } else {
-          dispatch({
-            type: GETIDCARDNO_FAILURE,
-            payload: response,
-            loading: false,
-          });
-        }
-      })
-      .catch((error) => {
+        // AppHistory.push("/");
+      } else {
         dispatch({
           type: GETIDCARDNO_FAILURE,
-          payload: error,
+          payload: result,
           loading: false,
         });
+      }
+
+      return result;
+    } catch (e) {
+      dispatch({
+        type: GETIDCARDNO_FAILURE,
+        payload: e,
+        loading: false,
       });
-    return result;
+    }
   }, []);
 
   const getPromoteUserList = useCallback((limit: number, page: number) => {
@@ -300,90 +291,83 @@ export function useAccountStore() {
     return result;
   }, []);
 
-  const getPromoteBillList = useCallback((limit: number, page: number) => {
-    var result = AccountService.GetPromoteBill(page, limit);
-    result.then((response) => {
-      if (response.IsSuccess) {
+  const getPromoteBillList = useCallback(
+    async (limit: number, page: number) => {
+      const result = await AccountService.GetPromoteBill(page, limit);
+
+      if (result.IsSuccess) {
         dispatch({
           type: GETPROMOTEBILL_SUCCESS,
-          payload: response,
+          payload: result,
           isNew: page === 0,
         });
       }
-    });
-    return result;
-  }, []);
+    },
+    []
+  );
 
   const GetRegisterStatus = useCallback(async () => {
-    const result = await AccountService.GetRegisterStatus()
-      .then((response) => {
-        if (response.IsSuccess) {
-        }
-        return response;
-      })
-      .catch((error) => {
-        dispatch({
-          type: GETACCOUNT_FAILURE,
-          payload: error,
-          loading: false,
-        });
+    try {
+      return await AccountService.GetRegisterStatus();
+    } catch (e) {
+      dispatch({
+        type: GETACCOUNT_FAILURE,
+        payload: e,
+        loading: false,
       });
-    return result;
+    }
   }, []);
 
   const newRegister = useCallback(async (type: string, input: any) => {
-    const result = await AccountService.NewRegister(type, input)
-      .then((response) => {
-        if (response.IsSuccess) {
-        }
-        return response;
-      })
-      .catch((error) => {
-        dispatch({
-          type: GETACCOUNT_FAILURE,
-          payload: error,
-          loading: false,
-        });
+    try {
+      return await AccountService.NewRegister(type, input);
+    } catch (e) {
+      dispatch({
+        type: GETACCOUNT_FAILURE,
+        payload: e,
+        loading: false,
       });
-    return result;
+    }
   }, []);
 
   const performUpdateMemberNameAndIC = useCallback(
-    (name: string, number: string, file: File) => {
+    async (name: string, number: string, file: File) => {
       dispatch({
         type: UPDATECARDNO_BEGIN,
         loading: true,
       });
-      const result = AccountService.UpdateMemberNameAndIC(name, number, file)
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: UPDATECARDNO_SUCCESS,
-              payload: {
-                IsSuccess: true,
-                member_name: name,
-                check_pass_account: true,
-              },
-              loading: false,
-            });
-          } else {
-            dispatch({
-              type: UPDATECARDNO_FAILURE,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((e) => {
+      try {
+        const result = await AccountService.UpdateMemberNameAndIC(
+          name,
+          number,
+          file
+        );
+
+        if (result.IsSuccess) {
           dispatch({
-            type: UPDATECARDNO_FAILURE,
-            payload: e.status,
+            type: UPDATECARDNO_SUCCESS,
+            payload: {
+              IsSuccess: true,
+              member_name: name,
+              check_pass_account: true,
+            },
             loading: false,
           });
+        } else {
+          dispatch({
+            type: UPDATECARDNO_FAILURE,
+            payload: result,
+            loading: false,
+          });
+        }
+        return result;
+      } catch (e) {
+        dispatch({
+          type: UPDATECARDNO_FAILURE,
+          payload: e.status,
+          loading: false,
         });
-
-      return result;
+      }
     },
     []
   );
