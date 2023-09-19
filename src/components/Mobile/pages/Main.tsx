@@ -2,6 +2,7 @@ import banner from "@/assets/images/home/mobile/banner_1.png";
 import CardPrompt from "@/components/Mobile/components/CardPrompt";
 import Category from "@/components/Mobile/components/Category";
 import Tab from "@/components/Mobile/components/Tab";
+import Tag from "@/components/Mobile/components/Tag";
 import styled from "styled-components";
 
 const MainWrapper = styled.div`
@@ -33,8 +34,9 @@ const Main = (props: Props) => {
         <Banner></Banner>
         <CardPrompt />
         <Tab />
+        <Tag />
         <Category />
-    </MainWrapper>;
+    </MainWrapper>
 };
 
 export default Main;

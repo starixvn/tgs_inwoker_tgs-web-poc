@@ -23,8 +23,9 @@ const Wrapper = styled.div<{ imageUrl: string, text: string, isActive: boolean }
     user-select: none;
 `;
 
-const Text = styled.div<{ fontSize: string }>`
-    color: ${(props) => props.theme.white};
+const Text = styled.div<{ fontSize: string, isActive: boolean }>`
+      color: ${(props) =>
+        props.isActive ? props.theme.white : props.theme.tertiary};
     font-size: ${(props) =>
         props.fontSize === 'small' ? '0.875rem' : '0.6875rem'
     };
@@ -34,7 +35,7 @@ const Tab = ({ imageUrl, text, isActive, fontSize, onClick }: Props) => {
     return (
         <Wrapper isActive={isActive} imageUrl={imageUrl} text={text} onClick={onClick}>
             <img src={imageUrl} alt={text} />
-            <Text fontSize={fontSize}>{text}</Text>
+            <Text isActive={isActive} fontSize={fontSize}>{text}</Text>
         </Wrapper>
     );
 };

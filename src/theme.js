@@ -589,7 +589,7 @@ export const darkTheme = {
 export const mobileT18 = {
     primary: "#6152DD",
     primaryDark: "#0E131B", //BG
-    primaryLight: "#181F2B", //Sub BG
+    primaryLight: "#181F2B", //Sub BG = Main_Blue
     secondary: "#E7415A",
     tertiary: "#596578", //Gray1
     tertiaryMiddle: "#6A768B",  //Gray2
