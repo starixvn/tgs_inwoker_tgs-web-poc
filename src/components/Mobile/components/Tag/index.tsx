@@ -43,7 +43,6 @@ const Container = styled.div`
     overflow-x: auto;
     white-space: nowrap;
     scroll-behavior: smooth;
-    width: 100%;
     -webkit-overflow-scrolling: touch;
     /* Enable smooth scrolling on iOS */
 `;

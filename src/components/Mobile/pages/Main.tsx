@@ -2,6 +2,7 @@ import banner from "@/assets/images/home/mobile/banner_1.png";
 import searchIcon from "@/assets/images/home/mobile/search.svg";
 import CardPrompt from "@/components/Mobile/components/CardPrompt";
 import Category from "@/components/Mobile/components/Category";
+import Games from "@/components/Mobile/components/Games";
 import Input from "@/components/Mobile/components/Input";
 import Tab from "@/components/Mobile/components/Tab";
 import Tag from "@/components/Mobile/components/Tag";
@@ -45,7 +46,9 @@ const Main = (props: Props) => {
         <Tab />
         <Tag />
         <Input placeholder={"Search"} imageUrl={searchIcon} handleChange={handleSearch} value={searchString} />
+
         <Category />
+        <Games />
     </MainWrapper>
 };
 
