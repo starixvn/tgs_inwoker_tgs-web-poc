@@ -8,6 +8,8 @@ import RegisterDialog from "@/components/Mobile/components/auth/RegisterDialog";
 import { useAccount } from "@/components/Mobile/hooks/useAccount";
 import { useGeneral } from "@/components/Mobile/hooks/useGeneral";
 import Loading from "@/components/Mobile/components/UI/Loading";
+import { useDispatch } from "react-redux";
+import { accountAction } from "@/api-services/actions/accountAction";
 
 type Props = {};
 const Mobile = (props: Props) => {

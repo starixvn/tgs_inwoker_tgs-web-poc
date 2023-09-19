@@ -13,6 +13,7 @@ const HeaderContainer = styled.div`
   background: #181f2b;
   height: 80px;
   width: 100%;
+  z-index: 10;
 `;
 
 const HeaderWrapper = styled.div`
