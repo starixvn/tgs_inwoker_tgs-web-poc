@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { TypePromotionData } from '@/components/Mobile/pages/Promotion'
 import { themeList } from "@/theme";
+import { AppHistory } from "@/history/History";
 
 const theme = themeList["mobileT18"];
 
@@ -48,8 +49,15 @@ const ClickMoreText = styled.div`
 const PromotionCard = ({ promotionData }: {
   promotionData: TypePromotionData
 }) => {
+  
+  const handleEnterDetail = () => {
+    AppHistory.replace({
+      pathname: "/promotion/" + promotionData.id,
+    });
+  }
+
   return (
-    <PromotionCardContainer>
+    <PromotionCardContainer onClick={handleEnterDetail}>
       <BannerWrapper>
         <img src={promotionData.mobileBanner} alt="banner" width={"100%"} height={"100%"}/>
       </BannerWrapper>

@@ -32,7 +32,7 @@ const Title = styled.h1`
 `;
 
 const Promotion = () => {
-
+  // TODO: fake promotion list
   const promotionList = [
     {
       id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -55,17 +55,15 @@ const Promotion = () => {
       from: "2023-09-19T02:42:01.908Z",
       to: "2023-09-19T02:42:01.908Z",
       terms: 'promotion terms promotion terms promotion terms',
-      campaignDetail: "campaignDetail", // TODO: check layout position
-      content: "content", // TODO: check layout position
-      subSubject: "subSubject" // TODO: check layout position
+      campaignDetail: "campaignDetail",
+      content: "content",
+      subSubject: "subSubject"
     },
   ]
 
   return (
     <PromotionContainer>
-      <Title>
-        Promotions
-      </Title>
+      <Title>Promotions</Title>
       <PromotionCardListContainer>
         {promotionList.map((promotionData: TypePromotionData) => 
             <PromotionCard key={promotionData.id} promotionData={promotionData} />
