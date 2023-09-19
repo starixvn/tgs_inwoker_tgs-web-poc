@@ -98,6 +98,7 @@
         "@types/react": "^17.0.65",
         "@types/react-dom": "^18.2.7",
         "@types/react-router-dom": "^5.3.3",
+        "@types/react-slick": "^0.23.10",
         "@types/react-textfit": "^1.1.0",
         "@types/styled-components": "^5.1.26",
         "babel-plugin-named-exports-order": "0.0.2",

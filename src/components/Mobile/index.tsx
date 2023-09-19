@@ -10,6 +10,7 @@ import { useGeneral } from "@/components/Mobile/hooks/useGeneral";
 import Loading from "@/components/Mobile/components/UI/Loading";
 import { useDispatch } from "react-redux";
 import { accountAction } from "@/api-services/actions/accountAction";
+import PopupAnnouncement from "@/components/Mobile/components/Popup/PopupAnnouncement";
 
 type Props = {};
 const Mobile = (props: Props) => {
@@ -103,6 +104,7 @@ const Mobile = (props: Props) => {
 
             <LoginDialog />
             <RegisterDialog />
+            <PopupAnnouncement />
         </>
     );
 };
