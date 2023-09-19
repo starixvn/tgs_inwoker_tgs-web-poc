@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useState } from "react";
 import Carousel from "@/components/Mobile/components/UI/Carousel";
 import { themeList } from "@/theme";
-import { ANNOUNCEMENT } from "@/components/Mobile/constants/dialog";
 
 const theme = themeList["mobileT18"];
 
@@ -58,7 +57,7 @@ const PopupAnnouncement = () => {
   }
 
   return (
-      <DialogPopup isOpen={isAnnouncementOpen} handleCloseDialog={handleCloseDialog} type={ANNOUNCEMENT}>
+      <DialogPopup isOpen={isAnnouncementOpen} handleCloseDialog={handleCloseDialog}>
         <Carousel>
           {
             announcementList.map((announcement, index) => {
