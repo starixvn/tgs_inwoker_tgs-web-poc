@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
-import Support from "@/components/Mobile/components/Support";
+import Support from "@/components/Mobile/components/Account/AccountNavigations/ContactUsDialog/Support";
 import { useGeneral } from "@/components/Mobile/hooks/useGeneral";
 import { BrandsSupport } from "@/types/general";
 

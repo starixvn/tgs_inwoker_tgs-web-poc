@@ -1,17 +1,20 @@
 import React from "react";
 import {
   FormControl as MuiFormControl,
+  FormControlProps,
   InputLabel,
   MenuItem,
   Select as MuiSelect,
 } from "@material-ui/core";
 import styled from "styled-components";
+import { themeList } from "@/theme";
+
+const theme = themeList["mobileT18"];
 
 const StyledFormControl = styled(MuiFormControl)`
-  background: #212937;
   border-radius: 8px;
-  width: 117px;
   margin-right: 10px;
+  border: 1px solid ${theme.tertiary};
 
   & label {
     color: #646973;
@@ -27,7 +30,7 @@ const StyledFormControl = styled(MuiFormControl)`
 `;
 
 const StyledSelect = styled(MuiSelect)`
-  background: #212937;
+  //background: #212937;
   border-radius: 8px;
 `;
 
@@ -41,22 +44,29 @@ type Props = {
   value: any;
   handleChange: any;
   selectItemList: SelectItem[];
-};
+  backgroundColor?: string;
+} & FormControlProps;
 const Select = ({
   label,
   value,
   handleChange = () => {},
   selectItemList = [],
+  backgroundColor = "#212937",
+  ...others
 }: Props) => {
   return (
-    <StyledFormControl variant="outlined">
+    // @ts-ignore
+    <StyledFormControl variant="outlined" {...others}>
       <InputLabel id="demo-simple-select-outlined-label">{label}</InputLabel>
       <StyledSelect
         labelId="demo-simple-select-outlined-label"
         id="demo-simple-select-outlined"
         value={value}
         onChange={handleChange}
-        label="Age"
+        label={label}
+        style={{
+          background: backgroundColor,
+        }}
       >
         <MenuItem value="">
           <em>None</em>
@@ -64,7 +74,11 @@ const Select = ({
 
         {selectItemList.map((selectItem) => {
           const { label, value } = selectItem;
-          return <MenuItem value={value}>{label}</MenuItem>;
+          return (
+            <MenuItem key={value} value={value}>
+              {label}
+            </MenuItem>
+          );
         })}
       </StyledSelect>
     </StyledFormControl>

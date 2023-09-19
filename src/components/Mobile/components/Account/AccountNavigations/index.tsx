@@ -85,7 +85,9 @@ const AccountNavigations = (props: Props) => {
           <AppDownloadButton />
         </AccountNavigationsContainer>
         <LanguageSwitch />
-        <Button fullWidth>Logout</Button>
+        <Button fullWidth variant={"contained"} color={"primary"}>
+          Logout
+        </Button>
       </AccountNavsContainer>
 
       {/* Dialogs */}

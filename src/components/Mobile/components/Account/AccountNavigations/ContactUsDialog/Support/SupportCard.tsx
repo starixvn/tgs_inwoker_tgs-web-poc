@@ -14,7 +14,7 @@ const SupportCardContainer = styled.div`
   padding: 14px 21px;
   background: ${theme.tertiaryDark};
   color: ${theme.white};
-  font-size: 0.937rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.098rem;
 
@@ -56,7 +56,7 @@ type IconProps = { icon: string };
 const Icon = styled.div<IconProps>`
   width: 60px;
   height: 60px;
-  background-color: ${theme.primary};
+  background-color: ${theme.tertiary};
   mask: ${({ icon }: IconProps) => {
     return `url(${
       process.env.PUBLIC_URL + "/assets/images/wapp/" + iconSwitcher(icon)
@@ -66,6 +66,7 @@ const Icon = styled.div<IconProps>`
 `;
 
 const ContactButton = styled.div`
+  width: 100%;
   color: ${theme.white};
   background: ${theme.primary};
   padding: 6px;
