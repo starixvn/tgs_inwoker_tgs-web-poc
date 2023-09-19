@@ -11,77 +11,86 @@ import sabong from "@/assets/images/home/mobile/tab/sabong.svg";
 import slot from "@/assets/images/home/mobile/tab/slot.svg";
 import sports from "@/assets/images/home/mobile/tab/sports.svg";
 
-export const tabIconList = [
+type TabIcon = {
+    key: string;
+    iconUrl: string;
+    text: string;
+    fontSize: string;
+}
+
+export const tabIconList: TabIcon[] = [
     {
         key: "Lobby",
         iconUrl: lobby,
         text: "Lobby",
-        fontSize: "small" as string
+        fontSize: "small"
     },
     {
         key: "slots",
         iconUrl: slot,
         text: "Slots",
-        fontSize: "small" as string
+        fontSize: "small"
     },
     {
         key: "Live",
         iconUrl: live,
         text: "Live Casino",
-        fontSize: "smaller" as string
+        fontSize: "smaller"
     },
     {
         key: "lottery",
         iconUrl: lottery,
         text: "Lottery",
-        fontSize: "small" as string
+        fontSize: "small"
     },
     {
         key: "fishing",
         iconUrl: fishing,
         text: "Fishing",
-        fontSize: "small" as string
+        fontSize: "small"
     },
     {
         key: "sports",
         iconUrl: sports,
         text: "Sports",
-        fontSize: "small" as string
+        fontSize: "small"
     },
     {
         key: "horse",
         iconUrl: horse,
         text: "Horse",
-        fontSize: "small" as string
+        fontSize: "small"
     },
     {
         key: "sabong",
         iconUrl: sabong,
         text: "Sabong",
-        fontSize: "small" as string
+        fontSize: "small"
     },
     {
         key: "egame",
         iconUrl: egame,
         text: "Egame",
-        fontSize: "small" as string
+        fontSize: "small"
     },
     {
         key: "cardgame",
         iconUrl: cardgame,
         text: "Card Game",
-        fontSize: "smaller" as string
+        fontSize: "smaller"
     },
     {
         key: "esports",
         iconUrl: esports,
         text: "Esports",
-        fontSize: "smaller" as string
+        fontSize: "smaller"
     },
     {
         key: "Favorite",
         iconUrl: favorite,
         text: "favorite",
-        fontSize: "small" as string
+        fontSize: "small"
     }
 ];
+
+export const rankingTabList: string[] = ['Latest Record', 'Winning Ranking'];

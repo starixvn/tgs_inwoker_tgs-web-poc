@@ -6,6 +6,7 @@ import CardPrompt from "@/components/Mobile/components/CardPrompt";
 import Category from "@/components/Mobile/components/Category";
 import Input from "@/components/Mobile/components/Input";
 import Tab from "@/components/Mobile/components/Tab";
+import TabPanel from "@/components/Mobile/components/TabPanel";
 import Tag from "@/components/Mobile/components/Tag";
 import { ChangeEvent, useState } from 'react';
 import styled from "styled-components";
@@ -89,11 +90,11 @@ const BadgeIcon = styled.div`
 `;
 
 const Main = (props: Props) => {
-    const [selectedTab, setSelectedTab] = useState("Lobby");
+    const [activeGameTypeTab, setActiveGameTypeTab] = useState("Lobby");
     const [searchString, setSearchString] = useState("");
 
     const handleClick = (item: string) => {
-        setSelectedTab(item);
+        setActiveGameTypeTab(item);
     };
 
     const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -111,14 +112,14 @@ const Main = (props: Props) => {
                     key={item.key}
                     imageUrl={item.iconUrl}
                     text={item.text}
-                    isActive={item.text === selectedTab}
+                    isActive={item.text === activeGameTypeTab}
                     fontSize={item.fontSize}
                     onClick={() => handleClick(item.text)}
                 />
             ))}
         </TabContainer>
 
-        {(selectedTab === "Slots" || selectedTab === "Fishing" || selectedTab === "Egame") ?
+        {(activeGameTypeTab === "Slots" || activeGameTypeTab === "Fishing" || activeGameTypeTab === "Egame") ?
             <>
                 <Tag />
                 <Input placeholder={"Search"} imageUrl={searchIcon} handleChange={handleSearch} value={searchString} />
@@ -146,7 +147,9 @@ const Main = (props: Props) => {
             </>
             : <Category />
         }
-    </MainWrapper>
+
+        <TabPanel />
+    </MainWrapper >
 };
 
 export default Main;
