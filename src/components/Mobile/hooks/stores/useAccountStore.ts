@@ -25,6 +25,7 @@ import {
   UPDATECARDNO_SUCCESS,
 } from "@/api-services/constant/actionType";
 import { AccountService } from "@/api-services/services/AccountService";
+import { GetMemberInfoResDto } from "@/models/dto/account/GetMemberInfoResDto";
 
 export function useAccountStore() {
   const dispatch = useDispatch();
@@ -136,7 +137,7 @@ export function useAccountStore() {
       type: CHECKTOKEN_BEGIN,
       loading: true,
     });
-    const response = await AccountService.GetMemberInfo();
+    const response: GetMemberInfoResDto = await AccountService.GetMemberInfo();
 
     if (response.IsSuccess) {
       dispatch({
@@ -162,7 +163,7 @@ export function useAccountStore() {
       loading: true,
     });
     try {
-      const result = await AccountService.GetMemberInfo();
+      const result: GetMemberInfoResDto = await AccountService.GetMemberInfo();
       if (result.IsSuccess) {
         dispatch({
           type: GETACCOUNT_SUCCESS,
@@ -191,7 +192,8 @@ export function useAccountStore() {
 
   const getAccountProfile = useCallback(async (showVip: boolean) => {
     try {
-      const response = await AccountService.GetMemberInfo();
+      const response: GetMemberInfoResDto =
+        await AccountService.GetMemberInfo();
       if (response.IsSuccess) {
         dispatch({
           type: showVip ? GETACCOUNT_SUCCESS : GETBALANCE_SUCCESS,

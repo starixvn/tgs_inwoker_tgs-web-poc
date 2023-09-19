@@ -11,9 +11,12 @@ import Loading from "@/components/Mobile/components/UI/Loading";
 import { useDispatch } from "react-redux";
 import { accountAction } from "@/api-services/actions/accountAction";
 import PopupAnnouncement from "@/components/Mobile/components/Popup/PopupAnnouncement";
+import config from "@/config/config";
+import { useHistory } from "react-router-dom";
 
 type Props = {};
 const Mobile = (props: Props) => {
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
   const accountStore = useAccountStore();
   const { general } = useGeneralStore();
@@ -29,20 +32,33 @@ const Mobile = (props: Props) => {
       accountStore.account.info.token === "";
 
     if (NEED_TO_REFRESH_TOKEN) {
-      const responseToken: any = await dispatch(
-        accountStore.checkTokenIsValid()
-      );
+      const responseToken: any = await accountStore.checkTokenIsValid();
       if (!responseToken.IsSuccess) return;
 
-      const response: any = await dispatch(
-        accountStore.getAccountProfile(true)
-      );
+      const response: any = await accountStore.getAccountProfile(true);
+
       const bankInfoAuthentication = response.data?.bankinfoauthentication;
       const isPhoneNull = response.data.phone === null;
       const isEmailNull = response.data.email === null;
       const isRegisterCompleted = response.data.registercompleted;
 
-      setIsLoading(false);
+      if (config.features.ForceRedirectAddCard && !bankInfoAuthentication) {
+        setIsLoading(false);
+        if (isPhoneNull) {
+          history.push({
+            pathname: "/profile/phone",
+            state: { forced: true },
+          });
+        } else if (isEmailNull) {
+          history.push({
+            pathname: "/profile/email",
+            state: { forced: true },
+          });
+        } else if (!isRegisterCompleted) {
+          history.push("/card/add");
+        }
+        return;
+      }
     }
   };
   useEffect(() => {
