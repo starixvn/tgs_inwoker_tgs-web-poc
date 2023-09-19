@@ -2,14 +2,14 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { themeList } from "@/theme";
 import QRCode from "react-qr-code";
-import { useAccount } from "@/components/Mobile/hooks/useAccount";
+import { useAccountStore } from "@/components/Mobile/hooks/stores/useAccountStore";
 import Button from "@/components/Mobile/components/UI/Button";
 import AffiliateInfoRow from "@/components/Mobile/components/Account/AccountNavigations/AffiliateDialog/Affiliate/AffiliateInfoRow";
 import Select from "@/components/Mobile/components/UI/Select";
 import DarkSelect, {
   SelectItem,
 } from "@/components/Mobile/components/UI/Select/DarkSelect";
-import { useGeneral } from "@/components/Mobile/hooks/useGeneral";
+import { useGeneralStore } from "@/components/Mobile/hooks/stores/useGeneralStore";
 import { BrandAllAgent } from "@/models/dto/general/GetBrandAllAgentResDto";
 import i18n from "@/utils/i18n";
 import {

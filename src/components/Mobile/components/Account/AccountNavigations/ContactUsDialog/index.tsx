@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from "react";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
 import Support from "@/components/Mobile/components/Account/AccountNavigations/ContactUsDialog/Support";
-import { useGeneral } from "@/components/Mobile/hooks/useGeneral";
+import { useGeneralStore } from "@/components/Mobile/hooks/stores/useGeneralStore";
 import { BrandsSupport } from "@/types/general";
 
 const theme = themeList["mobileT18"];
@@ -44,7 +44,7 @@ const mockBrandsSupportList: BrandsSupport[] = [
 ];
 
 const ContactUsDialog = ({ isOpen, handleCloseDialog }: Props) => {
-  const { general } = useGeneral();
+  const { general } = useGeneralStore();
 
   const csLiveChatUrl = general?.livechat?.setting?.url || "www.google.com";
   const handleContactCs = useCallback(() => {

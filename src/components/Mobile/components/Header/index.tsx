@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import MenuButton from "@/components/Mobile/components/Header/MenuButton";
 import { useHistory } from "react-router";
-import { useAccount } from "@/components/Mobile/hooks/useAccount";
+import { useAccountStore } from "@/components/Mobile/hooks/stores/useAccountStore";
 import AnonymousHeaderContent from "@/components/Mobile/components/Header/AnonymousHeaderContent";
 import AccountHeaderContent from "@/components/Mobile/components/Header/AccountHeaderContent";
 
@@ -29,7 +29,7 @@ type Props = {};
 const Header = (props: Props) => {
   const history = useHistory();
 
-  const { account } = useAccount();
+  const { account } = useAccountStore();
 
   const noLoginAccount = account.token !== account.info.token;
 

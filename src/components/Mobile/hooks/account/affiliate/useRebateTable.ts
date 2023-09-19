@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { SelectItem } from "@/components/Mobile/components/UI/Select/DarkSelect";
 import i18n from "@/utils/i18n";
 import { BrandAllAgent } from "@/models/dto/general/GetBrandAllAgentResDto";
-import { useAccount } from "@/components/Mobile/hooks/useAccount";
-import { useGeneral } from "@/components/Mobile/hooks/useGeneral";
+import { useAccountStore } from "@/components/Mobile/hooks/stores/useAccountStore";
+import { useGeneralStore } from "@/components/Mobile/hooks/stores/useGeneralStore";
 
 enum RebateTypeEnum {
   ALL = 0,
@@ -30,8 +30,8 @@ const rebateItemList: RebateItem[] = [
 ];
 
 export function useRebateTable() {
-  const { account } = useAccount();
-  const { getBrandAllAgent } = useGeneral();
+  const { account } = useAccountStore();
+  const { getBrandAllAgent } = useGeneralStore();
 
   // Rebate select
   const [selectedRebateItem, setSelectedRebateItem] = useState<RebateItem>(
