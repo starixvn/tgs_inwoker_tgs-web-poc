@@ -9,7 +9,7 @@ import Tab from "@/components/Mobile/components/Tab";
 import Tag from "@/components/Mobile/components/Tag";
 import { ChangeEvent, useState } from 'react';
 import styled from "styled-components";
-import { gamesList } from "../constants/games";
+import { badgeList, gamesList } from "../constants/games";
 import { tabIconList } from "../constants/tab";
 
 type Props = {
@@ -77,6 +77,16 @@ const LikeIcon = styled.div`
     right: 8px;
 `;
 
+const BadgeIcon = styled.div`
+    width: 45.5px;
+    height: 21px;
+    background-image: url(${(props: Props) => props.imageUrl});
+    background-size: cover;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+`;
 
 const Main = (props: Props) => {
     const [selectedTab, setSelectedTab] = useState("Lobby");
@@ -114,7 +124,7 @@ const Main = (props: Props) => {
                 <Input placeholder={"Search"} imageUrl={searchIcon} handleChange={handleSearch} value={searchString} />
                 <GameCardContainer>
                     {gamesList.map((item: {
-                        isFavorite: any; key: string; iconUrl: string;
+                        isFavorite: any; key: string; iconUrl: string; tag: string;
                     }) => (
                         <>
                             <GameCard
@@ -126,6 +136,9 @@ const Main = (props: Props) => {
                                 /> : <LikeIcon
                                     imageUrl={dislikeIcon}
                                 />}
+
+                                {item.tag === "hot" && <BadgeIcon imageUrl={badgeList.hot} />}
+                                {item.tag === "new" && <BadgeIcon imageUrl={badgeList.new} />}
                             </GameCard>
                         </>
                     ))}

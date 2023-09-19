@@ -1,3 +1,5 @@
+import hotIcon from "@/assets/images/home/mobile/badge_hot.svg";
+import newIcon from "@/assets/images/home/mobile/badge_new.svg";
 import game1 from "@/assets/images/home/mobile/game1.png";
 import game2 from "@/assets/images/home/mobile/game2.png";
 import game3 from "@/assets/images/home/mobile/game3.png";
@@ -33,3 +35,8 @@ export const gamesList = [
         tag: "new"
     }
 ]
+
+export const badgeList = {
+    "hot": hotIcon,
+    "new": newIcon,
+}
