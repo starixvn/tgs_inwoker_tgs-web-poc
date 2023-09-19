@@ -51,7 +51,7 @@ const bottomNavItemList: BottomNavItem[] = [
     iconActiveUrl:
       process.env.PUBLIC_URL +
       `/assets/images/mobile/bottomAppBar/icon_promotion_active.svg`,
-    routePath: "/main/home",
+    routePath: "/promotion-list",
   },
   {
     navType: "item",
