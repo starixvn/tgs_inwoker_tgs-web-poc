@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { themeList } from "@/theme";
 import SupportCard from "@/components/Mobile/components/Account/AccountNavigations/ContactUsDialog/Support/SupportCard";
 import QrCodeDialog from "@/components/Mobile/components/Account/AccountNavigations/ContactUsDialog/Support/QRCodeHolder";
-import contactGirlImg from "@/assets/images/contactUs/contact.png";
+import contactGirlImg from "@/assets/images/account/girl/contact.png";
 
 const theme = themeList["mobileT18"];
 
