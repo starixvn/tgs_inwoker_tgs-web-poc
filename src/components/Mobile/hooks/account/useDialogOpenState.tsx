@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
+import { NavCardKey } from "@/components/Mobile/hooks/account/useAccountNavigations";
 
 export function useDialogOpenState<T>(dictionary: { [key in string]: T }) {
   const initialDialogOpenState = useMemo(() => {
@@ -16,10 +17,10 @@ export function useDialogOpenState<T>(dictionary: { [key in string]: T }) {
     initialDialogOpenState
   );
 
-  const handleToggleDialog = useCallback((dialogKey?: string) => {
+  const handleToggleDialog = useCallback((dialogKey?: any) => {
     const newDialogOpenState = { ...initialDialogOpenState };
 
-    if (dialogKey) {
+    if (typeof dialogKey !== "undefined") {
       newDialogOpenState[dialogKey] = !initialDialogOpenState[dialogKey]!;
     }
     setDialogOpenState(newDialogOpenState);

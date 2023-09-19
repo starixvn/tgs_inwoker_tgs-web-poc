@@ -1,5 +1,6 @@
 import { themeList } from "@/theme";
 import styled from "styled-components";
+import { NavCardItem } from "@/components/Mobile/hooks/account/useAccountNavigations";
 
 const theme = themeList["mobileT18"];
 
@@ -34,29 +35,21 @@ const LogoContainer = styled.div`
   }
 `;
 
-export interface NavCardItem {
-  key: string;
-  label: string;
-  iconUrl: string;
-  routePath: string;
-  isOpenInDialog?: boolean;
-}
-
 type Props = {
-    navCardItem: NavCardItem;
-    handleClick: (navCardItem: NavCardItem) => void;
+  navCardItem: NavCardItem;
+  handleClick: (navCardItem: NavCardItem) => void;
 };
 const NavCard = ({ navCardItem, handleClick }: Props) => {
-    const { label, iconUrl } = navCardItem;
-    return (
-        <NavCardContainer onClick={() => handleClick(navCardItem)}>
-            <LogoContainer>
-                <img src={iconUrl} alt={label} />
-            </LogoContainer>
+  const { label, iconUrl } = navCardItem;
+  return (
+    <NavCardContainer onClick={() => handleClick(navCardItem)}>
+      <LogoContainer>
+        <img src={iconUrl} alt={label} />
+      </LogoContainer>
 
-            <span>{label}</span>
-        </NavCardContainer>
-    );
+      <span>{label}</span>
+    </NavCardContainer>
+  );
 };
 
 export default NavCard;
