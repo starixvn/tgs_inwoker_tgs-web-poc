@@ -1,21 +1,18 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect } from "react";
 import BalanceTracker from "@/components/Mobile/components/BalanceTracker";
 import LanguageSwitch from "@/components/Mobile/components/LanguageSwitch";
 import Button from "@/components/Mobile/components/UI/Button";
 import styled from "styled-components";
-import NavCard, {
-  NavCardItem,
-} from "@/components/Mobile/components/Account/AccountNavigations/NavCard";
+import NavCard from "@/components/Mobile/components/Account/AccountNavigations/NavCard";
 import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloadButton";
 import { useDialogOpenState } from "@/components/Mobile/hooks/account/useDialogOpenState";
-import AccountDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog";
 import { useHistory } from "react-router-dom";
-import { useAccountNavigations } from "@/components/Mobile/hooks/account/useAccountNavigations";
-import AffiliateDialog from "@/components/Mobile/components/Account/AccountNavigations/AffiliateDialog";
-import TransferDialog from "@/components/Mobile/components/Account/AccountNavigations/TransferDialog";
-import ReportDialog from "@/components/Mobile/components/Account/AccountNavigations/ReportDialog";
-import InboxDialog from "@/components/Mobile/components/Account/AccountNavigations/InboxDialog";
-import ContactUsDialog from "@/components/Mobile/components/Account/AccountNavigations/ContactUsDialog";
+import {
+  NavCardItem,
+  NavCardKey,
+  NavDialogFactory,
+  useAccountNavigations,
+} from "@/components/Mobile/hooks/account/useAccountNavigations";
 
 const AccountNavsContainer = styled.div`
   padding: 15px 0 0;
@@ -27,7 +24,7 @@ const AccountNavsContainer = styled.div`
   }
 `;
 
-const AccountNavigationsContainer = styled.div`
+const AccountNavCardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -71,8 +68,20 @@ const AccountNavigations = (props: Props) => {
     <>
       <AccountNavsContainer>
         <BalanceTracker />
-        <AccountNavigationsContainer>
+
+        <AccountNavCardsContainer>
+          {/* Cards */}
           {navCardItemList.map((navCardItem) => {
+            if (navCardItem.key === NavCardKey.APP_DOWNLOAD) {
+              return (
+                <AppDownloadButton
+                  key={navCardItem.key}
+                  navCardItem={navCardItem}
+                  handleClick={handleClickNav}
+                />
+              );
+            }
+
             return (
               <NavCard
                 key={navCardItem.key}
@@ -81,9 +90,7 @@ const AccountNavigations = (props: Props) => {
               />
             );
           })}
-
-          <AppDownloadButton />
-        </AccountNavigationsContainer>
+        </AccountNavCardsContainer>
         <LanguageSwitch />
         <Button fullWidth variant={"contained"} color={"primary"}>
           Logout
@@ -91,30 +98,18 @@ const AccountNavigations = (props: Props) => {
       </AccountNavsContainer>
 
       {/* Dialogs */}
-      <AccountDialog
-        isOpen={dialogOpenState["profile"]}
-        handleCloseDialog={handleCloseNav}
-      />
-      <TransferDialog
-        isOpen={dialogOpenState["transfer"]}
-        handleCloseDialog={handleCloseNav}
-      />
-      <ReportDialog
-        isOpen={dialogOpenState["report"]}
-        handleCloseDialog={handleCloseNav}
-      />
-      <InboxDialog
-        isOpen={dialogOpenState["inbox"]}
-        handleCloseDialog={handleCloseNav}
-      />
-      <AffiliateDialog
-        isOpen={dialogOpenState["affiliate"]}
-        handleCloseDialog={handleCloseNav}
-      />
-      <ContactUsDialog
-        isOpen={dialogOpenState["contactUs"]}
-        handleCloseDialog={handleCloseNav}
-      />
+      {navCardItemList.map((navCardItem) => {
+        if (!navCardItem.isOpenInDialog) return null;
+
+        const NavDialogComponent = NavDialogFactory[navCardItem.key];
+        return (
+          <NavDialogComponent
+            key={navCardItem.key}
+            isOpen={dialogOpenState[navCardItem.key]}
+            handleCloseDialog={handleCloseNav}
+          />
+        );
+      })}
     </>
   );
 };

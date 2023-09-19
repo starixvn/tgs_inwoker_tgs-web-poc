@@ -1,6 +1,7 @@
 import downloadImg from "@/assets/images/account/icon_download.png";
 import { themeList } from "@/theme";
 import styled from "styled-components";
+import { NavCardItem } from "@/components/Mobile/hooks/account/useAccountNavigations";
 
 const theme = themeList["mobileT18"];
 
@@ -28,16 +29,22 @@ const LogoContainer = styled.span`
   }
 `;
 
-const AppDownloadButton = () => {
-    return (
-        <AppDownloadButtonContainer>
-            <LogoContainer>
-                <img src={downloadImg} alt={"download"} />
-            </LogoContainer>
+type Props = {
+  navCardItem: NavCardItem;
+  handleClick: (navCardItem: NavCardItem) => void;
+};
 
-            <span>App Download</span>
-        </AppDownloadButtonContainer>
-    );
+const AppDownloadButton = ({ navCardItem, handleClick }: Props) => {
+  const { label, iconUrl } = navCardItem;
+  return (
+    <AppDownloadButtonContainer onClick={() => handleClick(navCardItem)}>
+      <LogoContainer>
+        <img src={iconUrl} alt={label} />
+      </LogoContainer>
+
+      <span>{label}</span>
+    </AppDownloadButtonContainer>
+  );
 };
 
 export default AppDownloadButton;
