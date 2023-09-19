@@ -1,8 +1,11 @@
 import banner from "@/assets/images/home/mobile/banner_1.png";
+import searchIcon from "@/assets/images/home/mobile/search.svg";
 import CardPrompt from "@/components/Mobile/components/CardPrompt";
 import Category from "@/components/Mobile/components/Category";
+import Input from "@/components/Mobile/components/Input";
 import Tab from "@/components/Mobile/components/Tab";
 import Tag from "@/components/Mobile/components/Tag";
+import { ChangeEvent, useState } from 'react';
 import styled from "styled-components";
 
 const MainWrapper = styled.div`
@@ -30,11 +33,18 @@ const Banner = styled.div`
 
 type Props = {};
 const Main = (props: Props) => {
+    const [searchString, setSearchString] = useState("");
+    const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setSearchString(value);
+    };
+
     return <MainWrapper>
         <Banner></Banner>
         <CardPrompt />
         <Tab />
         <Tag />
+        <Input placeholder={"Search"} imageUrl={searchIcon} handleChange={handleSearch} value={searchString} />
         <Category />
     </MainWrapper>
 };
