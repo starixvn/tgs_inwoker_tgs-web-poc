@@ -1,11 +1,30 @@
 import { useSelector } from "react-redux";
-import { AccountState } from "@/types/account";
+import { ModalState } from "@/types/modal";
+import { CLOSE_MODAL, SHOW_MODAL } from "@/api-services/constant/actionType";
 
-export function useAccountStore() {
+export function useModalStore() {
   //@ts-ignore
-  const account: AccountState = useSelector((state) => state.account);
+  const modal: ModalState = useSelector((state) => state.modal);
+
+  const showModal = async () => {
+    return (dispatch) => {
+      dispatch({
+        type: SHOW_MODAL,
+      });
+    };
+  };
+
+  const closeModal = async () => {
+    return (dispatch) => {
+      dispatch({
+        type: CLOSE_MODAL,
+      });
+    };
+  };
 
   return {
-    account,
+    modal,
+    showModal,
+    closeModal,
   };
 }
