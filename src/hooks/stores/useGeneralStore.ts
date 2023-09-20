@@ -116,7 +116,6 @@ export function useGeneralStore() {
         type: GETSITETOKEN_FAIL,
         payload: error.data,
       });
-      return error;
     }
   }, []);
 
@@ -140,7 +139,6 @@ export function useGeneralStore() {
         type: GETBRAND_FAIL,
         payload: error,
       });
-      return error;
     }
   }, []);
 
@@ -156,7 +154,6 @@ export function useGeneralStore() {
     //   }
     //   return response;
     // } catch (error) {
-    //   return error;
     // }
   }, []);
 
@@ -203,7 +200,6 @@ export function useGeneralStore() {
           payload: error,
           loading: false,
         });
-        return error;
       }
     },
     []
@@ -252,7 +248,6 @@ export function useGeneralStore() {
           payload: error,
           loading: false,
         });
-        return error;
       }
     },
     []
@@ -288,7 +283,6 @@ export function useGeneralStore() {
         payload: error,
         loading: false,
       });
-      return error;
     }
   }, []);
 
@@ -321,7 +315,6 @@ export function useGeneralStore() {
         payload: error,
         loading: false,
       });
-      return error;
     }
   }, []);
 
@@ -354,7 +347,6 @@ export function useGeneralStore() {
         payload: error,
         loading: false,
       });
-      return error;
     }
   }, []);
 
@@ -386,7 +378,6 @@ export function useGeneralStore() {
         payload: error,
         loading: false,
       });
-      return error;
     }
   }, []);
 
@@ -419,7 +410,6 @@ export function useGeneralStore() {
         payload: error,
         loading: false,
       });
-      return error;
     }
   }, []);
 
@@ -442,9 +432,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
-      return error;
-    }
+    } catch (error) {}
   }, []);
 
   const getInvitationCode = useCallback(async () => {
@@ -463,9 +451,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
-      return error;
-    }
+    } catch (error) {}
   }, []);
 
   const getPromotionRouletteStatus = useCallback(async (id: string) => {
@@ -489,9 +475,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
-      return error;
-    }
+    } catch (error) {}
   }, []);
 
   const getPromotionRouletteResult = useCallback(async (id) => {
@@ -515,9 +499,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
-      return error;
-    }
+    } catch (error) {}
   }, []);
 
   const getPromotion = useCallback(async () => {
@@ -539,9 +521,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
-      return error;
-    }
+    } catch (error) {}
   }, []);
 
   const getPromotionRouletteCount = useCallback(async () => {
@@ -564,9 +544,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
-      return error;
-    }
+    } catch (error) {}
   }, []);
 
   const getDepositAccumulateRoulette = useCallback(async (id: string) => {
@@ -574,9 +552,7 @@ export function useGeneralStore() {
       return (await GeneralService.GetDepositAccumulateRoulette(
         id
       )) as GetDepositAccumulateRouletteResDto;
-    } catch (error) {
-      return error;
-    }
+    } catch (error) {}
   }, []);
 
   const getDepositAccumulateRouletteResult = useCallback(async (id: string) => {
@@ -584,9 +560,7 @@ export function useGeneralStore() {
       return (await GeneralService.GetDepositAccumulateRouletteResult(
         id
       )) as GetDepositAccumulateRouletteResultResDto;
-    } catch (error) {
-      return error;
-    }
+    } catch (error) {}
   }, []);
 
   const getDepositAccumulateRouletteHistory = useCallback(
@@ -595,9 +569,7 @@ export function useGeneralStore() {
         return (await GeneralService.GetDepositAccumulateRouletteHistory(
           id
         )) as GetDepositAccumulateRouletteHistoryResDto;
-      } catch (error) {
-        return error;
-      }
+      } catch (error) {}
     },
     []
   );
@@ -619,9 +591,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
-      return error;
-    }
+    } catch (error) {}
   }, []);
 
   const getAffiliateStatus = useCallback(async () => {
@@ -640,9 +610,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
-      return error;
-    }
+    } catch (error) {}
   }, []);
 
   const getMemoV2 = useCallback(async () => {
@@ -677,7 +645,6 @@ export function useGeneralStore() {
         payload: error,
         loading: false,
       });
-      return error;
     }
   }, []);
 
@@ -712,7 +679,6 @@ export function useGeneralStore() {
         payload: error,
         loading: false,
       });
-      return error;
     }
   }, []);
 
@@ -747,7 +713,6 @@ export function useGeneralStore() {
         payload: error,
         loading: false,
       });
-      return error;
     }
   }, []);
 
@@ -775,7 +740,6 @@ export function useGeneralStore() {
         type: READMEMO_FAIL,
         payload: error,
       });
-      return error;
     }
   }, []);
 
@@ -804,7 +768,6 @@ export function useGeneralStore() {
     //     type: DELIVERYBOX_FAIL,
     //     payload: error,
     //   });
-    //   return error;
     // }
   }, []);
 

@@ -113,7 +113,7 @@ export interface AccountState {
     list: any[];
     count: 0;
   };
-  token: string;
+  token: string | null;
   logintime: null | string;
   error: null | any;
   loading: boolean;
