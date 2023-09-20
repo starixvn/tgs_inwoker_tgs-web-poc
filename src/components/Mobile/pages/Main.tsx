@@ -2,9 +2,11 @@ import banner from "@/assets/images/home/mobile/banner_1.png";
 import dislikeIcon from "@/assets/images/home/mobile/dislike.png";
 import likeIcon from "@/assets/images/home/mobile/like.png";
 import searchIcon from "@/assets/images/home/mobile/search.svg";
+import vendorsIcon from "@/assets/images/home/mobile/vendors.png";
 import CardPrompt from "@/components/Mobile/components/CardPrompt";
 import Category from "@/components/Mobile/components/Category";
 import Input from "@/components/Mobile/components/Input";
+import SocialMedia from "@/components/Mobile/components/SocialMedia";
 import Tab from "@/components/Mobile/components/Tab";
 import TabPanel from "@/components/Mobile/components/TabPanel";
 import Tag from "@/components/Mobile/components/Tag";
@@ -89,6 +91,13 @@ const BadgeIcon = styled.div`
     left: 0;
 `;
 
+const VendorIcon = styled.div`
+    width: 392px;
+    height: 296px;
+    background-image: url(${vendorsIcon});
+    background-size: cover;
+`;
+
 const Main = (props: Props) => {
     const [activeGameTypeTab, setActiveGameTypeTab] = useState("Lobby");
     const [searchString, setSearchString] = useState("");
@@ -149,6 +158,8 @@ const Main = (props: Props) => {
         }
 
         <TabPanel />
+        <SocialMedia />
+        <VendorIcon />
     </MainWrapper >
 };
 
