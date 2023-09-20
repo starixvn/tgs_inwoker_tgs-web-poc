@@ -3,9 +3,9 @@ import { accountAction } from "@/api-services/actions/accountAction";
 import i18n from "@/utils/i18n";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
+import { useAuthDialog } from "@/hooks/useAuthDialog";
 import config from "@/config/config";
-import { useAccountStore } from "@/components/Mobile/hooks/stores/useAccountStore";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
 
 type LoginState = {
   data: any | null;

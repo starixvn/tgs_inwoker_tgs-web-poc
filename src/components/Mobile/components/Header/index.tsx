@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import MenuButton from "@/components/Mobile/components/Header/MenuButton";
 import { useHistory } from "react-router";
-import { useAccountStore } from "@/components/Mobile/hooks/stores/useAccountStore";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import AnonymousHeaderContent from "@/components/Mobile/components/Header/AnonymousHeaderContent";
 import AccountHeaderContent from "@/components/Mobile/components/Header/AccountHeaderContent";
 

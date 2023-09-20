@@ -2,14 +2,14 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { themeList } from "@/theme";
 import QRCode from "react-qr-code";
-import { useAccountStore } from "@/components/Mobile/hooks/stores/useAccountStore";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import Button from "@/components/Mobile/components/UI/Button";
 import AffiliateInfoRow from "@/components/Mobile/components/Account/AccountNavigations/AffiliateDialog/Affiliate/AffiliateInfoRow";
 import Select from "@/components/Mobile/components/UI/Select";
 import DarkSelect, {
   SelectItem,
 } from "@/components/Mobile/components/UI/Select/DarkSelect";
-import { useGeneralStore } from "@/components/Mobile/hooks/stores/useGeneralStore";
+import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { BrandAllAgent } from "@/models/dto/general/GetBrandAllAgentResDto";
 import i18n from "@/utils/i18n";
 import {
@@ -20,7 +20,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import RebateTable from "@/components/Mobile/components/Account/AccountNavigations/AffiliateDialog/Affiliate/RebateTable";
-import { useRebateTable } from "@/components/Mobile/hooks/account/affiliate/useRebateTable";
+import { useRebateTable } from "@/hooks/account/affiliate/useRebateTable";
 
 const theme = themeList["mobileT18"];
 

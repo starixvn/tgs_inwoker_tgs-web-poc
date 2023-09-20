@@ -6,7 +6,7 @@ import Tabs, { TabItem } from "@/components/Mobile/components/UI/Tabs";
 import accountImg from "@/assets/images/account/icon_account.png";
 import infoImg from "@/assets/images/account/icon_info.png";
 import AccountLevelInfoCard from "@/components/Mobile/components/Account/AccountLevelInfoCard";
-import { useTab } from "@/components/Mobile/hooks/account/useTab";
+import { useTab } from "@/hooks/account/useTab";
 import AccountNavigations from "@/components/Mobile/components/Account/AccountNavigations";
 import { useHistory } from "react-router-dom";
 

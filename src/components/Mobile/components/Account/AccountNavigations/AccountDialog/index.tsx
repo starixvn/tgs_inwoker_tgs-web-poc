@@ -4,7 +4,7 @@ import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWit
 import { themeList } from "@/theme";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NameDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/NameDialog";
-import { useDialogOpenState } from "@/components/Mobile/hooks/account/useDialogOpenState";
+import { useDialogOpenState } from "@/hooks/account/useDialogOpenState";
 import PhoneDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/PhoneDialog";
 import EmailDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/EmailDialog";
 import BirthDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/BirthDialog";

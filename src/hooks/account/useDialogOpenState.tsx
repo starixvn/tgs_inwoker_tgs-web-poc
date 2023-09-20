@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { NavCardKey } from "@/components/Mobile/hooks/account/useAccountNavigations";
+import { NavCardKey } from "@/hooks/account/useAccountNavigations";
 
 export function useDialogOpenState<T>(dictionary: { [key in string]: T }) {
   const initialDialogOpenState = useMemo(() => {

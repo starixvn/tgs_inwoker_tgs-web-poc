@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { useGeneralStore } from "@/components/Mobile/hooks/stores/useGeneralStore";
+import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { themeList } from "@/theme";
 
 const theme = themeList["mobileT18"];

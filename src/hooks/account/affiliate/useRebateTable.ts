@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { SelectItem } from "@/components/Mobile/components/UI/Select/DarkSelect";
 import i18n from "@/utils/i18n";
 import { BrandAllAgent } from "@/models/dto/general/GetBrandAllAgentResDto";
-import { useAccountStore } from "@/components/Mobile/hooks/stores/useAccountStore";
-import { useGeneralStore } from "@/components/Mobile/hooks/stores/useGeneralStore";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
+import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 
 enum RebateTypeEnum {
   ALL = 0,
@@ -57,8 +57,6 @@ export function useRebateTable() {
   }, []);
 
   const rebateTableRow = useMemo(() => {
-    console.log(selectedRebateItem);
-    console.log(rebateTableRows);
     return rebateTableRows.filter((brandAllAgent) => {
       const currentRebateType = selectedRebateItem.value;
       if (currentRebateType === RebateTypeEnum.ALL) return true;

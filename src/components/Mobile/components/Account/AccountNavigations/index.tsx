@@ -5,14 +5,14 @@ import Button from "@/components/Mobile/components/UI/Button";
 import styled from "styled-components";
 import NavCard from "@/components/Mobile/components/Account/AccountNavigations/NavCard";
 import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloadButton";
-import { useDialogOpenState } from "@/components/Mobile/hooks/account/useDialogOpenState";
+import { useDialogOpenState } from "@/hooks/account/useDialogOpenState";
 import { useHistory } from "react-router-dom";
 import {
   NavCardItem,
   NavCardKey,
   NavDialogFactory,
   useAccountNavigations,
-} from "@/components/Mobile/hooks/account/useAccountNavigations";
+} from "@/hooks/account/useAccountNavigations";
 
 const AccountNavsContainer = styled.div`
   padding: 15px 0 0;

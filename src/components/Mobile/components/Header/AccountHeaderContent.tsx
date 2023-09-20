@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "@/components/Mobile/components/UI/Button";
-import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
-import ContextMenuButton from "./ContextMenuButton"
+import { useAuthDialog } from "@/hooks/useAuthDialog";
+import ContextMenuButton from "./ContextMenuButton";
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ const AccountHeaderContent = (props: Props) => {
         {/*>*/}
         {/*  Register*/}
         {/*</Button>*/}
-        <ContextMenuButton/>
+        <ContextMenuButton />
       </ButtonContainer>
     </>
   );
