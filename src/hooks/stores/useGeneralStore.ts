@@ -65,6 +65,30 @@ import {
   REPLYMEMO_SUCCESS,
 } from "@/api-services/constant/actionType";
 import { GeneralService } from "@/api-services/services/GeneralService";
+import { GetSiteTokenResDto } from "@/models/dto/general/GetSiteTokenResDto";
+import { GetBrandResDto } from "@/models/dto/general/GetBrandResDto";
+import { GetPromotionListResDto } from "@/models/dto/general/GetPromotionListResDto";
+import { GetPlayerPromotionListResDto } from "@/models/dto/general/GetPlayerPromotionListResDto";
+import { JoinPromotionResDto } from "@/models/dto/general/JoinPromotionResDto";
+import { GetBrandCommunicationResDto } from "@/models/dto/general/GetBrandCommunicationResDto";
+import { GetBrandLanguageResDto } from "@/models/dto/general/GetBrandLanguageResDto";
+import { GetBannerResDto } from "@/models/dto/general/GetBannerResDto";
+import { GetLiveChatUrlResDto } from "@/models/dto/general/GetLiveChatUrlResDto";
+import { GetVipResDto } from "@/models/dto/general/GetVipResDto";
+import { GetInvitationCodeResDto } from "@/models/dto/general/GetInvitationCodeResDto";
+import { GetPromotionRouletteResultResDto } from "@/models/dto/general/GetPromotionRouletteResultResDto";
+import { GetPromotionRouletteStatusResDto } from "@/models/dto/general/GetPromotionRouletteStatusResDto";
+import { GetPromotionDto } from "@/models/dto/general/GetPromotionDto";
+import { GetPromotionRouletteCountResDto } from "@/models/dto/general/GetPromotionRouletteCountResDto";
+import { GetDepositAccumulateRouletteResDto } from "@/models/dto/general/GetDepositAccumulateRouletteResDto";
+import { GetDepositAccumulateRouletteResultResDto } from "@/models/dto/general/GetDepositAccumulateRouletteResultResDto";
+import { GetDepositAccumulateRouletteHistoryResDto } from "@/models/dto/general/GetDepositAccumulateRouletteHistoryResDto";
+import { GetBrandAllAgentResDto } from "@/models/dto/general/GetBrandAllAgentResDto";
+import { GetAffiliateStatusResDto } from "@/models/dto/general/GetAffiliateStatusResDto";
+import { GetMemoV2ResDto } from "@/models/dto/general/GetMemoV2ResDto";
+import { ReplyMemoResDto } from "@/models/dto/general/ReplyMemoResDto";
+import { ComposeMemoResDto } from "@/models/dto/general/ComposeMemoResDto";
+import { ReadMemoResDto } from "@/models/dto/general/ReadMemoResDto";
 
 export function useGeneralStore() {
   const dispatch = useDispatch();
@@ -73,7 +97,8 @@ export function useGeneralStore() {
 
   const getSiteToken = useCallback(async () => {
     try {
-      const response = await GeneralService.GetSiteToken();
+      const response =
+        (await GeneralService.GetSiteToken()) as GetSiteTokenResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETSITETOKEN_SUCCESS,
@@ -97,7 +122,7 @@ export function useGeneralStore() {
 
   const getBrand = useCallback(async () => {
     try {
-      const response = await GeneralService.GetBrand();
+      const response = (await GeneralService.GetBrand()) as GetBrandResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETBRAND_SUCCESS,
@@ -136,21 +161,28 @@ export function useGeneralStore() {
   }, []);
 
   const getPromotionList = useCallback(
-    async (language, page, rows, desc, sort, all) => {
+    async (
+      language: string,
+      page: number,
+      rows: number,
+      desc: boolean,
+      sort: string,
+      all: boolean
+    ) => {
       dispatch({
         type: GETPROMOLIST_BEGIN,
         loading: true,
       });
 
       try {
-        const response = await GeneralService.GetPromotionList(
+        const response = (await GeneralService.GetPromotionList(
           language,
           page,
           rows,
           desc,
           sort,
           all
-        );
+        )) as GetPromotionListResDto;
         if (response.IsSuccess) {
           dispatch({
             type: GETPROMOLIST_SUCCESS,
@@ -178,21 +210,28 @@ export function useGeneralStore() {
   );
 
   const getPlayerPromotionList = useCallback(
-    async (language, page, rows, desc, sort, all) => {
+    async (
+      language: string,
+      page: number,
+      rows: number,
+      desc: boolean,
+      sort: string,
+      all: boolean
+    ) => {
       dispatch({
         type: GETPLAYERPROMOLIST_BEGIN,
         loading: true,
       });
 
       try {
-        const response = await GeneralService.GetPlayerPromotionList(
+        const response = (await GeneralService.GetPlayerPromotionList(
           language,
           page,
           rows,
           desc,
           sort,
           all
-        );
+        )) as GetPlayerPromotionListResDto;
         if (response.IsSuccess) {
           dispatch({
             type: GETPLAYERPROMOLIST_SUCCESS,
@@ -219,14 +258,16 @@ export function useGeneralStore() {
     []
   );
 
-  const joinPromotion = useCallback(async (id) => {
+  const joinPromotion = useCallback(async (id: string) => {
     dispatch({
       type: JOINPROMO_BEGIN,
       loading: true,
     });
 
     try {
-      const response = await GeneralService.JoinPromotion(id);
+      const response = (await GeneralService.JoinPromotion(
+        id
+      )) as JoinPromotionResDto;
       if (response.IsSuccess) {
         dispatch({
           type: JOINPROMO_SUCCESS,
@@ -258,7 +299,8 @@ export function useGeneralStore() {
     });
 
     try {
-      const response = await GeneralService.GetBrandCommunication();
+      const response =
+        (await GeneralService.GetBrandCommunication()) as GetBrandCommunicationResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETBRANDCOMMUNICATION_SUCCESS,
@@ -290,7 +332,8 @@ export function useGeneralStore() {
     });
 
     try {
-      const response = await GeneralService.GetBrandLanguage();
+      const response =
+        (await GeneralService.GetBrandLanguage()) as GetBrandLanguageResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETBRANDLANGUAGE_SUCCESS,
@@ -322,7 +365,7 @@ export function useGeneralStore() {
     });
 
     try {
-      const response = await GeneralService.GetBanner();
+      const response = (await GeneralService.GetBanner()) as GetBannerResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETBANNER_SUCCESS,
@@ -354,7 +397,8 @@ export function useGeneralStore() {
     });
 
     try {
-      const response = await GeneralService.GetLiveChatURL();
+      const response =
+        (await GeneralService.GetLiveChatURL()) as GetLiveChatUrlResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETLIVECHATURL_SUCCESS,
@@ -385,7 +429,7 @@ export function useGeneralStore() {
     });
 
     try {
-      const response = await GeneralService.GetVIP();
+      const response = (await GeneralService.GetVIP()) as GetVipResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETVIP_SUCCESS,
@@ -405,7 +449,8 @@ export function useGeneralStore() {
 
   const getInvitationCode = useCallback(async () => {
     try {
-      const response = await GeneralService.GetInvitationCode();
+      const response =
+        (await GeneralService.GetInvitationCode()) as GetInvitationCodeResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETINVITATIONCODE_SUCCESS,
@@ -423,13 +468,15 @@ export function useGeneralStore() {
     }
   }, []);
 
-  const getPromotionRouletteStatus = useCallback(async (id) => {
+  const getPromotionRouletteStatus = useCallback(async (id: string) => {
     dispatch({
       type: GETPROMOROULETTE_STATUS_BEGIN,
     });
 
     try {
-      const response = await GeneralService.GetPromotionRouletteStatus(id);
+      const response = (await GeneralService.GetPromotionRouletteStatus(
+        id
+      )) as GetPromotionRouletteStatusResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETPROMOROULETTE_STATUS_SUCCESS,
@@ -453,7 +500,9 @@ export function useGeneralStore() {
     });
 
     try {
-      const response = await GeneralService.GetPromotionRouletteResult(id);
+      const response = (await GeneralService.GetPromotionRouletteResult(
+        id
+      )) as GetPromotionRouletteResultResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETPROMOROULETTE_RESULT_SUCCESS,
@@ -477,7 +526,7 @@ export function useGeneralStore() {
     });
 
     try {
-      const response = await GeneralService.GetPromotion();
+      const response = (await GeneralService.GetPromotion()) as GetPromotionDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETPROMOTION_SUCCESS,
@@ -501,7 +550,8 @@ export function useGeneralStore() {
     });
 
     try {
-      const response = await GeneralService.GetPromotionRouletteCount();
+      const response =
+        (await GeneralService.GetPromotionRouletteCount()) as GetPromotionRouletteCountResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETROULETTE_COUNT_SUCCESS,
@@ -521,8 +571,9 @@ export function useGeneralStore() {
 
   const getDepositAccumulateRoulette = useCallback(async (id: string) => {
     try {
-      //
-      return await GeneralService.GetDepositAccumulateRoulette(id);
+      return (await GeneralService.GetDepositAccumulateRoulette(
+        id
+      )) as GetDepositAccumulateRouletteResDto;
     } catch (error) {
       return error;
     }
@@ -530,7 +581,9 @@ export function useGeneralStore() {
 
   const getDepositAccumulateRouletteResult = useCallback(async (id: string) => {
     try {
-      return await GeneralService.GetDepositAccumulateRouletteResult(id);
+      return (await GeneralService.GetDepositAccumulateRouletteResult(
+        id
+      )) as GetDepositAccumulateRouletteResultResDto;
     } catch (error) {
       return error;
     }
@@ -539,7 +592,9 @@ export function useGeneralStore() {
   const getDepositAccumulateRouletteHistory = useCallback(
     async (id: string) => {
       try {
-        return await GeneralService.GetDepositAccumulateRouletteHistory(id);
+        return (await GeneralService.GetDepositAccumulateRouletteHistory(
+          id
+        )) as GetDepositAccumulateRouletteHistoryResDto;
       } catch (error) {
         return error;
       }
@@ -549,7 +604,9 @@ export function useGeneralStore() {
 
   const getBrandAllAgent = useCallback(async () => {
     try {
-      const response = await GeneralService.GetBrandAllAgent("");
+      const response = (await GeneralService.GetBrandAllAgent(
+        ""
+      )) as GetBrandAllAgentResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETBRANDALLAGENT_SUCCESS,
@@ -569,7 +626,8 @@ export function useGeneralStore() {
 
   const getAffiliateStatus = useCallback(async () => {
     try {
-      const response = await GeneralService.GetAffiliateStatus();
+      const response =
+        (await GeneralService.GetAffiliateStatus()) as GetAffiliateStatusResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETAFFILIATESTATUS_SUCCESS,
@@ -594,7 +652,11 @@ export function useGeneralStore() {
     });
 
     try {
-      const response = await GeneralService.GetMemoV2("", 0, 0);
+      const response = (await GeneralService.GetMemoV2(
+        "",
+        0,
+        0
+      )) as GetMemoV2ResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETMEMOV2_SUCCESS,
@@ -619,14 +681,17 @@ export function useGeneralStore() {
     }
   }, []);
 
-  const replyMemo = useCallback(async (id, message) => {
+  const replyMemo = useCallback(async (id: string, message: string) => {
     dispatch({
       type: REPLYMEMO_BEGIN,
       loading: true,
     });
 
     try {
-      const response = await GeneralService.ReplyMemo(id, message);
+      const response = (await GeneralService.ReplyMemo(
+        id,
+        message
+      )) as ReplyMemoResDto;
       if (response.IsSuccess) {
         dispatch({
           type: REPLYMEMO_SUCCESS,
@@ -658,7 +723,10 @@ export function useGeneralStore() {
     });
 
     try {
-      const response = await GeneralService.ComposeMemo(subject, message);
+      const response = (await GeneralService.ComposeMemo(
+        subject,
+        message
+      )) as ComposeMemoResDto;
       if (response.IsSuccess) {
         dispatch({
           type: COMPOSEMEMO_SUCCESS,
@@ -683,13 +751,13 @@ export function useGeneralStore() {
     }
   }, []);
 
-  const readMemo = useCallback(async (id) => {
+  const readMemo = useCallback(async (id: string) => {
     dispatch({
       type: READMEMO_BEGIN,
     });
 
     try {
-      const response = await GeneralService.ReadMemo(id);
+      const response = (await GeneralService.ReadMemo(id)) as ReadMemoResDto;
       if (response.IsSuccess) {
         dispatch({
           type: READMEMO_SUCCESS,
