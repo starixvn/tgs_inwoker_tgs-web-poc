@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UiState } from "@/types/ui";
 import {
@@ -7,6 +8,7 @@ import {
   GETMARQUEE_BEGIN,
   GETMARQUEE_FAIL,
   GETMARQUEE_SUCCESS,
+  UPDATING_SCREEN_SIZE,
 } from "@/api-services/constant/actionType";
 import { UiService } from "@/api-services/services/UiService";
 import { GetMarqueeResDto } from "@/models/dto/ui/GetMarqueeResDto";
@@ -17,64 +19,65 @@ export function useUiStore() {
   //@ts-ignore
   const ui: UiState = useSelector((state) => state.ui);
 
-  const getMarquee = async (language: string) => {
-    return async (dispatch) => {
-      dispatch({
-        type: GETMARQUEE_BEGIN,
-        loading: true,
-      });
+  const updateScreenSize = useCallback((width, height) => {
+    dispatch({ type: UPDATING_SCREEN_SIZE, width, height });
+  }, []);
 
-      try {
-        const response = (await UiService.GetMarquee(
-          language
-        )) as GetMarqueeResDto;
+  const getMarquee = useCallback(async (language: string) => {
+    dispatch({
+      type: GETMARQUEE_BEGIN,
+      loading: true,
+    });
 
-        if (response.IsSuccess) {
-          dispatch({
-            type: GETMARQUEE_SUCCESS,
-            payload: response.data,
-            loading: false,
-          });
-        }
-      } catch (e) {
+    try {
+      const response = (await UiService.GetMarquee(
+        language
+      )) as GetMarqueeResDto;
+
+      if (response.IsSuccess) {
         dispatch({
-          type: GETMARQUEE_FAIL,
+          type: GETMARQUEE_SUCCESS,
+          payload: response.data,
           loading: false,
         });
       }
-    };
-  };
-
-  const getAnnouncement = async (language: string) => {
-    return async (dispatch) => {
+    } catch (e) {
       dispatch({
-        type: GETANNOUNCEMENT_BEGIN,
-        loading: true,
+        type: GETMARQUEE_FAIL,
+        loading: false,
       });
+    }
+  }, []);
 
-      try {
-        const response = (await UiService.GetMarquee(
-          language
-        )) as GetMarqueeResDto;
+  const getAnnouncement = useCallback(async (language: string) => {
+    dispatch({
+      type: GETANNOUNCEMENT_BEGIN,
+      loading: true,
+    });
 
-        if (response.IsSuccess) {
-          dispatch({
-            type: GETANNOUNCEMENT_SUCCESS,
-            payload: response.data,
-            loading: false,
-          });
-        }
-      } catch (e) {
+    try {
+      const response = (await UiService.GetMarquee(
+        language
+      )) as GetMarqueeResDto;
+
+      if (response.IsSuccess) {
         dispatch({
-          type: GETANNOUNCEMENT_FAIL,
+          type: GETANNOUNCEMENT_SUCCESS,
+          payload: response.data,
           loading: false,
         });
       }
-    };
-  };
+    } catch (e) {
+      dispatch({
+        type: GETANNOUNCEMENT_FAIL,
+        loading: false,
+      });
+    }
+  }, []);
 
   return {
     ui,
+    updateScreenSize,
     getMarquee,
     getAnnouncement,
   };

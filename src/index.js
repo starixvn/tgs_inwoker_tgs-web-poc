@@ -240,7 +240,6 @@ const AppWrapper = () => {
   }, []);
 
   if (isReady) {
-    console.log(store.getState());
     return (
       <Provider store={store}>
         <AuthDialogContextProvider>

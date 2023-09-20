@@ -449,7 +449,6 @@ export function useWalletStore() {
           payload: error,
           loading: false,
         });
-        return error;
       }
     },
     []
@@ -502,7 +501,6 @@ export function useWalletStore() {
           payload: error,
           loading: false,
         });
-        return error;
       }
     },
     []
@@ -543,7 +541,6 @@ export function useWalletStore() {
           payload: error,
           loading: false,
         });
-        return error;
       }
     },
     []
@@ -584,7 +581,6 @@ export function useWalletStore() {
           payload: error,
           loading: false,
         });
-        return error;
       }
     },
     []
