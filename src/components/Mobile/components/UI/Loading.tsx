@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { useGeneral } from "@/components/Mobile/hooks/useGeneral";
+import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { themeList } from "@/theme";
 
 const theme = themeList["mobileT18"];
@@ -34,7 +34,7 @@ type Props = {
 };
 
 const Loading = ({ opacity }: Props) => {
-  const { general } = useGeneral();
+  const { general } = useGeneralStore();
 
   const backgroundOpacity = typeof opacity === "number" ? opacity : 0.5;
 

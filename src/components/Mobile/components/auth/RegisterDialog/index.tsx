@@ -3,7 +3,7 @@ import styled from "styled-components";
 import TextField from "@/components/Mobile/components/UI/TextField";
 import Checkbox from "@/components/Mobile/components/UI/Checkbox";
 import Button from "@/components/Mobile/components/UI/Button";
-import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
+import { useAuthDialog } from "@/hooks/useAuthDialog";
 import Select from "@/components/Mobile/components/UI/Select";
 import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
 import { themeList } from "@/theme";

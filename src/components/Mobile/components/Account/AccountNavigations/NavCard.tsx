@@ -1,6 +1,6 @@
 import { themeList } from "@/theme";
 import styled from "styled-components";
-import { NavCardItem } from "@/components/Mobile/hooks/account/useAccountNavigations";
+import { NavCardItem } from "@/hooks/account/useAccountNavigations";
 
 const theme = themeList["mobileT18"];
 

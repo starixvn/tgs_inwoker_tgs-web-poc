@@ -49,6 +49,7 @@ import JoinLotteryGame from "./components/Share/JoinLotteryGame";
 import config from "./config/config";
 import { GlobalStyles } from "./global";
 import { themeList } from "./theme";
+import Wap from "@/components/Wap";
 
 require("es6-promise").polyfill();
 
@@ -316,7 +317,7 @@ const AppWrapper = () => {
                       <Route
                         path={"/"}
                         render={(props) =>
-                          isMobileOnly ? <Mobile /> : <Web />
+                          isMobileOnly ? <Mobile /> : <Mobile />
                         }
                       />
                       <Redirect to={`/`} />
