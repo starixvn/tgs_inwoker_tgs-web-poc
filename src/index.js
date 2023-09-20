@@ -316,7 +316,9 @@ const AppWrapper = () => {
                       })()}
                       <Route
                         path={"/"}
-                        render={(props) => (isMobileOnly ? <Wap /> : <Web />)}
+                        render={(props) =>
+                          isMobileOnly ? <Mobile /> : <Mobile />
+                        }
                       />
                       <Redirect to={`/`} />
                     </Switch>

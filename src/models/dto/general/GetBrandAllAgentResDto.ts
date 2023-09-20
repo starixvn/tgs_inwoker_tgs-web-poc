@@ -10,5 +10,5 @@ export class GetBrandAllAgentResDto {
   IsSuccess: boolean = true;
   code: number = 0;
   data: BrandAllAgent[] = [];
-  info: any | null = null;
+  info: string | null = null;
 }

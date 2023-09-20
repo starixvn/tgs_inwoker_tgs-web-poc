@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthDialog } from "@/components/Mobile/hooks/useAuthDialog";
 import config from "@/config/config";
+import { useAccountStore } from "@/components/Mobile/hooks/stores/useAccountStore";
 
 type LoginState = {
   data: any | null;
@@ -15,6 +16,7 @@ export function useLogin() {
   const history = useHistory();
   const dispatch = useDispatch();
   const { toggleLoginDialog } = useAuthDialog();
+  const accountStore = useAccountStore();
   const [loginState, setLoginState] = useState<LoginState>({
     isLoading: false,
     data: null,
@@ -26,9 +28,8 @@ export function useLogin() {
       try {
         setLoginState((prevState) => ({ ...prevState, isLoading: true }));
 
-        const result: any = await dispatch(
-          accountAction.accountLogin(username, password)
-        );
+        const result = await accountStore.accountLogin(username, password);
+        console.log(result);
 
         if (!result.IsSuccess) {
           if (result.code === 210) throw new Error("banned");

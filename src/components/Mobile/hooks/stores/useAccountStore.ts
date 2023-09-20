@@ -25,7 +25,17 @@ import {
   UPDATECARDNO_SUCCESS,
 } from "@/api-services/constant/actionType";
 import { AccountService } from "@/api-services/services/AccountService";
-import { GetMemberInfoResDto } from "@/models/dto/account/GetMemberInfoResDto";
+import { GetMemberInfoResDto } from "@/models/dto/player/GetMemberInfoResDto";
+import { AddRealNameResDto } from "@/models/dto/player/AddRealNameResDto";
+import { LoginResDto } from "@/models/dto/player/LoginResDto";
+import { GetIDCardNoResDto } from "@/models/dto/pc/GetIDCardNoResDto";
+import { GetPromoteUserResDto } from "@/models/dto/pc/GetPromoteUserResDto";
+import { LogoutResDto } from "@/models/dto/player/LooutResDto";
+import { GetPromoteBillResDto } from "@/models/dto/pc/GetPromoteBillResDto";
+import { UpdateMemberNameAndICResDto } from "@/models/dto/player/UpdateMemberNameAndICResDto";
+import { NewRegisterResDto } from "@/models/dto/player/NewRegisterResDto";
+import { GetRegisterStatusResDto } from "@/models/dto/player/GetRegisterStatusResDto";
+import { RegisterResDto } from "@/models/dto/player/RegisterResDto";
 
 export function useAccountStore() {
   const dispatch = useDispatch();
@@ -41,7 +51,10 @@ export function useAccountStore() {
         loading: true,
       });
       try {
-        const response = await AccountService.AddRealName(name, number);
+        const response = (await AccountService.AddRealName(
+          name,
+          number
+        )) as AddRealNameResDto;
 
         if (response.IsSuccess) {
           dispatch({
@@ -80,8 +93,10 @@ export function useAccountStore() {
         loading: true,
       });
       try {
-        const response = await AccountService.Login(username, password);
-
+        const response = (await AccountService.Login(
+          username,
+          password
+        )) as LoginResDto;
         if (response.IsSuccess) {
           dispatch({
             type: LOGIN_SUCCESS,
@@ -113,7 +128,7 @@ export function useAccountStore() {
       type: LOGOUT_BEGIN,
       loading: true,
     });
-    const response = await AccountService.Logout();
+    const response = (await AccountService.Logout()) as LogoutResDto;
 
     if (response.IsSuccess) {
       dispatch({
@@ -137,7 +152,8 @@ export function useAccountStore() {
       type: CHECKTOKEN_BEGIN,
       loading: true,
     });
-    const response: GetMemberInfoResDto = await AccountService.GetMemberInfo();
+    const response =
+      (await AccountService.GetMemberInfo()) as GetMemberInfoResDto;
 
     if (response.IsSuccess) {
       dispatch({
@@ -163,7 +179,8 @@ export function useAccountStore() {
       loading: true,
     });
     try {
-      const result: GetMemberInfoResDto = await AccountService.GetMemberInfo();
+      const result =
+        (await AccountService.GetMemberInfo()) as GetMemberInfoResDto;
       if (result.IsSuccess) {
         dispatch({
           type: GETACCOUNT_SUCCESS,
@@ -192,8 +209,8 @@ export function useAccountStore() {
 
   const getAccountProfile = useCallback(async (showVip: boolean) => {
     try {
-      const response: GetMemberInfoResDto =
-        await AccountService.GetMemberInfo();
+      const response =
+        (await AccountService.GetMemberInfo()) as GetMemberInfoResDto;
       if (response.IsSuccess) {
         dispatch({
           type: showVip ? GETACCOUNT_SUCCESS : GETBALANCE_SUCCESS,
@@ -228,13 +245,13 @@ export function useAccountStore() {
       upper: string
     ) => {
       try {
-        return await AccountService.Register(
+        return (await AccountService.Register(
           username,
           pwd,
           confirmpwd,
           invitationcode,
           upper
-        );
+        )) as RegisterResDto;
       } catch (e) {
         dispatch({
           type: GETACCOUNT_FAILURE,
@@ -252,7 +269,7 @@ export function useAccountStore() {
       loading: true,
     });
     try {
-      const result = await AccountService.GetIDCardNo();
+      const result = (await AccountService.GetIDCardNo()) as GetIDCardNoResDto;
       if (result.IsSuccess) {
         dispatch({
           type: GETIDCARDNO_SUCCESS,
@@ -280,22 +297,27 @@ export function useAccountStore() {
   }, []);
 
   const getPromoteUserList = useCallback((limit: number, page: number) => {
-    var result = AccountService.GetPromoteUser(page, limit);
-    result.then((response) => {
-      if (response.IsSuccess) {
-        dispatch({
-          type: GETPROMOTEUSER_SUCCESS,
-          payload: response,
-          isNew: page === 0,
-        });
-      }
-    });
-    return result;
+    var result = AccountService.GetPromoteUser(
+      page,
+      limit
+    ) as GetPromoteUserResDto;
+
+    if (result.IsSuccess) {
+      dispatch({
+        type: GETPROMOTEUSER_SUCCESS,
+        payload: result,
+        isNew: page === 0,
+      });
+      return result;
+    }
   }, []);
 
   const getPromoteBillList = useCallback(
     async (limit: number, page: number) => {
-      const result = await AccountService.GetPromoteBill(page, limit);
+      const result = (await AccountService.GetPromoteBill(
+        page,
+        limit
+      )) as GetPromoteBillResDto;
 
       if (result.IsSuccess) {
         dispatch({
@@ -304,13 +326,15 @@ export function useAccountStore() {
           isNew: page === 0,
         });
       }
+
+      return result;
     },
     []
   );
 
   const GetRegisterStatus = useCallback(async () => {
     try {
-      return await AccountService.GetRegisterStatus();
+      return (await AccountService.GetRegisterStatus()) as GetRegisterStatusResDto;
     } catch (e) {
       dispatch({
         type: GETACCOUNT_FAILURE,
@@ -322,7 +346,10 @@ export function useAccountStore() {
 
   const newRegister = useCallback(async (type: string, input: any) => {
     try {
-      return await AccountService.NewRegister(type, input);
+      return (await AccountService.NewRegister(
+        type,
+        input
+      )) as NewRegisterResDto;
     } catch (e) {
       dispatch({
         type: GETACCOUNT_FAILURE,
@@ -339,11 +366,11 @@ export function useAccountStore() {
         loading: true,
       });
       try {
-        const result = await AccountService.UpdateMemberNameAndIC(
+        const result = (await AccountService.UpdateMemberNameAndIC(
           name,
           number,
           file
-        );
+        )) as UpdateMemberNameAndICResDto;
 
         if (result.IsSuccess) {
           dispatch({

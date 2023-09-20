@@ -19,7 +19,7 @@ const Mobile = (props: Props) => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
   const accountStore = useAccountStore();
-  const { general } = useGeneralStore();
+  const generalStore = useGeneralStore();
 
   const dispatch = useDispatch();
 
@@ -60,6 +60,8 @@ const Mobile = (props: Props) => {
         return;
       }
     }
+
+    generalStore.getSiteToken();
   };
   useEffect(() => {
     validateTokenState().then();

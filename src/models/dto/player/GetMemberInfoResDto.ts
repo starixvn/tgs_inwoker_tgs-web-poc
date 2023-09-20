@@ -29,5 +29,5 @@ export class GetMemberInfoResDto {
   IsSuccess: boolean = true;
   code: number = 0;
   data: MemberInfo;
-  info: any | null = null;
+  info: string | null = null;
 }
