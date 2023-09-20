@@ -61,7 +61,8 @@ const Mobile = (props: Props) => {
       }
     }
 
-    generalStore.getSiteToken();
+    const res = await generalStore.getSiteToken();
+    console.log(res);
   };
   useEffect(() => {
     validateTokenState().then();
