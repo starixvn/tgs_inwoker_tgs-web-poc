@@ -82,6 +82,17 @@ import {
 } from "@/api-services/constant/actionType";
 import { WalletService } from "@/api-services/services/WalletService";
 import { useCallback } from "react";
+import { GetWalletBalanceResDto } from "@/models/dto/wallet/GetWalletBalanceResDto";
+import { GetDepositMethodResDto } from "@/models/dto/wallet/GetDepositMethodResDto";
+import { PerformManualBankDepositResDto } from "@/models/dto/wallet/PerformManualBankDepositResDto";
+import { PerformManualFPSDepositResDto } from "@/models/dto/wallet/PerformManualFPSDepositResDto";
+import { PerformManualThirdPartyDepositResDto } from "@/models/dto/wallet/PerformManualThirdPartyDepositResDto";
+import { PerformUsdtDepositResDto } from "@/models/dto/wallet/PerformUsdtDepositResDto";
+import { PerformPulsaDepositResDto } from "@/models/dto/wallet/PerformPulsaDepositResDto";
+import { PerformEWalletDepositResDto } from "@/models/dto/wallet/PerformEWalletDepositResDto";
+import { PerformLeePayDepositResDto } from "@/models/dto/wallet/PerformLeePayDepositResDto";
+import { PerformManualFPSDepositWithNameResDto } from "@/models/dto/wallet/PerformManualFPSDepositWithNameResDto";
+import { GetListOfWithdrawChannelResDto } from "@/models/dto/wallet/GetListOfWithdrawChannelResDto";
 
 export function useWalletStore() {
   const dispatch = useDispatch();
@@ -89,72 +100,72 @@ export function useWalletStore() {
   //@ts-ignore
   const wallet: WalletState = useSelector((state) => state.wallet);
 
-  const getWalletBalance = useCallback(() => {
-    dispatch({
-      type: GETWALLETBALANCE_BEGIN,
-      loading: true,
-    });
+  const getWalletBalance = useCallback(async () => {
+    try {
+      dispatch({
+        type: GETWALLETBALANCE_BEGIN,
+        loading: true,
+      });
 
-    return WalletService.GetWalletBalance()
-      .then((response) => {
-        if (response.IsSuccess) {
-          dispatch({
-            type: GETWALLETEBALANCE_SUCCESS,
-            payload: response,
-            loading: true,
-          });
-        } else {
-          dispatch({
-            type: GETWALLETBALANCE_FAILED,
-            payload: response,
-            loading: false,
-          });
-        }
-        return response;
-      })
-      .catch((error) => {
+      const response =
+        (await WalletService.GetWalletBalance()) as GetWalletBalanceResDto;
+
+      if (response.IsSuccess) {
+        dispatch({
+          type: GETWALLETEBALANCE_SUCCESS,
+          payload: response,
+          loading: true,
+        });
+      } else {
         dispatch({
           type: GETWALLETBALANCE_FAILED,
-          payload: error,
+          payload: response,
           loading: false,
         });
+      }
+    } catch (error) {
+      dispatch({
+        type: GETWALLETBALANCE_FAILED,
+        payload: error,
+        loading: false,
       });
-  }, []);
+    }
+  }, [dispatch]);
 
-  const getDepositMethod = useCallback(() => {
-    dispatch({
-      type: GETDEPOSITCHANNEL_BEGIN,
-      loading: true,
-    });
+  const getDepositMethod = useCallback(async () => {
+    try {
+      dispatch({
+        type: GETDEPOSITCHANNEL_BEGIN,
+        loading: true,
+      });
 
-    return WalletService.GetDepositMethod()
-      .then((response) => {
-        if (response.IsSuccess) {
-          dispatch({
-            type: GETDEPOSITCHANNEL_SUCCESS,
-            payload: response,
-            loading: true,
-          });
-        } else {
-          dispatch({
-            type: GETDEPOSITCHANNEL_FAIL,
-            payload: response,
-            loading: false,
-          });
-        }
-        return response;
-      })
-      .catch((error) => {
+      const response =
+        (await WalletService.GetDepositMethod()) as GetDepositMethodResDto;
+
+      if (response.IsSuccess) {
+        dispatch({
+          type: GETDEPOSITCHANNEL_SUCCESS,
+          payload: response,
+          loading: true,
+        });
+      } else {
         dispatch({
           type: GETDEPOSITCHANNEL_FAIL,
-          payload: error,
+          payload: response,
           loading: false,
         });
+      }
+    } catch (error) {
+      dispatch({
+        type: GETDEPOSITCHANNEL_FAIL,
+        payload: error,
+        loading: false,
       });
-  }, []);
+    }
+  }, [dispatch]);
 
   const doBankDeposit = useCallback(
-    (
+    async (
       name: string,
       account: string,
       amount: number,
@@ -163,96 +174,97 @@ export function useWalletStore() {
       banktype: string,
       note: string
     ) => {
-      dispatch({
-        type: DOMANUALDEPOSIT_BEGIN,
-        loading: true,
-      });
+      try {
+        dispatch({
+          type: DOMANUALDEPOSIT_BEGIN,
+          loading: true,
+        });
 
-      return WalletService.PerformManualBankDeposit(
-        name,
-        account,
-        amount,
-        paymentid,
-        promotionid,
-        banktype,
-        note
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DOMANUALDEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DOMANUALDEPOSIT_FAILED,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+        const response = (await WalletService.PerformManualBankDeposit(
+          name,
+          account,
+          amount,
+          paymentid,
+          promotionid,
+          banktype,
+          note
+        )) as PerformManualBankDepositResDto;
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DOMANUALDEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DOMANUALDEPOSIT_FAILED,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DOMANUALDEPOSIT_FAILED,
+          payload: error,
+          loading: false,
         });
+        throw error; // Re-throw the error to indicate failure
+      }
     },
-    []
+    [dispatch]
   );
 
   const doFPSDeposit = useCallback(
-    (
+    async (
       account: string,
       amount: number,
       paymentid: string,
       promotionid: string,
       banktype: string
     ) => {
-      dispatch({
-        type: DOMANUALDEPOSIT_BEGIN,
-        loading: true,
-      });
+      try {
+        dispatch({
+          type: DOMANUALDEPOSIT_BEGIN,
+          loading: true,
+        });
 
-      return WalletService.PerformManualFPSDeposit(
-        account,
-        amount,
-        paymentid,
-        promotionid,
-        banktype
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DOMANUALDEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DOMANUALDEPOSIT_FAILED,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+        const response = (await WalletService.PerformManualFPSDeposit(
+          account,
+          amount,
+          paymentid,
+          promotionid,
+          banktype
+        )) as PerformManualFPSDepositResDto;
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DOMANUALDEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DOMANUALDEPOSIT_FAILED,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+      } catch (error) {
+        dispatch({
+          type: DOMANUALDEPOSIT_FAILED,
+          payload: error,
+          loading: false,
         });
+      }
     },
-    []
+    [dispatch]
   );
 
   const doFPSDepositWithName = useCallback(
-    (
+    async (
       name: string,
       account: string,
       amount: number,
@@ -265,43 +277,44 @@ export function useWalletStore() {
         loading: true,
       });
 
-      return WalletService.PerformManualFPSDepositWithName(
-        name,
-        account,
-        amount,
-        paymentid,
-        promotionid,
-        banktype
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DOMANUALDEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DOMANUALDEPOSIT_FAILED,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+      try {
+        const response = (await WalletService.PerformManualFPSDepositWithName(
+          name,
+          account,
+          amount,
+          paymentid,
+          promotionid,
+          banktype
+        )) as PerformManualFPSDepositWithNameResDto;
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DOMANUALDEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DOMANUALDEPOSIT_FAILED,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DOMANUALDEPOSIT_FAILED,
+          payload: error,
+          loading: false,
         });
+      }
     },
     []
   );
 
   const doThirdPartyDeposit = useCallback(
-    (
+    async (
       amount: number,
       paymentid: string,
       promotionid: string,
@@ -312,41 +325,41 @@ export function useWalletStore() {
         loading: true,
       });
 
-      return WalletService.PerformManualThirdPartyDeposit(
-        amount,
-        paymentid,
-        promotionid,
-        banktype
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DOTHIRDPARTYDEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DOTHIRDPARTYDEPOSIT_FAIL,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+      try {
+        const response = (await WalletService.PerformManualThirdPartyDeposit(
+          amount,
+          paymentid,
+          promotionid,
+          banktype
+        )) as PerformManualThirdPartyDepositResDto;
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DOTHIRDPARTYDEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DOTHIRDPARTYDEPOSIT_FAIL,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DOTHIRDPARTYDEPOSIT_FAIL,
+          payload: error,
+          loading: false,
         });
+      }
     },
-    []
+    [dispatch]
   );
 
   const doUsdtDeposit = useCallback(
-    (
+    async (
       amount: number,
       paymentid: string,
       promotionid: string,
@@ -357,41 +370,42 @@ export function useWalletStore() {
         loading: true,
       });
 
-      return WalletService.PerformUsdtDeposit(
-        amount,
-        paymentid,
-        promotionid,
-        banktype
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DODEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DODEPOSIT_FAILED,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+      try {
+        const response = (await WalletService.PerformUsdtDeposit(
+          amount,
+          paymentid,
+          promotionid,
+          banktype
+        )) as PerformUsdtDepositResDto;
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DODEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DODEPOSIT_FAILED,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DODEPOSIT_FAILED,
+          payload: error,
+          loading: false,
         });
+      }
     },
     []
   );
 
   const doPulsaDeposit = useCallback(
-    (
+    async (
       amount: number,
       paymentid: string,
       promotionid: string,
@@ -404,43 +418,45 @@ export function useWalletStore() {
         loading: true,
       });
 
-      return WalletService.PerformPulsaDeposit(
-        amount,
-        paymentid,
-        promotionid,
-        banktype,
-        note,
-        phone
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DODEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DODEPOSIT_FAILED,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+      try {
+        const response = (await WalletService.PerformPulsaDeposit(
+          amount,
+          paymentid,
+          promotionid,
+          banktype,
+          note,
+          phone
+        )) as PerformPulsaDepositResDto;
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DODEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DODEPOSIT_FAILED,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DODEPOSIT_FAILED,
+          payload: error,
+          loading: false,
         });
+        return error;
+      }
     },
     []
   );
 
   const doEWalletDeposit = useCallback(
-    (
+    async (
       amount: number,
       paymentid: string,
       promotionid: string,
@@ -454,309 +470,328 @@ export function useWalletStore() {
         loading: true,
       });
 
-      return WalletService.PerformEWalletDeposit(
-        amount,
-        paymentid,
-        promotionid,
-        banktype,
-        note,
-        emoneyname,
-        phone
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DODEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DODEPOSIT_FAILED,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+      try {
+        const response = (await WalletService.PerformEWalletDeposit(
+          amount,
+          paymentid,
+          promotionid,
+          banktype,
+          note,
+          emoneyname,
+          phone
+        )) as PerformEWalletDepositResDto;
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DODEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DODEPOSIT_FAILED,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DODEPOSIT_FAILED,
+          payload: error,
+          loading: false,
         });
+        return error;
+      }
     },
     []
   );
 
   const doLeePayDeposit = useCallback(
-    (amount: number, paymentid: string, promotionid: string) => {
+    async (amount: number, paymentid: string, promotionid: string) => {
       dispatch({
         type: DOLEEPAYDEPOSIT_BEGIN,
         loading: true,
       });
 
-      return WalletService.PerformLeePayDeposit(amount, paymentid, promotionid)
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DOLEEPAYDEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DOLEEPAYDEPOSIT_FAIL,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+      try {
+        const response = (await WalletService.PerformLeePayDeposit(
+          amount,
+          paymentid,
+          promotionid
+        )) as PerformLeePayDepositResDto;
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DOLEEPAYDEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DOLEEPAYDEPOSIT_FAIL,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DOLEEPAYDEPOSIT_FAIL,
+          payload: error,
+          loading: false,
         });
+        return error;
+      }
     },
     []
   );
 
   const doUmPayBankDeposit = useCallback(
-    (amount: number, paymentid: string, promotionid: string) => {
+    async (amount: number, paymentid: string, promotionid: string) => {
       dispatch({
         type: DOUMPAYDEPOSIT_BEGIN,
         loading: true,
       });
 
-      return WalletService.PerformUmPayBankDeposit(
-        amount,
-        paymentid,
-        promotionid
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DOUMPAYDEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DOUMPAYDEPOSIT_FAIL,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+      try {
+        const response = await WalletService.PerformUmPayBankDeposit(
+          amount,
+          paymentid,
+          promotionid
+        );
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DOUMPAYDEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DOUMPAYDEPOSIT_FAIL,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DOUMPAYDEPOSIT_FAIL,
+          payload: error,
+          loading: false,
         });
+        return error;
+      }
     },
     []
   );
-
+  //-----------
   const doUmPayCryptoDeposit = useCallback(
-    (amount: number, paymentid: string, promotionid: string) => {
+    async (amount: number, paymentid: string, promotionid: string) => {
       dispatch({
         type: DOUMPAYDEPOSIT_BEGIN,
         loading: true,
       });
 
-      return WalletService.PerformUmPayCrytoDeposit(
-        amount,
-        paymentid,
-        promotionid
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DOUMPAYDEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DOUMPAYDEPOSIT_FAIL,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+      try {
+        const response = await WalletService.PerformUmPayCrytoDeposit(
+          amount,
+          paymentid,
+          promotionid
+        );
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DOUMPAYDEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DOUMPAYDEPOSIT_FAIL,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DOUMPAYDEPOSIT_FAIL,
+          payload: error,
+          loading: false,
         });
+      }
     },
     []
   );
 
   const doPrimePayDeposit = useCallback(
-    (amount: number, paymentid: string, promotionid: string) => {
+    async (amount: number, paymentid: string, promotionid: string) => {
       dispatch({
         type: DOPRIMEPAYDEPOSIT_BEGIN,
         loading: true,
       });
 
-      return WalletService.PerformPrimePayDeposit(
-        amount,
-        paymentid,
-        promotionid
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DOPRIMEPAYDEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DOPRIMEPAYDEPOSIT_FAIL,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+      try {
+        const response = await WalletService.PerformPrimePayDeposit(
+          amount,
+          paymentid,
+          promotionid
+        );
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DOPRIMEPAYDEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DOPRIMEPAYDEPOSIT_FAIL,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DOPRIMEPAYDEPOSIT_FAIL,
+          payload: error,
+          loading: false,
         });
+      }
     },
     []
   );
 
   const doMaticPayDeposit = useCallback(
-    (amount: number, paymentid: string, promotionid: string) => {
+    async (amount: number, paymentid: string, promotionid: string) => {
       dispatch({
         type: DOBANKDEPOSIT_BEGIN,
         loading: true,
       });
 
-      return WalletService.PerformMaticPayDeposit(
-        amount,
-        paymentid,
-        promotionid
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DOBANKDEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DOBANKDEPOSIT_FAILED,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+      try {
+        const response = await WalletService.PerformMaticPayDeposit(
+          amount,
+          paymentid,
+          promotionid
+        );
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DOBANKDEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DOBANKDEPOSIT_FAILED,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DOBANKDEPOSIT_FAILED,
+          payload: error,
+          loading: false,
         });
+      }
     },
     []
   );
 
   const doHelp2PayDeposit = useCallback(
-    (amount: number, paymentid: string, promotionid: string) => {
+    async (amount: number, paymentid: string, promotionid: string) => {
       dispatch({
         type: DOBANKDEPOSIT_BEGIN,
         loading: true,
       });
 
-      return WalletService.PerformHelp2PayDeposit(
-        amount,
-        paymentid,
-        promotionid
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DOBANKDEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DOBANKDEPOSIT_FAILED,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+      try {
+        const response = await WalletService.PerformHelp2PayDeposit(
+          amount,
+          paymentid,
+          promotionid
+        );
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DOBANKDEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DOBANKDEPOSIT_FAILED,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DOBANKDEPOSIT_FAILED,
+          payload: error,
+          loading: false,
         });
+      }
     },
     []
   );
 
   const doSkyPayDeposit = useCallback(
-    (amount: number, paymentid: string, promotionid: string) => {
+    async (amount: number, paymentid: string, promotionid: string) => {
       dispatch({
         type: DOBANKDEPOSIT_SUCCESS,
         loading: true,
       });
 
-      return WalletService.PerformSkyPayDeposit(amount, paymentid, promotionid)
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DOBANKDEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DOBANKDEPOSIT_FAILED,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
+      try {
+        const response = await WalletService.PerformSkyPayDeposit(
+          amount,
+          paymentid,
+          promotionid
+        );
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DOBANKDEPOSIT_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
           dispatch({
             type: DOBANKDEPOSIT_FAILED,
-            payload: error,
+            payload: response,
             loading: false,
           });
+        }
+
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DOBANKDEPOSIT_FAILED,
+          payload: error,
+          loading: false,
         });
+      }
     },
     []
   );
 
   const doApplePayDeposit = useCallback(
-    (
+    async (
       amount: number,
       paymentid: string,
       promotionid: string,
@@ -767,104 +802,111 @@ export function useWalletStore() {
         loading: true,
       });
 
-      return WalletService.PerformApplePayDeposit(
-        amount,
-        paymentid,
-        promotionid,
-        transname
-      )
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DOAPPLEPAYDEPOSIT_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DOAPPLEPAYDEPOSIT_FAIL,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
-          dispatch({
-            type: DOAPPLEPAYDEPOSIT_FAIL,
-            payload: error,
-            loading: false,
-          });
-        });
-    },
-    []
-  );
+      try {
+        const response = await WalletService.PerformApplePayDeposit(
+          amount,
+          paymentid,
+          promotionid,
+          transname
+        );
 
-  const doUploadDepositProof = useCallback(
-    (id: string, file: File, payload: any) => {
-      dispatch({
-        type: DOMANUALDEPOSITUPLOAD_BEGIN,
-        loading: true,
-      });
-
-      return WalletService.PerformUploadDepositProof(id, file)
-        .then((response) => {
-          if (response.IsSuccess) {
-            dispatch({
-              type: DOMANUALDEPOSITUPLOAD_SUCCESS,
-              payload: response,
-              loading: true,
-            });
-          } else {
-            dispatch({
-              type: DOMANUALDEPOSITUPLOAD_FAIL,
-              payload: response,
-              loading: false,
-            });
-          }
-          return response;
-        })
-        .catch((error) => {
-          dispatch({
-            type: DOMANUALDEPOSITUPLOAD_FAIL,
-            payload: error,
-            loading: false,
-          });
-        });
-    },
-    []
-  );
-
-  const getWithdrawalChannel = useCallback(() => {
-    dispatch({
-      type: GETWITHDRAWALCHANNEL_BEGIN,
-      loading: true,
-    });
-
-    return WalletService.GetListOfWithdrawChannel()
-      .then((response) => {
         if (response.IsSuccess) {
           dispatch({
-            type: GETWITHDRAWALCHANNEL_SUCCESS,
+            type: DOAPPLEPAYDEPOSIT_SUCCESS,
             payload: response,
             loading: true,
           });
         } else {
           dispatch({
-            type: GETWITHDRAWALCHANNEL_FAILED,
+            type: DOAPPLEPAYDEPOSIT_FAIL,
             payload: response,
             loading: false,
           });
         }
+
         return response;
-      })
-      .catch((error) => {
+      } catch (error) {
         dispatch({
-          type: GETWITHDRAWALCHANNEL_FAILED,
+          type: DOAPPLEPAYDEPOSIT_FAIL,
           payload: error,
           loading: false,
         });
+      }
+    },
+    []
+  );
+
+  const doUploadDepositProof = useCallback(
+    async (id: string, file: File, payload: any) => {
+      dispatch({
+        type: DOMANUALDEPOSITUPLOAD_BEGIN,
+        loading: true,
       });
+
+      try {
+        const response = await WalletService.PerformUploadDepositProof(
+          id,
+          file
+        );
+
+        if (response.IsSuccess) {
+          dispatch({
+            type: DOMANUALDEPOSITUPLOAD_SUCCESS,
+            payload: response,
+            loading: true,
+          });
+        } else {
+          dispatch({
+            type: DOMANUALDEPOSITUPLOAD_FAIL,
+            payload: response,
+            loading: false,
+          });
+        }
+
+        return response;
+      } catch (error) {
+        dispatch({
+          type: DOMANUALDEPOSITUPLOAD_FAIL,
+          payload: error,
+          loading: false,
+        });
+      }
+    },
+    []
+  );
+
+  const getWithdrawalChannel = useCallback(async () => {
+    dispatch({
+      type: GETWITHDRAWALCHANNEL_BEGIN,
+      loading: true,
+    });
+
+    try {
+      const response =
+        (await WalletService.GetListOfWithdrawChannel()) as GetListOfWithdrawChannelResDto;
+
+      if (response.IsSuccess) {
+        dispatch({
+          type: GETWITHDRAWALCHANNEL_SUCCESS,
+          payload: response,
+          loading: true,
+        });
+      } else {
+        dispatch({
+          type: GETWITHDRAWALCHANNEL_FAILED,
+          payload: response,
+          loading: false,
+        });
+      }
+
+      return response;
+    } catch (error) {
+      dispatch({
+        type: GETWITHDRAWALCHANNEL_FAILED,
+        payload: error,
+        loading: false,
+      });
+    }
   }, []);
 
   const getBankCardList = useCallback(() => {
