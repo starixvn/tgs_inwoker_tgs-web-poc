@@ -41,7 +41,6 @@ import { AppHistory } from "./history/History";
 import i18n from "./utils/i18n";
 
 import Mobile from "@/components/Mobile";
-import { AuthDialogContextProvider } from "@/components/Mobile/contexts/authContext";
 import { ThemeProvider } from "styled-components";
 import AudioPlayer from "./components/Share/audioplayer";
 import FeatureGetter from "./components/Share/feature-getter";
@@ -242,92 +241,88 @@ const AppWrapper = () => {
   if (isReady) {
     return (
       <Provider store={store}>
-        <AuthDialogContextProvider>
-          <FeatureGetter />
-          {Config.features.BackgroundMusic && <AudioPlayer />}
-          <StylesProvider injectFirst>
-            <MuiThemeProvider theme={muiTheme}>
-              <ThemeProvider theme={muiThemeMode}>
-                <GlobalStyles />
-                <SnackbarProvider
-                  classes={{
-                    variantSuccess: classes.success,
-                    variantError: classes.error,
-                    variantWarning: classes.warning,
-                    variantInfo: classes.info,
-                  }}
-                  iconVariant={{
-                    success: <Icon src={SuccessPNG}></Icon>,
-                    error: <Icon src={DangerPNG}></Icon>,
-                    warning: <Icon src={DangerPNG}></Icon>,
-                    info: <Icon src={InfoPNG}></Icon>,
-                  }}
-                  action={(key) => (
-                    <Dismiss onClick={onClickDismiss(key)}>x</Dismiss>
-                  )}
-                  maxSnack={3}
-                  autoHideDuration={3000}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "center",
-                  }}
-                  ref={notistackRef}
-                >
-                  <Router history={AppHistory}>
-                    <Switch>
-                      <Route
-                        exact
-                        path={
-                          "/deposit/:paymentcode/:methodcode/:channelid/:amount/:promotion/:name/:account?"
-                        }
-                        component={Deposit}
-                      />
-                      <Route
-                        exact
-                        path={"/joingame/:type/:params/:params2?"}
-                        component={JoinGame}
-                      />
-                      <Route
-                        exact
-                        path={"/redirect/:url"}
-                        component={RedirectPage}
-                      />
-                      <Route
-                        exact
-                        path={"/joinlottery/:brand"}
-                        component={JoinLotteryGame}
-                      />
-                      <Route
-                        exact
-                        path={"/joinlobbygame/:type/:params"}
-                        component={JoinLobbyGame}
-                      />
+        <FeatureGetter />
+        {Config.features.BackgroundMusic && <AudioPlayer />}
+        <StylesProvider injectFirst>
+          <MuiThemeProvider theme={muiTheme}>
+            <ThemeProvider theme={muiThemeMode}>
+              <GlobalStyles />
+              <SnackbarProvider
+                classes={{
+                  variantSuccess: classes.success,
+                  variantError: classes.error,
+                  variantWarning: classes.warning,
+                  variantInfo: classes.info,
+                }}
+                iconVariant={{
+                  success: <Icon src={SuccessPNG}></Icon>,
+                  error: <Icon src={DangerPNG}></Icon>,
+                  warning: <Icon src={DangerPNG}></Icon>,
+                  info: <Icon src={InfoPNG}></Icon>,
+                }}
+                action={(key) => (
+                  <Dismiss onClick={onClickDismiss(key)}>x</Dismiss>
+                )}
+                maxSnack={3}
+                autoHideDuration={3000}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+                ref={notistackRef}
+              >
+                <Router history={AppHistory}>
+                  <Switch>
+                    <Route
+                      exact
+                      path={
+                        "/deposit/:paymentcode/:methodcode/:channelid/:amount/:promotion/:name/:account?"
+                      }
+                      component={Deposit}
+                    />
+                    <Route
+                      exact
+                      path={"/joingame/:type/:params/:params2?"}
+                      component={JoinGame}
+                    />
+                    <Route
+                      exact
+                      path={"/redirect/:url"}
+                      component={RedirectPage}
+                    />
+                    <Route
+                      exact
+                      path={"/joinlottery/:brand"}
+                      component={JoinLotteryGame}
+                    />
+                    <Route
+                      exact
+                      path={"/joinlobbygame/:type/:params"}
+                      component={JoinLobbyGame}
+                    />
 
-                      {(() => {
-                        if (!isMobileOnly) {
-                          return (
-                            <Route
-                              exact
-                              path={"/maintenance"}
-                              render={(props) => <Maintenance />}
-                            />
-                          );
-                        }
-                      })()}
-                      <Route
-                        path={"/"}
-                        render={(props) =>
-                          isMobileOnly ? <Mobile /> : <Wap />
-                        }
-                      />
-                      <Redirect to={`/`} />
-                    </Switch>
-                  </Router>
-                </SnackbarProvider>
-              </ThemeProvider>
-            </MuiThemeProvider>
-          </StylesProvider>
-        </AuthDialogContextProvider>
+                    {(() => {
+                      if (!isMobileOnly) {
+                        return (
+                          <Route
+                            exact
+                            path={"/maintenance"}
+                            render={(props) => <Maintenance />}
+                          />
+                        );
+                      }
+                    })()}
+                    <Route
+                      path={"/"}
+                      render={(props) => (isMobileOnly ? <Mobile /> : <Wap />)}
+                    />
+                    <Redirect to={`/`} />
+                  </Switch>
+                </Router>
+              </SnackbarProvider>
+            </ThemeProvider>
+          </MuiThemeProvider>
+        </StylesProvider>
       </Provider>
     );
   } else {
