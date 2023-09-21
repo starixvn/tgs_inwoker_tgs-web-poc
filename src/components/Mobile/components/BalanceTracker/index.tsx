@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import AddIcon from "@material-ui/icons/Add";
 import { themeList } from "@/theme";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
+import { useWalletStore } from "@/hooks/stores/useWalletStore";
 
 const theme = themeList["mobileT18"];
 
@@ -45,6 +47,7 @@ const DepositButton = () => {
 };
 
 const BalanceTracker = () => {
+  const walletStore = useWalletStore();
   const currentBalance = `R$ 0.00`;
 
   return (

@@ -1,3 +1,5 @@
+import { keys } from "@material-ui/core/styles/createBreakpoints";
+
 export interface AccountState {
   pending: boolean;
   updateCardResult: null | any;
@@ -58,6 +60,8 @@ export interface AccountState {
     identityformstatus: number;
     identityformid: string;
     bankInfoAuthentication: boolean;
+  } & {
+    [key in string]: string;
   };
   vip: {
     member: string;

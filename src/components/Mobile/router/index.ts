@@ -8,9 +8,7 @@ import PromotionDetail from "@/components/Mobile/components/Promotion/PromotionD
 import VIP from "@/components/Mobile/pages/VIP";
 import BettingBonus from "@/components/Mobile/pages/BettingBonus";
 
-const Mine = React.lazy(
-  () => import("@/components/Mobile/components/Account/Mine")
-);
+const Mine = React.lazy(() => import("@/components/Mobile/pages/Mine"));
 
 interface Route {
   path: string;
@@ -50,14 +48,14 @@ const routes: Route[] = [
     path: "/promotion-list",
     component: Promotion,
     alert: true,
-    navigate: true
+    navigate: true,
   },
   {
     path: "/promotion/:id?",
     component: PromotionDetail,
     alert: true,
     navigate: true,
-    promoProps: true
+    promoProps: true,
   },
   {
     path: "/account",
