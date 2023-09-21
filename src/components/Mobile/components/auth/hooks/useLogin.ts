@@ -31,21 +31,8 @@ export function useLogin() {
         const result = await accountStore.accountLogin(username, password);
         console.log(result);
 
-        if (!result.IsSuccess) {
-          if (result.code === 210) throw new Error("banned");
-
-          if (result.data.self_control === 1) {
-            // TODO:selfControl
-            // this.props.showLogin(false);
-            // this.setState({
-            //   ...this.state,
-            //   expired_time: result.data.expired_time,
-            //   openSelfControlDialog: true,
-            //   openDialog: false,
-            //   loading: false,
-            // });
-            return;
-          }
+        if (!result?.IsSuccess) {
+          if (result?.code === 210) throw new Error("banned");
 
           throw new Error(i18n.t("common.msgInvalidUsername"));
         }

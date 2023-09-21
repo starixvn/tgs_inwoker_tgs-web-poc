@@ -15,12 +15,14 @@ class Vip {
   virtualSportsRebate: number = 0;
 }
 
+class DataDto {
+  items: Vip[] = [];
+  totalCount: number = 0;
+}
+
 export class GetVipResDto {
   IsSuccess: boolean = true;
   code: number = 0;
   info: string | null = null;
-  data: {
-    items: Vip[];
-    totalCount: number;
-  };
+  data: DataDto = new DataDto();
 }

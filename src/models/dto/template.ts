@@ -11,6 +11,6 @@ class DataDto {
 export class PerformPulsaDeposit {
   IsSuccess: boolean = true;
   code: number = 0;
-  data: DataDto;
+  data: DataDto = new DataDto();
   info: string | null = null;
 }

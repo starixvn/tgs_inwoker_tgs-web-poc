@@ -8,5 +8,5 @@ export class GetPromotionRouletteCountResDto {
   IsSuccess: boolean = true;
   code: number = 0;
   info: string | null = null;
-  data: Roulette[];
+  data: Roulette[] = [];
 }

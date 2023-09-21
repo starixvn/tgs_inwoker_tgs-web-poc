@@ -36,9 +36,9 @@ export function useGameStore() {
 
     try {
       const response =
-        (await GameService.GetHomePageGameList()) as GetHomePageGameListResDto;
+        (await GameService.GetHomePageGameList()) as unknown as GetHomePageGameListResDto;
 
-      if (response.IsSuccess) {
+      if (response?.IsSuccess) {
         dispatch({
           type: GETHOMEPAGEGAMELIST_SUCCESS,
           payload: response,
@@ -53,7 +53,7 @@ export function useGameStore() {
       }
 
       return response;
-    } catch (e) {
+    } catch (e: any) {
       dispatch({
         type: GETHOMEPAGEGAMELIST_FAIL,
         payload: e.status,
@@ -70,11 +70,12 @@ export function useGameStore() {
       });
 
       try {
+        //  @ts-ignore
         const response = (await GameService.SetFavoriteGame(
           gameId
         )) as SetFavoriteGameResDto;
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: SETFAVGAME_SUCCESS,
             payload: response,
@@ -89,7 +90,7 @@ export function useGameStore() {
         }
 
         return response;
-      } catch (e) {
+      } catch (e: any) {
         dispatch({
           type: SETFAVGAME_FAIL,
           payload: e.status,
@@ -108,11 +109,12 @@ export function useGameStore() {
       });
 
       try {
+        //  @ts-ignore
         const response = (await GameService.RemoveFavoriteGame(
           gameId
         )) as RemoveFavoriteGameResDto;
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: REMOVEFAVGAME_SUCCESS,
             payload: response,
@@ -127,7 +129,7 @@ export function useGameStore() {
         }
 
         return response;
-      } catch (e) {
+      } catch (e: any) {
         dispatch({
           type: REMOVEFAVGAME_FAIL,
           payload: e.status,
@@ -146,11 +148,12 @@ export function useGameStore() {
       });
 
       try {
+        //  @ts-ignore
         const response = (await GameService.GetFavoriteGame(
           gameType
-        )) as GetFavoriteGameResDto;
+        )) as unknown as GetFavoriteGameResDto;
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: GETFAVGAME_SUCCESS,
             payload: response,
@@ -165,7 +168,7 @@ export function useGameStore() {
         }
 
         return response;
-      } catch (e) {
+      } catch (e: any) {
         dispatch({
           type: GETFAVGAME_FAIL,
           payload: e.status,

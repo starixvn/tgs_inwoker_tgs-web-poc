@@ -1,17 +1,14 @@
-export enum PlatformTypeEnum {
-  IS_DESKTOP,
-  IS_MOBILE,
+class DataDto {
+  err: number = 0;
+  errmsg: string = "";
+  errmsgid: string = "";
+  token: string = "";
+  logintime: number = 0;
 }
 
 export class LoginResDto {
   IsSuccess: boolean = true;
   code: number = 0;
-  data: {
-    err: number;
-    errmsg: string;
-    errmsgid: string;
-    token: string;
-    logintime: number;
-  };
+  data: DataDto = new DataDto();
   info: string | null = null;
 }

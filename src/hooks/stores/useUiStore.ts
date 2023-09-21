@@ -30,18 +30,19 @@ export function useUiStore() {
     });
 
     try {
+      //  @ts-ignore
       const response = (await UiService.GetMarquee(
         language
-      )) as GetMarqueeResDto;
+      )) as unknown as GetMarqueeResDto;
 
-      if (response.IsSuccess) {
+      if (response?.IsSuccess) {
         dispatch({
           type: GETMARQUEE_SUCCESS,
           payload: response.data,
           loading: false,
         });
       }
-    } catch (e) {
+    } catch (e: any) {
       dispatch({
         type: GETMARQUEE_FAIL,
         loading: false,
@@ -56,9 +57,10 @@ export function useUiStore() {
     });
 
     try {
+      //  @ts-ignore
       const response = (await UiService.GetMarquee(
         language
-      )) as GetMarqueeResDto;
+      )) as unknown as GetMarqueeResDto;
 
       if (response.IsSuccess) {
         dispatch({
@@ -67,7 +69,7 @@ export function useUiStore() {
           loading: false,
         });
       }
-    } catch (e) {
+    } catch (e: any) {
       dispatch({
         type: GETANNOUNCEMENT_FAIL,
         loading: false,

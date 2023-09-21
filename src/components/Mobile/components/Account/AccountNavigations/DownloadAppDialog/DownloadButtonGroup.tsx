@@ -6,11 +6,14 @@ import config from "@/config/config";
 import i18n from "@/utils/i18n";
 import { utility } from "@/utils/utility";
 
+type ContainerProps = {
+  language: string;
+};
 const Container = styled.div`
   width: 100%;
   height: 100vh;
   position: relative;
-  background: url(${({ language }) => {
+  background: url(${({ language }: ContainerProps) => {
       return process.env.PUBLIC_URL + `/assets/images/download/bg.jpg`;
     }})
     no-repeat;
@@ -62,12 +65,15 @@ const Text = styled.div`
   font-size: 40px;
 `;
 
+type IconsProp = {
+  icon: string;
+};
 const Icons = styled.div`
   width: 60px;
   height: 60px;
 
   background: #000;
-  mask: url(${({ icon }) => {
+  mask: url(${({ icon }: IconsProp) => {
       return (
         process.env.PUBLIC_URL + `/assets/images/download/icons/${icon}.png`
       );
@@ -202,9 +208,10 @@ const Links = styled.div`
   cursor: pointer;
 `;
 
-const Download = ({ alert }) => {
+type Props = {};
+const Download = () => {
   const [open, setOpen] = useState(false);
-  const [download, setDownload] = useState([]);
+  const [download, setDownload] = useState<any[]>([]);
 
   const [pointlessDialog, setPointlessDialog] = useState(false);
 
@@ -222,8 +229,8 @@ const Download = ({ alert }) => {
         console.error(error);
       });
   }
-  function copyStupidLink(link) {
-    alert("", i18n.t("pointless.copy"));
+  function copyStupidLink(link: string) {
+    // alert("", i18n.t("pointless.copy"));
     utility.copy(link);
   }
 
@@ -234,7 +241,7 @@ const Download = ({ alert }) => {
     }
   }, []);
 
-  function logoSwitcher(brand) {
+  function logoSwitcher(brand: string) {
     switch (brand) {
       case "Atinbet":
         return "Atinbet";
@@ -282,7 +289,7 @@ const Download = ({ alert }) => {
             return (
               <QRCodeContainer>
                 <QRCodeHolder>
-                  <QRCode value={data.link} size="180" />
+                  <QRCode value={data.link} size={180} />
                 </QRCodeHolder>
                 <DeviceText>{data.platform}</DeviceText>
                 <DownloadButton

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { useDispatch, useSelector } from "react-redux";
 import { WalletState } from "@/types/wallet";
 import {
@@ -108,9 +110,9 @@ export function useWalletStore() {
       });
 
       const response =
-        (await WalletService.GetWalletBalance()) as GetWalletBalanceResDto;
-
-      if (response.IsSuccess) {
+        (await WalletService.GetWalletBalance()) as unknown as GetWalletBalanceResDto;
+      //@ts-ignore
+      if (response?.IsSuccess) {
         dispatch({
           type: GETWALLETEBALANCE_SUCCESS,
           payload: response,
@@ -123,7 +125,7 @@ export function useWalletStore() {
           loading: false,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: GETWALLETBALANCE_FAILED,
         payload: error,
@@ -140,9 +142,9 @@ export function useWalletStore() {
       });
 
       const response =
-        (await WalletService.GetDepositMethod()) as GetDepositMethodResDto;
-
-      if (response.IsSuccess) {
+        (await WalletService.GetDepositMethod()) as unknown as GetDepositMethodResDto;
+      //@ts-ignore
+      if (response?.IsSuccess) {
         dispatch({
           type: GETDEPOSITCHANNEL_SUCCESS,
           payload: response,
@@ -155,7 +157,7 @@ export function useWalletStore() {
           loading: false,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: GETDEPOSITCHANNEL_FAIL,
         payload: error,
@@ -180,6 +182,7 @@ export function useWalletStore() {
           loading: true,
         });
 
+        //  @ts-ignore
         const response = (await WalletService.PerformManualBankDeposit(
           name,
           account,
@@ -189,8 +192,8 @@ export function useWalletStore() {
           banktype,
           note
         )) as PerformManualBankDepositResDto;
-
-        if (response.IsSuccess) {
+        //@ts-ignore
+        if (response?.IsSuccess) {
           dispatch({
             type: DOMANUALDEPOSIT_SUCCESS,
             payload: response,
@@ -205,7 +208,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DOMANUALDEPOSIT_FAILED,
           payload: error,
@@ -231,6 +234,7 @@ export function useWalletStore() {
           loading: true,
         });
 
+        //  @ts-ignore
         const response = (await WalletService.PerformManualFPSDeposit(
           account,
           amount,
@@ -238,8 +242,8 @@ export function useWalletStore() {
           promotionid,
           banktype
         )) as PerformManualFPSDepositResDto;
-
-        if (response.IsSuccess) {
+        //@ts-ignore
+        if (response?.IsSuccess) {
           dispatch({
             type: DOMANUALDEPOSIT_SUCCESS,
             payload: response,
@@ -252,7 +256,7 @@ export function useWalletStore() {
             loading: false,
           });
         }
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DOMANUALDEPOSIT_FAILED,
           payload: error,
@@ -278,6 +282,7 @@ export function useWalletStore() {
       });
 
       try {
+        //  @ts-ignore
         const response = (await WalletService.PerformManualFPSDepositWithName(
           name,
           account,
@@ -286,8 +291,8 @@ export function useWalletStore() {
           promotionid,
           banktype
         )) as PerformManualFPSDepositWithNameResDto;
-
-        if (response.IsSuccess) {
+        //@ts-ignore
+        if (response?.IsSuccess) {
           dispatch({
             type: DOMANUALDEPOSIT_SUCCESS,
             payload: response,
@@ -302,7 +307,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DOMANUALDEPOSIT_FAILED,
           payload: error,
@@ -326,6 +331,7 @@ export function useWalletStore() {
       });
 
       try {
+        //  @ts-ignore
         const response = (await WalletService.PerformManualThirdPartyDeposit(
           amount,
           paymentid,
@@ -333,7 +339,7 @@ export function useWalletStore() {
           banktype
         )) as PerformManualThirdPartyDepositResDto;
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DOTHIRDPARTYDEPOSIT_SUCCESS,
             payload: response,
@@ -347,7 +353,7 @@ export function useWalletStore() {
           });
         }
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DOTHIRDPARTYDEPOSIT_FAIL,
           payload: error,
@@ -371,6 +377,7 @@ export function useWalletStore() {
       });
 
       try {
+        //  @ts-ignore
         const response = (await WalletService.PerformUsdtDeposit(
           amount,
           paymentid,
@@ -378,7 +385,7 @@ export function useWalletStore() {
           banktype
         )) as PerformUsdtDepositResDto;
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DODEPOSIT_SUCCESS,
             payload: response,
@@ -393,7 +400,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DODEPOSIT_FAILED,
           payload: error,
@@ -419,6 +426,7 @@ export function useWalletStore() {
       });
 
       try {
+        //  @ts-ignore
         const response = (await WalletService.PerformPulsaDeposit(
           amount,
           paymentid,
@@ -428,7 +436,7 @@ export function useWalletStore() {
           phone
         )) as PerformPulsaDepositResDto;
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DODEPOSIT_SUCCESS,
             payload: response,
@@ -443,7 +451,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DODEPOSIT_FAILED,
           payload: error,
@@ -470,6 +478,7 @@ export function useWalletStore() {
       });
 
       try {
+        //  @ts-ignore
         const response = (await WalletService.PerformEWalletDeposit(
           amount,
           paymentid,
@@ -480,7 +489,7 @@ export function useWalletStore() {
           phone
         )) as PerformEWalletDepositResDto;
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DODEPOSIT_SUCCESS,
             payload: response,
@@ -495,7 +504,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DODEPOSIT_FAILED,
           payload: error,
@@ -514,13 +523,14 @@ export function useWalletStore() {
       });
 
       try {
+        //  @ts-ignore
         const response = (await WalletService.PerformLeePayDeposit(
           amount,
           paymentid,
           promotionid
         )) as PerformLeePayDepositResDto;
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DOLEEPAYDEPOSIT_SUCCESS,
             payload: response,
@@ -535,7 +545,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DOLEEPAYDEPOSIT_FAIL,
           payload: error,
@@ -560,7 +570,7 @@ export function useWalletStore() {
           promotionid
         );
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DOUMPAYDEPOSIT_SUCCESS,
             payload: response,
@@ -575,7 +585,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DOUMPAYDEPOSIT_FAIL,
           payload: error,
@@ -600,7 +610,7 @@ export function useWalletStore() {
           promotionid
         );
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DOUMPAYDEPOSIT_SUCCESS,
             payload: response,
@@ -615,7 +625,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DOUMPAYDEPOSIT_FAIL,
           payload: error,
@@ -640,7 +650,7 @@ export function useWalletStore() {
           promotionid
         );
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DOPRIMEPAYDEPOSIT_SUCCESS,
             payload: response,
@@ -655,7 +665,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DOPRIMEPAYDEPOSIT_FAIL,
           payload: error,
@@ -680,7 +690,7 @@ export function useWalletStore() {
           promotionid
         );
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DOBANKDEPOSIT_SUCCESS,
             payload: response,
@@ -695,7 +705,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DOBANKDEPOSIT_FAILED,
           payload: error,
@@ -720,7 +730,7 @@ export function useWalletStore() {
           promotionid
         );
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DOBANKDEPOSIT_SUCCESS,
             payload: response,
@@ -735,7 +745,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DOBANKDEPOSIT_FAILED,
           payload: error,
@@ -760,7 +770,7 @@ export function useWalletStore() {
           promotionid
         );
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DOBANKDEPOSIT_SUCCESS,
             payload: response,
@@ -775,7 +785,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DOBANKDEPOSIT_FAILED,
           payload: error,
@@ -806,7 +816,7 @@ export function useWalletStore() {
           transname
         );
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DOAPPLEPAYDEPOSIT_SUCCESS,
             payload: response,
@@ -821,7 +831,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DOAPPLEPAYDEPOSIT_FAIL,
           payload: error,
@@ -845,7 +855,8 @@ export function useWalletStore() {
           file
         );
 
-        if (response.IsSuccess) {
+        //@ts-ignore
+        if (response?.IsSuccess) {
           dispatch({
             type: DOMANUALDEPOSITUPLOAD_SUCCESS,
             payload: response,
@@ -860,7 +871,7 @@ export function useWalletStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: DOMANUALDEPOSITUPLOAD_FAIL,
           payload: error,
@@ -879,9 +890,9 @@ export function useWalletStore() {
 
     try {
       const response =
-        (await WalletService.GetListOfWithdrawChannel()) as GetListOfWithdrawChannelResDto;
+        (await WalletService.GetListOfWithdrawChannel()) as unknown as GetListOfWithdrawChannelResDto;
 
-      if (response.IsSuccess) {
+      if (response?.IsSuccess) {
         dispatch({
           type: GETWITHDRAWALCHANNEL_SUCCESS,
           payload: response,
@@ -896,7 +907,7 @@ export function useWalletStore() {
       }
 
       return response;
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: GETWITHDRAWALCHANNEL_FAILED,
         payload: error,
@@ -913,9 +924,11 @@ export function useWalletStore() {
 
     return WalletService.GetBankCardList()
       .then((response) => {
-        if (response.IsSuccess) {
+        //@ts-ignore
+        if (response?.IsSuccess) {
           dispatch({
             type: GETBANKCARDLIST_SUCCESS,
+            //@ts-ignore
             payload: response.data,
             loading: false,
           });
@@ -948,7 +961,7 @@ export function useWalletStore() {
 
       return WalletService.InitBankCard(channelid, bankType, address)
         .then((response) => {
-          if (response.IsSuccess) {
+          if (response?.IsSuccess) {
             dispatch({
               type: ADDBANKCARD_SUCCESS,
               payload: response,
@@ -985,7 +998,7 @@ export function useWalletStore() {
 
       return WalletService.AddBankCard(channelid, bankType, address)
         .then((response) => {
-          if (response.IsSuccess) {
+          if (response?.IsSuccess) {
             dispatch({
               type: ADDBANKCARD_SUCCESS,
               payload: response,
@@ -1021,7 +1034,7 @@ export function useWalletStore() {
 
     return WalletService.DeleteBankCard(id)
       .then((response) => {
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DELETEBANKCARD_SUCCESS,
             payload: response,
@@ -1055,7 +1068,7 @@ export function useWalletStore() {
 
     return WalletService.GetWalletBalance()
       .then((response) => {
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: GETBALANCELIST_SUCCESS,
             payload: response.data,
@@ -1092,7 +1105,7 @@ export function useWalletStore() {
       WalletService.GetWalletBalance()
         // const result = WalletService.UpdateWalletDetails()
         .then((response) => {
-          if (response.IsSuccess) {
+          if (response?.IsSuccess) {
             dispatch({
               type: UPDATEBALANCELIST_SUCCESS,
               payload: response.data,
@@ -1127,7 +1140,7 @@ export function useWalletStore() {
 
     return WalletService.CancelDeposit(id)
       .then((response) => {
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: CANCELDEPOSIT_SUCCESS,
             payload: response,
@@ -1161,7 +1174,7 @@ export function useWalletStore() {
 
     return WalletService.WithdrawAll()
       .then((response) => {
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DOWITHDRAWALALL_SUCCESS,
             payload: response,
@@ -1194,7 +1207,7 @@ export function useWalletStore() {
     });
     const result = WalletService.Transfer(gpcode, amount)
       .then((response) => {
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DOTRANSFER_SUCCESS,
             payload: response,
@@ -1229,7 +1242,7 @@ export function useWalletStore() {
     });
     const result = WalletService.WithdrawalFromGame(gpcode, amount)
       .then((response) => {
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DOTRANSFER_SUCCESS,
             payload: response,
@@ -1264,7 +1277,7 @@ export function useWalletStore() {
     });
     const result = WalletService.WithdrawEverything()
       .then((response) => {
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: DOTRANSFER_SUCCESS,
             payload: response,
@@ -1297,7 +1310,7 @@ export function useWalletStore() {
     });
     const result = WalletService.GetGameBalance(gpcode)
       .then((response) => {
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: GETGAMEBALANCE_SUCCESS,
             payload: response,
@@ -1346,7 +1359,7 @@ export function useWalletStore() {
         paymentcode
       )
         .then((response) => {
-          if (response.IsSuccess) {
+          if (response?.IsSuccess) {
             dispatch({
               type: DOBANKDEPOSIT_SUCCESS,
               payload: response,
@@ -1391,7 +1404,7 @@ export function useWalletStore() {
         paymentcode
       )
         .then((response) => {
-          if (response.IsSuccess) {
+          if (response?.IsSuccess) {
             dispatch({
               type: DOCRYPTODEPOSIT_SUCCESS,
               payload: response,
@@ -1438,7 +1451,7 @@ export function useWalletStore() {
         type
       )
         .then((response) => {
-          if (response.IsSuccess) {
+          if (response?.IsSuccess) {
             dispatch({
               type: DODEPOSIT_SUCCESS,
               payload: response,
@@ -1472,7 +1485,7 @@ export function useWalletStore() {
     });
     const result = WalletService.AddBilling(card_id, amount)
       .then((response) => {
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: ADDBILLING_SUCCESS,
             payload: response,
@@ -1513,7 +1526,7 @@ export function useWalletStore() {
         note
       )
         .then((response) => {
-          if (response.IsSuccess) {
+          if (response?.IsSuccess) {
             dispatch({
               type: DOWITHDRAWAL_SUCCESS,
               payload: response,
@@ -1550,7 +1563,7 @@ export function useWalletStore() {
     });
     const result = WalletService.GetAutoTransferStatus()
       .then((response) => {
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: GETAUTOTRANSFER_SUCCESS,
             payload: response,
@@ -1585,7 +1598,7 @@ export function useWalletStore() {
     });
     const result = WalletService.UpdateAutoTransferStatus()
       .then((response) => {
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: UPDATEAUTOTRANSFER_SUCCESS,
             payload: response,
@@ -1636,7 +1649,7 @@ export function useWalletStore() {
         note
       )
         .then((response) => {
-          if (response.IsSuccess) {
+          if (response?.IsSuccess) {
             dispatch({
               type: DOMANUALDEPOSIT_SUCCESS,
               payload: response,
@@ -1687,7 +1700,7 @@ export function useWalletStore() {
         phone
       )
         .then((response) => {
-          if (response.IsSuccess) {
+          if (response?.IsSuccess) {
             dispatch({
               type: DODEPOSIT_SUCCESS,
               payload: response,
@@ -1740,7 +1753,8 @@ export function useWalletStore() {
         phone
       )
         .then((response) => {
-          if (response.IsSuccess) {
+          //@ts-ignore
+          if (response?.IsSuccess) {
             dispatch({
               type: DODEPOSIT_SUCCESS,
               payload: response,

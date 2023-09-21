@@ -117,7 +117,7 @@ const Mobile = (props: Props) => {
             urlParams.get("token")
           );
 
-          localStorage.setItem("token1", decryptedToken);
+          localStorage.setItem("token1", `${decryptedToken}`);
           AppHistory.replace("/");
           break;
         default:
@@ -195,7 +195,7 @@ const Mobile = (props: Props) => {
 
     return () => {
       window.removeEventListener("resize", updateScreenSize);
-      window.removeEventListener("focus", this.onFocus);
+      window.removeEventListener("focus", onFocus);
     };
   }, []);
 

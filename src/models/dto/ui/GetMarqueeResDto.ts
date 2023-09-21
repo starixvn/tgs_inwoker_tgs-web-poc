@@ -7,13 +7,15 @@ class Marquee {
   type: string = "";
 }
 
+class DataDto {
+  deposits: Marquee[] = [];
+  mains: Marquee[] = [];
+  marquees: Marquee[] = [];
+}
+
 export class GetMarqueeResDto {
   IsSuccess: boolean = true;
   code: number = 0;
   info: string | null = null;
-  data: {
-    deposits: Marquee[];
-    mains: Marquee[];
-    marquees: Marquee[];
-  };
+  data: DataDto = new DataDto();
 }

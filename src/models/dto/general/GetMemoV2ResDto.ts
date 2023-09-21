@@ -13,5 +13,5 @@ export class GetMemoV2ResDto {
   IsSuccess: boolean = true;
   code: number = 0;
   info: string | null = null;
-  data: DataDto;
+  data: DataDto = new DataDto();
 }

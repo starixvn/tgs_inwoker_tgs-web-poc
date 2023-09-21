@@ -1,4 +1,4 @@
-class DataDTO {
+class DataDto {
   content: string = "";
   localization: string = "";
   name: string = "";
@@ -21,5 +21,5 @@ export class GetDepositAccumulateRouletteResDto {
   IsSuccess: boolean = true;
   code: number = 0;
   info: string | null = null;
-  data: DataDTO;
+  data: DataDto = new DataDto();
 }
