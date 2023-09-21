@@ -1,26 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
+import AffiliateInfoRow from "@/components/Mobile/components/Account/AccountNavigations/AffiliateDialog/Affiliate/AffiliateInfoRow";
+import RebateTable from "@/components/Mobile/components/Account/AccountNavigations/AffiliateDialog/Affiliate/RebateTable";
+import Button from "@/components/Mobile/components/UI/Button";
+import Select from "@/components/Mobile/components/UI/Select";
+import DarkSelect from "@/components/Mobile/components/UI/Select/DarkSelect";
+import { useRebateTable } from "@/hooks/account/affiliate/useRebateTable";
 import { themeList } from "@/theme";
 import QRCode from "react-qr-code";
-import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import Button from "@/components/Mobile/components/UI/Button";
-import AffiliateInfoRow from "@/components/Mobile/components/Account/AccountNavigations/AffiliateDialog/Affiliate/AffiliateInfoRow";
-import Select from "@/components/Mobile/components/UI/Select";
-import DarkSelect, {
-  SelectItem,
-} from "@/components/Mobile/components/UI/Select/DarkSelect";
-import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
-import { BrandAllAgent } from "@/models/dto/general/GetBrandAllAgentResDto";
-import i18n from "@/utils/i18n";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@material-ui/core";
-import RebateTable from "@/components/Mobile/components/Account/AccountNavigations/AffiliateDialog/Affiliate/RebateTable";
-import { useRebateTable } from "@/hooks/account/affiliate/useRebateTable";
+import styled from "styled-components";
 
 const theme = themeList["mobileT18"];
 
@@ -80,51 +66,51 @@ const StyledSelect = styled(Select)`
 
 type Props = {};
 const Affiliate = (props: Props) => {
-  const {
-    rebateItemList,
-    selectedRebateItem,
-    handleChangeSelectItem,
-    rebateTableRow,
-    affiliateLink,
-  } = useRebateTable();
+    const {
+        rebateItemList,
+        selectedRebateItem,
+        handleChangeSelectItem,
+        rebateTableRow,
+        affiliateLink,
+    } = useRebateTable();
 
-  return (
-    <AffiliateContainer>
-      <AffiliateTitle>REFERRAL QR Code</AffiliateTitle>
+    return (
+        <AffiliateContainer>
+            <AffiliateTitle>REFERRAL QR Code</AffiliateTitle>
 
-      <QRCodeContainer id="qrcode-container">
-        <QRCode value={affiliateLink} />
-      </QRCodeContainer>
+            <QRCodeContainer id="qrcode-container">
+                <QRCode value={affiliateLink} />
+            </QRCodeContainer>
 
-      <ActionButtonContainer>
-        <Button>Copy</Button>
-        <Button>Download</Button>
-      </ActionButtonContainer>
+            <ActionButtonContainer>
+                <Button>Copy</Button>
+                <Button>Download</Button>
+            </ActionButtonContainer>
 
-      <AffiliateInfoRowContainer>
-        <AffiliateInfoRow label={"Referral ID"} value={"12"} />
-        <AffiliateInfoRow label={"Affiliate Link"} value={"12"} />
-      </AffiliateInfoRowContainer>
+            <AffiliateInfoRowContainer>
+                <AffiliateInfoRow label={"Referral ID"} value={"12"} />
+                <AffiliateInfoRow label={"Affiliate Link"} value={"12"} />
+            </AffiliateInfoRowContainer>
 
-      <AffiliateTitle style={{ alignSelf: "flex-start" }}>
-        Rebate Rates
-      </AffiliateTitle>
+            <AffiliateTitle style={{ alignSelf: "flex-start" }}>
+                Rebate Rates
+            </AffiliateTitle>
 
-      <DarkSelect
-        label={""}
-        selectItem={selectedRebateItem}
-        handleChange={handleChangeSelectItem}
-        selectItemList={rebateItemList}
-        backgroundColor={theme.primaryDark}
-        style={{
-          width: "100%",
-          marginBottom: "20px",
-        }}
-      />
+            <DarkSelect
+                label={""}
+                selectItem={selectedRebateItem}
+                handleChange={(newSelectItem) => handleChangeSelectItem(newSelectItem)}
+                selectItemList={rebateItemList}
+                backgroundColor={theme.primaryDark}
+                style={{
+                    width: "100%",
+                    marginBottom: "20px",
+                }}
+            />
 
-      <RebateTable rebateTableRow={rebateTableRow} />
-    </AffiliateContainer>
-  );
+            <RebateTable rebateTableRow={rebateTableRow} />
+        </AffiliateContainer>
+    );
 };
 
 export default Affiliate;
