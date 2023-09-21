@@ -1,4 +1,4 @@
 import { useContext } from "react";
-import { AuthDialogContext } from "@/components/Mobile/contexts/authContext";
+import { AuthDialogContext } from "@/contexts/authContext";
 
 export const useAuthDialog = () => useContext(AuthDialogContext);

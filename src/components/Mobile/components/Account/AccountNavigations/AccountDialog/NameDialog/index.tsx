@@ -1,6 +1,7 @@
 import React from "react";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
+import NameForm from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/NameDialog/NameForm";
 
 type Props = {
   isOpen: boolean;
@@ -14,7 +15,7 @@ const NameDialog = ({ isOpen, handleCloseDialog }: Props) => {
       dialogHeaderTitle={"Real Name"}
       transitionComponent={LeftTransition}
     >
-      <h1>HELLO</h1>
+      <NameForm />
     </DialogWithHeader>
   );
 };

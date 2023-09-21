@@ -6,7 +6,7 @@ export interface AccountState {
   registercompleted: boolean;
   info: {
     balance: number;
-    member_card_no: string;
+    member_card_no: string | null;
     member_id: number;
     member_level_id: number;
     member_name: null | string;
