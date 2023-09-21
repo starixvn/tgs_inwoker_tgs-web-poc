@@ -17,14 +17,6 @@ type Props = {};
 const Mobile = (props: Props) => {
   const { isLoading } = useInitSite();
 
-  // handle popup alert
-  const { showAlertPopup } = useNotifications();
-
-  // example
-  useEffect(() => {
-    showAlertPopup("i am title", "message", "i am small words at bottom");
-  }, []);
-
   if (isLoading) {
     return <Loading />;
   }
