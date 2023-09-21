@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { NamedExoticComponent, Props, useMemo } from "react";
 import profileImg from "@/assets/images/account/icon_profile.svg";
 import depositImg from "@/assets/images/account/icon_deposit.svg";
 import withdrawImg from "@/assets/images/account/icon_withdraw.svg";
@@ -129,7 +129,12 @@ export function useAccountNavigations() {
   };
 }
 
-export const NavDialogFactory = {
+export const NavDialogFactory: {
+  [key in any]: (props: {
+    isOpen: boolean;
+    handleCloseDialog: () => void;
+  }) => any;
+} = {
   [NavCardKey.PROFILE]: AccountDialog,
   [NavCardKey.TRANSFER]: TransferDialog,
   [NavCardKey.REPORT]: ReportDialog,

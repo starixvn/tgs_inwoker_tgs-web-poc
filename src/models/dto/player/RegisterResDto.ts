@@ -1,12 +1,14 @@
+class DataDto {
+  err: number = 0;
+  errmsg: string = "";
+  errmsgid: string = "";
+  uid: string = "";
+  isnew: boolean = true;
+}
+
 export class RegisterResDto {
   IsSuccess: boolean = true;
   code: number = 0;
-  data: {
-    err: number;
-    errmsg: string;
-    errmsgid: string;
-    uid: string;
-    isnew: boolean;
-  };
+  data: DataDto = new DataDto();
   info: string | null = null;
 }

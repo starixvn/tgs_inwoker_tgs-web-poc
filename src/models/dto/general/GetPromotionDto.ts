@@ -19,5 +19,5 @@ export class GetPromotionDto {
   IsSuccess: boolean = true;
   code: number = 0;
   info: string | null = null;
-  data: Promotion[];
+  data: Promotion[] = [];
 }

@@ -23,6 +23,6 @@ class WithdrawChannel {
 export class GetListOfWithdrawChannelResDto {
   IsSuccess: boolean = true;
   code: number = 0;
-  data: WithdrawChannel[];
+  data: WithdrawChannel[] = [];
   info: string | null = null;
 }

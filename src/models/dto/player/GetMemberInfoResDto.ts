@@ -28,6 +28,6 @@ export class MemberInfo {
 export class GetMemberInfoResDto {
   IsSuccess: boolean = true;
   code: number = 0;
-  data: MemberInfo;
+  data: MemberInfo = new MemberInfo();
   info: string | null = null;
 }

@@ -98,8 +98,8 @@ export function useGeneralStore() {
   const getSiteToken = useCallback(async () => {
     try {
       const response =
-        (await GeneralService.GetSiteToken()) as GetSiteTokenResDto;
-      if (response.IsSuccess) {
+        (await GeneralService.GetSiteToken()) as unknown as GetSiteTokenResDto;
+      if (response?.IsSuccess) {
         dispatch({
           type: GETSITETOKEN_SUCCESS,
           payload: response.data,
@@ -111,7 +111,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: GETSITETOKEN_FAIL,
         payload: error.data,
@@ -121,8 +121,10 @@ export function useGeneralStore() {
 
   const getBrand = useCallback(async () => {
     try {
-      const response = (await GeneralService.GetBrand()) as GetBrandResDto;
-      if (response.IsSuccess) {
+      //  @ts-ignore
+      const response =
+        (await GeneralService.GetBrand()) as unknown as GetBrandResDto;
+      if (response?.IsSuccess) {
         dispatch({
           type: GETBRAND_SUCCESS,
           payload: response,
@@ -134,7 +136,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: GETBRAND_FAIL,
         payload: error,
@@ -146,14 +148,14 @@ export function useGeneralStore() {
     // TODO:GeneralService.GetMobilePrefix is not defined
     // try {
     //   const response = await GeneralService.GetMobilePrefix();
-    //   if (response.IsSuccess) {
+    //   if (response?.IsSuccess) {
     //     dispatch({
     //       type: GETMOBILEPREFIX_SUCCESS,
     //       payload: response.data,
     //     });
     //   }
     //   return response;
-    // } catch (error) {
+    // } catch (error: any) {
     // }
   }, []);
 
@@ -172,6 +174,7 @@ export function useGeneralStore() {
       });
 
       try {
+        //  @ts-ignore
         const response = (await GeneralService.GetPromotionList(
           language,
           page,
@@ -179,8 +182,8 @@ export function useGeneralStore() {
           desc,
           sort,
           all
-        )) as GetPromotionListResDto;
-        if (response.IsSuccess) {
+        )) as unknown as GetPromotionListResDto;
+        if (response?.IsSuccess) {
           dispatch({
             type: GETPROMOLIST_SUCCESS,
             payload: response,
@@ -194,7 +197,7 @@ export function useGeneralStore() {
           });
         }
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: GETPROMOLIST_FAILURE,
           payload: error,
@@ -220,6 +223,7 @@ export function useGeneralStore() {
       });
 
       try {
+        //  @ts-ignore
         const response = (await GeneralService.GetPlayerPromotionList(
           language,
           page,
@@ -227,8 +231,8 @@ export function useGeneralStore() {
           desc,
           sort,
           all
-        )) as GetPlayerPromotionListResDto;
-        if (response.IsSuccess) {
+        )) as unknown as GetPlayerPromotionListResDto;
+        if (response?.IsSuccess) {
           dispatch({
             type: GETPLAYERPROMOLIST_SUCCESS,
             payload: response,
@@ -242,7 +246,7 @@ export function useGeneralStore() {
           });
         }
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: GETPLAYERPROMOLIST_FAILURE,
           payload: error,
@@ -260,10 +264,11 @@ export function useGeneralStore() {
     });
 
     try {
+      //  @ts-ignore
       const response = (await GeneralService.JoinPromotion(
         id
       )) as JoinPromotionResDto;
-      if (response.IsSuccess) {
+      if (response?.IsSuccess) {
         dispatch({
           type: JOINPROMO_SUCCESS,
           payload: response,
@@ -277,7 +282,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: JOINPROMO_FAILURE,
         payload: error,
@@ -294,8 +299,8 @@ export function useGeneralStore() {
 
     try {
       const response =
-        (await GeneralService.GetBrandCommunication()) as GetBrandCommunicationResDto;
-      if (response.IsSuccess) {
+        (await GeneralService.GetBrandCommunication()) as unknown as GetBrandCommunicationResDto;
+      if (response?.IsSuccess) {
         dispatch({
           type: GETBRANDCOMMUNICATION_SUCCESS,
           payload: response,
@@ -309,7 +314,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: GETBRANDCOMMUNICATION_FAIL,
         payload: error,
@@ -326,8 +331,8 @@ export function useGeneralStore() {
 
     try {
       const response =
-        (await GeneralService.GetBrandLanguage()) as GetBrandLanguageResDto;
-      if (response.IsSuccess) {
+        (await GeneralService.GetBrandLanguage()) as unknown as GetBrandLanguageResDto;
+      if (response?.IsSuccess) {
         dispatch({
           type: GETBRANDLANGUAGE_SUCCESS,
           payload: response,
@@ -341,7 +346,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: GETBRANDLANGUAGE_FAIL,
         payload: error,
@@ -357,8 +362,10 @@ export function useGeneralStore() {
     });
 
     try {
-      const response = (await GeneralService.GetBanner()) as GetBannerResDto;
-      if (response.IsSuccess) {
+      //  @ts-ignore
+      const response =
+        (await GeneralService.GetBanner()) as unknown as GetBannerResDto;
+      if (response?.IsSuccess) {
         dispatch({
           type: GETBANNER_SUCCESS,
           payload: response,
@@ -372,7 +379,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: GETBANNER_FAIL,
         payload: error,
@@ -389,8 +396,8 @@ export function useGeneralStore() {
 
     try {
       const response =
-        (await GeneralService.GetLiveChatURL()) as GetLiveChatUrlResDto;
-      if (response.IsSuccess) {
+        (await GeneralService.GetLiveChatURL()) as unknown as GetLiveChatUrlResDto;
+      if (response?.IsSuccess) {
         dispatch({
           type: GETLIVECHATURL_SUCCESS,
           payload: response,
@@ -404,7 +411,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: GETLIVECHATURL_FAIL,
         payload: error,
@@ -419,8 +426,10 @@ export function useGeneralStore() {
     });
 
     try {
-      const response = (await GeneralService.GetVIP()) as GetVipResDto;
-      if (response.IsSuccess) {
+      //  @ts-ignore
+      const response =
+        (await GeneralService.GetVIP()) as unknown as GetVipResDto;
+      if (response?.IsSuccess) {
         dispatch({
           type: GETVIP_SUCCESS,
           payload: response,
@@ -432,14 +441,14 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {}
+    } catch (error: any) {}
   }, []);
 
   const getInvitationCode = useCallback(async () => {
     try {
       const response =
-        (await GeneralService.GetInvitationCode()) as GetInvitationCodeResDto;
-      if (response.IsSuccess) {
+        (await GeneralService.GetInvitationCode()) as unknown as GetInvitationCodeResDto;
+      if (response?.IsSuccess) {
         dispatch({
           type: GETINVITATIONCODE_SUCCESS,
           payload: response,
@@ -451,7 +460,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {}
+    } catch (error: any) {}
   }, []);
 
   const getPromotionRouletteStatus = useCallback(async (id: string) => {
@@ -460,10 +469,11 @@ export function useGeneralStore() {
     });
 
     try {
+      //  @ts-ignore
       const response = (await GeneralService.GetPromotionRouletteStatus(
         id
-      )) as GetPromotionRouletteStatusResDto;
-      if (response.IsSuccess) {
+      )) as unknown as GetPromotionRouletteStatusResDto;
+      if (response?.IsSuccess) {
         dispatch({
           type: GETPROMOROULETTE_STATUS_SUCCESS,
           payload: response,
@@ -475,7 +485,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {}
+    } catch (error: any) {}
   }, []);
 
   const getPromotionRouletteResult = useCallback(async (id) => {
@@ -484,10 +494,11 @@ export function useGeneralStore() {
     });
 
     try {
+      //  @ts-ignore
       const response = (await GeneralService.GetPromotionRouletteResult(
         id
-      )) as GetPromotionRouletteResultResDto;
-      if (response.IsSuccess) {
+      )) as unknown as GetPromotionRouletteResultResDto;
+      if (response?.IsSuccess) {
         dispatch({
           type: GETPROMOROULETTE_RESULT_SUCCESS,
           payload: response,
@@ -499,7 +510,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {}
+    } catch (error: any) {}
   }, []);
 
   const getPromotion = useCallback(async () => {
@@ -508,7 +519,9 @@ export function useGeneralStore() {
     });
 
     try {
-      const response = (await GeneralService.GetPromotion()) as GetPromotionDto;
+      //  @ts-ignore
+      const response =
+        (await GeneralService.GetPromotion()) as unknown as GetPromotionDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETPROMOTION_SUCCESS,
@@ -521,7 +534,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {}
+    } catch (error: any) {}
   }, []);
 
   const getPromotionRouletteCount = useCallback(async () => {
@@ -531,7 +544,7 @@ export function useGeneralStore() {
 
     try {
       const response =
-        (await GeneralService.GetPromotionRouletteCount()) as GetPromotionRouletteCountResDto;
+        (await GeneralService.GetPromotionRouletteCount()) as unknown as GetPromotionRouletteCountResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETROULETTE_COUNT_SUCCESS,
@@ -544,23 +557,23 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {}
+    } catch (error: any) {}
   }, []);
 
   const getDepositAccumulateRoulette = useCallback(async (id: string) => {
     try {
       return (await GeneralService.GetDepositAccumulateRoulette(
         id
-      )) as GetDepositAccumulateRouletteResDto;
-    } catch (error) {}
+      )) as unknown as GetDepositAccumulateRouletteResDto;
+    } catch (error: any) {}
   }, []);
 
   const getDepositAccumulateRouletteResult = useCallback(async (id: string) => {
     try {
       return (await GeneralService.GetDepositAccumulateRouletteResult(
         id
-      )) as GetDepositAccumulateRouletteResultResDto;
-    } catch (error) {}
+      )) as unknown as GetDepositAccumulateRouletteResultResDto;
+    } catch (error: any) {}
   }, []);
 
   const getDepositAccumulateRouletteHistory = useCallback(
@@ -568,17 +581,18 @@ export function useGeneralStore() {
       try {
         return (await GeneralService.GetDepositAccumulateRouletteHistory(
           id
-        )) as GetDepositAccumulateRouletteHistoryResDto;
-      } catch (error) {}
+        )) as unknown as GetDepositAccumulateRouletteHistoryResDto;
+      } catch (error: any) {}
     },
     []
   );
 
   const getBrandAllAgent = useCallback(async () => {
     try {
+      //  @ts-ignore
       const response = (await GeneralService.GetBrandAllAgent(
         ""
-      )) as GetBrandAllAgentResDto;
+      )) as unknown as GetBrandAllAgentResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETBRANDALLAGENT_SUCCESS,
@@ -591,13 +605,13 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {}
+    } catch (error: any) {}
   }, []);
 
   const getAffiliateStatus = useCallback(async () => {
     try {
       const response =
-        (await GeneralService.GetAffiliateStatus()) as GetAffiliateStatusResDto;
+        (await GeneralService.GetAffiliateStatus()) as unknown as GetAffiliateStatusResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETAFFILIATESTATUS_SUCCESS,
@@ -610,7 +624,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {}
+    } catch (error: any) {}
   }, []);
 
   const getMemoV2 = useCallback(async () => {
@@ -620,11 +634,12 @@ export function useGeneralStore() {
     });
 
     try {
+      //  @ts-ignore
       const response = (await GeneralService.GetMemoV2(
         "",
         0,
         0
-      )) as GetMemoV2ResDto;
+      )) as unknown as GetMemoV2ResDto;
       if (response.IsSuccess) {
         dispatch({
           type: GETMEMOV2_SUCCESS,
@@ -639,7 +654,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: GETMEMOV2_FAIL,
         payload: error,
@@ -655,6 +670,7 @@ export function useGeneralStore() {
     });
 
     try {
+      //  @ts-ignore
       const response = (await GeneralService.ReplyMemo(
         id,
         message
@@ -673,7 +689,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: REPLYMEMO_FAIL,
         payload: error,
@@ -689,6 +705,7 @@ export function useGeneralStore() {
     });
 
     try {
+      //  @ts-ignore
       const response = (await GeneralService.ComposeMemo(
         subject,
         message
@@ -707,7 +724,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: COMPOSEMEMO_FAIL,
         payload: error,
@@ -722,6 +739,7 @@ export function useGeneralStore() {
     });
 
     try {
+      //  @ts-ignore
       const response = (await GeneralService.ReadMemo(id)) as ReadMemoResDto;
       if (response.IsSuccess) {
         dispatch({
@@ -735,7 +753,7 @@ export function useGeneralStore() {
         });
       }
       return response;
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: READMEMO_FAIL,
         payload: error,
@@ -763,7 +781,7 @@ export function useGeneralStore() {
     //     });
     //   }
     //   return response;
-    // } catch (error) {
+    // } catch (error: any) {
     //   dispatch({
     //     type: DELIVERYBOX_FAIL,
     //     payload: error,

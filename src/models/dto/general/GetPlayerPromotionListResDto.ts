@@ -3,12 +3,14 @@ export class PlayerPromotion {
   promotionName: string = "";
 }
 
+class DataDto {
+  items: PlayerPromotion[] = [];
+  totalCount: number = 0;
+}
+
 export class GetPlayerPromotionListResDto {
   IsSuccess: boolean = true;
   code: number = 0;
   info: string | null = null;
-  data: {
-    items: PlayerPromotion[];
-    totalCount: number;
-  };
+  data: DataDto = new DataDto();
 }

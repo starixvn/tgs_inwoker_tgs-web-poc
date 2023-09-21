@@ -25,9 +25,9 @@ export function useBonusStore() {
     });
 
     try {
-      const response = await BonusService.AvailableList(token);
+      const response = (await BonusService.AvailableList(token)) as any;
 
-      if (response.IsSuccess) {
+      if (response?.IsSuccess) {
         dispatch({
           type: BONUSNEW_SUCCESS,
           payload: response,
@@ -44,7 +44,7 @@ export function useBonusStore() {
       }
 
       return response;
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: BONUSNEW_FAILURE,
         payload: error,

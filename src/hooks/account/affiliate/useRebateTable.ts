@@ -47,7 +47,7 @@ export function useRebateTable() {
 
   const fetchRebateTable = useCallback(async () => {
     const res = await getBrandAllAgent();
-    if (!res.IsSuccess) return;
+    if (!res?.IsSuccess) return;
 
     setRebateTableRows(res.data);
   }, []);

@@ -6,6 +6,6 @@ class DataDto {
 export class PerformLeePayDepositResDto {
   IsSuccess: boolean = true;
   code: number = 0;
-  data: DataDto;
+  data: DataDto = new DataDto();
   info: string | null = null;
 }

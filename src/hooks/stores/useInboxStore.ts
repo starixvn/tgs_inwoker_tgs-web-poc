@@ -9,6 +9,8 @@ import {
   SETMESSAGEREAD_SUCCESS,
 } from "@/api-services/constant/actionType";
 import { InboxService } from "@/api-services/services/InboxService";
+import { InboxListResDto } from "@/models/dto/inbox/InboxListResDto";
+import { UpdateReadMessageResDto } from "@/models/dto/inbox/UpdateReadMessageResDto";
 
 export function useInboxStore() {
   const dispatch = useDispatch();
@@ -26,8 +28,12 @@ export function useInboxStore() {
           type: GETMESSAGE_BEGIN,
           loading: true,
         });
-        const response = await InboxService.InboxList(language, pages, limit);
-        if (response.IsSuccess) {
+        const response = (await InboxService.InboxList(
+          language,
+          pages,
+          limit
+        )) as unknown as InboxListResDto;
+        if (response?.IsSuccess) {
           dispatch({
             type: GETMESSAGE_SUCCESS,
             payload: response,
@@ -44,7 +50,7 @@ export function useInboxStore() {
         }
 
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: GETMESSAGE_FAILED,
           payload: error,
@@ -62,7 +68,9 @@ export function useInboxStore() {
         loading: true,
       });
       try {
-        const response = InboxService.UpdateReadMessage(ids);
+        const response = (await InboxService.UpdateReadMessage(
+          ids
+        )) as unknown as UpdateReadMessageResDto;
         if (response.IsSuccess) {
           dispatch({
             type: SETMESSAGEREAD_SUCCESS,
@@ -78,7 +86,7 @@ export function useInboxStore() {
           });
         }
         return response;
-      } catch (error) {
+      } catch (error: any) {
         dispatch({
           type: SETMESSAGEREAD_FAILED,
           payload: error,

@@ -54,9 +54,9 @@ export function useAccountStore() {
         const response = (await AccountService.AddRealName(
           name,
           number
-        )) as AddRealNameResDto;
+        )) as unknown as AddRealNameResDto;
 
-        if (response.IsSuccess) {
+        if (response?.IsSuccess) {
           dispatch({
             type: UPDATECARDNO_SUCCESS,
             payload: {
@@ -75,7 +75,7 @@ export function useAccountStore() {
         }
 
         return response;
-      } catch (e) {
+      } catch (e: any) {
         dispatch({
           type: UPDATECARDNO_FAILURE,
           payload: e.status,
@@ -96,8 +96,8 @@ export function useAccountStore() {
         const response = (await AccountService.Login(
           username,
           password
-        )) as LoginResDto;
-        if (response.IsSuccess) {
+        )) as unknown as LoginResDto;
+        if (response?.IsSuccess) {
           dispatch({
             type: LOGIN_SUCCESS,
             payload: response,
@@ -112,7 +112,7 @@ export function useAccountStore() {
         }
 
         return response;
-      } catch (e) {
+      } catch (e: any) {
         dispatch({
           type: UPDATECARDNO_FAILURE,
           payload: e.status,
@@ -128,9 +128,9 @@ export function useAccountStore() {
       type: LOGOUT_BEGIN,
       loading: true,
     });
-    const response = (await AccountService.Logout()) as LogoutResDto;
+    const response = (await AccountService.Logout()) as unknown as LogoutResDto;
 
-    if (response.IsSuccess) {
+    if (response?.IsSuccess) {
       dispatch({
         type: LOGOUT_SUCCESS,
         payload: response,
@@ -153,9 +153,9 @@ export function useAccountStore() {
       loading: true,
     });
     const response =
-      (await AccountService.GetMemberInfo()) as GetMemberInfoResDto;
+      (await AccountService.GetMemberInfo()) as unknown as GetMemberInfoResDto;
 
-    if (response.IsSuccess) {
+    if (response?.IsSuccess) {
       dispatch({
         type: CHECKTOKEN_SUCCESS,
         payload: response,
@@ -179,8 +179,9 @@ export function useAccountStore() {
       loading: true,
     });
     try {
+      // @ts-ignore
       const result =
-        (await AccountService.GetMemberInfo()) as GetMemberInfoResDto;
+        (await AccountService.GetMemberInfo()) as unknown as GetMemberInfoResDto;
       if (result.IsSuccess) {
         dispatch({
           type: GETACCOUNT_SUCCESS,
@@ -198,7 +199,7 @@ export function useAccountStore() {
       }
 
       return result;
-    } catch (e) {
+    } catch (e: any) {
       dispatch({
         type: GETACCOUNT_FAILURE,
         payload: e,
@@ -210,8 +211,8 @@ export function useAccountStore() {
   const getAccountProfile = useCallback(async (showVip: boolean) => {
     try {
       const response =
-        (await AccountService.GetMemberInfo()) as GetMemberInfoResDto;
-      if (response.IsSuccess) {
+        (await AccountService.GetMemberInfo()) as unknown as GetMemberInfoResDto;
+      if (response?.IsSuccess) {
         dispatch({
           type: showVip ? GETACCOUNT_SUCCESS : GETBALANCE_SUCCESS,
           payload: response,
@@ -227,12 +228,13 @@ export function useAccountStore() {
         });
       }
       return response;
-    } catch (e) {
+    } catch (e: any) {
       dispatch({
         type: GETACCOUNT_FAILURE,
         payload: e,
         loading: false,
       });
+      throw e;
     }
   }, []);
 
@@ -251,8 +253,8 @@ export function useAccountStore() {
           confirmpwd,
           invitationcode,
           upper
-        )) as RegisterResDto;
-      } catch (e) {
+        )) as unknown as RegisterResDto;
+      } catch (e: any) {
         dispatch({
           type: GETACCOUNT_FAILURE,
           payload: e,
@@ -269,7 +271,8 @@ export function useAccountStore() {
       loading: true,
     });
     try {
-      const result = (await AccountService.GetIDCardNo()) as GetIDCardNoResDto;
+      const result =
+        (await AccountService.GetIDCardNo()) as unknown as GetIDCardNoResDto;
       if (result.IsSuccess) {
         dispatch({
           type: GETIDCARDNO_SUCCESS,
@@ -287,7 +290,7 @@ export function useAccountStore() {
       }
 
       return result;
-    } catch (e) {
+    } catch (e: any) {
       dispatch({
         type: GETIDCARDNO_FAILURE,
         payload: e,
@@ -300,7 +303,7 @@ export function useAccountStore() {
     var result = AccountService.GetPromoteUser(
       page,
       limit
-    ) as GetPromoteUserResDto;
+    ) as unknown as GetPromoteUserResDto;
 
     if (result.IsSuccess) {
       dispatch({
@@ -317,7 +320,7 @@ export function useAccountStore() {
       const result = (await AccountService.GetPromoteBill(
         page,
         limit
-      )) as GetPromoteBillResDto;
+      )) as unknown as GetPromoteBillResDto;
 
       if (result.IsSuccess) {
         dispatch({
@@ -334,8 +337,8 @@ export function useAccountStore() {
 
   const GetRegisterStatus = useCallback(async () => {
     try {
-      return (await AccountService.GetRegisterStatus()) as GetRegisterStatusResDto;
-    } catch (e) {
+      return (await AccountService.GetRegisterStatus()) as unknown as GetRegisterStatusResDto;
+    } catch (e: any) {
       dispatch({
         type: GETACCOUNT_FAILURE,
         payload: e,
@@ -349,8 +352,8 @@ export function useAccountStore() {
       return (await AccountService.NewRegister(
         type,
         input
-      )) as NewRegisterResDto;
-    } catch (e) {
+      )) as unknown as NewRegisterResDto;
+    } catch (e: any) {
       dispatch({
         type: GETACCOUNT_FAILURE,
         payload: e,
@@ -370,7 +373,7 @@ export function useAccountStore() {
           name,
           number,
           file
-        )) as UpdateMemberNameAndICResDto;
+        )) as unknown as UpdateMemberNameAndICResDto;
 
         if (result.IsSuccess) {
           dispatch({
@@ -390,7 +393,7 @@ export function useAccountStore() {
           });
         }
         return result;
-      } catch (e) {
+      } catch (e: any) {
         dispatch({
           type: UPDATECARDNO_FAILURE,
           payload: e.status,

@@ -9,6 +9,6 @@ class Game {
 export class GetHomePageGameListResDto {
   IsSuccess: boolean = true;
   code: number = 0;
-  data: Game[];
+  data: Game[] = [];
   info: string | null = null;
 }
