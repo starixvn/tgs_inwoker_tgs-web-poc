@@ -20,6 +20,7 @@ import {
   LOGOUT_BEGIN,
   LOGOUT_FAILURE,
   LOGOUT_SUCCESS,
+  RESET_ACCOUNTRESULT,
   UPDATECARDNO_BEGIN,
   UPDATECARDNO_FAILURE,
   UPDATECARDNO_SUCCESS,
@@ -404,6 +405,12 @@ export function useAccountStore() {
     []
   );
 
+  const resetAccountResult = useCallback(() => {
+    dispatch({
+      type: RESET_ACCOUNTRESULT,
+    });
+  }, []);
+
   return {
     account,
     updateMemberCardNo,
@@ -419,5 +426,6 @@ export function useAccountStore() {
     GetRegisterStatus,
     newRegister,
     performUpdateMemberNameAndIC,
+    resetAccountResult,
   };
 }

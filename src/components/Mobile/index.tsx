@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import MobileLayout from "@/components/Mobile/layouts/mobileLayout";
 import { Redirect, Route, Router, Switch } from "react-router";
 import { AppHistory } from "@/history/History";
@@ -8,11 +8,22 @@ import RegisterDialog from "@/components/Mobile/components/auth/RegisterDialog";
 import Loading from "@/components/Mobile/components/UI/Loading";
 import PopupAnnouncement from "@/components/Mobile/components/Popup/PopupAnnouncement";
 import { useInitSite } from "@/hooks/useInitSite";
-import { AuthDialogContextProvider } from "@/components/Mobile/contexts/authContext";
+import { AuthDialogContextProvider } from "@/contexts/authContext";
+import { NotificationContextProvider } from "@/contexts/notificationContext";
+import PopupAlertModal from "@/components/Mobile/components/Popup/PopupAlertDialog";
+import { useNotifications } from "@/hooks/useNotifications";
 
 type Props = {};
 const Mobile = (props: Props) => {
   const { isLoading } = useInitSite();
+
+  // handle popup alert
+  const { showAlertPopup } = useNotifications();
+
+  // example
+  useEffect(() => {
+    showAlertPopup("i am title", "message", "i am small words at bottom");
+  }, []);
 
   if (isLoading) {
     return <Loading />;
@@ -48,6 +59,7 @@ const Mobile = (props: Props) => {
         <LoginDialog />
         <RegisterDialog />
         <PopupAnnouncement />
+        <PopupAlertModal />
       </AuthDialogContextProvider>
     </>
   );

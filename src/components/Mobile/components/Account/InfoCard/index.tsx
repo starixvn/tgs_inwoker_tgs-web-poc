@@ -6,13 +6,15 @@ import emailImg from "@/assets/images/account/icon_email.png";
 import birthImg from "@/assets/images/account/icon_birth.png";
 import { themeList } from "@/theme";
 import { ReactI18NextChild } from "react-i18next";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
 
 const theme = themeList["mobileT18"];
 
 const InfoCardContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
+  padding-left: 28px;
 `;
 
 const Border = styled.div`
@@ -21,7 +23,12 @@ const Border = styled.div`
   height: 115px;
 `;
 
-const AvatarContainer = styled.div``;
+const AvatarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: ${theme.tertiary};
+`;
 
 const InfoItemListContainer = styled.div`
   & > div {
@@ -53,28 +60,38 @@ interface InfoItem {
   infoType: string;
   value: string;
   logoImg: string;
+  isNotValid: boolean;
 }
 
 const InfoCard = (props: any) => {
+  const accountStore = useAccountStore();
+  const username = accountStore.account.info.member_username;
+
   const infoItemList: InfoItem[] = useMemo(() => {
+    const accountInfo = accountStore.account.info;
+
     return [
       {
         infoType: "phone",
         logoImg: phoneImg,
-        value: "",
+        value: accountInfo.member_phone || "Not yet verified",
+        isNotValid: !accountInfo.member_phone,
       },
       {
         infoType: "email",
         logoImg: emailImg,
-        value: "liyibass@gmail.com",
+        value: accountInfo.member_email || "Not yet set",
+        isNotValid: !accountInfo.member_email,
       },
       {
         infoType: "birth",
         logoImg: birthImg,
-        value: "",
+        value: accountInfo.member_birthday || "Not yet set",
+        isNotValid: !accountInfo.member_birthday,
       },
     ];
-  }, []);
+  }, [accountStore.account.info]);
+
   return (
     // @ts-ignore
     <InfoCardContainer {...props}>
@@ -82,24 +99,21 @@ const InfoCard = (props: any) => {
         <div className={".avatar"}>
           <img src={avatarImg} alt={"avatar"} />
         </div>
-        Tony
+        {username}
       </AvatarContainer>
 
       <Border />
 
       <InfoItemListContainer>
         {infoItemList.map((infoItem) => {
-          const { logoImg, infoType, value } = infoItem;
+          const { logoImg, infoType, value, isNotValid } = infoItem;
           return (
             <InfoItemContainer key={infoType}>
               <div className={"logo"}>
                 <img src={logoImg} alt={"avatar"} />
               </div>
-              {value ? (
-                <span>{value}</span>
-              ) : (
-                <span className={"unbound"}>Unbound</span>
-              )}
+
+              <span className={isNotValid ? "unbound" : ""}>{value}</span>
             </InfoItemContainer>
           );
         })}

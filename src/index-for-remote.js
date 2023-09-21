@@ -27,7 +27,7 @@ import AudioPlayer from "./components/Share/audioplayer";
 import { GlobalStyles } from "./global";
 import { themeList } from "./theme";
 import Mobile from "@/components/Mobile";
-import { AuthDialogContextProvider } from "@/components/Mobile/contexts/authContext";
+import { AuthDialogContextProvider } from "@/contexts/authContext";
 
 require("es6-promise").polyfill();
 
