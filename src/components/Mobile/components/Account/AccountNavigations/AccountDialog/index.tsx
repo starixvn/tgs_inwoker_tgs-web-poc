@@ -9,7 +9,7 @@ import PhoneDialog from "@/components/Mobile/components/Account/AccountNavigatio
 import EmailDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/EmailDialog";
 import BirthDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/BirthDialog";
 import QQDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/QQDialog";
-import WechatDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/WechatDialog";
+import WeChatDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/WeChatDialog";
 import PasswordDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/PasswordDialog";
 import i18n from "@/utils/i18n";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
@@ -279,7 +279,7 @@ const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
         isOpen={dialogOpenState["qq"]}
         handleCloseDialog={handleCloseProfileItem}
       />
-      <WechatDialog
+      <WeChatDialog
         isOpen={dialogOpenState["wechat"]}
         handleCloseDialog={handleCloseProfileItem}
       />

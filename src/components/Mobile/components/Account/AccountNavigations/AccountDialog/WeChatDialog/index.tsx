@@ -1,12 +1,18 @@
 import React from "react";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
+import { useNotifications } from "@/hooks/useNotifications";
+import { useHistory } from "react-router-dom";
+import WeChat from "@/components/Mobile/components/_PrevProfile/WeChat";
 
 type Props = {
   isOpen: boolean;
   handleCloseDialog: () => void;
 };
-const WechatDialog = ({ isOpen, handleCloseDialog }: Props) => {
+const WeChatDialog = ({ isOpen, handleCloseDialog }: Props) => {
+  const { alert } = useNotifications();
+  const history = useHistory();
+
   return (
     <DialogWithHeader
       isOpen={isOpen}
@@ -14,9 +20,9 @@ const WechatDialog = ({ isOpen, handleCloseDialog }: Props) => {
       dialogHeaderTitle={"Wechat Account"}
       transitionComponent={LeftTransition}
     >
-      <h1>HELLO</h1>
+      <WeChat alert={alert} appHistory={history} />
     </DialogWithHeader>
   );
 };
 
-export default WechatDialog;
+export default WeChatDialog;

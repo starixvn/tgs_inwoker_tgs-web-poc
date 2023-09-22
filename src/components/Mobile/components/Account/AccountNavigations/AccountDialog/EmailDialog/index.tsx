@@ -1,12 +1,18 @@
 import React from "react";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
+import Email from "@/components/Mobile/components/_PrevProfile/Email";
+import { useNotifications } from "@/hooks/useNotifications";
+import { useHistory } from "react-router-dom";
 
 type Props = {
   isOpen: boolean;
   handleCloseDialog: () => void;
 };
 const EmailDialog = ({ isOpen, handleCloseDialog }: Props) => {
+  const { alert } = useNotifications();
+  const history = useHistory();
+
   return (
     <DialogWithHeader
       isOpen={isOpen}
@@ -14,7 +20,7 @@ const EmailDialog = ({ isOpen, handleCloseDialog }: Props) => {
       dialogHeaderTitle={"Email Address"}
       transitionComponent={LeftTransition}
     >
-      <h1>Hello</h1>
+      <Email alert={alert} appHistory={history} />
     </DialogWithHeader>
   );
 };
