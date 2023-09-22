@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import i18n from "@/utils/i18n";
-import { AccountService } from "@/api-services/services/AccountService";
 import config from "@/config/config";
 import Textbox from "../_PrevShare/Textbox";
 import Button from "../_PrevShare/Button";
@@ -9,9 +8,11 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import Loading from "@/components/Mobile/components/UI/Loading";
 import BottomNote from "@/components/Mobile/components/_PrevShare/BottomNote";
+import { useAccountService } from "@/hooks/services/useAccountService";
 
 const WeChat = () => {
   const { account, getAccountProfile } = useAccountStore();
+  const AccountService = useAccountService();
   const { alert } = useNotifications();
 
   const [wechat, setWechat] = useState("");
@@ -36,7 +37,7 @@ const WeChat = () => {
     return !wechat;
   };
 
-  const handleSubmitClicked = () => {
+  const handleSubmitClicked = async () => {
     const wechatValue = wechat;
     // Validate WeChat here
     const re = new RegExp("^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}$");
@@ -47,29 +48,32 @@ const WeChat = () => {
 
     showLoading(true);
 
-    // API call to update WeChat
-    AccountService.UpdateIM(wechatValue, "wechat", "wechat")
-      .then((response) => {
-        //@ts-ignore
-        if (response?.IsSuccess) {
-          getAccountProfile(true).then((responseUpdate) => {
-            if (responseUpdate?.IsSuccess) {
-              setWechat(wechatValue);
-              setIsConfigured(true);
-            }
-            alert("", i18n.t("common.msgSuccessUpdateProfile"));
-            showLoading(false);
-          });
-        } else {
-          //@ts-ignore
-          alert("", response?.msg);
-          showLoading(false);
+    try {
+      // API call to update WeChat
+      const response = await AccountService.UpdateIM(
+        wechatValue,
+        "wechat",
+        "wechat"
+      );
+
+      //@ts-ignore
+      if (response?.IsSuccess) {
+        const responseUpdate = await getAccountProfile(true);
+        if (responseUpdate?.IsSuccess) {
+          setWechat(wechatValue);
+          setIsConfigured(true);
         }
-      })
-      .catch((err) => {
-        alert("", err.message);
+        alert("", i18n.t("common.msgSuccessUpdateProfile"));
         showLoading(false);
-      });
+      } else {
+        //@ts-ignore
+        alert("", response?.msg);
+        showLoading(false);
+      }
+    } catch (error: any) {
+      alert("", error.message);
+      showLoading(false);
+    }
   };
 
   const showLoading = (loading: boolean) => {
