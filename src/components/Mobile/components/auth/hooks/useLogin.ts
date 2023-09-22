@@ -62,9 +62,9 @@ export function useLogin() {
     username: string,
     needToRemember?: boolean
   ) => {
-    const response: any = await dispatch(accountAction.getAccountInfo());
+    const response = await accountStore.getAccountInfo();
 
-    if (!response.IsSuccess) throw new Error("Fetching account info fail");
+    if (!response?.IsSuccess) throw new Error("Fetching account info fail");
 
     const bankInfoAuthentication = response.data.bankinfoauthentication;
     if (

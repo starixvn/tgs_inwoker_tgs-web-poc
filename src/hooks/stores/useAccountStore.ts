@@ -193,6 +193,8 @@ export function useAccountStore() {
       // @ts-ignore
       const result =
         (await AccountService.GetMemberInfo()) as unknown as GetMemberInfoResDto;
+      console.log(result);
+
       if (result.IsSuccess) {
         dispatch({
           type: GETACCOUNT_SUCCESS,
@@ -223,6 +225,8 @@ export function useAccountStore() {
     try {
       const response =
         (await AccountService.GetMemberInfo()) as unknown as GetMemberInfoResDto;
+      // response.data.identityauthentication = true;
+
       if (response?.IsSuccess) {
         dispatch({
           type: showVip ? GETACCOUNT_SUCCESS : GETBALANCE_SUCCESS,

@@ -1,12 +1,18 @@
 import React from "react";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
+import { useNotifications } from "@/hooks/useNotifications";
+import { useHistory } from "react-router-dom";
+import ChangePassword from "@/components/Mobile/components/_PrevProfile/ChangePassword";
 
 type Props = {
   isOpen: boolean;
   handleCloseDialog: () => void;
 };
-const NameDialog = ({ isOpen, handleCloseDialog }: Props) => {
+const PasswordDialog = ({ isOpen, handleCloseDialog }: Props) => {
+  const { alert } = useNotifications();
+  const history = useHistory();
+
   return (
     <DialogWithHeader
       isOpen={isOpen}
@@ -14,9 +20,10 @@ const NameDialog = ({ isOpen, handleCloseDialog }: Props) => {
       dialogHeaderTitle={"Login Password"}
       transitionComponent={LeftTransition}
     >
-      <h1>HELLO</h1>
+      {/*@ts-ignore*/}
+      <ChangePassword alert={alert} appHistory={history} />
     </DialogWithHeader>
   );
 };
 
-export default NameDialog;
+export default PasswordDialog;

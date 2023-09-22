@@ -5,14 +5,14 @@ export const initialState: {
   title: string;
   message: string;
   action: string;
-  showAlertPopup: (title: string, message: string, action: string) => void;
+  alert: (title: string, message: string, action?: string) => void;
   closeAlertPopup: () => void;
 } = {
   isOpen: false,
   title: "",
   message: "",
   action: "",
-  showAlertPopup: (title: string, message: string, action: string = "") => {},
+  alert: (title: string, message: string, action?: string) => {},
   closeAlertPopup: () => {},
 };
 
@@ -31,11 +31,11 @@ export const NotificationContextProvider = ({ children }: ProviderProps) => {
   const [action, setAction] = useState<string>("");
 
   const showAlertPopup = useCallback(
-    (title: string, message: string, action: string = "") => {
+    (title: string, message: string, action?: string) => {
       setIsOpen(true);
       setTitle(title);
       setMessage(message);
-      setAction(action);
+      setAction(action || "");
     },
     []
   );
@@ -51,7 +51,7 @@ export const NotificationContextProvider = ({ children }: ProviderProps) => {
         title,
         message,
         action,
-        showAlertPopup,
+        alert: showAlertPopup,
         closeAlertPopup,
       }}
     >
