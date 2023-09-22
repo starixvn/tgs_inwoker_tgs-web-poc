@@ -55,7 +55,7 @@ export interface AccountState {
     token: string;
     logintime: string;
     member_last_login: string;
-    member_birthdate: null;
+    member_birthdate: string | null;
     playercode: string;
     identityformstatus: number;
     identityformid: string;

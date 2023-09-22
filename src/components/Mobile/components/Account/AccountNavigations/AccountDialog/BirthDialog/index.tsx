@@ -3,7 +3,7 @@ import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWit
 import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useHistory } from "react-router-dom";
-import Birthdate from "@/components/Mobile/components/_PrevProfile/Birthdate";
+import Birthdate from "@/components/Mobile/components/_PrevProfile/BirthDate";
 
 type Props = {
   isOpen: boolean;
@@ -20,7 +20,7 @@ const BirthDialog = ({ isOpen, handleCloseDialog }: Props) => {
       dialogHeaderTitle={"Birth Date"}
       transitionComponent={LeftTransition}
     >
-      <Birthdate alert={alert} appHistory={history} />
+      <Birthdate />
     </DialogWithHeader>
   );
 };

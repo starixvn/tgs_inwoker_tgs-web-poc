@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import i18n from "../../../../utils/i18n";
-import { accountAction } from "../../../../api-services/actions/accountAction";
-import { AccountService } from "../../../../api-services/services/AccountService";
+import i18n from "@/utils/i18n";
+import { accountAction } from "@/api-services/actions/accountAction";
+import { AccountService } from "@/api-services/services/AccountService";
 import BaseProfile from "./BaseProfile";
-import config from "../../../../config/config";
-import BottomNote from "../_PrevShare/BottomNoteDepecrated";
+import config from "@/config/config";
+import BottomNote from "../_PrevShare/BottomNote";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
@@ -55,7 +55,7 @@ const CustomLabel = styled.div`
   color: ${({ theme }) => theme.secondary};
 `;
 
-class Birthdate extends BaseProfile {
+class BirthdatePrev extends BaseProfile {
   state = {
     birthdate: moment(
       this.props.account.info.member_birthdate
@@ -190,4 +190,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(Birthdate));
+)(withRouter(BirthdatePrev));
