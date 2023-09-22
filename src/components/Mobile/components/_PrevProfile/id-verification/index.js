@@ -208,7 +208,6 @@ class NameVerify extends BaseProfile {
   };
 
   sceneSwitcher = (scene) => {
-    console.log(scene);
     switch (scene) {
       case "waiting-verification":
         return <Approved {...this.commonprops} />;

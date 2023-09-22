@@ -9,7 +9,7 @@ type Props = {
   isOpen: boolean;
   handleCloseDialog: () => void;
 };
-const NameDialog = ({ isOpen, handleCloseDialog }: Props) => {
+const PasswordDialog = ({ isOpen, handleCloseDialog }: Props) => {
   const { alert } = useNotifications();
   const history = useHistory();
 
@@ -20,9 +20,10 @@ const NameDialog = ({ isOpen, handleCloseDialog }: Props) => {
       dialogHeaderTitle={"Login Password"}
       transitionComponent={LeftTransition}
     >
+      {/*@ts-ignore*/}
       <ChangePassword alert={alert} appHistory={history} />
     </DialogWithHeader>
   );
 };
 
-export default NameDialog;
+export default PasswordDialog;

@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Textbox from "../_PrevShare/Textbox";
 import BaseProfile from "./BaseProfile";
+import { AccountService } from "@/api-services/services/AccountService";
 
-import { AccountService } from "../../../../api-services/services/AccountService";
+import i18n from "@/utils/i18n";
+import config from "@/config/config";
 
-import i18n from "../../../../utils/i18n";
-import config from "../../../../config/config";
 class ChangePassword extends BaseProfile {
   componentDidMount() {}
   handleChangeOldPassword = (e) => {

@@ -1,9 +1,9 @@
 import React from "react";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
-import NameVerify from "@/components/Mobile/components/_PrevProfile/id-verification";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useHistory } from "react-router-dom";
+import NameVerify from "@/components/Mobile/components/_PrevProfile/id-verification";
 
 type Props = {
   isOpen: boolean;
