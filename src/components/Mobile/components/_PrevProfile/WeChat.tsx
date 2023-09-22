@@ -22,7 +22,7 @@ const WeChat = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const isConfigured = Boolean(account?.info.member_wechat);
+    const isConfigured = !!account?.info.member_wechat;
 
     setWechat(account.info.member_wechat || "");
     setIsConfigured(isConfigured);

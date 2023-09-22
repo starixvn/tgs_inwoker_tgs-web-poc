@@ -12,6 +12,7 @@ import { GetRegisterStatusResDto } from "@/models/dto/player/GetRegisterStatusRe
 import { NewRegisterResDto } from "@/models/dto/player/NewRegisterResDto";
 import { UpdateMemberNameAndICResDto } from "@/models/dto/player/UpdateMemberNameAndICResDto";
 import { UpdateIMResDto } from "@/models/dto/player/UpdateIMResDto";
+import { SetBirthDateResDto } from "@/models/dto/player/SetBirthDateResDto";
 
 export function useAccountService() {
   function CheckUserName(username: string) {
@@ -104,7 +105,7 @@ export function useAccountService() {
   function SetBirthDate(yyyymmdd: string) {
     return ApiService.patch("player/birthdate", {
       birthdate: yyyymmdd,
-    });
+    }) as unknown as SetBirthDateResDto;
   }
 
   function UpdateIM(value: string, im: string, param: string) {
