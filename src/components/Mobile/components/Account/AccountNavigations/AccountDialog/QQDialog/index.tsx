@@ -1,26 +1,22 @@
 import React from "react";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
-import { useNotifications } from "@/hooks/useNotifications";
-import { useHistory } from "react-router-dom";
 import QQ from "@/components/Mobile/components/_PrevProfile/QQ";
+import i18n from "@/utils/i18n";
 
 type Props = {
   isOpen: boolean;
   handleCloseDialog: () => void;
 };
 const QQDialog = ({ isOpen, handleCloseDialog }: Props) => {
-  const { alert } = useNotifications();
-  const history = useHistory();
-
   return (
     <DialogWithHeader
       isOpen={isOpen}
       handleCloseDialog={handleCloseDialog}
-      dialogHeaderTitle={"QQ"}
+      dialogHeaderTitle={i18n.t("common.qqNumber")}
       transitionComponent={LeftTransition}
     >
-      <QQ alert={alert} appHistory={history} />
+      <QQ />
     </DialogWithHeader>
   );
 };

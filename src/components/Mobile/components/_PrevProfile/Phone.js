@@ -7,7 +7,7 @@ import BaseProfile from "./BaseProfile";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { AccountService } from "@/api-services/services/AccountService";
 import styled from "styled-components";
-import BottomNote from "../_PrevShare/BottomNote";
+import BottomNote from "../_PrevShare/BottomNoteDepecrated";
 
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
@@ -157,29 +157,6 @@ class Phone extends BaseProfile {
         }
         this.showLoading(false);
       });
-
-    // AccountService.VerifyPhone(this.state.phone, this.state.areacode)
-    //   .then((response) => {
-    //     if (response.IsSuccess) {
-    //       this.setState({
-    //         ...this.state,
-    //         countdownToken: 60,
-    //         securityKey: response.data,
-    //       });
-    //       this.showInfoMessage(i18n.t("common.msgTokenSent"));
-    //       setTimeout(() => {
-    //         this.checkCountdownToken();
-    //       }, 1000);
-    //     } else {
-    //       this.showErrorMessage(response.info);
-    //     }
-    //     this.showLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     this.showErrorMessage(err);
-
-    //     this.showLoading(false);
-    //   });
   };
 
   isDisableButton = () => {
@@ -275,14 +252,6 @@ class Phone extends BaseProfile {
                     if (response.IsSuccess) {
                       this.props.getAccountInfo().then((responseUpdate) => {
                         if (responseUpdate.IsSuccess) {
-                          // this.setState({
-                          //   ...this.state,
-                          //   code: "",
-                          //   securityKey: "",
-                          //   countdownToken: 0,
-                          //   isNew: false,
-                          //   isConfigured: true,
-                          // });
                           if (
                             responseUpdate.data.email === null &&
                             !responseUpdate.data.registercompleted
@@ -344,34 +313,6 @@ class Phone extends BaseProfile {
           this.showLoading(false);
         });
     }
-    // this.props
-    //   .newRegister("InitPhone", {
-    //     input: "Valid",
-    //     data: {
-    //       securitykey: this.state.securityKey,
-    //       validatecode: this.state.code,
-    //     },
-    //   })
-    //   .then(async (response) => {
-    //     if (response.IsSuccess) {
-    //       this.props.getAccountInfo().then((responseUpdate) => {
-    //         if (responseUpdate.IsSuccess) {
-    //           this.setState({
-    //             ...this.state,
-    //             code: "",
-    //             securityKey: "",
-    //             countdownToken: 0,
-    //             isNew: false,
-    //             isConfigured: true,
-    //           });
-    //         }
-    //         this.showLoading(false);
-    //       });
-    //     } else {
-    //       this.showErrorMessage(response.info);
-    //       this.showLoading(false);
-    //     }
-    //   });
   };
 
   render() {
