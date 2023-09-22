@@ -128,17 +128,23 @@ export function useInitSite() {
 
     if (NEED_TO_REFRESH_TOKEN) {
       const responseToken = await accountStore.checkTokenIsValid();
-      if (!responseToken.IsSuccess) return;
+      if (!responseToken?.IsSuccess) return;
 
-      const { data: memberInfo } = await accountStore.getAccountProfile(true);
+      const res = await accountStore.getAccountProfile(true);
+      const memberInfo = res?.data;
 
       const bankInfoAuthentication = memberInfo?.bankinfoauthentication;
-      const isPhoneNull = memberInfo.phone === null;
-      const isEmailNull = memberInfo.email === null;
-      const isRegisterCompleted = memberInfo.registercompleted;
 
-      if (config.features.ForceRedirectAddCard && !bankInfoAuthentication) {
+      if (
+        config.features.ForceRedirectAddCard &&
+        memberInfo &&
+        !bankInfoAuthentication
+      ) {
         setIsLoading(false);
+
+        const isPhoneNull = !memberInfo.phone;
+        const isEmailNull = !memberInfo.email;
+        const isRegisterCompleted = memberInfo.registercompleted;
 
         if (isPhoneNull) {
           history.push({
@@ -177,13 +183,14 @@ export function useInitSite() {
     ];
 
     await Promise.all(anotherPromiseList);
-    setIsLoading(false);
 
     window.addEventListener("focus", onFocus);
   };
 
   useEffect(() => {
-    validateTokenState().then();
+    validateTokenState().then(() => {
+      setIsLoading(false);
+    });
 
     return () => {
       window.removeEventListener("resize", updateScreenSize);

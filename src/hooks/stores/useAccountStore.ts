@@ -153,25 +153,35 @@ export function useAccountStore() {
       type: CHECKTOKEN_BEGIN,
       loading: true,
     });
-    const response =
-      (await AccountService.GetMemberInfo()) as unknown as GetMemberInfoResDto;
 
-    if (response?.IsSuccess) {
-      dispatch({
-        type: CHECKTOKEN_SUCCESS,
-        payload: response,
-        loading: false,
-      });
-    } else {
-      localStorage.removeItem("token");
+    try {
+      const response =
+        (await AccountService.GetMemberInfo()) as unknown as GetMemberInfoResDto;
 
+      if (response?.IsSuccess) {
+        dispatch({
+          type: CHECKTOKEN_SUCCESS,
+          payload: response,
+          loading: false,
+        });
+      } else {
+        localStorage.removeItem("token");
+
+        dispatch({
+          type: CHECKTOKEN_FAILURE,
+          payload: response,
+          loading: false,
+        });
+      }
+
+      return response;
+    } catch (error: any) {
       dispatch({
         type: CHECKTOKEN_FAILURE,
-        payload: response,
+        payload: error,
         loading: false,
       });
     }
-    return response;
   }, []);
 
   const getAccountInfo = useCallback(async () => {
@@ -235,7 +245,6 @@ export function useAccountStore() {
         payload: e,
         loading: false,
       });
-      throw e;
     }
   }, []);
 
