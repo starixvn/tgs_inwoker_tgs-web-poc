@@ -6,7 +6,7 @@ import { accountAction } from "../../../../api-services/actions/accountAction";
 import { AccountService } from "../../../../api-services/services/AccountService";
 import BaseProfile from "./BaseProfile";
 import config from "../../../../config/config";
-import BottomNote from "../_PrevShare/BottomNote";
+import BottomNote from "../_PrevShare/BottomNoteDepecrated";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 

@@ -1,17 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-
 import { withRouter } from "react-router-dom";
+import i18n from "@/utils/i18n";
+import { accountAction } from "@/api-services/actions/accountAction";
+import { AccountService } from "@/api-services/services/AccountService";
+import config from "@/config/config";
 
 import Textbox from "../_PrevShare/Textbox";
-
 import BaseProfile from "./BaseProfile";
-import i18n from "../../../../utils/i18n";
-import { accountAction } from "../../../../api-services/actions/accountAction";
-import { AccountService } from "../../../../api-services/services/AccountService";
-import config from "../../../../config/config";
-import BottomNote from "../_PrevShare/BottomNote";
-class WeChat extends BaseProfile {
+import BottomNote from "../_PrevShare/BottomNoteDepecrated";
+
+class WeChatPrev extends BaseProfile {
   state = {
     wechat: "",
     isConfigured: false,
@@ -135,4 +134,7 @@ const mapDispatchToProps = (dispatch) => {
     getAccountProfile: () => dispatch(accountAction.getAccountProfile(true)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(WeChat));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(WeChatPrev));

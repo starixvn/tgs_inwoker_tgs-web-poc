@@ -1,15 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Textbox from "../_PrevShare/Textbox";
-import i18n from "../../../../utils/i18n";
-import { accountAction } from "../../../../api-services/actions/accountAction";
-import { AccountService } from "../../../../api-services/services/AccountService";
+import i18n from "@/utils/i18n";
+import { accountAction } from "@/api-services/actions/accountAction";
+import { AccountService } from "@/api-services/services/AccountService";
+import config from "@/config/config";
 import BaseProfile from "./BaseProfile";
-import config from "../../../../config/config";
-import BottomNote from "../_PrevShare/BottomNote";
+import Textbox from "../_PrevShare/Textbox";
+import BottomNote from "../_PrevShare/BottomNoteDepecrated";
 
-class QQ extends BaseProfile {
+class QQPrev extends BaseProfile {
   state = {
     qq: "",
     isConfigured: false,
@@ -137,4 +137,4 @@ const mapDispatchToProps = (dispatch) => {
     getAccountProfile: () => dispatch(accountAction.getAccountProfile(true)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(QQ));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(QQPrev));

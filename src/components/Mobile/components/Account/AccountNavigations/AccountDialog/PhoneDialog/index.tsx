@@ -4,6 +4,7 @@ import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transit
 import { useNotifications } from "@/hooks/useNotifications";
 import Phone from "@/components/Mobile/components/_PrevProfile/Phone";
 import { useHistory } from "react-router-dom";
+import PhoneNew from "@/components/Mobile/components/_PrevProfile/QQ";
 
 type Props = {
   isOpen: boolean;
@@ -20,7 +21,7 @@ const PhoneDialog = ({ isOpen, handleCloseDialog }: Props) => {
       dialogHeaderTitle={"Phone Number"}
       transitionComponent={LeftTransition}
     >
-      <Phone alert={alert} appHistory={history} />
+      <Phone />
     </DialogWithHeader>
   );
 };

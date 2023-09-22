@@ -20,7 +20,7 @@ const LabelNormal = styled.span`
   color: ${({ theme }) => theme.primary};
   text-decoration: none;
 `;
-class BottomNote extends Component {
+class BottomNoteDepecrated extends Component {
   GetSupportUrl = (userid, name, question, email) => {
     var newURL = this.props.general.livechat
       ? this.props.general.livechat.setting.url
@@ -88,4 +88,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(BottomNote);
+export default connect(mapStateToProps, null)(BottomNoteDepecrated);

@@ -6,7 +6,7 @@ import TextboxWithButton from "../_PrevShare/TextboxWithButton";
 import BaseProfile from "./BaseProfile";
 import { accountAction } from "../../../../api-services/actions/accountAction";
 import { AccountService } from "../../../../api-services/services/AccountService";
-import BottomNote from "../_PrevShare/BottomNote";
+import BottomNote from "../_PrevShare/BottomNoteDepecrated";
 
 import i18n from "../../../../utils/i18n";
 import config from "../../../../config/config";

@@ -1,17 +1,16 @@
 import React, { Component } from "react";
+import styled from "styled-components";
+import i18n from "@/utils/i18n";
+import { UPDATE_INFO } from "@/api-services/constant/actionType";
 
 import Button from "../_PrevShare/Button";
-import BottomNote from "../_PrevShare/BottomNote";
-import styled from "styled-components";
+import BottomNote from "../_PrevShare/BottomNoteDepecrated";
 import Header from "../_PrevShare/Header";
 import Loading from "../_PrevShare/Loading";
-import i18n from "../../../../utils/i18n";
-import { UPDATE_INFO } from "../../../../api-services/constant/actionType";
 
 const Container = styled.div`
   width: 100%;
   overflow: hidden;
-  //height: 100%;
 `;
 
 class BaseProfile extends Component {

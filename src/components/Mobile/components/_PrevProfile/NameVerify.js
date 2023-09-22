@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Textbox from "../_PrevShare/Textbox";
 import i18n from "../../../../utils/i18n";
-import BottomNote from "../_PrevShare/BottomNote";
+import BottomNote from "../_PrevShare/BottomNoteDepecrated";
 import BaseProfile from "./BaseProfile";
 import styled from "styled-components";
 
