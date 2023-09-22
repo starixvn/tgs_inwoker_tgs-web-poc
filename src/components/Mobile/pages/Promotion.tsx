@@ -25,7 +25,7 @@ const PromotionCardListContainer = styled.div`
   margin: 30px 0;
 `;
 
-const Title = styled.h1`
+const TitleText = styled.h1`
   font-size: 1.5rem;
   font-weight: 700;
   color: #FFFFFF;
@@ -63,7 +63,7 @@ const Promotion = () => {
 
   return (
     <PromotionContainer>
-      <Title>Promotions</Title>
+      <TitleText>Promotions</TitleText>
       <PromotionCardListContainer>
         {promotionList.map((promotionData: TypePromotionData) => 
             <PromotionCard key={promotionData.id} promotionData={promotionData} />

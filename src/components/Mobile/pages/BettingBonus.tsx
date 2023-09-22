@@ -1,132 +1,128 @@
 import styled from "styled-components"
-import Level1Icon from "@/assets/images/bettingBonus/level_1.svg"
-import Level3Icon from "@/assets/images/bettingBonus/level_3.svg"
-import Level5Icon from "@/assets/images/bettingBonus/level_5.svg"
-import Arrow from "@/assets/images/bettingBonus/icon_arrow.svg"
+import CurrentLevelBanner from "@/components/Mobile/components/BettingBonus/CurrentLevelBanner"
+import LevelTable from "@/components/Mobile/components/BettingBonus/LevelTable"
 
 const Container = styled.div`
   padding: 20px 10px;
-`
-const CurrentLevelBanner = styled.div`
-  width: 408px;
-  height: 307px;
-  border-radius: 20px;
-  background-size: cover;
-  position: relative;
   display: flex;
-  justify-content: center;
-  background-image: url(${`${process.env.PUBLIC_URL}/assets/images/mobile/bettingBonus/current_level_bg.png`});
-`
-const LevelIconContainer = styled.div`
-  position: absolute;
-  top: 125px;
-  left: 14px;
-  transform: translateY(-50%);
-`
-const TableContainer = styled.div`
-  width: 251px;
-  margin-top: 20px;
-  position: absolute;
-  right: 17px;
-`
-const TableRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-`
-const GameName = styled.div`
-  font-size: 1rem;
-  color: #fff;
-  width: 52px;
-  font-weight: 500;
-`
-const CurrentRate = styled.div`
-  font-size: 1rem;
-  color: #33AD4E;
-  font-weight: 700;
-`
-const NextRate = styled.div`
-  color: #6A768B;
-  font-weight: 700;
-`
-const LevelTag = styled.div`
-  font-size: 0.75rem;
-  border-radius: 5px;
-  color: #fff;
-  width: 63px;
-  height: 20px;
-  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-`
-const CurrentLevelTag = styled(LevelTag)`
-  background: #33AD4E;
-`
-const NextLevelTag = styled(LevelTag)`
-  background: #FF9A02;
 `
 
+const TitleText = styled.div`
+  width: 100%;
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: start;
+`;
+
+export interface LevelList {
+  name: string
+  level1: string
+  level2: string
+  level3: string
+  level4: string
+  level5: string
+  level6: string
+  level7: string
+  level8: string
+  level9: string
+  level10: string
+}
+
 // fake data
-const currentLevelListByGame = [
+const currentLevelListByGame: LevelList[] = [
+  {
+    name: "Live Dealer",
+    level1: "0.20%",
+    level2: "0.25%",
+    level3: "0.30%",
+    level4: "0.35%",
+    level5: "0.40%",
+    level6: "0.45%",
+    level7: "0.50%",
+    level8: "0.55%",
+    level9: "0.60%",
+    level10: "0.65%",
+  },
+  {
+    name: "Sports book",
+    level1: "0.20%",
+    level2: "0.25%",
+    level3: "0.30%",
+    level4: "0.35%",
+    level5: "0.40%",
+    level6: "0.45%",
+    level7: "0.50%",
+    level8: "0.55%",
+    level9: "0.60%",
+    level10: "0.65%",
+  },
+  {
+    name: "E-Game",
+    level1: "0.20%",
+    level2: "0.25%",
+    level3: "0.30%",
+    level4: "0.35%",
+    level5: "0.40%",
+    level6: "0.45%",
+    level7: "0.50%",
+    level8: "0.55%",
+    level9: "0.60%",
+    level10: "0.65%",
+  },
   {
     name: "Card Game",
     level1: "0.20%",
     level2: "0.25%",
-  },
-  {
-    name: "Live Casino",
-    level1: "0.20%",
-    level2: "0.25%",
+    level3: "0.30%",
+    level4: "0.35%",
+    level5: "0.40%",
+    level6: "0.45%",
+    level7: "0.50%",
+    level8: "0.55%",
+    level9: "0.60%",
+    level10: "0.65%",
   },
   {
     name: "Lottery",
     level1: "0.20%",
     level2: "0.25%",
+    level3: "0.30%",
+    level4: "0.35%",
+    level5: "0.40%",
+    level6: "0.45%",
+    level7: "0.50%",
+    level8: "0.55%",
+    level9: "0.60%",
+    level10: "0.65%",
   },
   {
-    name: "Slots",
+    name: "Virtual Sports",
     level1: "0.20%",
     level2: "0.25%",
-  },
-  {
-    name: "Sports",
-    level1: "0.20%",
-    level2: "0.25%",
-  },
-  {
-    name: "ESports",
-    level1: "0.20%",
-    level2: "0.25%",
+    level3: "0.30%",
+    level4: "0.35%",
+    level5: "0.40%",
+    level6: "0.45%",
+    level7: "0.50%",
+    level8: "0.55%",
+    level9: "0.60%",
+    level10: "0.65%",
   },
 ]
+
 const BettingBonus = () => {
   return (
     <Container>
-      <CurrentLevelBanner>
-        <LevelIconContainer>
-          <img src={Level1Icon} width={"98px"} height={"98px"}/>
-        </LevelIconContainer>
-        <TableContainer>
-          <TableRow key="tag">
-            <GameName/>
-            <CurrentLevelTag>CurrentV0</CurrentLevelTag>
-            <NextLevelTag>NextV1</NextLevelTag>
-          </TableRow>
-          {
-            currentLevelListByGame.map((item, index) => {
-              return (
-                <TableRow key={index}>
-                  <GameName>{item.name}</GameName>
-                  <CurrentRate>{item.level1}</CurrentRate>
-                  <img src={Arrow} width={"32px"} height={"32px"}/>
-                  <NextRate>{item.level2}</NextRate>
-                </TableRow>
-              )
-            })
-          }
-        </TableContainer>
-      </CurrentLevelBanner>
+      <CurrentLevelBanner currentLevelListByGame={currentLevelListByGame}/>
+      <TitleText>
+        Ratio of Bet Bonus
+      </TitleText>
+      <LevelTable currentLevelListByGame={currentLevelListByGame}/>
     </Container>
   )
 }
