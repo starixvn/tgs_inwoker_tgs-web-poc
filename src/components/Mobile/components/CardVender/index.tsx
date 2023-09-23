@@ -10,8 +10,7 @@ type Props = {
 
 const CardVendorBg = styled.div`
     width: calc(33.33% - 10px);
-    height: 158px;
-    left: 0;
+    height: 158px; //to-do : dynamic heigh
     bottom: 0;
     background-image: url(${bg});
     background-size: cover;
