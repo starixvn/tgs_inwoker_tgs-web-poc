@@ -300,7 +300,6 @@ class Transfer extends Component {
     //   this.bindData();
     // });
     //this.handleRefreshClick();
-    console.log(this);
   }
   componentDidUpdate(preProps) {
     if (

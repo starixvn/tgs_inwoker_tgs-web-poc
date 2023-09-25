@@ -1,18 +1,25 @@
-import React, { createContext, useCallback, useState } from "react";
+import React, { createContext } from "react";
+import { LoginState, useLogin } from "@/hooks/auth/useAuth/useLogin";
+import { LogoutState, useLogout } from "@/hooks/auth/useAuth/useLogout";
+import { RegisterState, useRegister } from "@/hooks/auth/useAuth/useRegister";
+import Register from "@/components/App/Register";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
 
 export const initialState: {
-  isLoginOpen: boolean;
-  isRegisterOpen: boolean;
-  toggleLoginDialog: () => void;
-  toggleRegisterDialog: () => void;
-} = {
-  isLoginOpen: false,
-  isRegisterOpen: false,
-  toggleLoginDialog: () => {},
-  toggleRegisterDialog: () => {},
-};
+  loginState: LoginState;
+  logoutState: LogoutState;
+  registerState: RegisterState;
+  handleClickLogin: (
+    username: string,
+    password: string,
+    needToRemember?: boolean
+  ) => Promise<void>;
+  handleClickLogout: () => void;
+  handleClickRegister: () => void;
+  isLogin: boolean;
+} = {};
 
-export const AuthDialogContext = createContext({
+export const AuthContext = createContext({
   ...initialState,
 });
 
@@ -20,28 +27,27 @@ type ProviderProps = {
   children: React.ReactNode;
 };
 
-export const AuthDialogContextProvider = ({ children }: ProviderProps) => {
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+export const AuthContextProvider = ({ children }: ProviderProps) => {
+  const { loginState, handleClickLogin } = useLogin();
+  const { logoutState, handleClickLogout } = useLogout();
+  const { registerState, handleClickRegister } = useRegister();
+  const { account } = useAccountStore();
 
-  const toggleLoginDialog = useCallback(() => {
-    setIsLoginOpen((prevState) => !prevState);
-  }, []);
-
-  const toggleRegisterDialog = useCallback(() => {
-    setIsRegisterOpen((prevState) => !prevState);
-  }, []);
+  const isLogin = !!account.token;
 
   return (
-    <AuthDialogContext.Provider
+    <AuthContext.Provider
       value={{
-        isLoginOpen,
-        isRegisterOpen,
-        toggleLoginDialog,
-        toggleRegisterDialog,
+        loginState,
+        handleClickLogin,
+        logoutState,
+        handleClickLogout,
+        registerState,
+        handleClickRegister,
+        isLogin,
       }}
     >
       {children}
-    </AuthDialogContext.Provider>
+    </AuthContext.Provider>
   );
 };

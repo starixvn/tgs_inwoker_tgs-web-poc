@@ -8,7 +8,7 @@ import RegisterDialog from "@/components/Mobile/components/auth/RegisterDialog";
 import Loading from "@/components/Mobile/components/UI/Loading";
 import PopupAnnouncement from "@/components/Mobile/components/Popup/PopupAnnouncement";
 import { useInitSite } from "@/hooks/useInitSite";
-import { AuthDialogContextProvider } from "@/contexts/authContext";
+import { AuthDialogContextProvider } from "@/contexts/authDialogContext";
 import { NotificationContextProvider } from "@/contexts/notificationContext";
 import PopupAlertModal from "@/components/Mobile/components/Popup/PopupAlertDialog";
 import { useNotifications } from "@/hooks/useNotifications";

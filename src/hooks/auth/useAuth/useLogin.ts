@@ -6,22 +6,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAuthDialog } from "@/hooks/useAuthDialog";
 import config from "@/config/config";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
+import { useWalletStore } from "@/hooks/stores/useWalletStore";
+import { useInboxStore } from "@/hooks/stores/useInboxStore";
+import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 
-type LoginState = {
+export type LoginState = {
   data: any | null;
   isLoading: boolean;
   error: Error | null;
 };
 export function useLogin() {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const { toggleLoginDialog } = useAuthDialog();
-  const accountStore = useAccountStore();
   const [loginState, setLoginState] = useState<LoginState>({
     isLoading: false,
     data: null,
     error: null,
   });
+
+  const history = useHistory();
+  const { toggleLoginDialog } = useAuthDialog();
+  const accountStore = useAccountStore();
+  const walletStore = useWalletStore();
+  const inboxStore = useInboxStore();
+  const generalStore = useGeneralStore();
 
   const handleClickLogin = useCallback(
     async (username: string, password: string, needToRemember?: boolean) => {
@@ -29,7 +35,6 @@ export function useLogin() {
         setLoginState((prevState) => ({ ...prevState, isLoading: true }));
 
         const result = await accountStore.accountLogin(username, password);
-        console.log(result);
 
         if (!result?.IsSuccess) {
           if (result?.code === 210) throw new Error("banned");
@@ -105,12 +110,17 @@ export function useLogin() {
         (config.features.Register_CustomFlow_IDR && bankInfoAuthentication)
       ) {
         // TODO:fetch data
-        // this.props.getBalanceList();
-        // this.props.getMessageList(i18n.language, 1, 99);
-        // this.props.getBankCardList();
-        // this.props.getPromotion();
-        // this.props.getPromotionRouletteCount();
-        // this.props.getWithdrawalChannel();
+
+        const promiseList = [
+          walletStore.getBalanceList,
+          () => inboxStore.getMessages(i18n.language, 1, 99),
+          walletStore.getBankCardList,
+          generalStore.getPromotion,
+          generalStore.getPromotionRouletteCount,
+          walletStore.getWithdrawalChannel,
+        ];
+
+        await Promise.all(promiseList);
       }
 
       if (needToRemember) {
