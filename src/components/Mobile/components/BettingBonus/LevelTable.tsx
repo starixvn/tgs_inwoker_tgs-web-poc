@@ -12,6 +12,9 @@ const LevelTableContainer = styled.table`
 `
 const Header = styled.thead`
 `
+const HeaderRow = styled.tr`
+  height: 32px;
+`
 const HeaderItem = styled.th`
   color: #6A768B;
   font-size: 0.875rem;
@@ -55,9 +58,9 @@ export const LevelTableRow = ({
         <LevelIcon level={level} width={"57px"} />
       </td>
         {
-          bonusList.map(bonus => {
+          bonusList.map((bonus, index) => {
             return (
-              <td>{bonus}</td>
+              <td key={index}>{bonus}</td>
             )
           })
         }
@@ -80,19 +83,19 @@ const LevelTable = ({
   return (
     <LevelTableContainer>
       <Header>
-        <tr>
+        <HeaderRow>
           <LevelHeaderItem>Level</LevelHeaderItem>
           {
             gameList.map(game => (
-              <HeaderItem>{game}</HeaderItem>
+              <HeaderItem key={game}>{game}</HeaderItem>
             ))
           }
-        </tr>
+        </HeaderRow>
       </Header>
       <tbody>
         {
           levelList.map((level) => {
-            return <LevelTableRow level={level} bonusList={getLevelList(level)}/>
+            return <LevelTableRow key={level} level={level} bonusList={getLevelList(level)}/>
           })
         }
       </tbody>
