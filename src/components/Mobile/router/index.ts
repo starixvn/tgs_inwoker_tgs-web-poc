@@ -259,12 +259,12 @@ const routes: Route[] = [
   //   navigate: true,
   // },
   //
-  // {
-  //   path: "/deposit/:promotionid?",
-  //   component: Deposit,
-  //   alert: true,
-  //   navigate: true,
-  // },
+  {
+    path: "/deposit/:promotionid?",
+    component: Deposit,
+    alert: true,
+    navigate: true,
+  },
   // {
   //   path: "/manual/:paymentId?",
   //   component: Deposit,

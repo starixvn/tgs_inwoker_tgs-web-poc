@@ -28,7 +28,6 @@ const SelectContainer = styled.select`
   font-size: 30px;
 `;
 const CustomText = styled.div`
-  width: 700px;
   height: 170px;
   padding: 20px 20px 0 20px;
   margin: 20px auto;

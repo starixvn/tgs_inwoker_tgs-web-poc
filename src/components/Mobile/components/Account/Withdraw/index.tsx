@@ -1,8 +1,9 @@
 import React from "react";
+import WithdrawalPrev from "@/components/Mobile/components/Account/Withdraw/WithdrawalPrev";
 
 type Props = {};
 const Withdraw = (props: Props) => {
-  return <div>Withdraw</div>;
+  return <WithdrawalPrev />;
 };
 
 export default Withdraw;

@@ -53,15 +53,21 @@ const AccountNavigations = (props: Props) => {
     history.push("/account");
   }, []);
 
-  useEffect(() => {
-    // open correspond dialog via url
+  // open correspond dialog via url
+  // ex: url: domain/account, then "click" accountDialog
+  // ex: url: domain/withdraw, then "click" accountDialog
+  const handleInitNav = useCallback(() => {
     const { pathname, search } = history.location;
     const matchedNavCardItem = navCardItemList.find((navCardItem) => {
       return navCardItem.routePath === `${pathname}${search}`;
     });
-
     if (!matchedNavCardItem) return;
+
     handleClickNav(matchedNavCardItem);
+  }, []);
+
+  useEffect(() => {
+    handleInitNav();
   }, []);
 
   return (
