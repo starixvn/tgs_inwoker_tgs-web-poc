@@ -1,8 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import ReportPrev from "@/components/Mobile/components/Account/AccountNavigations/ReportDialog/ReportPrev";
+import { useNotifications } from "@/hooks/useNotifications";
+import { useHistory } from "react-router-dom";
 
 const theme = themeList["mobileT18"];
 
@@ -12,6 +13,8 @@ type Props = {
 };
 
 const ReportDialog = ({ isOpen, handleCloseDialog }: Props) => {
+  const { alert } = useNotifications();
+  const history = useHistory();
   return (
     <>
       <DialogWithHeader
@@ -19,7 +22,7 @@ const ReportDialog = ({ isOpen, handleCloseDialog }: Props) => {
         handleCloseDialog={handleCloseDialog}
         dialogHeaderTitle={"Report"}
       >
-        <>YOYO</>
+        <ReportPrev alert={alert} history={history} />
       </DialogWithHeader>
     </>
   );
