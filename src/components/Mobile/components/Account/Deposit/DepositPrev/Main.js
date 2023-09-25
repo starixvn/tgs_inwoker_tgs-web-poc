@@ -315,7 +315,7 @@ class Main extends Component {
                       this.props.selectedPaymentIndex
                     ].method.map((item, index) => {
                       return (
-                        <option value={index}>
+                        <option key={index} value={index}>
                           {config.features.CustomKING8Deposit &&
                           (paymentCode("manual") ||
                             alteredPaymentCode("manual")) &&
@@ -371,7 +371,11 @@ class Main extends Component {
                     this.props.selectedPaymentIndex
                   ].method[this.props.selectedMethodIndex].channel.map(
                     (item, index) => {
-                      return <option value={index}>{item.channelname}</option>;
+                      return (
+                        <option key={index} value={index}>
+                          {item.channelname}
+                        </option>
+                      );
                     }
                   )}
               </CustomCustomSelect>
@@ -500,7 +504,7 @@ class Main extends Component {
                     );
                   } else {
                     return (
-                      <TransferContainer>
+                      <TransferContainer key={index}>
                         <TransferLabel>
                           {i18n.t("extended." + [key])}:
                         </TransferLabel>
