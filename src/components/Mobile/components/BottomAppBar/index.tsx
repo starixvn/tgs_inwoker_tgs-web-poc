@@ -89,7 +89,7 @@ const BottomAppBar = () => {
     );
 
     setSelectedBottomNavItem(matchNavItem || null);
-  }, []);
+  }, [history]);
 
   const handleClick = (appBarItem: BottomNavItem) => {
     setSelectedBottomNavItem(appBarItem);

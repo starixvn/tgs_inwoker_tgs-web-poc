@@ -1,12 +1,10 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import { Slide } from "@material-ui/core";
-import { TransitionProps } from "@material-ui/core/transitions";
 import { useAuthDialog } from "@/hooks/useAuthDialog";
 import LoginForm from "@/components/Mobile/components/auth/LoginDialog/LoginForm";
-import { useLogin } from "@/components/Mobile/components/auth/hooks/useLogin";
 import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
 import { themeList } from "@/theme";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 const theme = themeList["mobileT18"];
 
@@ -55,7 +53,7 @@ const LoginDialog = () => {
   const { isLoginOpen, toggleLoginDialog, toggleRegisterDialog } =
     useAuthDialog();
 
-  const { loginState, handleClickLogin } = useLogin();
+  const { loginState, handleClickLogin } = useAuth();
 
   const handleRedirectToRegister = useCallback(() => {
     toggleLoginDialog();

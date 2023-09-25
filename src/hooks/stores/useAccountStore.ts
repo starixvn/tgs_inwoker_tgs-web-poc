@@ -175,7 +175,6 @@ export function useAccountStore() {
     try {
       // @ts-ignore
       const result = await AccountService.GetMemberInfo();
-      console.log(result);
 
       if (result.IsSuccess) {
         dispatch({
