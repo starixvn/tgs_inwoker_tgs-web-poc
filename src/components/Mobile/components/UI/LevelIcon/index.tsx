@@ -7,10 +7,20 @@ const type1 = 'type1'
 const type3 = 'type3'
 const type5 = 'type5'
 
+const iconBaseWidthHeight = 50
+
 const LevelIconContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  width: ${iconBaseWidthHeight}px;
+  height: ${iconBaseWidthHeight}px;
   position: relative;
+  transform: ${({scale}: {
+    scale: number;
+  }) => `scale(${scale})`};
+  transform-origin: top left;
+`
+const ImageIconWrapper = styled.div`
+  width: ${iconBaseWidthHeight}px;
+  height: ${iconBaseWidthHeight}px;
 `
 const LevelText = styled.div`
   position: absolute;
@@ -30,8 +40,9 @@ const LevelText = styled.div`
   }};
   font-style: italic;
   color: #ffffff;
-  font-size: 1.25rem;
+  font-size: 1rem;
   text-stroke: 2px #E5C0A2;
+  font-weight: 700;
 `
 
 const levelTypeMap: {
@@ -60,19 +71,21 @@ const levelIconMap: {
 const LevelIcon = ({
   level,
   width,
-  height
 }: { 
   level: number;
   width: string;
-  height: string;
 }) => {
 
   const levelType = levelTypeMap[level]
   const levelIcon = levelIconMap[levelType]
 
+  const scale = width ? parseInt(width) / iconBaseWidthHeight : 1
+
   return (
-    <LevelIconContainer>
-      <img src={levelIcon} width={width} height={height}/>
+    <LevelIconContainer scale={scale}>
+      <ImageIconWrapper>
+      <img src={levelIcon} width={"100%"} height={"100%"}/>
+      </ImageIconWrapper>
       <LevelText levelType={levelType}>{level}</LevelText>
     </LevelIconContainer>
   )

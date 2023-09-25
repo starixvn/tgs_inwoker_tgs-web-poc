@@ -52,7 +52,7 @@ export const LevelTableRow = ({
   return (
     <Row>
       <td>
-        <LevelIcon level={level} width={"70px"} height={"57px"} />
+        <LevelIcon level={level} width={"57px"} />
       </td>
         {
           bonusList.map(bonus => {

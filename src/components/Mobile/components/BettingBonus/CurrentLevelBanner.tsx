@@ -1,8 +1,6 @@
 import styled from "styled-components"
-import Level1Icon from "@/assets/images/bettingBonus/level_1.svg"
-import Level3Icon from "@/assets/images/bettingBonus/level_3.svg"
-import Level5Icon from "@/assets/images/bettingBonus/level_5.svg"
 import Arrow from "@/assets/images/bettingBonus/icon_arrow.svg"
+import LevelIcon from "@/components/Mobile/components/UI/LevelIcon"
 
 const CurrentLevelBannerContainer = styled.div`
   width: 408px;
@@ -20,6 +18,8 @@ const LevelIconContainer = styled.div`
   top: 125px;
   left: 14px;
   transform: translateY(-50%);
+  width: 100px;
+  height: 100px;
 `
 const TableContainer = styled.div`
   max-width: 251px;
@@ -85,7 +85,7 @@ const CurrentLevelBanner = ({
   return (
     <CurrentLevelBannerContainer>
     <LevelIconContainer>
-      <img src={Level1Icon} width={"98px"} height={"98px"}/>
+      <LevelIcon level={1} width={"100px"} />
     </LevelIconContainer>
     <TableContainer>
       <TableRow key="tag">

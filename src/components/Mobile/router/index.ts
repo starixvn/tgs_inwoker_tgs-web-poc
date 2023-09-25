@@ -45,19 +45,6 @@ const routes: Route[] = [
     navigate: true,
   },
   {
-    path: "/promotion-list",
-    component: Promotion,
-    alert: true,
-    navigate: true,
-  },
-  {
-    path: "/promotion/:id?",
-    component: PromotionDetail,
-    alert: true,
-    navigate: true,
-    promoProps: true,
-  },
-  {
     path: "/account",
     component: Mine,
     alert: true,
@@ -71,11 +58,6 @@ const routes: Route[] = [
     path: "/account/withdraw",
     component: Withdraw,
     alert: true,
-  },
-  {
-    path: "/vip",
-    component: VIP,
-    navigate: true,
   },
   {
     path: "/betting-bonus",
@@ -212,19 +194,19 @@ const routes: Route[] = [
   //   alert: true,
   //   navigate: true,
   // },
-  // {
-  //   path: "/promotion-list",
-  //   component: Promotion,
-  //   alert: true,
-  //   navigate: true,
-  // },
-  // {
-  //   path: "/promotion/:id?",
-  //   component: PromotionDetails,
-  //   alert: true,
-  //   navigate: true,
-  //   promoProps: true,
-  // },
+  {
+    path: "/promotion-list",
+    component: Promotion,
+    alert: true,
+    navigate: true,
+  },
+  {
+    path: "/promotion/:id?",
+    component: PromotionDetail,
+    alert: true,
+    navigate: true,
+    promoProps: true,
+  },
   //
   // {
   //   path: "/inbox",
@@ -383,11 +365,11 @@ const routes: Route[] = [
   //   component: Banned,
   //   navigate: true,
   // },
-  // {
-  //   path: "/vip",
-  //   component: VIP,
-  //   navigate: true,
-  // },
+  {
+    path: "/vip",
+    component: VIP,
+    navigate: true,
+  },
   // {
   //   path: "/sports/:platform",
   //   component: CustomSportPage,
