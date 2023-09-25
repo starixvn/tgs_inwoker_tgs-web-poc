@@ -1016,9 +1016,7 @@ class DepositPrev extends Component {
                             key={index}
                             value={index}
                             label={i18n.t(item.paymentcode)}
-                          >
-                            {i18n.t(item.paymentcode)}
-                          </Tab>
+                          ></Tab>
                         );
                       })}
                   </CustomTabs>

@@ -43,7 +43,7 @@ export function useInitSite() {
     }
   };
 
-  const validateTokenState = async () => {
+  const init = async () => {
     const urlpath = location.pathname.split("/");
     if (urlpath.length === 3) {
       if (urlpath[1] === "a") {
@@ -64,8 +64,9 @@ export function useInitSite() {
     // =============================================
     window.addEventListener("resize", updateScreenSize);
 
-    if (generalStore.general.token === "") {
+    if (!generalStore.general.token) {
       await generalStore.getSiteToken();
+      console.log(generalStore.general.token);
     } else {
       const promiseList = [
         generalStore.getBrandLanguage,
@@ -79,9 +80,14 @@ export function useInitSite() {
         walletStore.getDepositMethod,
         walletStore.getWithdrawalChannel,
         generalStore.getAffiliateStatus,
+
+        generalStore.getMobilePrefix,
+        gameStore.getHomePageGameList,
       ];
+      console.log(promiseList);
 
       await Promise.all(promiseList);
+      console.log(gameStore);
     }
 
     // =============================================
@@ -123,8 +129,8 @@ export function useInitSite() {
 
     const NEED_TO_REFRESH_TOKEN =
       localStorageToken != null &&
-      accountStore.account.token == null &&
-      accountStore.account.info.token === "";
+      !accountStore.account.token &&
+      !accountStore.account.info.token;
 
     if (NEED_TO_REFRESH_TOKEN) {
       const responseToken = await accountStore.checkTokenIsValid();
@@ -188,7 +194,7 @@ export function useInitSite() {
   };
 
   useEffect(() => {
-    validateTokenState().then(() => {
+    init().then(() => {
       setIsLoading(false);
     });
 
