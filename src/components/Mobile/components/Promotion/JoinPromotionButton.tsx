@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { themeList } from "@/theme";
+import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
+import { useSnackbar } from "notistack";
 
 const theme = themeList["mobileT18"];
 
@@ -12,19 +14,20 @@ const Button = styled.button`
   background: ${theme.secondary};
   color: #ffffff;
   font-size: 1.25rem;
-`
+`;
 
-const JoinPromotionButton = () => {
-  
+const JoinPromotionButton = ({ id }: { id: string }) => {
+  const { joinPromotion } = useGeneralStore();
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleJoinPromotion = () => {
-    console.log('%c⧭', 'color: #e50000', 'handleJoinPromotion');
-  }
+    // TODO: 待確認行為
+    // enqueueSnackbar("success!!!", {
+    //   variant: "success",
+    // });
+  };
 
-  return (
-    <Button onClick={handleJoinPromotion}>
-      Convide Agora
-    </Button>
-  )
-}
+  return <Button onClick={handleJoinPromotion}>Convide Agora</Button>;
+};
 
-export default JoinPromotionButton
+export default JoinPromotionButton;

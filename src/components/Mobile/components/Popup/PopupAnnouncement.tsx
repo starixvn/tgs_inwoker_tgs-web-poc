@@ -51,7 +51,7 @@ const PopupAnnouncement = () => {
     }
   ]
 
-  const [isAnnouncementOpen, setIsAnnouncementOpen] = useState(true);
+  const [isAnnouncementOpen, setIsAnnouncementOpen] = useState(false);
   const handleCloseDialog = () => {
     setIsAnnouncementOpen(false);
   }
