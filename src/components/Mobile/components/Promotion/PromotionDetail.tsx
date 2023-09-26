@@ -4,6 +4,7 @@ import JoinPromotionButton from "./JoinPromotionButton";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { Promotion } from "@/models/dto/general/GetPromotionListResDto";
 import BannerImage from "./BannerImage";
+import i18n from "@/utils/i18n";
 const moment = require("moment");
 
 const theme = themeList["mobileT18"];
@@ -60,6 +61,21 @@ const PromotionDetail = () => {
 
   if (!promotionData || Object.keys(promotionData).length === 0) return null;
 
+  const isLocalizationHasData =
+    Object.keys(promotionData.localization).length > 0;
+
+  const contentToDisplay =
+    (isLocalizationHasData &&
+      promotionData.localization[i18n.language].content) ||
+    promotionData.content ||
+    "";
+
+  const termsToDisplay =
+    (isLocalizationHasData &&
+      promotionData.localization[i18n.language].terms) ||
+    promotionData.terms ||
+    "";
+
   return (
     <>
       <PromotionDetailContainer>
@@ -69,7 +85,7 @@ const PromotionDetail = () => {
         <ContentContainer>
           <TextArea>
             <Title>{promotionData.name}</Title>
-            <Description>{promotionData.content}</Description>
+            <Description>{contentToDisplay}</Description>
           </TextArea>
           <TextArea>
             <Title>Promo Period</Title>
@@ -80,7 +96,11 @@ const PromotionDetail = () => {
           </TextArea>
           <TextArea>
             <Title>Terms & Conditions</Title>
-            <Description>{promotionData.terms}</Description>
+            <Description
+              dangerouslySetInnerHTML={{
+                __html: "<div>" + termsToDisplay + "</div>",
+              }}
+            />
           </TextArea>
         </ContentContainer>
       </PromotionDetailContainer>

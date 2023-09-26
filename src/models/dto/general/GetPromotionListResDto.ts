@@ -8,6 +8,8 @@ interface PromotionLocalization {
   [key: string]: {
     desktopBanner: string;
     mobileBanner: string;
+    content: string;
+    terms: string;
   };
 }
 
