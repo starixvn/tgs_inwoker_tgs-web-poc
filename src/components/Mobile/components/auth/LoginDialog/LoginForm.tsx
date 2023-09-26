@@ -54,10 +54,7 @@ const LoginForm = ({ isLoading, handleClickLogin }: Props) => {
   const formik = useFormik({
     initialValues,
     validationSchema: Yup.object(validationSchemaSpec),
-    onSubmit: async (values) => {
-      const { username, password } = values;
-      await handleClickLogin(username, password, needToRemember);
-    },
+    onSubmit: async (values) => {},
   });
 
   const [needToRemember, setNeedToRemember] = useState(false);

@@ -9,13 +9,13 @@ export const initialState: {
   loginState: LoginState;
   logoutState: LogoutState;
   registerState: RegisterState;
-  handleClickLogin: (
+  handleLogin: (
     username: string,
     password: string,
     needToRemember?: boolean
   ) => Promise<void>;
-  handleClickLogout: () => void;
-  handleClickRegister: () => void;
+  handleLogout: () => void;
+  handleRegister: () => void;
   isLogin: boolean;
 } = {
   loginState: {
@@ -33,13 +33,10 @@ export const initialState: {
     isLoading: false,
     error: null,
   },
-  handleClickLogin: (
-    username: string,
-    password: string,
-    needToRemember?: boolean
-  ) => Promise.resolve(),
-  handleClickLogout: () => {},
-  handleClickRegister: () => {},
+  handleLogin: (username: string, password: string, needToRemember?: boolean) =>
+    Promise.resolve(),
+  handleLogout: () => {},
+  handleRegister: () => {},
   isLogin: false,
 };
 
@@ -52,9 +49,9 @@ type ProviderProps = {
 };
 
 export const AuthContextProvider = ({ children }: ProviderProps) => {
-  const { loginState, handleClickLogin } = useLogin();
-  const { logoutState, handleClickLogout } = useLogout();
-  const { registerState, handleClickRegister } = useRegister();
+  const { loginState, handleLogin } = useLogin();
+  const { logoutState, handleLogout } = useLogout();
+  const { registerState, handleRegister } = useRegister();
   const { account } = useAccountStore();
 
   const isLogin = !!account.token;
@@ -63,11 +60,11 @@ export const AuthContextProvider = ({ children }: ProviderProps) => {
     <AuthContext.Provider
       value={{
         loginState,
-        handleClickLogin,
+        handleLogin,
         logoutState,
-        handleClickLogout,
+        handleLogout,
         registerState,
-        handleClickRegister,
+        handleRegister,
         isLogin,
       }}
     >

@@ -27,7 +27,7 @@ export function useRegister() {
   const inboxStore = useInboxStore();
   const generalStore = useGeneralStore();
 
-  const handleClickRegister = useCallback(async () => {
+  const handleRegister = useCallback(async () => {
     try {
       setRegisterState((prevState) => ({ ...prevState, isLoading: true }));
 
@@ -56,6 +56,6 @@ export function useRegister() {
 
   return {
     registerState,
-    handleClickRegister,
+    handleRegister,
   };
 }

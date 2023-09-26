@@ -54,13 +54,13 @@ const AvatarLevelWrapper = styled.div`
 `;
 
 const ContextMenu = () => {
-  const { handleClickLogout } = useAuth();
+  const { handleLogout } = useAuth();
 
   const handleClick = async (routerPath: string) => {
     console.log(routerPath);
     switch (routerPath) {
       case "/logout":
-        await handleClickLogout();
+        await handleLogout();
         break;
     }
   };

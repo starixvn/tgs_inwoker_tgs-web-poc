@@ -32,6 +32,9 @@ const StyledFormControl = styled(MuiFormControl)`
 const StyledSelect = styled(MuiSelect)`
   //background: #212937;
   border-radius: 8px;
+  & > * {
+    color: #ffffff;
+  }
 `;
 
 interface SelectItem {
@@ -40,7 +43,7 @@ interface SelectItem {
 }
 
 type Props = {
-  label: string;
+  label?: string;
   value: any;
   handleChange: any;
   selectItemList: SelectItem[];
@@ -68,9 +71,9 @@ const Select = ({
           background: backgroundColor,
         }}
       >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
+        {/*<MenuItem value="">*/}
+        {/*  <em>None</em>*/}
+        {/*</MenuItem>*/}
 
         {selectItemList.map((selectItem) => {
           const { label, value } = selectItem;

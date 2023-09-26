@@ -23,7 +23,7 @@ export function useLogout() {
   const history = useHistory();
   const accountStore = useAccountStore();
 
-  const handleClickLogout = useCallback(async () => {
+  const handleLogout = useCallback(async () => {
     try {
       setLogoutState((prevState) => ({ ...prevState, isLoading: true }));
 
@@ -46,6 +46,6 @@ export function useLogout() {
 
   return {
     logoutState,
-    handleClickLogout,
+    handleLogout,
   };
 }
