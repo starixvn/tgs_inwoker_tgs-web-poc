@@ -105,7 +105,7 @@ const PromotionDetail = () => {
         </ContentContainer>
       </PromotionDetailContainer>
       <JoinPromotionButtonWrapper>
-        <JoinPromotionButton />
+        <JoinPromotionButton id={promotionData.id} />
       </JoinPromotionButtonWrapper>
     </>
   );
