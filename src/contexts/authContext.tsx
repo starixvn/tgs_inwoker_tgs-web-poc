@@ -17,7 +17,31 @@ export const initialState: {
   handleClickLogout: () => void;
   handleClickRegister: () => void;
   isLogin: boolean;
-} = {};
+} = {
+  loginState: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
+  logoutState: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
+  registerState: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
+  handleClickLogin: (
+    username: string,
+    password: string,
+    needToRemember?: boolean
+  ) => Promise.resolve(),
+  handleClickLogout: () => {},
+  handleClickRegister: () => {},
+  isLogin: false,
+};
 
 export const AuthContext = createContext({
   ...initialState,
