@@ -5,6 +5,13 @@ import LoginForm from "@/components/Mobile/components/auth/LoginDialog/LoginForm
 import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
 import { themeList } from "@/theme";
 import { useAuth } from "@/hooks/auth/useAuth";
+import FormikForm from "@/components/Mobile/components/FormikForm";
+import Checkbox from "@/components/Mobile/components/UI/Checkbox";
+import i18n from "@/utils/i18n";
+import RedirectToLoginHint from "@/components/Mobile/components/auth/RegisterDialog/components/RedirectToLoginHint";
+import { useRegisterForm } from "@/hooks/auth/useRegisterForm";
+import { useLoginForm } from "@/hooks/auth/useLoginForm";
+import RedirectToRegisterHint from "@/components/Mobile/components/auth/LoginDialog/RedirectToRegisterHint";
 
 const theme = themeList["mobileT18"];
 
@@ -50,15 +57,8 @@ const CreateAccountContainer = styled.div`
 `;
 
 const LoginDialog = () => {
-  const { isLoginOpen, toggleLoginDialog, toggleRegisterDialog } =
-    useAuthDialog();
-
-  const { loginState, handleClickLogin } = useAuth();
-
-  const handleRedirectToRegister = useCallback(() => {
-    toggleLoginDialog();
-    toggleRegisterDialog();
-  }, []);
+  const { isLoginOpen, toggleLoginDialog } = useAuthDialog();
+  const { formInputConfigList, formik, isLoading, buttonText } = useLoginForm();
 
   return (
     <Dialog isOpen={isLoginOpen} handleCloseDialog={toggleLoginDialog}>
@@ -68,19 +68,16 @@ const LoginDialog = () => {
           <div className="bottom-border" />
         </TitleContainer>
 
-        <LoginForm
-          handleClickLogin={handleClickLogin}
-          isLoading={loginState.isLoading}
-        />
+        <FormikForm
+          formInputList={formInputConfigList}
+          formik={formik}
+          isLoading={isLoading}
+          buttonText={buttonText}
+        >
+          <ForgotPasswordContainer>Forgot Password?</ForgotPasswordContainer>
+        </FormikForm>
 
-        <ForgotPasswordContainer>Forgot Password?</ForgotPasswordContainer>
-
-        <CreateAccountContainer>
-          <span>Don't have an account?</span>
-          <span className="register" onClick={handleRedirectToRegister}>
-            Create Account
-          </span>
-        </CreateAccountContainer>
+        <RedirectToRegisterHint />
       </>
     </Dialog>
   );

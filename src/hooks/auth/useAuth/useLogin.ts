@@ -9,6 +9,7 @@ import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
 import { useInboxStore } from "@/hooks/stores/useInboxStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
+import { useLocation } from "react-router-dom";
 
 export type LoginState = {
   data: any | null;
@@ -23,13 +24,14 @@ export function useLogin() {
   });
 
   const history = useHistory();
+  const location = useLocation();
   const { toggleLoginDialog } = useAuthDialog();
   const accountStore = useAccountStore();
   const walletStore = useWalletStore();
   const inboxStore = useInboxStore();
   const generalStore = useGeneralStore();
 
-  const handleClickLogin = useCallback(
+  const handleLogin = useCallback(
     async (username: string, password: string, needToRemember?: boolean) => {
       try {
         setLoginState((prevState) => ({ ...prevState, isLoading: true }));
@@ -67,8 +69,16 @@ export function useLogin() {
     username: string,
     needToRemember?: boolean
   ) => {
-    const response = await accountStore.getAccountInfo();
+    const urlParams = new URLSearchParams(location.search);
+    if (urlParams.has("return_url")) {
+      // const returnValue = urlParams.get('return_url')
+      // if (returnValue) {
+      //   window.location.href =
+      //     returnValue + '?token=' + BlowFishEncryption.Encrypt(token)
+      // }
+    }
 
+    const response = await accountStore.getAccountInfo();
     if (!response?.IsSuccess) throw new Error("Fetching account info fail");
 
     const bankInfoAuthentication = response.data.bankinfoauthentication;
@@ -130,11 +140,13 @@ export function useLogin() {
         localStorage.removeItem("remember");
         localStorage.removeItem("username");
       }
+
+      history.push("/main/home");
     }
   };
 
   return {
     loginState,
-    handleClickLogin,
+    handleLogin,
   };
 }
