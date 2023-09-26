@@ -1,3 +1,4 @@
+import { Promotion } from 'src/models/dto/general/GetPromotionListResDto'
 export interface GeneralState {
   banner: any[];
   brand: {
@@ -21,13 +22,7 @@ export interface GeneralState {
   };
   mobilePrefix: [];
   promotionList: {
-    items: {
-      campaignDetail: {
-        percentage: number;
-        bonusAmountLimit: number;
-        turnoverMultiple: number;
-      }[];
-    };
+    items: Promotion[];
   };
   rebates: any[];
   rouletteCount: any[];
