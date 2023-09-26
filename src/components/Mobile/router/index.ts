@@ -9,8 +9,7 @@ import VIP from "@/components/Mobile/pages/VIP";
 import BettingBonus from "@/components/Mobile/pages/BettingBonus";
 import Card from "@/components/Mobile/components/Card";
 import AddCard from "@/components/Mobile/components/Card/AddCard";
-import MaintenancePrev from "@/components/Share/Maintenance";
-import MaintenancePage from "@/components/Mobile/pages/MaintenancePage";
+import Maintenance from "@/components/Mobile/pages/Maintenance";
 import TransferDialog from "@/components/Mobile/pages/Transfer/TransferDialog";
 import Transfer from "@/components/Mobile/pages/Transfer";
 import Profile from "@/components/Mobile/pages/Profile";
@@ -295,7 +294,7 @@ const routes: Route[] = [
   },
   {
     path: "/maintenance",
-    component: MaintenancePage,
+    component: Maintenance,
     category: RouteCategoryEnum.HOME,
   },
 
