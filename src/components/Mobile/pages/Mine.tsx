@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { themeList } from "@/theme";
 import InfoCard from "@/components/Mobile/components/Account/InfoCard";
@@ -8,24 +8,12 @@ import infoImg from "@/assets/images/account/icon_info.png";
 import AccountLevelInfoCard from "@/components/Mobile/components/Account/AccountLevelInfoCard";
 import { useTab } from "@/hooks/account/useTab";
 import AccountNavigations from "@/components/Mobile/components/Account/AccountNavigations";
-import { useHistory } from "react-router-dom";
-import { useAccountStore } from "@/hooks/stores/useAccountStore";
 
 const theme = themeList["mobileT18"];
 
 const AccountContainer = styled.div`
   background: ${theme.primaryDark};
   padding: 40px 15px;
-`;
-
-const AccountNavContainer = styled.div`
-  padding: 15px 0 0;
-  & > * {
-    margin-bottom: 8px;
-  }
-  & > *:first-child {
-    margin-bottom: 16px;
-  }
 `;
 
 const AccountLevelInfoContainer = styled.div`
@@ -56,25 +44,23 @@ const tabList: TabItem[] = [
 const Mine = () => {
   const { selectedTab, handleTabChange } = useTab(tabList);
   return (
-    <>
-      <AccountContainer>
-        <InfoCard style={{ marginBottom: "50px" }} />
+    <AccountContainer>
+      <InfoCard style={{ marginBottom: "50px" }} />
 
-        <Tabs
-          tabItemList={tabList}
-          value={selectedTab}
-          handleChange={handleTabChange}
-        />
+      <Tabs
+        tabItemList={tabList}
+        value={selectedTab}
+        handleChange={handleTabChange}
+      />
 
-        {selectedTab.value === "account" && <AccountNavigations />}
+      {selectedTab.value === "account" && <AccountNavigations />}
 
-        {selectedTab.value === "info" && (
-          <AccountLevelInfoContainer>
-            <AccountLevelInfoCard />
-          </AccountLevelInfoContainer>
-        )}
-      </AccountContainer>
-    </>
+      {selectedTab.value === "info" && (
+        <AccountLevelInfoContainer>
+          <AccountLevelInfoCard />
+        </AccountLevelInfoContainer>
+      )}
+    </AccountContainer>
   );
 };
 

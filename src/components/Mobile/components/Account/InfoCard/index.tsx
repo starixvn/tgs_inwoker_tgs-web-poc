@@ -13,7 +13,7 @@ const theme = themeList["mobileT18"];
 const InfoCardContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
   padding-left: 28px;
 `;
 
