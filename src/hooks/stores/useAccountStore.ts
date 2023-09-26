@@ -325,7 +325,7 @@ export function useAccountStore() {
     []
   );
 
-  const GetRegisterStatus = useCallback(async () => {
+  const getRegisterStatus = useCallback(async () => {
     try {
       return await AccountService.GetRegisterStatus();
     } catch (e: any) {
@@ -409,7 +409,7 @@ export function useAccountStore() {
     getIDCardNo,
     getPromoteUserList,
     getPromoteBillList,
-    GetRegisterStatus,
+    getRegisterStatus,
     newRegister,
     performUpdateMemberNameAndIC,
     resetAccountResult,

@@ -11,7 +11,7 @@ const NavCardContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: calc((100% - 3 * 8px) / 4);
+  width: calc((100% - 3 * 8px) / 4);
   padding: 20px 30px;
 
   color: ${theme.tertiary};

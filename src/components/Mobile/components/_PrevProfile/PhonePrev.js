@@ -62,7 +62,7 @@ const CustomInput = styled.input`
     opacity: 1;
   }
 `;
-class Phone extends BaseProfile {
+class PhonePrev extends BaseProfile {
   state = {
     countdownToken: 0,
     areacode: config.features.PhonePrefix,
@@ -441,4 +441,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(accountAction.newRegister(type, input)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Phone));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(PhonePrev));

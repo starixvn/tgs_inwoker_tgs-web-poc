@@ -13,6 +13,7 @@ import { NewRegisterResDto } from "@/models/dto/player/NewRegisterResDto";
 import { UpdateMemberNameAndICResDto } from "@/models/dto/player/UpdateMemberNameAndICResDto";
 import { UpdateIMResDto } from "@/models/dto/player/UpdateIMResDto";
 import { SetBirthDateResDto } from "@/models/dto/player/SetBirthDateResDto";
+import { UpdatePhoneResDto } from "@/models/dto/player/UpdatePhoneResDto";
 
 export function useAccountService() {
   function CheckUserName(username: string) {
@@ -171,7 +172,7 @@ export function useAccountService() {
     return ApiService.put("player/phone", {
       securitykey: securitykey,
       validatecode: validateCode,
-    });
+    }) as unknown as Promise<UpdatePhoneResDto>;
   }
 
   function UpdatePassword(oldpwd: string, newpwd: string) {

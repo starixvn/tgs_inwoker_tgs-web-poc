@@ -36,31 +36,31 @@ const StyledTab = styled(MuiTab)`
 `;
 
 export interface TabItem {
-    label: string;
-    value: "account" | "info";
-    icon?: string | React.ReactElement;
+  label: string;
+  value: "account" | "info";
+  icon?: string | React.ReactElement;
 }
 type Props = {
-    tabItemList: TabItem[];
-    value: TabItem;
-    handleChange: (event: React.ChangeEvent<{}>, newValue: TabItem) => void;
+  tabItemList: TabItem[];
+  value: TabItem;
+  handleChange: (event: React.ChangeEvent<{}>, newValue: TabItem) => void;
 };
 const Tabs = ({ tabItemList, value, handleChange }: Props) => {
-    return (
-        <StyledTabs value={value} onChange={handleChange}>
-            {tabItemList.map((tabItem) => {
-                const { label, icon } = tabItem;
-                return (
-                    <StyledTab
-                        key={label}
-                        label={label}
-                        icon={icon || ""}
-                        value={tabItem}
-                    />
-                );
-            })}
-        </StyledTabs>
-    );
+  return (
+    <StyledTabs value={value} onChange={handleChange}>
+      {tabItemList.map((tabItem) => {
+        const { label, icon } = tabItem;
+        return (
+          <StyledTab
+            key={label}
+            label={label}
+            icon={icon || ""}
+            value={tabItem}
+          />
+        );
+      })}
+    </StyledTabs>
+  );
 };
 
 export default Tabs;
