@@ -74,4 +74,4 @@ const PopupDialog = (props: Props) => {
   );
 };
 
-export default PopupDialog;
+export default React.memo(PopupDialog);

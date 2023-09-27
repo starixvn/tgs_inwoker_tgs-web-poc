@@ -10,29 +10,31 @@ interface TransferChannel {
   };
 }
 
+export interface DepositType {
+  displayorder: number;
+  method: {
+    channelid: string;
+    channelname: string;
+    displayorer: number;
+    extended: {};
+    fees: number;
+    id: string;
+    transferlimit: {
+      from: number;
+      to: number;
+    };
+  }[];
+  paymentcode: string;
+  paymentid: string;
+}
+
 export interface WalletState {
   loading: true;
   updateBalanceloading: false;
   transferLoading: false;
   message: "";
   depositList: TransferChannel[];
-  depositTypeList: {
-    displayorder: number;
-    method: {
-      channelid: string;
-      channelname: string;
-      displayorer: number;
-      extended: {};
-      fees: number;
-      id: string;
-      transferlimit: {
-        from: number;
-        to: number;
-      };
-    }[];
-    paymentcode: string;
-    paymentid: string;
-  }[];
+  depositTypeList: DepositType[];
   depositLoading: false;
   depositResult: null;
   cancelDepositResult: null;
