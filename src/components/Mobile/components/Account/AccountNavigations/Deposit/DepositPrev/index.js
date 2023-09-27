@@ -984,7 +984,7 @@ class DepositPrev extends Component {
         ></Header>{" "}
         {(() => {
           if (this.props.wallet.depositTypeList.length <= 0) {
-            return <React.Fragment></React.Fragment>;
+            return null;
           }
           return (
             <React.Fragment>
