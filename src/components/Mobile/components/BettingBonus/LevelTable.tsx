@@ -1,6 +1,6 @@
-import styled from "styled-components"
-import { LevelList } from "@/components/Mobile/pages/BettingBonus"
-import LevelIcon from "@/components/Mobile/components/UI/LevelIcon"
+import styled from "styled-components";
+import { TypeProductRebateByLevel } from "@/components/Mobile/pages/BettingBonus";
+import LevelIcon from "@/components/Mobile/components/UI/LevelIcon";
 
 const LevelTableContainer = styled.table`
   width: 100%;
@@ -9,98 +9,105 @@ const LevelTableContainer = styled.table`
   margin-top: 20px;
   border-collapse: separate;
   border-spacing: 0 10px;
-`
-const Header = styled.thead`
-`
+`;
+const Header = styled.thead``;
 const HeaderRow = styled.tr`
   height: 32px;
-`
+`;
 const HeaderItem = styled.th`
-  color: #6A768B;
+  color: #6a768b;
   font-size: 0.875rem;
-`
+`;
 const LevelHeaderItem = styled(HeaderItem)`
   width: 70px;
-`
+`;
 const Row = styled.tr`
-  color: #B2C3EC;
+  color: #b2c3ec;
   text-align: center;
   font-size: 0.75rem;
   font-weight: 700;
   position: relative;
   width: 100%;
   height: 67px;
-  background-color: #181F2B;
+  background-color: #181f2b;
 
-  td:first-child{
+  td:first-child {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
   }
-  td:last-child{
+  td:last-child {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
   }
-`
+`;
 
 const maxLevel = 10;
-const levelList = Array.from({length: maxLevel}).map((level, index: number) => index + 1)
 
 export const LevelTableRow = ({
   level,
-  bonusList
+  bonusList,
 }: {
   level: number;
-  bonusList: string[];
+  bonusList: number[];
 }) => {
   return (
     <Row>
       <td>
         <LevelIcon level={level} width={"57px"} />
       </td>
-        {
-          bonusList.map((bonus, index) => {
-            return (
-              <td key={index}>{bonus}</td>
-            )
-          })
-        }
+      {bonusList.map((bonus, index) => {
+        return <td key={index}>{bonus}</td>;
+      })}
     </Row>
-  )
-}
+  );
+};
 
 const LevelTable = ({
-  currentLevelListByGame
+  productRebateByLevel,
 }: {
-  currentLevelListByGame: LevelList[]
+  productRebateByLevel: TypeProductRebateByLevel[];
 }) => {
-  const gameList = currentLevelListByGame.map((game) => game.name)
+  const gameList = productRebateByLevel.map((productRebate) => {
+    const gameName = Object.keys(productRebate)[0];
+    return gameName;
+  });
 
-  const getLevelList = (level: number) => {
-    const levelText = `level${level}` as keyof LevelList
-    return currentLevelListByGame.map((game) => game[levelText] || '')
-  }
+  const firstGame = gameList[0];
+  const firstProductRebate = productRebateByLevel[0];
+  const maxLevel = firstProductRebate[firstGame].length;
+  const levelList = Array.from({ length: maxLevel }, (_, i) => i + 1);
+
+  const getRebateList = (level: number) => {
+    return productRebateByLevel.map((productRebate) => {
+      const gameName = Object.keys(productRebate)[0];
+      const rebateList = productRebate[gameName];
+      return rebateList[level - 1];
+    });
+  };
 
   return (
     <LevelTableContainer>
       <Header>
         <HeaderRow>
           <LevelHeaderItem>Level</LevelHeaderItem>
-          {
-            gameList.map(game => (
-              <HeaderItem key={game}>{game}</HeaderItem>
-            ))
-          }
+          {gameList.map((game) => (
+            <HeaderItem key={game}>{game}</HeaderItem>
+          ))}
         </HeaderRow>
       </Header>
       <tbody>
-        {
-          levelList.map((level) => {
-            return <LevelTableRow key={level} level={level} bonusList={getLevelList(level)}/>
-          })
-        }
+        {levelList.map((level) => {
+          return (
+            <LevelTableRow
+              key={level}
+              level={level}
+              bonusList={getRebateList(level)}
+            />
+          );
+        })}
       </tbody>
     </LevelTableContainer>
-  )
-}
+  );
+};
 
-export default LevelTable
+export default LevelTable;
