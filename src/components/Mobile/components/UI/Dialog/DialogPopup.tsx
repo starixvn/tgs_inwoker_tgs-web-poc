@@ -15,7 +15,7 @@ const DialogContainer = styled(MuiDialog)`
     align-items: center;
     justify-content: center;
     width: 321px;
-    height: 298px
+    height: 298px;
     border-radius: 10px;
   }
 `;
@@ -48,38 +48,35 @@ const DontShowAgainHint = styled.div`
   color: #ffffff;
   border-radius: 50px;
   text-align: center;
-`
+`;
 
 type Props = {
-    isOpen: boolean;
-    handleCloseDialog: () => void;
-    children: React.ReactElement;
+  isOpen: boolean;
+  handleCloseDialog: () => void;
+  children: React.ReactElement;
 };
 
 const DialogPopup = ({ isOpen, handleCloseDialog, children }: Props) => {
   return (
+    <DialogContainer open={isOpen} TransitionComponent={UpTransition}>
       <>
-          <DialogContainer
-              open={isOpen}
-              TransitionComponent={UpTransition}
-          >
-              <CloseIconContainer>
-                  <CloseIcon
-                      onClick={handleCloseDialog}
-                      style={{
-                          color: "white",
-                          transform: "scale(1.6)",
-                      }}
-                  />
-              </CloseIconContainer>
-              <ChildContainer>{children}</ChildContainer>
-              {/* TODO: handle later */}
-              {/* <DontShowAgainHint>
+        <CloseIconContainer>
+          <CloseIcon
+            onClick={handleCloseDialog}
+            style={{
+              color: "white",
+              transform: "scale(1.6)",
+            }}
+          />
+        </CloseIconContainer>
+        <ChildContainer>{children}</ChildContainer>
+        {/* TODO: handle later */}
+        {/* <DontShowAgainHint>
                   Don't show again
               </DontShowAgainHint> */}
-          </DialogContainer>
       </>
-    );
+    </DialogContainer>
+  );
 };
 
 export default React.memo(DialogPopup);

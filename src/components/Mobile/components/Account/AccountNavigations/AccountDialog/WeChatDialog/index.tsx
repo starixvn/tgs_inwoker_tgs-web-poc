@@ -1,7 +1,7 @@
 import React from "react";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
-import WeChat from "@/components/Mobile/components/_PrevProfile/WeChat";
+import WeChat from "@/components/Mobile/components/_Share/Account/Profile/WeChat";
 import i18n from "@/utils/i18n";
 
 type Props = {

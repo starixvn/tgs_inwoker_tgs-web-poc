@@ -1,5 +1,5 @@
 import React from "react";
-import WithdrawalPrev from "@/components/Mobile/components/Account/AccountNavigations/Withdraw/WithdrawalPrev";
+import WithdrawalPrev from "@/components/Mobile/components/_Share/Account/WithdrawalPrev";
 
 type Props = {};
 const Withdraw = (props: Props) => {

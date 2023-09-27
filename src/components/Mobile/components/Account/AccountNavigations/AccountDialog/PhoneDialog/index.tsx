@@ -2,7 +2,7 @@ import React from "react";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
 import { useNotifications } from "@/hooks/useNotifications";
-import Phone from "@/components/Mobile/components/_PrevProfile/Phone";
+import Phone from "@/components/Mobile/components/_Share/Account/Profile/Phone";
 import { useHistory } from "react-router-dom";
 
 type Props = {

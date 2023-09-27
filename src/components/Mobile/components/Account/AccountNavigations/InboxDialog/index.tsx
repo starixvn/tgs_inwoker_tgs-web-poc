@@ -3,7 +3,7 @@ import styled from "styled-components";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import InboxPrev from "@/components/Mobile/components/Account/AccountNavigations/InboxDialog/InboxPrev";
+import InboxPrev from "@/components/Mobile/components/_Share/Account/InboxPrev";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useHistory } from "react-router-dom";
 

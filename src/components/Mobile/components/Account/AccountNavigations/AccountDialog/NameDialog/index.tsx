@@ -3,7 +3,7 @@ import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWit
 import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useHistory } from "react-router-dom";
-import NameVerify from "@/components/Mobile/components/_PrevProfile/id-verification";
+import NameVerify from "@/components/Mobile/components/_Share/Account/Profile/id-verification";
 
 type Props = {
   isOpen: boolean;

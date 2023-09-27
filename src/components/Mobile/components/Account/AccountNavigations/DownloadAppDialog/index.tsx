@@ -3,7 +3,7 @@ import styled from "styled-components";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import DownloadApp from "@/components/Mobile/components/Account/AccountNavigations/DownloadAppDialog/DownloadApp";
+import Index from "@/components/Mobile/components/_Share/Account/DownloadApp";
 
 const theme = themeList["mobileT18"];
 
@@ -20,7 +20,7 @@ const DownloadAppDialog = ({ isOpen, handleCloseDialog }: Props) => {
         handleCloseDialog={handleCloseDialog}
         dialogHeaderTitle={"Download App"}
       >
-        <DownloadApp />
+        <Index />
       </DialogWithHeader>
     </>
   );
