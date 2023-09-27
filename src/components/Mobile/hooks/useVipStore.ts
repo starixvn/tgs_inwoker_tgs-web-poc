@@ -1,7 +1,7 @@
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { useEffect, useState } from "react";
 
-type VipData = {
+export type VipData = {
     birthBenefit: number;
     cardGameRebate: number;
     level: number;
@@ -21,14 +21,17 @@ type VipData = {
 const useVipStore = () => {
     const { getVIP } = useGeneralStore();
     const [vipData, setVipData] = useState<VipData[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchGetVIP = async () => {
             try {
+                setIsLoading(true);
                 const result = await getVIP();
                 if (result?.IsSuccess) {
                     setVipData(result?.data?.items);
                 }
+                setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching VIP api:", error);
             }
@@ -39,6 +42,7 @@ const useVipStore = () => {
     return {
         setVipData,
         vipData,
+        isLoading
     };
 };
 
