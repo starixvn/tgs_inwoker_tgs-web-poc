@@ -15,7 +15,7 @@ const DialogContainer = styled(MuiDialog)`
     align-items: center;
     justify-content: center;
     width: 321px;
-    height: 298px;
+    height: 298px
     border-radius: 10px;
   }
 `;
@@ -43,7 +43,7 @@ const DontShowAgainHint = styled.div`
   align-items: center;
   justify-content: center;
   position: fixed;
-  top: clac(50% + 149px);
+  top: calc(50% + 149px);
   z-index: 99;
   color: #ffffff;
   border-radius: 50px;
@@ -58,8 +58,8 @@ type Props = {
 
 const DialogPopup = ({ isOpen, handleCloseDialog, children }: Props) => {
   return (
-    <DialogContainer open={isOpen} TransitionComponent={UpTransition}>
-      <>
+    <>
+      <DialogContainer open={isOpen} TransitionComponent={UpTransition}>
         <CloseIconContainer>
           <CloseIcon
             onClick={handleCloseDialog}
@@ -74,8 +74,8 @@ const DialogPopup = ({ isOpen, handleCloseDialog, children }: Props) => {
         {/* <DontShowAgainHint>
                   Don't show again
               </DontShowAgainHint> */}
-      </>
-    </DialogContainer>
+      </DialogContainer>
+    </>
   );
 };
 

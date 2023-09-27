@@ -6,7 +6,7 @@ const featureList = {
     ICVerification: true,
     QQWeChat: true,
     SportsHideLogo: false,
-    PopupAnnouncement: false,
+    PopupAnnouncement: true,
     Withdrawal_HundredDigit: false,
     Deposit_ManualApplePayHideBankAcc: false,
     Deposit_DualPage: false,
@@ -48,7 +48,7 @@ const featureList = {
     AddCard_MaximumCardAllowed: 99,
     AddCard_DisableCreateUpdateDelete: false, //different than AddCard_NotAllowedEditDelete, as it disable addcard if they forgot to add card initially.
     Register_HideInvitation: false,
-    PopupPromotion: false,
+    PopupPromotion: true,
     AddCard_AllowedAdd: true,
     MenuItem_Sorting_WLGHK: false,
 
