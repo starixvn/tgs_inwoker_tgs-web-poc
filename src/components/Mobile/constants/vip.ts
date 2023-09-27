@@ -14,7 +14,7 @@ type levelItem = {
 
 export const levelItemStyleList: levelItem[] = [
     {
-        key: "level 0",
+        key: "level 1",
         level: "V1",
         cardImage: "/card/level_0.png",
         lineImage: "/line/level_0.png",
@@ -26,7 +26,7 @@ export const levelItemStyleList: levelItem[] = [
         bonusTextColor: "#6E491F"
     },
     {
-        key: "level 1",
+        key: "level 2",
         level: "V2",
         cardImage: "/card/level_1.png",
         lineImage: "/line/level_1.png",
@@ -38,7 +38,7 @@ export const levelItemStyleList: levelItem[] = [
         bonusTextColor: "#22203D"
     },
     {
-        key: "level 2",
+        key: "level 3",
         level: "V3",
         cardImage: "/card/level_2.png",
         lineImage: "/line/level_2.png",
@@ -50,7 +50,7 @@ export const levelItemStyleList: levelItem[] = [
         bonusTextColor: "#452B0D"
     },
     {
-        key: "level 3",
+        key: "level 4",
         level: "V4",
         cardImage: "/card/level_3.png",
         lineImage: "/line/level_3.png",
@@ -62,7 +62,7 @@ export const levelItemStyleList: levelItem[] = [
         bonusTextColor: "#452B0D"
     },
     {
-        key: "level 4",
+        key: "level 5",
         level: "V5",
         cardImage: "/card/level_4.png",
         lineImage: "/line/level_4.png",
@@ -74,7 +74,7 @@ export const levelItemStyleList: levelItem[] = [
         bonusTextColor: "#452B0D"
     },
     {
-        key: "level 5",
+        key: "level 6",
         level: "V6",
         cardImage: "/card/level_5.png",
         lineImage: "/line/level_5.png",
@@ -86,7 +86,7 @@ export const levelItemStyleList: levelItem[] = [
         bonusTextColor: "#452B0D"
     },
     {
-        key: "level 6",
+        key: "level 7",
         level: "V7",
         cardImage: "/card/level_6.png",
         lineImage: "/line/level_6.png",
@@ -98,7 +98,7 @@ export const levelItemStyleList: levelItem[] = [
         bonusTextColor: "#452B0D"
     },
     {
-        key: "level 7",
+        key: "level 8",
         level: "V8",
         cardImage: "/card/level_7.png",
         lineImage: "/line/level_7.png",
@@ -110,7 +110,7 @@ export const levelItemStyleList: levelItem[] = [
         bonusTextColor: "#452B0D"
     },
     {
-        key: "level 8",
+        key: "level 9",
         level: "V9",
         cardImage: "/card/level_8.png",
         lineImage: "/line/level_8.png",
@@ -122,7 +122,7 @@ export const levelItemStyleList: levelItem[] = [
         bonusTextColor: "#452B0D"
     },
     {
-        key: "level 9",
+        key: "level 10",
         level: "V10",
         cardImage: "/card/level_9.png",
         lineImage: "/line/level_9.png",
@@ -134,7 +134,7 @@ export const levelItemStyleList: levelItem[] = [
         bonusTextColor: "#452B0D"
     },
     {
-        key: "level 10",
+        key: "level 11",
         level: "V11",
         cardImage: "/card/level_10.png",
         lineImage: "/line/level_10.png",
