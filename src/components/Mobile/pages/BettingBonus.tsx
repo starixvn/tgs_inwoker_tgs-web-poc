@@ -38,6 +38,7 @@ export interface TypeProductRebateByLevel {
 const BettingBonus = () => {
   const { vipData, isLoading } = useVipStore();
 
+  const currentLevel = 3; // TODO: 待確認VIP level
   const productList = Object.keys(productColumnNameMap);
   const productRebateByLevel: TypeProductRebateByLevel[] = productList.map(
     (product) => {
@@ -50,7 +51,7 @@ const BettingBonus = () => {
         const columnName = productColumnNameMap[product];
 
         if (vipLevelData && columnName in vipLevelData) {
-          const rebate = vipLevelData[columnName] as number;
+          const rebate = (vipLevelData as Record<string, number>)[columnName];
           return rebate;
         } else {
           // Handle the case where the columnName is not found in vipLevelData
@@ -68,12 +69,12 @@ const BettingBonus = () => {
   return (
     <Container>
       <CurrentLevelBanner
-        level={3}
+        level={currentLevel}
         productRebateByLevel={productRebateByLevel}
       />
       <TitleText>Ratio of Bet Bonus</TitleText>
       <LevelTable
-        currentLevel={3}
+        currentLevel={currentLevel}
         productRebateByLevel={productRebateByLevel}
       />
     </Container>

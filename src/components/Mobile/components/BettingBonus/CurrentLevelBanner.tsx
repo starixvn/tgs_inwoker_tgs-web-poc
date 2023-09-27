@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Arrow from "@/assets/images/bettingBonus/icon_arrow.svg";
 import LevelIcon from "@/components/Mobile/components/UI/LevelIcon";
 import { TypeProductRebateByLevel } from "@/components/Mobile/pages/BettingBonus";
-import { useCallback } from "react";
 
 const CurrentLevelBannerContainer = styled.div`
   width: 408px;
@@ -17,15 +16,14 @@ const CurrentLevelBannerContainer = styled.div`
 `;
 const LevelIconContainer = styled.div`
   position: absolute;
-  top: 125px;
-  left: 14px;
+  top: 131px;
+  left: 31px;
   transform: translateY(-50%);
   width: 100px;
   height: 100px;
 `;
 const TableContainer = styled.div`
-  max-width: 251px;
-  min-width: 220px;
+  width: 251px;
   margin-top: 24px;
   position: absolute;
   right: 17px;

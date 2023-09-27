@@ -78,7 +78,7 @@ const LevelIcon = ({
 }: {
   level: number;
   width: string;
-  isCurrentLevel: boolean;
+  isCurrentLevel?: boolean;
 }) => {
   const levelType = levelTypeMap[level];
   const levelIcon = levelIconMap[levelType];
@@ -93,7 +93,6 @@ const LevelIcon = ({
         </ImageIconWrapper>
         <LevelText levelType={levelType}>{level}</LevelText>
       </LevelIconContainer>
-
       {isCurrentLevel && (
         <CurrentLevelTagWrapper>
           <img src={CurrentLevelTag} />
