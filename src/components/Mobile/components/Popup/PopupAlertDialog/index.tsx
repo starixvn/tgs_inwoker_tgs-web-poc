@@ -1,38 +1,12 @@
 import React from "react";
 import i18n from "@/utils/i18n";
-import styled from "styled-components";
-import { StyledDialog } from "@/components/Wap/components/PopupAlertModal/StyledDialog";
 import { useNotifications } from "@/hooks/useNotifications";
-
-const DialogTitle = styled.div`
-  font-size: 36px;
-  font-weight: 600;
-  margin: 30px 0 20px 45px;
-  color: #4a4a4a;
-`;
-const DialogMessage = styled.div`
-  font-size: 26px;
-  margin: 20px 45px;
-  color: #4a4a4a;
-  line-height: 1.8em;
-  text-align: center;
-`;
-
-const ButtonConfirm = styled.div`
-  width: 250px;
-  height: 90px;
-  border-radius: 20px;
-  font-size: 34px;
-  text-align: center;
-  padding-top: 24px;
-  margin: 10px auto;
-  background-image: linear-gradient(
-    to top,
-    ${({ theme }) => theme.primaryGradient},
-    ${({ theme }) => theme.primary}
-  );
-  color: #ffffff;
-`;
+import DialogPopup from "@/components/Mobile/components/UI/Dialog/DialogPopup";
+import {
+  ButtonConfirm,
+  DialogContent,
+  DialogTitle,
+} from "@/components/Mobile/components/UI/Dialog/dialogStyles";
 
 type ModalButtonsProps = {
   handleClose: () => void;
@@ -65,15 +39,18 @@ const PopupAlertDialog = () => {
     useNotifications();
 
   return (
-    <StyledDialog onClose={closeAlertPopup} open={isOpen}>
-      <DialogTitle>{title}</DialogTitle>
-      <DialogMessage>{message}</DialogMessage>
-      <ModalButtons
-        handleClose={closeAlertPopup}
-        message={message}
-        action={action}
-      />
-    </StyledDialog>
+    <DialogPopup isOpen={isOpen} handleCloseDialog={closeAlertPopup}>
+      <>
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent>{message}</DialogContent>
+
+        <ModalButtons
+          handleClose={closeAlertPopup}
+          message={message}
+          action={action}
+        />
+      </>
+    </DialogPopup>
   );
 };
 

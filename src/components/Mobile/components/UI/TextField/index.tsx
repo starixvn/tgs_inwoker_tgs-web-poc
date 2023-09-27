@@ -7,7 +7,7 @@ const StyledTextField = styled(MuiTextField)`
   border-radius: 8px;
 
   & input {
-    background: #212937;
+    //background: #212937;
     color: white !important;
   }
 
