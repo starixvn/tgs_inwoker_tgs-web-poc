@@ -1,10 +1,8 @@
 import React, { Component, Suspense } from "react";
-
 import { connect } from "react-redux";
 import { Redirect, Route, Router, Switch } from "react-router";
 import { AppHistory } from "@/history/History";
 import { withRouter } from "react-router-dom";
-
 import {
   SHOW_LOGIN,
   UPDATING_SCREEN_SIZE,
@@ -16,7 +14,6 @@ import { walletAction } from "@/api-services/actions/walletAction";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { inboxAction } from "@/api-services/actions/inboxAction";
 import { GeneralService } from "@/api-services/services/GeneralService";
-
 import config from "@/config/config";
 import ErrorSwitcher from "@/utils/ErrorSwitcher";
 import i18n from "@/utils/i18n";

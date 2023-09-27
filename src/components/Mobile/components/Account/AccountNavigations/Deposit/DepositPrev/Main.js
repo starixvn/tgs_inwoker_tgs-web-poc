@@ -69,12 +69,7 @@ const CustomText = styled.div`
   padding: 40px 20px 10px 20px;
   margin-bottom: 20px;
 `;
-const CustomImage = styled.img`
-  display: block;
-  margin-top: 10px;
-  width: 200px;
-  height: 200px;
-`;
+
 const CustomLabel = styled.div`
   font-size: ${() => (config.brand === "WGHK" ? "26px" : "24px")};
   font-weight: 600;

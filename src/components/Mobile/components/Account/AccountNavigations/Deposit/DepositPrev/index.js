@@ -22,10 +22,12 @@ import DetailsManual from "./DetailsManual";
 import config from "@/config/config";
 import Main from "./Main";
 import MainHKJP from "./MainHKJP";
-import PopupAnnouncement from "@/components/Share/PopupAnnouncement";
+import PopupAnnouncementPrev from "@/components/Share/PopupAnnouncementPrev";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import Header from "@/components/Mobile/components/_PrevShare/Header";
+import DepositNotificationDialog from "@/components/Mobile/components/Account/AccountNavigations/Deposit/DepositPrev/components/DepositNotificationDialog";
+import PopupDialog from "@/components/Mobile/components/Account/AccountNavigations/Deposit/DepositPrev/components/PopupDialog";
 
 const Container = styled.div`
   position: relative;
@@ -46,51 +48,6 @@ const StyledAppBar = withStyles({
     boxShadow: "none",
   },
 })(AppBar);
-
-const StyledModalPopup = withStyles((theme) => ({
-  paper: {
-    borderRadius: "50px",
-    fontSize: "28px",
-    color: "#666666",
-    padding: "30px",
-    maxWidth: "690px",
-
-    display: "block",
-  },
-}))(Modal);
-
-const DialoTitle = styled.div`
-  font-size: 36px;
-  font-weight: 600;
-  margin: 0 auto;
-  display: table;
-  color: #4a4a4a;
-`;
-const DialoMessage = styled.div`
-  font-size: 26px;
-  margin: 30px 45px;
-  color: #4a4a4a;
-  line-height: 1.8em;
-  text-align: center;
-`;
-
-const ButtonConfirm = styled.div`
-  width: 250px;
-  height: 90px;
-  border-radius: 20px;
-
-  font-size: 34px;
-
-  text-align: center;
-
-  padding-top: 24px;
-
-  margin: 10px auto;
-  background-image: linear-gradient(to top, ${({ theme }) =>
-    theme.primaryGradient},
-      ${({ theme }) => theme.primary}));
-  color: #ffffff;
-`;
 
 const CustomTabs = styled(Tabs)`
   background: ${({ theme }) => theme.tabbar};
@@ -148,7 +105,6 @@ class DepositPrev extends Component {
       fileInput: Math.random().toString(36),
       openPopup: false,
       url: "",
-      openAnnouncement: config.features.DepositNotification,
       playerNote: "",
       selectedBankCard: "",
       showTabContainer: true,
@@ -221,7 +177,7 @@ class DepositPrev extends Component {
     }
 
     if (
-      preProps.wallet.depositResult != this.props.wallet.depositResult &&
+      preProps.wallet.depositResult !== this.props.wallet.depositResult &&
       this.props.wallet.depositResult !== null
     ) {
       if (this.props.wallet.depositResult.IsSuccess) {
@@ -301,7 +257,7 @@ class DepositPrev extends Component {
       }
     }
     if (
-      preProps.wallet.depositUploadResult !=
+      preProps.wallet.depositUploadResult !==
         this.props.wallet.depositUploadResult &&
       this.props.wallet.depositUploadResult !== null
     ) {
@@ -374,8 +330,7 @@ class DepositPrev extends Component {
     if (
       config.features.Deposit_AddCard &&
       preProps.wallet.bankCardList !== this.props.wallet.bankCardList &&
-      this.props.wallet.bankCardList.length > 0 &&
-      this.props.wallet.bankCardList !== null
+      this.props.wallet.bankCardList.length > 0
     ) {
       var defaultCard = this.props.wallet.bankCardList.filter(
         (item) => item.default
@@ -393,8 +348,7 @@ class DepositPrev extends Component {
     await this.props.resetDeposit();
     if (
       config.features.Deposit_AddCard &&
-      this.props.wallet.bankCardList.length > 0 &&
-      this.props.wallet.bankCardList !== null
+      this.props.wallet.bankCardList.length > 0
     ) {
       var defaultCard = this.props.wallet.bankCardList.filter(
         (item) => item.default
@@ -936,34 +890,7 @@ class DepositPrev extends Component {
     };
     return (
       <Container>
-        {(() => {
-          if (
-            config.features.DepositNotification &&
-            this.props.ui.deposits &&
-            this.props.ui.deposits.length > 0
-          ) {
-            var row = this.props.ui.deposits[0];
-
-            return (
-              <PopupAnnouncement
-                open={this.state.openAnnouncement}
-                onClose={() => {
-                  this.setState({ ...this.state, openAnnouncement: false });
-                }}
-                text={
-                  row.localization !== null && row.localization.content
-                    ? row.localization.content
-                    : row.content
-                }
-                header={
-                  row.localization !== null && row.localization.subject
-                    ? row.localization.subject
-                    : row.subject
-                }
-              ></PopupAnnouncement>
-            );
-          }
-        })()}
+        <DepositNotificationDialog />
         <Header
           onBackClick={this.handleBackClick}
           title={i18n.t("deposit.title")}
@@ -1028,16 +955,7 @@ class DepositPrev extends Component {
             </React.Fragment>
           );
         })()}
-        <StyledModalPopup
-          onClose={this.props.hideAlert}
-          open={this.props.wallet.message !== ""}
-        >
-          <DialoTitle>{i18n.t("common.info")}</DialoTitle>
-          <DialoMessage>{this.props.wallet.message}</DialoMessage>
-          <ButtonConfirm onClick={this.props.hideAlert}>
-            {i18n.t("common.confirm")}
-          </ButtonConfirm>
-        </StyledModalPopup>
+        <PopupDialog />
         <Loading show={this.props.wallet.depositLoading}></Loading>
       </Container>
     );
