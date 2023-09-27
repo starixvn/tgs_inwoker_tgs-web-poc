@@ -1,12 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Modal from "@material-ui/core/Dialog";
+
 import { walletAction } from "@/api-services/actions/walletAction";
 import { generalAction } from "@/api-services/actions/generalAction";
 import { WalletService } from "@/api-services/services/WalletService";
@@ -14,7 +10,6 @@ import {
   RESET_WALLETRESULT,
   WALLET_HIDEMESSAGE,
 } from "@/api-services/constant/actionType";
-import Common from "@/utils/Common";
 
 import i18n from "@/utils/i18n";
 import Details from "./Details";
@@ -22,102 +17,16 @@ import DetailsManual from "./DetailsManual";
 import config from "@/config/config";
 import Main from "./Main";
 import MainHKJP from "./MainHKJP";
-import PopupAnnouncement from "@/components/Share/PopupAnnouncement";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
-import Header from "@/components/Mobile/components/_PrevShare/Header";
+import DepositNotificationDialog from "@/components/Mobile/components/Account/AccountNavigations/Deposit/DepositPrev/components/DepositNotificationDialog";
+import PopupDialog from "@/components/Mobile/components/Account/AccountNavigations/Deposit/DepositPrev/components/PopupDialog";
+import PaymentTabsHeader from "@/components/Mobile/components/Account/AccountNavigations/Deposit/DepositPrev/components/PaymentTabsHeader";
+import DepositAddCard from "@/components/Mobile/components/Account/AccountNavigations/Deposit/DepositPrev/components/DepositAddCard";
 
 const Container = styled.div`
   position: relative;
   padding-top: 85px;
-`;
-const BalanceLabel = styled.div`
-  float: right;
-  font-size: 30px;
-  font-weight: 600;
-  text-align: right;
-  color: ${({ theme }) => theme.balance};
-`;
-
-const StyledAppBar = withStyles({
-  root: {
-    top: "89px",
-    backgroundColor: "#f1f1f1",
-    boxShadow: "none",
-  },
-})(AppBar);
-
-const StyledModalPopup = withStyles((theme) => ({
-  paper: {
-    borderRadius: "50px",
-    fontSize: "28px",
-    color: "#666666",
-    padding: "30px",
-    maxWidth: "690px",
-
-    display: "block",
-  },
-}))(Modal);
-
-const DialoTitle = styled.div`
-  font-size: 36px;
-  font-weight: 600;
-  margin: 0 auto;
-  display: table;
-  color: #4a4a4a;
-`;
-const DialoMessage = styled.div`
-  font-size: 26px;
-  margin: 30px 45px;
-  color: #4a4a4a;
-  line-height: 1.8em;
-  text-align: center;
-`;
-
-const ButtonConfirm = styled.div`
-  width: 250px;
-  height: 90px;
-  border-radius: 20px;
-
-  font-size: 34px;
-
-  text-align: center;
-
-  padding-top: 24px;
-
-  margin: 10px auto;
-  background-image: linear-gradient(to top, ${({ theme }) =>
-    theme.primaryGradient},
-      ${({ theme }) => theme.primary}));
-  color: #ffffff;
-`;
-
-const CustomTabs = styled(Tabs)`
-  background: ${({ theme }) => theme.tabbar};
-`;
-
-const TabButtonContainer = styled.div`
-  height: 90px;
-  padding-top: 30px;
-  margin-left: 50px;
-  margin-top: -90px;
-`;
-
-const ButtonAddCard = styled.div`
-  width: 100px;
-  height: 60px;
-  border: 1px solid #d9d9d9;
-  text-align: center;
-  border-radius: 5px;
-  background-color: #fff;
-  cursor: pointer;
-  &:before {
-    content: "+";
-    width: 50px;
-    height: 50px;
-    font-size: 50px;
-    line-height: 50px;
-  }
 `;
 
 class DepositPrev extends Component {
@@ -148,7 +57,6 @@ class DepositPrev extends Component {
       fileInput: Math.random().toString(36),
       openPopup: false,
       url: "",
-      openAnnouncement: config.features.DepositNotification,
       playerNote: "",
       selectedBankCard: "",
       showTabContainer: true,
@@ -221,7 +129,7 @@ class DepositPrev extends Component {
     }
 
     if (
-      preProps.wallet.depositResult != this.props.wallet.depositResult &&
+      preProps.wallet.depositResult !== this.props.wallet.depositResult &&
       this.props.wallet.depositResult !== null
     ) {
       if (this.props.wallet.depositResult.IsSuccess) {
@@ -301,7 +209,7 @@ class DepositPrev extends Component {
       }
     }
     if (
-      preProps.wallet.depositUploadResult !=
+      preProps.wallet.depositUploadResult !==
         this.props.wallet.depositUploadResult &&
       this.props.wallet.depositUploadResult !== null
     ) {
@@ -374,8 +282,7 @@ class DepositPrev extends Component {
     if (
       config.features.Deposit_AddCard &&
       preProps.wallet.bankCardList !== this.props.wallet.bankCardList &&
-      this.props.wallet.bankCardList.length > 0 &&
-      this.props.wallet.bankCardList !== null
+      this.props.wallet.bankCardList.length > 0
     ) {
       var defaultCard = this.props.wallet.bankCardList.filter(
         (item) => item.default
@@ -385,16 +292,17 @@ class DepositPrev extends Component {
       }
     }
   }
+
   componentWillUnmount() {
     clearInterval(this.countDownInterval);
   }
+
   handleRestartClick = async (e) => {
     this.setState({ ...this.initialState });
     await this.props.resetDeposit();
     if (
       config.features.Deposit_AddCard &&
-      this.props.wallet.bankCardList.length > 0 &&
-      this.props.wallet.bankCardList !== null
+      this.props.wallet.bankCardList.length > 0
     ) {
       var defaultCard = this.props.wallet.bankCardList.filter(
         (item) => item.default
@@ -417,13 +325,6 @@ class DepositPrev extends Component {
   };
   handleClose = () => {
     this.setState({ ...this.state, open: false });
-  };
-
-  uploadImage = (e) => {
-    this.setState({
-      ...this.state,
-      upload: e.target.files[0],
-    });
   };
 
   handleDepositClick = () => {
@@ -771,273 +672,179 @@ class DepositPrev extends Component {
       url: "",
     });
   };
-  brandSwitcher = (brand) => {
-    switch (brand) {
-      case "GMO":
-        return "GMO";
+
+  switchView = (view) => {
+    switch (view) {
+      case 1:
+        if (config.features.Deposit_DualPage) {
+          return (
+            <MainHKJP
+              name={this.state.name}
+              handleNameChange={this.handleNameChange}
+              handleMethodChange={this.handleMethodChange}
+              handleChannelChange={this.handleChannelChange}
+              handleAccountChange={this.handleAccountChange}
+              handlePromotionChange={this.handlePromotionChange}
+              handleAmountChange={this.handleAmountChange}
+              handleDepositClick={this.handleDepositClick}
+              selectedPaymentIndex={this.state.selectedPaymentIndex}
+              selectedMethodIndex={this.state.selectedMethodIndex}
+              selectedChannelIndex={this.state.selectedChannelIndex}
+              depositPromotion={this.state.depositPromotion}
+              account={this.state.account}
+              amount={this.state.amount}
+              exchangeRate={this.state.exchangeRate}
+              step={this.state.step}
+              disabled={this.state.disabled}
+              playerNote={this.state.playerNote}
+              handlePlayerNoteChange={this.handlePlayerNoteChange}
+            ></MainHKJP>
+          );
+        } else {
+          return (
+            <Main
+              name={this.state.name}
+              handleNameChange={this.handleNameChange}
+              handleMethodChange={this.handleMethodChange}
+              handleChannelChange={this.handleChannelChange}
+              handleAccountChange={this.handleAccountChange}
+              handlePromotionChange={this.handlePromotionChange}
+              handleAmountChange={this.handleAmountChange}
+              handleDepositClick={this.handleDepositClick}
+              handleSelectAccountChange={this.handleSelectAccountChange}
+              selectedPaymentIndex={this.state.selectedPaymentIndex}
+              selectedMethodIndex={this.state.selectedMethodIndex}
+              selectedChannelIndex={this.state.selectedChannelIndex}
+              depositPromotion={this.state.depositPromotion}
+              account={this.state.account}
+              amount={this.state.amount}
+              exchangeRate={this.state.exchangeRate}
+              step={this.state.step}
+              disabled={this.state.disabled}
+              handleFileChange={this.handleFileChange}
+              key={this.state.fileInput}
+              files={this.state.files}
+              handleClosePopup={this.handleClosePopup}
+              openPopup={this.state.openPopup}
+              handleOpenPopupUrl={this.handleOpenPopupUrl}
+              alert={this.props.alert}
+              playerNote={this.state.playerNote}
+              handlePlayerNoteChange={this.handlePlayerNoteChange}
+              selectedBankCard={this.state.selectedBankCard}
+              handleBankCardChange={this.handleBankCardChange}
+              bankCardList={
+                config.features.Deposit_AddCard
+                  ? this.props.wallet.bankCardList.sort(
+                      (a, b) => b.default - a.default
+                    )
+                  : this.props.wallet.bankCardList
+              }
+            ></Main>
+          );
+        }
+
+      case 2:
+      case 3:
+        return (
+          <Details
+            alert={this.props.alert}
+            performUploadImage={this.performUploadImage}
+            amount={this.state.amount}
+            depositResult={this.props.wallet.depositResult}
+            methodcode={
+              this.props.wallet.depositTypeList[this.state.selectedPaymentIndex]
+                .method[this.state.selectedMethodIndex].methodcode
+            }
+            channel={
+              this.props.wallet.depositTypeList[this.state.selectedPaymentIndex]
+                .method[this.state.selectedMethodIndex].channel[
+                this.state.selectedChannelIndex
+              ]
+            }
+            handleRestartClick={this.handleRestartClick}
+            isManual={
+              (config.features.Deposit_SplitUsdt &&
+                this.props.wallet.depositTypeList[
+                  this.state.selectedPaymentIndex
+                ].alteredpaymentcode &&
+                this.props.wallet.depositTypeList[
+                  this.state.selectedPaymentIndex
+                ].alteredpaymentcode.toUpperCase() === "MANUAL") ||
+              this.props.wallet.depositTypeList[
+                this.state.selectedPaymentIndex
+              ].paymentcode.toUpperCase() === "MANUAL"
+            }
+            isCrypto={
+              this.props.wallet.depositTypeList[this.state.selectedPaymentIndex]
+                .method[this.state.selectedMethodIndex].methodcode === "Crypto"
+            }
+            depositType={
+              this.props.wallet.depositTypeList[this.state.selectedPaymentIndex]
+                .paymentcode
+            }
+            extended={
+              this.props.wallet.depositTypeList[this.state.selectedPaymentIndex]
+                .method[this.state.selectedMethodIndex].channel[
+                this.state.selectedChannelIndex
+              ].extended
+            }
+          ></Details>
+        );
+      case 5:
+        return (
+          <DetailsManual
+            methodcode={this.state.methodcode}
+            channelname={this.state.channelname}
+            depositDetail={this.state.depositDetail}
+            bankaccount={this.state.bankaccount}
+            paymentId={this.state.paymentId}
+            depositResult={this.props.wallet.depositResult}
+            isManual={true}
+            amount={this.state.amount}
+            alert={this.props.alert}
+            performUploadImage={this.performUploadImage}
+            handleRestartClick={this.handleRestartClick}
+            extended={
+              this.props.wallet.depositTypeList[this.state.selectedPaymentIndex]
+                .method[this.state.selectedMethodIndex].channel[
+                this.state.selectedChannelIndex
+              ].extended
+            }
+          ></DetailsManual>
+        );
       default:
         return "";
     }
   };
 
-  handleAddCard = () => {
-    this.props.navigate("/card/add?do=deposit");
-  };
-
   render() {
-    const switchView = (view) => {
-      switch (view) {
-        case 1:
-          if (config.features.Deposit_DualPage) {
-            return (
-              <MainHKJP
-                name={this.state.name}
-                handleNameChange={this.handleNameChange}
-                handleMethodChange={this.handleMethodChange}
-                handleChannelChange={this.handleChannelChange}
-                handleAccountChange={this.handleAccountChange}
-                handlePromotionChange={this.handlePromotionChange}
-                handleAmountChange={this.handleAmountChange}
-                handleDepositClick={this.handleDepositClick}
-                selectedPaymentIndex={this.state.selectedPaymentIndex}
-                selectedMethodIndex={this.state.selectedMethodIndex}
-                selectedChannelIndex={this.state.selectedChannelIndex}
-                depositPromotion={this.state.depositPromotion}
-                account={this.state.account}
-                amount={this.state.amount}
-                exchangeRate={this.state.exchangeRate}
-                step={this.state.step}
-                disabled={this.state.disabled}
-                playerNote={this.state.playerNote}
-                handlePlayerNoteChange={this.handlePlayerNoteChange}
-              ></MainHKJP>
-            );
-          } else {
-            return (
-              <Main
-                name={this.state.name}
-                handleNameChange={this.handleNameChange}
-                handleMethodChange={this.handleMethodChange}
-                handleChannelChange={this.handleChannelChange}
-                handleAccountChange={this.handleAccountChange}
-                handlePromotionChange={this.handlePromotionChange}
-                handleAmountChange={this.handleAmountChange}
-                handleDepositClick={this.handleDepositClick}
-                handleSelectAccountChange={this.handleSelectAccountChange}
-                selectedPaymentIndex={this.state.selectedPaymentIndex}
-                selectedMethodIndex={this.state.selectedMethodIndex}
-                selectedChannelIndex={this.state.selectedChannelIndex}
-                depositPromotion={this.state.depositPromotion}
-                account={this.state.account}
-                amount={this.state.amount}
-                exchangeRate={this.state.exchangeRate}
-                step={this.state.step}
-                disabled={this.state.disabled}
-                handleFileChange={this.handleFileChange}
-                key={this.state.fileInput}
-                files={this.state.files}
-                handleClosePopup={this.handleClosePopup}
-                openPopup={this.state.openPopup}
-                handleOpenPopupUrl={this.handleOpenPopupUrl}
-                alert={this.props.alert}
-                playerNote={this.state.playerNote}
-                handlePlayerNoteChange={this.handlePlayerNoteChange}
-                selectedBankCard={this.state.selectedBankCard}
-                handleBankCardChange={this.handleBankCardChange}
-                bankCardList={
-                  config.features.Deposit_AddCard
-                    ? this.props.wallet.bankCardList.sort(
-                        (a, b) => b.default - a.default
-                      )
-                    : this.props.wallet.bankCardList
-                }
-              ></Main>
-            );
-          }
-
-        case 2:
-        case 3:
-          return (
-            <Details
-              alert={this.props.alert}
-              performUploadImage={this.performUploadImage}
-              amount={this.state.amount}
-              depositResult={this.props.wallet.depositResult}
-              methodcode={
-                this.props.wallet.depositTypeList[
-                  this.state.selectedPaymentIndex
-                ].method[this.state.selectedMethodIndex].methodcode
-              }
-              channel={
-                this.props.wallet.depositTypeList[
-                  this.state.selectedPaymentIndex
-                ].method[this.state.selectedMethodIndex].channel[
-                  this.state.selectedChannelIndex
-                ]
-              }
-              handleRestartClick={this.handleRestartClick}
-              isManual={
-                (config.features.Deposit_SplitUsdt &&
-                  this.props.wallet.depositTypeList[
-                    this.state.selectedPaymentIndex
-                  ].alteredpaymentcode &&
-                  this.props.wallet.depositTypeList[
-                    this.state.selectedPaymentIndex
-                  ].alteredpaymentcode.toUpperCase() === "MANUAL") ||
-                this.props.wallet.depositTypeList[
-                  this.state.selectedPaymentIndex
-                ].paymentcode.toUpperCase() === "MANUAL"
-              }
-              isCrypto={
-                this.props.wallet.depositTypeList[
-                  this.state.selectedPaymentIndex
-                ].method[this.state.selectedMethodIndex].methodcode === "Crypto"
-              }
-              depositType={
-                this.props.wallet.depositTypeList[
-                  this.state.selectedPaymentIndex
-                ].paymentcode
-              }
-              extended={
-                this.props.wallet.depositTypeList[
-                  this.state.selectedPaymentIndex
-                ].method[this.state.selectedMethodIndex].channel[
-                  this.state.selectedChannelIndex
-                ].extended
-              }
-            ></Details>
-          );
-        case 5:
-          return (
-            <DetailsManual
-              methodcode={this.state.methodcode}
-              channelname={this.state.channelname}
-              depositDetail={this.state.depositDetail}
-              bankaccount={this.state.bankaccount}
-              paymentId={this.state.paymentId}
-              depositResult={this.props.wallet.depositResult}
-              isManual={true}
-              amount={this.state.amount}
-              alert={this.props.alert}
-              performUploadImage={this.performUploadImage}
-              handleRestartClick={this.handleRestartClick}
-              extended={
-                this.props.wallet.depositTypeList[
-                  this.state.selectedPaymentIndex
-                ].method[this.state.selectedMethodIndex].channel[
-                  this.state.selectedChannelIndex
-                ].extended
-              }
-            ></DetailsManual>
-          );
-        default:
-          return "";
-      }
-    };
     return (
       <Container>
-        {(() => {
-          if (
-            config.features.DepositNotification &&
-            this.props.ui.deposits &&
-            this.props.ui.deposits.length > 0
-          ) {
-            var row = this.props.ui.deposits[0];
+        <DepositNotificationDialog />
 
-            return (
-              <PopupAnnouncement
-                open={this.state.openAnnouncement}
-                onClose={() => {
-                  this.setState({ ...this.state, openAnnouncement: false });
-                }}
-                text={
-                  row.localization !== null && row.localization.content
-                    ? row.localization.content
-                    : row.content
-                }
-                header={
-                  row.localization !== null && row.localization.subject
-                    ? row.localization.subject
-                    : row.subject
-                }
-              ></PopupAnnouncement>
-            );
-          }
-        })()}
-        <Header
-          onBackClick={this.handleBackClick}
-          title={i18n.t("deposit.title")}
-          fixedColor={config.brand === "GMO"}
-          rightContent={
-            <BalanceLabel>
-              {Common.formatNumberWithThousand(
-                this.props.game.providerList.reduce(
-                  (total, item) =>
-                    item.transferwallet === true
-                      ? (total += item.balance)
-                      : (total += 0),
-                  0
-                ) + this.props.wallet.mainBalance
-              )}
-            </BalanceLabel>
-          }
-        ></Header>{" "}
         {(() => {
           if (this.props.wallet.depositTypeList.length <= 0) {
-            return <React.Fragment></React.Fragment>;
+            return null;
           }
           return (
-            <React.Fragment>
+            <>
               {config.features.Deposit_AddCard ? (
                 <React.Fragment>
-                  {this.state.showTabContainer && (
-                    <TabButtonContainer>
-                      <ButtonAddCard
-                        onClick={this.handleAddCard}
-                      ></ButtonAddCard>
-                    </TabButtonContainer>
-                  )}
+                  {this.state.showTabContainer && <DepositAddCard />}
                 </React.Fragment>
               ) : (
-                <StyledAppBar>
-                  <CustomTabs
-                    value={this.state.selectedPaymentIndex}
-                    onChange={this.handlePaymentChange}
-                    variant="scrollable"
-                    scrollButtons="auto"
-                  >
-                    {this.props.wallet.depositTypeList
-                      .sort(function (a, b) {
-                        return a.displayorder - b.displayorder;
-                      })
-                      .map((item, index) => {
-                        return (
-                          <Tab
-                            key={index}
-                            value={index}
-                            label={i18n.t(item.paymentcode)}
-                          ></Tab>
-                        );
-                      })}
-                  </CustomTabs>
-                </StyledAppBar>
+                <PaymentTabsHeader
+                  selectedPaymentIndex={this.state.selectedPaymentIndex}
+                  handlePaymentChange={this.handlePaymentChange}
+                />
               )}
               {(() => {
-                return switchView(this.state.step);
+                return this.switchView(this.state.step);
               })()}
-            </React.Fragment>
+            </>
           );
         })()}
-        <StyledModalPopup
-          onClose={this.props.hideAlert}
-          open={this.props.wallet.message !== ""}
-        >
-          <DialoTitle>{i18n.t("common.info")}</DialoTitle>
-          <DialoMessage>{this.props.wallet.message}</DialoMessage>
-          <ButtonConfirm onClick={this.props.hideAlert}>
-            {i18n.t("common.confirm")}
-          </ButtonConfirm>
-        </StyledModalPopup>
+        <PopupDialog />
         <Loading show={this.props.wallet.depositLoading}></Loading>
       </Container>
     );

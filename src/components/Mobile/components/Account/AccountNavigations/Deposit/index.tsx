@@ -1,5 +1,5 @@
 import React from "react";
-import DepositPrev from "@/components/Mobile/components/Account/Deposit/DepositPrev";
+import DepositPrev from "@/components/Mobile/components/Account/AccountNavigations/Deposit/DepositPrev";
 import { useHistory } from "react-router-dom";
 
 type Props = {};
