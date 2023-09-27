@@ -1,48 +1,49 @@
 import bdcakeIcon from "@/assets/images/vip/bdcake.svg";
 import calendarIcon from "@/assets/images/vip/calendar.svg";
-import lockedIcon from "@/assets/images/vip/locked.svg";
 import rocketIcon from "@/assets/images/vip/rocket.svg";
+import uncompletedIcon from "@/assets/images/vip/uncompleted.svg";
 import styled from "styled-components";
+import LockerSvgIcon from "../components/LockerSvgIcon";
 import { levelItemStyleList } from "../constants/vip";
 import useVipStore from "../hooks/useVipStore";
 
 type Props = {
-    cardImage?: string,
-    lineImage?: string,
-    levelColor?: string,
-    levelStatusColor?: string,
-    bonusColor?: string,
-    stampImage?: string,
-    badgeImage?: string,
-    privilegeTitleColor?: string,
-    iconUrl?: string,
-    bonusTextColor?: string,
+  cardImage?: string,
+  lineImage?: string,
+  levelColor?: string,
+  levelStatusColor?: string,
+  bonusColor?: string,
+  stampImage?: string,
+  badgeImage?: string,
+  privilegeTitleColor?: string,
+  iconUrl?: string,
+  bonusTextColor?: string,
 };
 
 type VipBenefit = {
-    birthBenefit: number;
-    cardGameRebate: number;
-    level: number;
-    levelKeepAccumulateBetAmount: number;
-    levelKeepAccumulateDeposit: number;
-    levelUpAccumulateBetAmount: number;
-    levelUpAccumulateDeposit: number;
-    liveDealerRebate: number;
-    lotteryRebate: number;
-    promotionBenefit: number;
-    quarterlyBenefit: number;
-    slotRebate: number;
-    sportsRebate: number;
-    virtualSportsRebate: number;
+  birthBenefit: number;
+  cardGameRebate: number;
+  level: number;
+  levelKeepAccumulateBetAmount: number;
+  levelKeepAccumulateDeposit: number;
+  levelUpAccumulateBetAmount: number;
+  levelUpAccumulateDeposit: number;
+  liveDealerRebate: number;
+  lotteryRebate: number;
+  promotionBenefit: number;
+  quarterlyBenefit: number;
+  slotRebate: number;
+  sportsRebate: number;
+  virtualSportsRebate: number;
 };
 
 const VipScrollableContainer = styled.div`
     width: 100%;
-    min-height: 100vh;
     display: flex;
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
     padding: 20px;
+    margin: 0 20px;
     background-color: ${(props: { theme: { primaryDark: any; }; }) => props.theme.primaryDark};
     color: ${(props: { theme: { white: any; }; }) => props.theme.white};
 `;
@@ -59,6 +60,7 @@ const VipScrollableItem = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    margin-right: 20px;
 `;
 
 const VipCard = styled.div<Props>`
@@ -202,11 +204,10 @@ const LevelText = styled.div<Props>`
     font-style: italic;
     font-weight: 700;
     font-size: 2.25rem;
-    line-height: 1.5rem;
 `;
 
-const LevelStatusText = styled.div<Props>`
-    color: ${(props) => props.levelColor};
+const CurrentLevelText = styled.div<Props>`
+    color: ${(props) => props.levelStatusColor};
     font-weight: 500;
 `;
 
@@ -242,96 +243,106 @@ const LockerIcon = styled.div<Props>`
     background-repeat: no-repeat;
 `;
 
+const LevelStatusTag = styled.div<Props>`
+    display: flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.50);
+    color: ${(props) => props.theme.white};
+`;
+
 const VIP = () => {
-    const { vipData } = useVipStore();
+  const { vipData } = useVipStore();
 
-    return (
-        <VipScrollableContainer>
-            {levelItemStyleList.map(item => (
-                <VipScrollableItem key={item.key}>
-                    <VipCard
-                        cardImage={item.cardImage}
-                    >
-                        <LevelText levelColor={item.levelColor}>{item.level}</LevelText>
-                        <LevelStatusText levelStatusColor={item.levelStatusColor}>Current level</LevelStatusText>
-                        <VipBadge
-                            badgeImage={item.badgeImage}
-                        />
-                    </VipCard>
+  return (
+    <VipScrollableContainer>
+      {levelItemStyleList.map(item => (
+        <VipScrollableItem key={item.key}>
+          <VipCard
+            cardImage={item.cardImage}
+          >
+            <LevelText levelColor={item.levelColor}>{item.level}</LevelText>
+            <LevelStatusTag><img src={uncompletedIcon} alt="uncompleted" />Uncompleted</LevelStatusTag>
+            {/* <CurrentLevelText levelStatusColor={item.levelStatusColor}>Current level</CurrentLevelText> */}
+            <VipBadge
+              badgeImage={item.badgeImage}
+            />
+          </VipCard>
 
-                    <VipLine
-                        lineImage={item.lineImage}
-                    />
-                    <VipBonusText bonusColor={item.bonusColor}>VIP BONUS</VipBonusText>
-                    <VipBonusContent>
-                        <VipBonusStampContainer
-                            stampImage={item.stampImage}
-                        >
-                            <VipBonusStamp>
-                                <VipBonusStampAbove>
-                                    <VipBonusStampTitle bonusTextColor={item.bonusTextColor}>PROMOTION</VipBonusStampTitle>
-                                    <VipBonusStampTitle bonusTextColor={item.bonusTextColor}>BONUS</VipBonusStampTitle>
-                                    <BonusIcon iconUrl={rocketIcon}></BonusIcon>
-                                    <VipBonusStampNumber bonusTextColor={item.bonusTextColor}>0</VipBonusStampNumber>
-                                </VipBonusStampAbove>
-                            </VipBonusStamp>
-                            <VipBonusStampBelow><LockerIcon iconUrl={lockedIcon}></LockerIcon></VipBonusStampBelow>
-                        </VipBonusStampContainer>
-                        <VipBonusStampContainer
-                            stampImage={item.stampImage}
-                        >
-                            <VipBonusStamp>
-                                <VipBonusStampAbove>
-                                    <VipBonusStampTitle bonusTextColor="#6E491F">BIRTHDAY</VipBonusStampTitle>
-                                    <VipBonusStampTitle bonusTextColor="#6E491F">BONUS</VipBonusStampTitle>
-                                    <BonusIcon iconUrl={bdcakeIcon}></BonusIcon>
-                                    <VipBonusStampNumber bonusTextColor="#6E491F">0</VipBonusStampNumber>
-                                </VipBonusStampAbove>
-                            </VipBonusStamp>
-                            <VipBonusStampBelow><LockerIcon iconUrl={lockedIcon}></LockerIcon></VipBonusStampBelow>
-                        </VipBonusStampContainer>
-                        <VipBonusStampContainer
-                            stampImage={item.stampImage}
-                        >
-                            <VipBonusStamp>
-                                <VipBonusStampAbove>
-                                    <VipBonusStampTitle bonusTextColor="#6E491F">MONTHLY</VipBonusStampTitle>
-                                    <VipBonusStampTitle bonusTextColor="#6E491F">BONUS</VipBonusStampTitle>
-                                    <BonusIcon iconUrl={calendarIcon}></BonusIcon>
-                                    <VipBonusStampNumber bonusTextColor="#6E491F">0</VipBonusStampNumber>
-                                </VipBonusStampAbove>
-                            </VipBonusStamp>
-                            <VipBonusStampBelow><LockerIcon iconUrl={lockedIcon}></LockerIcon></VipBonusStampBelow>
-                        </VipBonusStampContainer>
-                    </VipBonusContent>
+          <VipLine
+            lineImage={item.lineImage}
+          />
+          <VipBonusText bonusColor={item.bonusColor}>VIP BONUS</VipBonusText>
+          <VipBonusContent>
+            <VipBonusStampContainer
+              stampImage={item.stampImage}
+            >
+              <VipBonusStamp>
+                <VipBonusStampAbove>
+                  <VipBonusStampTitle bonusTextColor={item.bonusTextColor}>PROMOTION</VipBonusStampTitle>
+                  <VipBonusStampTitle bonusTextColor={item.bonusTextColor}>BONUS</VipBonusStampTitle>
+                  <BonusIcon iconUrl={rocketIcon}></BonusIcon>
+                  <VipBonusStampNumber bonusTextColor={item.bonusTextColor}>0</VipBonusStampNumber>
+                </VipBonusStampAbove>
+              </VipBonusStamp>
+              <VipBonusStampBelow><LockerSvgIcon color={item.lockerIconColor}></LockerSvgIcon></VipBonusStampBelow>
+            </VipBonusStampContainer>
+            <VipBonusStampContainer
+              stampImage={item.stampImage}
+            >
+              <VipBonusStamp>
+                <VipBonusStampAbove>
+                  <VipBonusStampTitle bonusTextColor={item.bonusTextColor}>BIRTHDAY</VipBonusStampTitle>
+                  <VipBonusStampTitle bonusTextColor={item.bonusTextColor}>BONUS</VipBonusStampTitle>
+                  <BonusIcon iconUrl={bdcakeIcon}></BonusIcon>
+                  <VipBonusStampNumber bonusTextColor={item.bonusTextColor}>0</VipBonusStampNumber>
+                </VipBonusStampAbove>
+              </VipBonusStamp>
+              <VipBonusStampBelow><LockerSvgIcon color={item.lockerIconColor}></LockerSvgIcon></VipBonusStampBelow>
+            </VipBonusStampContainer>
+            <VipBonusStampContainer
+              stampImage={item.stampImage}
+            >
+              <VipBonusStamp>
+                <VipBonusStampAbove>
+                  <VipBonusStampTitle bonusTextColor={item.bonusTextColor}>QUARTERLY</VipBonusStampTitle>
+                  <VipBonusStampTitle bonusTextColor={item.bonusTextColor}>BONUS</VipBonusStampTitle>
+                  <BonusIcon iconUrl={calendarIcon}></BonusIcon>
+                  <VipBonusStampNumber bonusTextColor={item.bonusTextColor}>0</VipBonusStampNumber>
+                </VipBonusStampAbove>
+              </VipBonusStamp>
+              <VipBonusStampBelow><LockerSvgIcon color={item.lockerIconColor}></LockerSvgIcon></VipBonusStampBelow>
+            </VipBonusStampContainer>
+          </VipBonusContent>
 
-                    <VipPrivilegeContent>
-                        <VipBadge
-                            badgeImage={"/badge/level_0.png"}
-                        />
-                        <VipPrivilegeText privilegeTitleColor="#4C85F7">Member Privilege</VipPrivilegeText>
-                        <VipPrivilegeItemWrapper>
-                            <VipPrivilegeItem>
-                                <VipPrivilegeItemText>Live Dealer Rebate</VipPrivilegeItemText>
-                                <VipPrivilegeItemNumber>3.00%</VipPrivilegeItemNumber>
-                            </VipPrivilegeItem>
-                        </VipPrivilegeItemWrapper>
-                        <VipPrivilegeText privilegeTitleColor="#4C85F7">Level protection</VipPrivilegeText>
-                        <VipPrivilegeItemWrapper>
-                            <VipPrivilegeItem>
-                                <VipPrivilegeItemText>Deposit</VipPrivilegeItemText>
-                                <VipPrivilegeItemNumber>R$20/Quarterly</VipPrivilegeItemNumber>
-                            </VipPrivilegeItem>
-                            <VipPrivilegeItem>
-                                <VipPrivilegeItemText>Betting</VipPrivilegeItemText>
-                                <VipPrivilegeItemNumber>R$20/Quarterly</VipPrivilegeItemNumber>
-                            </VipPrivilegeItem>
-                        </VipPrivilegeItemWrapper>
-                    </VipPrivilegeContent>
-                </VipScrollableItem>
-            ))}
-        </VipScrollableContainer >
-    )
+          <VipPrivilegeContent>
+            <VipBadge
+              badgeImage={item.badgeImage}
+            />
+            <VipPrivilegeText privilegeTitleColor="#4C85F7">Level Up</VipPrivilegeText>
+            <VipPrivilegeItemWrapper>
+              <VipPrivilegeItem>
+                <VipPrivilegeItemText>Deposit</VipPrivilegeItemText>
+                <VipPrivilegeItemNumber>2,400/ Daily</VipPrivilegeItemNumber>
+              </VipPrivilegeItem>
+            </VipPrivilegeItemWrapper>
+            <VipPrivilegeText privilegeTitleColor="#4C85F7">Level Protection</VipPrivilegeText>
+            <VipPrivilegeItemWrapper>
+              <VipPrivilegeItem>
+                <VipPrivilegeItemText>Deposit</VipPrivilegeItemText>
+                <VipPrivilegeItemNumber>1,200/ Monthlyy</VipPrivilegeItemNumber>
+              </VipPrivilegeItem>
+              <VipPrivilegeItem>
+                <VipPrivilegeItemText>Betting</VipPrivilegeItemText>
+                <VipPrivilegeItemNumber>1,100/ Monthlyy</VipPrivilegeItemNumber>
+              </VipPrivilegeItem>
+            </VipPrivilegeItemWrapper>
+          </VipPrivilegeContent>
+        </VipScrollableItem>
+      ))}
+    </VipScrollableContainer >
+  )
 }
 
 export default VIP;
