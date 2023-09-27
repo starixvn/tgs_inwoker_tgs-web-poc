@@ -1,11 +1,8 @@
-import bdcakeIcon from "@/assets/images/vip/bdcake.svg";
-import calendarIcon from "@/assets/images/vip/calendar.svg";
-import rocketIcon from "@/assets/images/vip/rocket.svg";
 import uncompletedIcon from "@/assets/images/vip/uncompleted.svg";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import LockerSvgIcon from "../components/LockerSvgIcon";
 import { levelItemStyleList } from "../constants/vip";
-import useVipStore from "../hooks/useVipStore";
+import useVipStore from "../hooks/vip/useVipStore";
 
 type Props = {
   cardImage?: string,
@@ -96,48 +93,6 @@ const VipBonusText = styled.div<Props>`
     color: ${(props) => props.bonusColor};
 `;
 
-const VipBonusContent = styled.div<Props>`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 26px 0;
-    gap: 15px;
-`;
-
-const VipBonusStampContainer = styled.div<Props>`
-    width: 100%;
-    max-width: 112px
-    min-height: 156px;
-    background-image: url(${props => process.env.PUBLIC_URL + "/assets/images/vip/mobile" + props.stampImage});
-    background-size: contain;
-    background-repeat: no-repeat;
-    position: relative;
-`;
-
-const VipBonusStamp = styled.div<Props>`
-    padding: 9px 7px;
-    min-height: 156px;
-`;
-
-const VipBonusStampAbove = styled.div<Props>`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`;
-
-const VipBonusStampBelow = styled.div<Props>`
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
 const VipPrivilegeContent = styled.div<Props>`
     display: flex;
     flex-direction: column;
@@ -211,10 +166,63 @@ const CurrentLevelText = styled.div<Props>`
     font-weight: 500;
 `;
 
+const LevelStatusTag = styled.div<Props>`
+    display: flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.50);
+    color: ${(props) => props.theme.white};
+`;
+
+const VipBonusStampGridContainer = styled.div<Props>`
+    display: flex;
+    justify-content: space-between;
+    margin: 26px 0;
+    gap: 15px;
+`;
+
+const VipBonusStampContainer = styled.div<Props>`
+    width: 100%;
+    max-width: 112px
+    min-height: 156px;
+    background-image: url(${props => process.env.PUBLIC_URL + "/assets/images/vip/mobile" + props.stampImage});
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+`;
+
 const VipBonusStampTitle = styled.div<Props>`
     color: ${(props) => props.bonusTextColor};
     font-weight: 400;
     line-height: 1.125rem;
+`;
+
+const VipBonusStamp = styled.div<Props>`
+    padding: 9px 7px;
+
+    @media (max-width: 400px) {
+      padding: 6px 5px;
+    }
+`;
+
+const VipBonusStampAbove = styled.div<Props>`
+border: 1px solid #fff;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+`;
+
+const VipBonusStampBelow = styled.div<Props>`
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const VipBonusStampNumber = styled.div<Props>`
@@ -243,17 +251,29 @@ const LockerIcon = styled.div<Props>`
     background-repeat: no-repeat;
 `;
 
-const LevelStatusTag = styled.div<Props>`
-    display: flex;
-    align-items: center;
-    padding: 4px 10px;
-    border-radius: 50px;
-    background: rgba(0, 0, 0, 0.50);
-    color: ${(props) => props.theme.white};
-`;
-
 const VIP = () => {
-  const { vipData } = useVipStore();
+  const { vipData, isLoading } = useVipStore();
+  const [vipSortingData, setVipSortingData] = useState<any[]>([])
+
+  useEffect(() => {
+    if (!isLoading && levelItemStyleList) {
+      const vipList =
+        vipData && vipData.sort((a, b) => {
+          return a.level < b.level ? -1 : a.level > b.level ? 1 : 0;
+        });
+
+      setVipSortingData(vipList);
+    }
+  }, [levelItemStyleList]);
+
+  const numberOfLevels = vipSortingData.length;
+  const levelItems = levelItemStyleList.slice(0, numberOfLevels);
+  const updatedVipSortingData = vipSortingData.map((sortingItem, index) => {
+    sortingItem.levelData = levelItems[index];
+    return sortingItem;
+  });
+
+  // to-do: 多抽一層資料處理hooks/vip for useVipDataHandler.ts 把資料和UI切分乾淨
 
   return (
     <VipScrollableContainer>
@@ -274,7 +294,7 @@ const VIP = () => {
             lineImage={item.lineImage}
           />
           <VipBonusText bonusColor={item.bonusColor}>VIP BONUS</VipBonusText>
-          <VipBonusContent>
+          <VipBonusStampGridContainer>
             <VipBonusStampContainer
               stampImage={item.stampImage}
             >
@@ -288,6 +308,7 @@ const VIP = () => {
               </VipBonusStamp>
               <VipBonusStampBelow><LockerSvgIcon color={item.lockerIconColor}></LockerSvgIcon></VipBonusStampBelow>
             </VipBonusStampContainer>
+
             <VipBonusStampContainer
               stampImage={item.stampImage}
             >
@@ -314,7 +335,7 @@ const VIP = () => {
               </VipBonusStamp>
               <VipBonusStampBelow><LockerSvgIcon color={item.lockerIconColor}></LockerSvgIcon></VipBonusStampBelow>
             </VipBonusStampContainer>
-          </VipBonusContent>
+          </VipBonusStampGridContainer>
 
           <VipPrivilegeContent>
             <VipBadge
