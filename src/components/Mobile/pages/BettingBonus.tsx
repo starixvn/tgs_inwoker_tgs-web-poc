@@ -20,15 +20,6 @@ const TitleText = styled.div`
   text-align: start;
 `;
 
-const productList = [
-  "Live Dealer",
-  "Sports book",
-  "E-Game",
-  "Card Game",
-  "Lottery",
-  "Virtual Sports",
-];
-
 const productColumnNameMap: {
   [key: string]: string;
 } = {
@@ -40,104 +31,9 @@ const productColumnNameMap: {
   "Virtual Sports": "virtualSportsRebate",
 };
 export interface TypeProductRebateByLevel {
-  [key: string]: number[];
-}
-
-export interface LevelList {
   name: string;
-  level1: string;
-  level2: string;
-  level3: string;
-  level4: string;
-  level5: string;
-  level6: string;
-  level7: string;
-  level8: string;
-  level9: string;
-  level10: string;
+  rebate: number[];
 }
-
-// fake data
-const currentLevelListByGame: LevelList[] = [
-  {
-    name: "Live Dealer",
-    level1: "0.20%",
-    level2: "0.25%",
-    level3: "0.30%",
-    level4: "0.35%",
-    level5: "0.40%",
-    level6: "0.45%",
-    level7: "0.50%",
-    level8: "0.55%",
-    level9: "0.60%",
-    level10: "0.65%",
-  },
-  {
-    name: "Sports book",
-    level1: "0.20%",
-    level2: "0.25%",
-    level3: "0.30%",
-    level4: "0.35%",
-    level5: "0.40%",
-    level6: "0.45%",
-    level7: "0.50%",
-    level8: "0.55%",
-    level9: "0.60%",
-    level10: "0.65%",
-  },
-  {
-    name: "E-Game",
-    level1: "0.20%",
-    level2: "0.25%",
-    level3: "0.30%",
-    level4: "0.35%",
-    level5: "0.40%",
-    level6: "0.45%",
-    level7: "0.50%",
-    level8: "0.55%",
-    level9: "0.60%",
-    level10: "0.65%",
-  },
-  {
-    name: "Card Game",
-    level1: "0.20%",
-    level2: "0.25%",
-    level3: "0.30%",
-    level4: "0.35%",
-    level5: "0.40%",
-    level6: "0.45%",
-    level7: "0.50%",
-    level8: "0.55%",
-    level9: "0.60%",
-    level10: "0.65%",
-  },
-  {
-    name: "Lottery",
-    level1: "0.20%",
-    level2: "0.25%",
-    level3: "0.30%",
-    level4: "0.35%",
-    level5: "0.40%",
-    level6: "0.45%",
-    level7: "0.50%",
-    level8: "0.55%",
-    level9: "0.60%",
-    level10: "0.65%",
-  },
-  {
-    name: "Virtual Sports",
-    level1: "0.20%",
-    level2: "0.25%",
-    level3: "0.30%",
-    level4: "0.35%",
-    level5: "0.40%",
-    level6: "0.45%",
-    level7: "0.50%",
-    level8: "0.55%",
-    level9: "0.60%",
-    level10: "0.65%",
-  },
-];
 
 const BettingBonus = () => {
   const { vipData, isLoading } = useVipStore();
@@ -162,18 +58,24 @@ const BettingBonus = () => {
         }
       });
       return {
-        [product]: productRebateList,
+        name: product,
+        rebate: productRebateList,
       };
     }
   );
 
-  console.log("%c⧭", "color: #731d6d", "rebateByLevel", productRebateByLevel);
   if (isLoading) return "isLoading"; // TODO: handle loading ui
   return (
     <Container>
-      <CurrentLevelBanner currentLevelListByGame={currentLevelListByGame} />
+      <CurrentLevelBanner
+        level={3}
+        productRebateByLevel={productRebateByLevel}
+      />
       <TitleText>Ratio of Bet Bonus</TitleText>
-      <LevelTable productRebateByLevel={productRebateByLevel} />
+      <LevelTable
+        currentLevel={3}
+        productRebateByLevel={productRebateByLevel}
+      />
     </Container>
   );
 };

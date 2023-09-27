@@ -41,46 +41,49 @@ const Row = styled.tr`
   }
 `;
 
-const maxLevel = 10;
-
 export const LevelTableRow = ({
   level,
+  isCurrentLevel,
   bonusList,
 }: {
   level: number;
+  isCurrentLevel: boolean;
   bonusList: number[];
 }) => {
   return (
     <Row>
       <td>
-        <LevelIcon level={level} width={"57px"} />
+        <LevelIcon
+          isCurrentLevel={isCurrentLevel}
+          level={level}
+          width={"57px"}
+        />
       </td>
       {bonusList.map((bonus, index) => {
-        return <td key={index}>{bonus}</td>;
+        return <td key={index}>{bonus}%</td>;
       })}
     </Row>
   );
 };
 
 const LevelTable = ({
+  currentLevel,
   productRebateByLevel,
 }: {
+  currentLevel: number;
   productRebateByLevel: TypeProductRebateByLevel[];
 }) => {
   const gameList = productRebateByLevel.map((productRebate) => {
-    const gameName = Object.keys(productRebate)[0];
-    return gameName;
+    return productRebate.name;
   });
 
-  const firstGame = gameList[0];
   const firstProductRebate = productRebateByLevel[0];
-  const maxLevel = firstProductRebate[firstGame].length;
+  const maxLevel = firstProductRebate.rebate.length;
   const levelList = Array.from({ length: maxLevel }, (_, i) => i + 1);
 
   const getRebateList = (level: number) => {
     return productRebateByLevel.map((productRebate) => {
-      const gameName = Object.keys(productRebate)[0];
-      const rebateList = productRebate[gameName];
+      const rebateList = productRebate.rebate;
       return rebateList[level - 1];
     });
   };
@@ -101,6 +104,7 @@ const LevelTable = ({
             <LevelTableRow
               key={level}
               level={level}
+              isCurrentLevel={currentLevel === level}
               bonusList={getRebateList(level)}
             />
           );
