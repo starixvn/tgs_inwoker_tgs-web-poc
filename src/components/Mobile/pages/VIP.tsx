@@ -17,7 +17,6 @@ type Props = {
   stampImage?: string,
   badgeImage?: string,
   privilegeTitleColor?: string,
-  iconUrl?: string,
   bonusTextColor?: string,
 };
 
@@ -175,7 +174,7 @@ const VIP = () => {
 
       setVipSortingData(vipList);
     }
-  }, [levelItemStyleList]);
+  }, [levelItemStyleList, isLoading, vipData]);
 
   const numberOfLevels = vipSortingData.length;
   const levelItems = levelItemStyleList.slice(0, numberOfLevels);

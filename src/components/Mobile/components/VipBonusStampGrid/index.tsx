@@ -102,14 +102,6 @@ const BonusIcon = styled.div<Props>`
     }
 `;
 
-const LockerIcon = styled.div<Props>`
-    width: 20px
-    height: 20px;
-    background-image: url(${props => props.iconUrl});
-    background-size: contain;
-    background-repeat: no-repeat;
-`;
-
 const VipBonusStampGrid = ({
   stampImages,
   bonusTextColor,
@@ -118,6 +110,7 @@ const VipBonusStampGrid = ({
   lockerIconColor,
   vipBonus
 }: Props) => {
+
   return (
     <VipBonusStampGridContainer>
       {stampImages && stampImages.map((stampImage: string, index: number) => (
@@ -131,7 +124,8 @@ const VipBonusStampGrid = ({
           >
             <VipBonusStampTitle bonusTextColor={bonusTextColor}>{bonusTextTitle && bonusTextTitle[index]}</VipBonusStampTitle>
             <VipBonusStampTitle bonusTextColor={bonusTextColor}>BONUS</VipBonusStampTitle>
-            <BonusIcon iconUrl={iconUrl && iconUrl[index]}></BonusIcon>
+            <BonusIcon iconUrl={iconUrl ? [iconUrl[index]] : undefined}></BonusIcon>
+
             <VipBonusStampNumber bonusTextColor={bonusTextColor}>{vipBonus && vipBonus[index]}</VipBonusStampNumber>
           </VipBonusStampAbove>
           <VipBonusStampBelow><LockerSvgIcon color={lockerIconColor}></LockerSvgIcon></VipBonusStampBelow>
