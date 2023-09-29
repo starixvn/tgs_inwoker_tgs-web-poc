@@ -7,6 +7,8 @@ import Promotion from "@/components/Mobile/pages/Promotion";
 import PromotionDetail from "@/components/Mobile/components/Promotion/PromotionDetail";
 import VIP from "@/components/Mobile/pages/VIP";
 import BettingBonus from "@/components/Mobile/pages/BettingBonus";
+import Card from "@/components/Mobile/components/Card";
+import AddCard from "@/components/Mobile/components/Card/AddCard";
 
 const Mine = React.lazy(() => import("@/components/Mobile/pages/Mine"));
 
@@ -269,18 +271,18 @@ const routes: Route[] = [
   //   component: DepositManual,
   //   alert: true,
   // },
-  // {
-  //   path: "/card",
-  //   component: Card,
-  //   alert: true,
-  //   navigate: true,
-  // },
-  // {
-  //   path: "/card/add",
-  //   component: AddCard,
-  //   alert: true,
-  //   navigate: true,
-  // },
+  {
+    path: "/card",
+    component: Card,
+    alert: true,
+    navigate: true,
+  },
+  {
+    path: "/card/add",
+    component: AddCard,
+    alert: true,
+    navigate: true,
+  },
   // {
   //   path: "/maintenance",
   //   component: Maintenance,

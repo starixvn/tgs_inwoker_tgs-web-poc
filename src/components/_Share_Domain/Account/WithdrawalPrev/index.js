@@ -472,27 +472,8 @@ class WithdrawalPrev extends Component {
   render() {
     return (
       <Container>
-        <Header
-          token={null}
-          balance={0}
-          background={true}
-          rightContent={
-            <BalanceLabel>
-              {Common.formatNumberWithThousand(
-                this.props.game.providerList.reduce(
-                  (total, item) =>
-                    item.transferwallet === true
-                      ? (total += item.balance)
-                      : (total += 0),
-                  0
-                ) + this.props.wallet.mainBalance
-              )}
-            </BalanceLabel>
-          }
-          onBackClick={this.handleBackClick}
-          title={i18n.t("withdrawal.title")}
-        ></Header>
         <InnerContainer>
+          {/*您可提款餘額為*/}
           <RowContainer>
             <LeftLabel>{i18n.t("withdrawal.msgCanWithdrawal")}</LeftLabel>
             <LeftLabelValue>
@@ -501,6 +482,7 @@ class WithdrawalPrev extends Component {
             </LeftLabelValue>
           </RowContainer>
           <RowContainer>
+            {/*流水需求*/}
             <LeftLabel>{i18n.t("withdrawal.turnover")}</LeftLabel>
             <LeftLabelValue>
               {this.props.wallet.mainSymbol}
@@ -508,18 +490,21 @@ class WithdrawalPrev extends Component {
             </LeftLabelValue>
           </RowContainer>
         </InnerContainer>
+        {/*管理银行卡*/}
         <ButtonCardManage onClick={() => this.props.appHistory.push("/card")}>
           <Icon
             icon={
               process.env.PUBLIC_URL +
               `/assets/images/wapp//icon-card-manage.png`
             }
-          />{" "}
+          />
           {i18n.t("withdrawal.manageBank")}
         </ButtonCardManage>
         {config.features.NewTransferUI && (
           <CustomSelectContainer>
+            {/*從所有子錢包轉移到主錢包*/}
             <CustomLabel>{i18n.t("transfer.msgTransferOutFromGP")}</CustomLabel>
+            {/*一键傳輸*/}
             <ButtonWrapper>
               <GameWalletButton
                 style={{ marginTop: 0, marginLeft: 10 }}
@@ -534,6 +519,7 @@ class WithdrawalPrev extends Component {
             </ButtonWrapper>
           </CustomSelectContainer>
         )}
+        {/*管理銀行卡*/}
         <CustomSelectContainer>
           <CustomLabel>{i18n.t("withdrawal.bankCard")}</CustomLabel>
           <CustomSelect
@@ -566,6 +552,7 @@ class WithdrawalPrev extends Component {
             )}
           </CustomSelect>
         </CustomSelectContainer>
+        {/*請輸入提款金額*/}
         <CustomPlaceholderWrapper>
           <Textbox
             style={{ margin: "50px auto 20px auto" }}
@@ -588,54 +575,28 @@ class WithdrawalPrev extends Component {
             //     </FeeSpot>
             //   </>
             // }
-          ></Textbox>
+          />
         </CustomPlaceholderWrapper>
-        {(() => {
-          if (
-            this.handleFilterCardList(this.props.wallet.bankCardList)[
-              this.state.selectedBankCardIndex
-            ] &&
-            this.handleFilterCardList(this.props.wallet.bankCardList)[
-              this.state.selectedBankCardIndex
-            ].banktype === "Usdt"
-          ) {
-            return (
-              <React.Fragment>
-                {/* <ExchangeRateContainer
-                  style={{ marginTop: "4px", whiteSpace: "break-spaces" }}
-                >
-                  <LimitLabel>{i18n.t("deposit.exchangeRate")} : </LimitLabel>
-                  <LimitAmount>1</LimitAmount>
-                  <LimitLabel> {"\t"} USDT : </LimitLabel>
-                  <LimitAmount>{`${this.state.exchangeRate}`}</LimitAmount>
-                </ExchangeRateContainer> */}
-                <Textbox
-                  style={{ margin: "50px auto 20px auto" }}
-                  value={
-                    isNaN(this.state.amount) === false
-                      ? (this.state.amount * this.state.exchangeRate).toFixed(2)
-                      : 0
-                  }
-                  label={i18n.t("withdrawal.usdtAmount")}
-                  type={"number"}
-                  disabled={true}
-                ></Textbox>
-              </React.Fragment>
-            );
-          }
-        })()}
-        {/* {config.brand !== 'HKJP' && config.brand !== 'GPI' ? (
-          <Textbox
-            style={{ margin: '50px auto 20px auto' }}
-            onChange={this.handlePasswordChange}
-            value={this.state.password}
-            placeholder={i18n.t(
-              'withdrawal.msgEnterWithdrawalPass'
-            )}
-            label={i18n.t('common.withdrawalPassword')}
-            type={'password'}
-          ></Textbox>
-        ) : null} */}
+        {/*金额 USDT*/}
+        {this.handleFilterCardList(this.props.wallet.bankCardList)[
+          this.state.selectedBankCardIndex
+        ] &&
+          this.handleFilterCardList(this.props.wallet.bankCardList)[
+            this.state.selectedBankCardIndex
+          ].banktype === "Usdt" && (
+            <Textbox
+              style={{ margin: "50px auto 20px auto" }}
+              value={
+                isNaN(this.state.amount) === false
+                  ? (this.state.amount * this.state.exchangeRate).toFixed(2)
+                  : 0
+              }
+              label={i18n.t("withdrawal.usdtAmount")}
+              type={"number"}
+              disabled={true}
+            />
+          )}
+        }{/*玩家備註*/}
         {config.features.Deposit_Withdrawal_PlayerNote &&
           this.handleFilterCardList(this.props.wallet.bankCardList)[
             this.state.selectedBankCardIndex
@@ -655,26 +616,24 @@ class WithdrawalPrev extends Component {
               onChange={this.handlePlayerNoteChange}
               placeholder={i18n.t("withdrawal.plsEnterPlayerNote")}
               label={i18n.t("withdrawal.playerNote")}
-            ></Textbox>
+            />
           )}
+        {/*此银行卡的开户名必须与您账号所填写真实姓名一致，否则提款可能失败*/}
         <BottomDesc>{i18n.t("withdrawal.notice")}</BottomDesc>
+        {/*提交*/}
         <Button
           style={{ margin: "40px auto 0 auto" }}
           label={i18n.t("common.submit")}
           onClick={this.handleSubmitClick}
-          disabled={(() => {
-            return (
-              isNaN(
-                parseFloat(this.state.amount.toString().replace(/,/g, ""))
-              ) ||
-              parseFloat(this.state.amount.toString().replace(/,/g, "")) <
-                this.state.min ||
-              parseFloat(this.state.amount.toString().replace(/,/g, "")) >
-                this.state.max ||
-              this.state.disabled === true
-            );
-          })()}
-        ></Button>
+          disabled={
+            isNaN(parseFloat(this.state.amount.toString().replace(/,/g, ""))) ||
+            parseFloat(this.state.amount.toString().replace(/,/g, "")) <
+              this.state.min ||
+            parseFloat(this.state.amount.toString().replace(/,/g, "")) >
+              this.state.max ||
+            this.state.disabled === true
+          }
+        />
         <StyledModalBank
           onClose={() => this.setState({ ...this.state, bankOpen: false })}
           open={this.state.bankOpen}
@@ -723,7 +682,7 @@ class WithdrawalPrev extends Component {
             labelStyle={{ color: "#fff" }}
             label={i18n.t("common.cancel")}
             onClick={() => this.setState({ ...this.state, otp: false })}
-          ></Button>
+          />
           <Button
             style={{
               width: "250px",
@@ -731,11 +690,9 @@ class WithdrawalPrev extends Component {
             }}
             label={i18n.t("common.confirm")}
             onClick={this.handleConfirmOTP}
-          ></Button>
+          />
         </StyledModalPopup>
-        <Loading
-          show={this.state.loading || this.props.wallet.loading}
-        ></Loading>
+        <Loading show={this.state.loading || this.props.wallet.loading} />
       </Container>
     );
   }
