@@ -1,0 +1,25 @@
+import React from "react";
+import DepositPrev from "@/components/_Share_Domain/Account/DepositPrev";
+import { useHistory } from "react-router-dom";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
+import styled from "styled-components";
+import { usePageProps } from "@/hooks/pageProps/usePageProps";
+
+const DepositContainer = styled.div`
+  padding: 20px 24px;
+`;
+
+type Props = {};
+const Deposit = (props: Props) => {
+  // const { appHistory, alert } = usePageProps();
+
+  const history = useHistory();
+  const { alert } = useNotifications();
+  return (
+    <DepositContainer>
+      <DepositPrev appHistory={history} alert={alert} />;
+    </DepositContainer>
+  );
+};
+
+export default Deposit;

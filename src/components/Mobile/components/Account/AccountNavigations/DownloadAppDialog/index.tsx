@@ -3,7 +3,7 @@ import styled from "styled-components";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import Index from "@/components/Mobile/components/_Share/Account/DownloadApp";
+import Index from "@/components/_Share_Domain/Account/DownloadApp";
 
 const theme = themeList["mobileT18"];
 

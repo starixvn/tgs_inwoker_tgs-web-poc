@@ -15,7 +15,10 @@ const StyledTextField = styled(MuiTextField)`
     color: #646973;
   }
 `;
-const TextField = (props: TextFieldProps) => {
+
+type Props = TextFieldProps & {};
+
+const TextField = (props: Props) => {
   // @ts-ignore
   return <StyledTextField {...props} variant={"outlined"} />;
 };

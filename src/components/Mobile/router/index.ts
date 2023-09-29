@@ -1,12 +1,16 @@
 import React from "react";
 import config from "@/config/config";
 import Main from "@/components/Mobile/pages/Main";
-import Deposit from "@/components/Mobile/components/Account/AccountNavigations/Deposit";
-import Withdraw from "@/components/Mobile/components/Account/AccountNavigations/Withdraw";
+import Deposit from "@/components/Mobile/pages/Deposit";
+import Withdraw from "@/components/Mobile/pages/Withdraw";
 import Promotion from "@/components/Mobile/pages/Promotion";
 import PromotionDetail from "@/components/Mobile/components/Promotion/PromotionDetail";
 import VIP from "@/components/Mobile/pages/VIP";
 import BettingBonus from "@/components/Mobile/pages/BettingBonus";
+import Card from "@/components/Mobile/components/Card";
+import AddCard from "@/components/Mobile/components/Card/AddCard";
+import MaintenancePrev from "@/components/Share/Maintenance";
+import MaintenancePage from "@/components/Mobile/pages/MaintenancePage";
 
 const Mine = React.lazy(() => import("@/components/Mobile/pages/Mine"));
 
@@ -269,26 +273,26 @@ const routes: Route[] = [
   //   component: DepositManual,
   //   alert: true,
   // },
-  // {
-  //   path: "/card",
-  //   component: Card,
-  //   alert: true,
-  //   navigate: true,
-  // },
-  // {
-  //   path: "/card/add",
-  //   component: AddCard,
-  //   alert: true,
-  //   navigate: true,
-  // },
-  // {
-  //   path: "/maintenance",
-  //   component: Maintenance,
-  //   navigate: true,
-  //   alert: true,
-  //   GetSupportUrl: true,
-  //   brandComm: true,
-  // },
+  {
+    path: "/card",
+    component: Card,
+    alert: true,
+    navigate: true,
+  },
+  {
+    path: "/card/add",
+    component: AddCard,
+    alert: true,
+    navigate: true,
+  },
+  {
+    path: "/maintenance",
+    component: MaintenancePage,
+    navigate: true,
+    alert: true,
+    GetSupportUrl: true,
+    brandComm: true,
+  },
   // // {
   // //   path: "/card/name",
   // //   component: NameVerification,

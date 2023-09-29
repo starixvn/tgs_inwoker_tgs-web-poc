@@ -9,4 +9,6 @@ export interface UiState {
   marquees: any[];
   mains: any[];
   deposits: any[];
+  screenWidth: number;
+  screenHeight: number;
 }

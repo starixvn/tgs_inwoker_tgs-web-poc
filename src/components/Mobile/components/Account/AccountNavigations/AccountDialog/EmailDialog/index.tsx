@@ -1,8 +1,8 @@
 import React from "react";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
-import Email from "@/components/Mobile/components/_Share/Account/Profile/Email";
-import { useNotifications } from "@/hooks/useNotifications";
+import Email from "@/components/_Share_Domain/Account/Profile/Email";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useHistory } from "react-router-dom";
 
 type Props = {
