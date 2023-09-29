@@ -1,7 +1,7 @@
 import React from "react";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { useHistory } from "react-router-dom";
-import Maintenance from "@/components/Mobile/components/Maintenance";
+import MaintenancePrev from "@/components/Mobile/components/Maintenance";
 
 const MaintenancePage = (props) => {
   const { general } = useGeneralStore();
@@ -13,7 +13,7 @@ const MaintenancePage = (props) => {
   //   }
   // });
 
-  return <Maintenance />;
+  return <MaintenancePrev />;
 };
 
 export default MaintenancePage;

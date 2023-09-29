@@ -140,7 +140,7 @@ const TextContainer = styled.div`
   flex-direction: column;
 `;
 
-const Maintenance = (props) => {
+const MaintenancePrev = (props) => {
   function csClick() {
     props.GetSupportUrl("", "", "", "");
   }
@@ -373,4 +373,4 @@ const Maintenance = (props) => {
   );
 };
 
-export default Maintenance;
+export default MaintenancePrev;
