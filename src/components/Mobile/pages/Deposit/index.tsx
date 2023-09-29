@@ -1,7 +1,7 @@
 import React from "react";
 import DepositPrev from "@/components/_Share_Domain/Account/DepositPrev";
 import { useHistory } from "react-router-dom";
-import { useNotifications } from "@/hooks/useNotifications";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import styled from "styled-components";
 
 const DepositContainer = styled.div`

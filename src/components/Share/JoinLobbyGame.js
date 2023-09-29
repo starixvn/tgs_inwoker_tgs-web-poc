@@ -8,7 +8,7 @@ import MaintenanceMobile from "./MaintenanceMobile";
 // try {
 // const channel = new BroadcastChannel('refreshBalance');
 // }catch {
-  
+
 // }
 
 class JoinLobbyGame extends Component {
@@ -41,14 +41,14 @@ class JoinLobbyGame extends Component {
     } else {
       GameService.JoinLobbyGame(gameType, gameCode).then((response) => {
         if (response.IsSuccess) {
-                                  // try {
-                                  //   channel.postMessage({
-                                  //     action: "refresh",
-                                  //     target: "*",
-                                  //   });
-                                  // } catch {}
-                                  window.location.href = response.data.url;
-                                } else {
+          // try {
+          //   channel.postMessage({
+          //     action: "refresh",
+          //     target: "*",
+          //   });
+          // } catch {}
+          window.location.href = response.data.url;
+        } else {
           this.handleJoinGameMaintenance(response);
         }
       });

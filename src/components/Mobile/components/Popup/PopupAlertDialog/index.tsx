@@ -1,6 +1,6 @@
 import React from "react";
 import i18n from "@/utils/i18n";
-import { useNotifications } from "@/hooks/useNotifications";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import DialogPopup from "@/components/Mobile/components/UI/Dialog/DialogPopup";
 import {
   ButtonConfirm,

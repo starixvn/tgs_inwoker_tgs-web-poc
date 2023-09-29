@@ -1,7 +1,7 @@
 import React from "react";
 import WithdrawalPrev from "@/components/_Share_Domain/Account/WithdrawalPrev";
 import { useHistory } from "react-router-dom";
-import { useNotifications } from "@/hooks/useNotifications";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
 
 type Props = {};
 const Withdraw = (props: Props) => {

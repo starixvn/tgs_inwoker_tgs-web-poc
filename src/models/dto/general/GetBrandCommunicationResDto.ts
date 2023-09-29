@@ -1,4 +1,4 @@
-class BrandCommunication {
+export class BrandCommunication {
   type: string = "";
   phone: string = "";
   appid: string = "";

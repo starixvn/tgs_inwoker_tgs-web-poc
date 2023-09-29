@@ -8,7 +8,7 @@ import TextboxWithButton from "../../../Mobile/components/_PrevShare/TextboxWith
 import BottomNote from "../../../Mobile/components/_PrevShare/BottomNote";
 import Header from "../../../Mobile/components/_PrevShare/Header";
 import Loading from "@/components/Mobile/components/UI/Loading";
-import { useNotifications } from "@/hooks/useNotifications";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useAccountService } from "@/hooks/services/useAccountService";
 

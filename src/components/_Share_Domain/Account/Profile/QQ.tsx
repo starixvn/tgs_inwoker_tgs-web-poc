@@ -6,7 +6,7 @@ import config from "@/config/config";
 import Textbox from "../../../Mobile/components/_PrevShare/Textbox";
 import Button from "../../../Mobile/components/_PrevShare/Button";
 import BottomNote from "../../../Mobile/components/_PrevShare/BottomNote";
-import { useNotifications } from "@/hooks/useNotifications";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import Loading from "@/components/Mobile/components/UI/Loading";
 

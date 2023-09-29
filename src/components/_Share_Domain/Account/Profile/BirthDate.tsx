@@ -8,7 +8,7 @@ import Header from "../../../Mobile/components/_PrevShare/Header";
 import Loading from "../../../Mobile/components/_PrevShare/Loading";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import { useNotifications } from "@/hooks/useNotifications";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import config from "@/config/config";
 import { useAccountService } from "@/hooks/services/useAccountService";

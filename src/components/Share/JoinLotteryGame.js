@@ -9,7 +9,7 @@ import { SHOW_LOGIN } from "../../api-services/constant/actionType";
 // try {
 //   const channel = new BroadcastChannel('refreshBalance');
 // }catch {
-  
+
 // }
 
 class JoinLotteryGame extends Component {

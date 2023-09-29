@@ -11,7 +11,7 @@ import { useInitSite } from "@/hooks/useInitSite";
 import { AuthDialogContextProvider } from "@/contexts/authDialogContext";
 import { NotificationContextProvider } from "@/contexts/notificationContext";
 import PopupAlertModal from "@/components/Mobile/components/Popup/PopupAlertDialog";
-import { useNotifications } from "@/hooks/useNotifications";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
 
 type Props = {};
 const Mobile = (props: Props) => {

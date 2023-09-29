@@ -243,17 +243,20 @@ class Play extends Component {
       );
   };
   updateIframeLanguage(event) {
-      // use these param to control change accordingly
-      console.log(event.data.module); // Sport.SetLanguage
-      console.log(event.data.params); // { language: 'language-code') // en, zh-cn, th-th, id-id, jp, ko-kr, vi-vn
-      if (event.data.module && event.data.params) {
-        if (event.data.module === "Sport.SetLanguage" && event.data.params.language) {
-          const url = new URL(this.myRef.current.src);
-          const searchParams = url.searchParams;
-          searchParams.set('lang', event.data.params.language);
-          this.myRef.current.src = url.href;
-        }
+    // use these param to control change accordingly
+    console.log(event.data.module); // Sport.SetLanguage
+    console.log(event.data.params); // { language: 'language-code') // en, zh-cn, th-th, id-id, jp, ko-kr, vi-vn
+    if (event.data.module && event.data.params) {
+      if (
+        event.data.module === "Sport.SetLanguage" &&
+        event.data.params.language
+      ) {
+        const url = new URL(this.myRef.current.src);
+        const searchParams = url.searchParams;
+        searchParams.set("lang", event.data.params.language);
+        this.myRef.current.src = url.href;
       }
+    }
   }
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });

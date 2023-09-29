@@ -164,7 +164,14 @@ const mapDispatchToProps = (dispatch) => {
         )
       );
     },
-    doFPSDepositWithName: (name, account, amount, paymentid, promotionid, banktype) => {
+    doFPSDepositWithName: (
+      name,
+      account,
+      amount,
+      paymentid,
+      promotionid,
+      banktype
+    ) => {
       dispatch(
         walletAction.doFPSDepositWithName(
           name,
