@@ -5,7 +5,7 @@ import { themeList } from "@/theme";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useHistory } from "react-router-dom";
-import TransferPrev from "@/components/Mobile/components/_Share/Account/TransferPrev";
+import TransferPrev from "@/components/_Share_Domain/Account/TransferPrev";
 
 const theme = themeList["mobileT18"];
 

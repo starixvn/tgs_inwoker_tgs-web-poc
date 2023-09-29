@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { SelectItem } from "@/components/Mobile/components/UI/Select/DarkSelect";
+import { SelectItem } from "@/components/Mobile/components/UI/_Trash/Select/DarkSelect";
 import i18n from "@/utils/i18n";
 import { BrandAllAgent } from "@/models/dto/general/GetBrandAllAgentResDto";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react";
 import styled from "styled-components";
 import ContextMenu from "@/components/Mobile/components/ContextMenu";
 import avatarImg from "@/assets/images/account/avatar.png";
@@ -14,44 +14,44 @@ const ContextMenuButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-` 
+`;
 
 const AvatarContainer = styled.div`
   width: 30px;
   height: 24px;
   background: url(${avatarImg}) no-repeat center center;
   background-size: cover;
-`
+`;
 
 const ArrowContainer = styled.div<{
-  open: boolean
+  open: boolean;
 }>`
   width: 32px;
   height: 32px;
-  transform: ${props => props.open ? 'rotate(0deg)' : 'rotate(180deg)'};
+  transform: ${(props) => (props.open ? "rotate(0deg)" : "rotate(180deg)")};
   transition: transform 0.3s ease-in-out;
-`
+`;
 
 const ContextMenuButton = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
-    setIsOpen(prevIsOpen => !prevIsOpen)
-  }
+    setIsOpen((prevIsOpen) => !prevIsOpen);
+  };
 
   return (
     <>
       <ContextMenuButtonContainer onClick={handleClick}>
-        <AvatarContainer/>
+        <AvatarContainer />
         <ArrowContainer open={isOpen}>
           <SvgIcon pathname="contextMenu/icon_arrow.svg" />
         </ArrowContainer>
       </ContextMenuButtonContainer>
-      <Modal open={isOpen} onClose={handleClick} >
-        <ContextMenu/>
+      <Modal open={isOpen} onClose={handleClick}>
+        <ContextMenu />
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default ContextMenuButton
+export default ContextMenuButton;

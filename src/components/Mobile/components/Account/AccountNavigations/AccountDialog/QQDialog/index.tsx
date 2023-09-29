@@ -1,7 +1,7 @@
 import React from "react";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
-import QQ from "@/components/Mobile/components/_Share/Account/Profile/QQ";
+import QQ from "@/components/_Share_Domain/Account/Profile/QQ";
 import i18n from "@/utils/i18n";
 
 type Props = {

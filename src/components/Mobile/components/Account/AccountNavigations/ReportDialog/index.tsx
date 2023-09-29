@@ -1,7 +1,7 @@
 import React from "react";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
-import ReportPrev from "@/components/Mobile/components/_Share/Account/ReportPrev";
+import ReportPrev from "@/components/_Share_Domain/Account/ReportPrev";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useHistory } from "react-router-dom";
 

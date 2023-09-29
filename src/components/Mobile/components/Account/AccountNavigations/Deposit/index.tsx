@@ -1,5 +1,5 @@
 import React from "react";
-import DepositPrev from "@/components/Mobile/components/_Share/Account/DepositPrev";
+import DepositPrev from "@/components/_Share_Domain/Account/DepositPrev";
 import { useHistory } from "react-router-dom";
 import { useNotifications } from "@/hooks/useNotifications";
 import styled from "styled-components";

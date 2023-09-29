@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ContextMenuItem from "./ContextMenuItem";
 import AvatarLevel from "@/components/Mobile/components/UI/AvatarLevel";
 import { useAuth } from "@/hooks/auth/useAuth";
+import { useHistory } from "react-router-dom";
 
 const contextMenuList = [
   {
@@ -55,12 +56,20 @@ const AvatarLevelWrapper = styled.div`
 
 const ContextMenu = () => {
   const { handleLogout } = useAuth();
+  const history = useHistory();
 
   const handleClick = async (routerPath: string) => {
-    console.log(routerPath);
     switch (routerPath) {
       case "/logout":
         await handleLogout();
+        break;
+
+      case "/account":
+        history.push("/account");
+        break;
+
+      case "/main/support":
+        history.push("/account?contact");
         break;
     }
   };
