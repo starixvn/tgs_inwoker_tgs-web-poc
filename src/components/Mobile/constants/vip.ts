@@ -35,7 +35,7 @@ export const levelItemStyleList: levelItem[] = [
     stampImage: "/stamp/level_1.png",
     badgeImage: "/badge/level_1.png",
     levelColor: "#312F59",
-    levelStatusColor: "#FFFFFF",
+    levelStatusColor: "#312F59",
     bonusColor: "#AAA2C5",
     bonusTextColor: "#22203D",
     lockerIconColor: "#DED5FC"
@@ -48,7 +48,7 @@ export const levelItemStyleList: levelItem[] = [
     stampImage: "/stamp/level_2.png",
     badgeImage: "/badge/level_2.png",
     levelColor: "#643E13",
-    levelStatusColor: "#FFFFFF",
+    levelStatusColor: "#643E13",
     bonusColor: "#E5D78E",
     bonusTextColor: "#452B0D",
     lockerIconColor: "#FCFED8"
@@ -61,7 +61,7 @@ export const levelItemStyleList: levelItem[] = [
     stampImage: "/stamp/level_3.png",
     badgeImage: "/badge/level_3.png",
     levelColor: "#2E575F",
-    levelStatusColor: "#FFFFFF",
+    levelStatusColor: "#2E575F",
     bonusColor: "#E5D78E",
     bonusTextColor: "#213D44",
     lockerIconColor: "#DDFCFE"
@@ -74,7 +74,7 @@ export const levelItemStyleList: levelItem[] = [
     stampImage: "/stamp/level_4.png",
     badgeImage: "/badge/level_4.png",
     levelColor: "#73ADF8",
-    levelStatusColor: "#FFFFFF",
+    levelStatusColor: "#73ADF8",
     bonusColor: "#E5D78E",
     bonusTextColor: "#76A6E5",
     lockerIconColor: "#D7E3FC"
@@ -87,7 +87,7 @@ export const levelItemStyleList: levelItem[] = [
     stampImage: "/stamp/level_5.png",
     badgeImage: "/badge/level_5.png",
     levelColor: "#2D1652",
-    levelStatusColor: "#FFFFFF",
+    levelStatusColor: "#2D1652",
     bonusColor: "#E5D78E",
     bonusTextColor: "#2C194E",
     lockerIconColor: "#F1D6FC"
@@ -100,7 +100,7 @@ export const levelItemStyleList: levelItem[] = [
     stampImage: "/stamp/level_6.png",
     badgeImage: "/badge/level_6.png",
     levelColor: "#550F61",
-    levelStatusColor: "#FFFFFF",
+    levelStatusColor: "#550F61",
     bonusColor: "#E5D78E",
     bonusTextColor: "#3A0942",
     lockerIconColor: "#F7D6F8"
@@ -113,7 +113,7 @@ export const levelItemStyleList: levelItem[] = [
     stampImage: "/stamp/level_7.png",
     badgeImage: "/badge/level_7.png",
     levelColor: "#64171C",
-    levelStatusColor: "#FFFFFF",
+    levelStatusColor: "#64171C",
     bonusColor: "#E5D78E",
     bonusTextColor: "#441013",
     lockerIconColor: "#F3BDBB"
@@ -126,7 +126,7 @@ export const levelItemStyleList: levelItem[] = [
     stampImage: "/stamp/level_8.png",
     badgeImage: "/badge/level_8.png",
     levelColor: "#713316",
-    levelStatusColor: "#FFFFFF",
+    levelStatusColor: "#713316",
     bonusColor: "#E5D78E",
     bonusTextColor: "#512611",
     lockerIconColor: "#F4C483"
@@ -139,7 +139,7 @@ export const levelItemStyleList: levelItem[] = [
     stampImage: "/stamp/level_9.png",
     badgeImage: "/badge/level_9.png",
     levelColor: "#336E69",
-    levelStatusColor: "#FFFFFF",
+    levelStatusColor: "#336E69",
     bonusColor: "#E5D78E",
     bonusTextColor: "#26514E",
     lockerIconColor: "#C8F5FD"
@@ -152,7 +152,7 @@ export const levelItemStyleList: levelItem[] = [
     stampImage: "/stamp/level_10.png",
     badgeImage: "/badge/level_10.png",
     levelColor: "#3D095A",
-    levelStatusColor: "#FFFFFF",
+    levelStatusColor: "#3D095A",
     bonusColor: "#E5D78E",
     bonusTextColor: "#2A053E",
     lockerIconColor: "#ECBDFB"
