@@ -2,7 +2,7 @@ import React from "react";
 import config from "@/config/config";
 import Main from "@/components/Mobile/pages/Main";
 import Deposit from "@/components/Mobile/pages/Deposit";
-import Withdraw from "@/components/Mobile/pages/Withdraw";
+import Withdrawal from "@/components/Mobile/pages/Withdrawal";
 import Promotion from "@/components/Mobile/pages/Promotion";
 import PromotionDetail from "@/components/Mobile/components/Promotion/PromotionDetail";
 import VIP from "@/components/Mobile/pages/VIP";
@@ -37,6 +37,10 @@ import ProfileTelegram from "@/components/Mobile/pages/Profile/ProfileTelegram";
 import ProfileLine from "@/components/Mobile/pages/Profile/ProfileLine";
 import ProfileViber from "@/components/Mobile/pages/Profile/ProfileViber";
 import ProfileWhatsapp from "@/components/Mobile/pages/Profile/ProfileWhatsapp";
+import DepositPayment from "@/components/Mobile/pages/Deposit/DepositPayment";
+import DepositDetails from "@/components/Mobile/pages/Deposit/DepositDetails";
+import DepositManual from "@/components/Mobile/pages/Deposit/DepositManual";
+import WithdrawalDetails from "@/components/Mobile/pages/Withdrawal/WithdrawalDetails";
 
 const Mine = React.lazy(() => import("@/components/Mobile/pages/Account/Mine"));
 
@@ -86,7 +90,7 @@ const routes: Route[] = [
   },
   {
     path: "/withdrawal",
-    component: Withdraw,
+    component: Withdrawal,
     alert: true,
   },
   {
@@ -257,41 +261,41 @@ const routes: Route[] = [
   //   screenHeight: true,
   // },
   //
-  // {
-  //   path: "/withdrawal/details",
-  //   component: WithdrawalDetails,
-  //   alert: true,
-  //   navigate: true,
-  // },
-  //
+  // it looks like /withdrawal/details is not used?
+  {
+    path: "/withdrawal/details",
+    component: WithdrawalDetails,
+    alert: true,
+    navigate: true,
+  },
   {
     path: "/deposit/:promotionid?",
     component: Deposit,
     alert: true,
     navigate: true,
   },
-  // {
-  //   path: "/manual/:paymentId?",
-  //   component: Deposit,
-  //   alert: true,
-  //   navigate: true,
-  // },
-  // {
-  //   path: "/deposit/payment/:id/:bank/:amount/:bonus?",
-  //   component: DepositPayment,
-  //   alert: true,
-  //   navigate: true,
-  // },
-  // {
-  //   path: "/deposit/details",
-  //   component: DepositDetails,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/deposit/manual",
-  //   component: DepositManual,
-  //   alert: true,
-  // },
+  {
+    path: "/manual/:paymentId?",
+    component: Deposit,
+    alert: true,
+    navigate: true,
+  },
+  {
+    path: "/deposit/payment/:id/:bank/:amount/:bonus?",
+    component: DepositPayment,
+    alert: true,
+    navigate: true,
+  },
+  {
+    path: "/deposit/details",
+    component: DepositDetails,
+    alert: true,
+  },
+  {
+    path: "/deposit/manual",
+    component: DepositManual,
+    alert: true,
+  },
   {
     path: "/card",
     component: Card,
@@ -312,32 +316,14 @@ const routes: Route[] = [
     GetSupportUrl: true,
     brandComm: true,
   },
-  // // {
-  // //   path: "/card/name",
-  // //   component: NameVerification,
-  // //   alert: true,
-  // //   navigate: true,
-  // // },
-  // // {
-  // //   path: "/card/pass",
-  // //   component: PassSetting,
-  // //   alert: true,
-  // //   navigate: true,
-  // // },
-  //
+
   {
     path: "/report/:tab?",
     component: Report,
     alert: true,
     navigate: true,
   },
-  // // {
-  // //   path: "/customer-service",
-  // //   component: CustomerService,
-  // //   alert: true,
-  // //   navigate: true,
-  // //   popup: true,
-  // // },
+
   // {
   //   path: "/chat/:userid?/:name?/:question?",
   //   component: CustomerServiceChat,
@@ -346,38 +332,12 @@ const routes: Route[] = [
   //   path: "/forgot-password",
   //   component: ForgotPassword,
   //   alert: true,
-  // },
-  // // {
-  // //   path: "/forgot-password/option",
-  // //   component: ForgotPasswordStep2,
-  // //   alert: true,
-  // // },
-  // // {
-  // //   path: "/forgot-password/reset",
-  // //   component: ForgotPasswordReset,
-  // //   alert: true,
-  // // },
-  //
+
   {
     path: "/affiliate",
     component: Affiliate,
     navigate: true,
   },
-  // //{
-  // //  path: "/affiliate/member",
-  // //  component: AffiliateMember,
-  // //  screenHeight: true,
-  // //},
-  // //{
-  // //  path: "/affiliate/report",
-  // //  component: AffiliateReport,
-  // //  screenHeight: true,
-  // //},
-  // //{
-  // //  path: "/affiliate/guide",
-  // //  component: AffiliateGuide,
-  // //  screenHeight: true,
-  // //},
   // {
   //   path: "/setting/language",
   //   component: SettingLanguage,

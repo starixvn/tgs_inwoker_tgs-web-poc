@@ -106,6 +106,7 @@ const ButtonConfirm = styled.div`
   );
   color: #ffffff;
 `;
+
 class Details extends Component {
   state = {
     expired_time: 0,

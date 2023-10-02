@@ -540,7 +540,7 @@ class WithdrawalPrev extends Component {
             {this.handleFilterCardList(this.props.wallet.bankCardList).map(
               (item, index) => {
                 return (
-                  <option value={index} id={`optionValue-${index}`}>
+                  <option key={index} value={index} id={`optionValue-${index}`}>
                     {item.banktype} (
                     {item.detail.address ||
                       item.detail.bankAccount ||
