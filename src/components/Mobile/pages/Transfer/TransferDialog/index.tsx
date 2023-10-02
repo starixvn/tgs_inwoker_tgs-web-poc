@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useHistory } from "react-router-dom";
 import TransferPrev from "@/components/_Share_Domain/Account/TransferPrev";

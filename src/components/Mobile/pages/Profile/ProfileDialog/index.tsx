@@ -3,17 +3,10 @@ import styled from "styled-components";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import NameDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/NameDialog";
-import { useDialogOpenState } from "@/hooks/account/useDialogOpenState";
-import PhoneDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/PhoneDialog";
-import EmailDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/EmailDialog";
-import BirthDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/BirthDialog";
-import QQDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/QQDialog";
-import WeChatDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/WeChatDialog";
-import PasswordDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/PasswordDialog";
 import i18n from "@/utils/i18n";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import config from "@/config/config";
+import { useHistory } from "react-router-dom";
 
 const theme = themeList["mobileT18"];
 
@@ -91,10 +84,12 @@ interface ProfileItem {
   key: string;
   label: string;
   status: string;
+  routePath: string;
 }
 
-const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
+const ProfileDialog = ({ isOpen, handleCloseDialog }: Props) => {
   const { account } = useAccountStore();
+  const history = useHistory();
 
   const getStatus = useCallback(() => {
     const currentFormStatus = account.info.identityformstatus;
@@ -136,6 +131,7 @@ const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
               }`
             )
           : i18n.t("profile.notSet"),
+        routePath: "/profile/name",
       },
       phone: {
         key: "phone",
@@ -143,6 +139,7 @@ const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
         status: account.info.member_phone
           ? account.info.member_phone.substring(0, 1) + "**"
           : i18n.t("profile.notSet"),
+        routePath: "/profile/phone",
       },
       email: {
         key: "email",
@@ -150,13 +147,15 @@ const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
         status: account.info.member_email
           ? account.info.member_email
           : i18n.t("profile.notSet"),
+        routePath: "/profile/email",
       },
       birth: {
-        key: "birth",
+        key: "birthdate",
         label: i18n.t("profile.birthdate.title"),
         status: account.info.member_birthdate
           ? account.info.member_birthdate
           : i18n.t("profile.notSet"),
+        routePath: "/profile/birthdate",
       },
       qq: {
         key: "qq",
@@ -164,6 +163,7 @@ const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
         status: account.info.member_qq
           ? account.info.member_qq.substring(0, 1) + "**"
           : i18n.t("profile.notSet"),
+        routePath: "/profile/qq",
       },
       wechat: {
         key: "wechat",
@@ -171,11 +171,13 @@ const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
         status: account.info.member_wechat
           ? account.info.member_wechat.substring(0, 1) + "**"
           : i18n.t("profile.notSet"),
+        routePath: "/profile/wechat",
       },
       password: {
-        key: "password",
+        key: "changepassword",
         label: i18n.t("profile.password.title"),
         status: "",
+        routePath: "/profile/changepassword",
       },
     };
   }, []);
@@ -191,15 +193,9 @@ const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
       };
     });
   }, []);
-  const { dialogOpenState, handleToggleDialog } =
-    useDialogOpenState<ProfileItem>(profileItemDictionary);
 
   const handleClickProfileItem = useCallback((newProfileItem: ProfileItem) => {
-    handleToggleDialog(newProfileItem.key);
-  }, []);
-
-  const handleCloseProfileItem = useCallback(() => {
-    handleToggleDialog();
+    history.push(newProfileItem.routePath);
   }, []);
 
   return (
@@ -257,38 +253,8 @@ const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
           </ProfileCard>
         </>
       </DialogWithHeader>
-
-      {/* Dialogs */}
-      <NameDialog
-        isOpen={dialogOpenState["name"]}
-        handleCloseDialog={handleCloseProfileItem}
-      />
-      <PhoneDialog
-        isOpen={dialogOpenState["phone"]}
-        handleCloseDialog={handleCloseProfileItem}
-      />
-      <EmailDialog
-        isOpen={dialogOpenState["email"]}
-        handleCloseDialog={handleCloseProfileItem}
-      />
-      <BirthDialog
-        isOpen={dialogOpenState["birth"]}
-        handleCloseDialog={handleCloseProfileItem}
-      />
-      <QQDialog
-        isOpen={dialogOpenState["qq"]}
-        handleCloseDialog={handleCloseProfileItem}
-      />
-      <WeChatDialog
-        isOpen={dialogOpenState["wechat"]}
-        handleCloseDialog={handleCloseProfileItem}
-      />
-      <PasswordDialog
-        isOpen={dialogOpenState["password"]}
-        handleCloseDialog={handleCloseProfileItem}
-      />
     </>
   );
 };
 
-export default React.memo(AccountDialog);
+export default React.memo(ProfileDialog);

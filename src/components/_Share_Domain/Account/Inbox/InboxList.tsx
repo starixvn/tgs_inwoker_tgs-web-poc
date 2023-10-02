@@ -1,17 +1,22 @@
 import React, { useState } from "react";
-
 import styled from "styled-components";
-
 import { Collapse } from "@material-ui/core";
-const moment = require("moment");
-const CheckboxContainer = styled.div`
+import moment from "moment";
+import { InboxMessage } from "@/types/account";
+
+type CheckboxContainerProps = {
+  edit: boolean;
+};
+const CheckboxContainer = styled.div<CheckboxContainerProps>`
   float: left;
   width: 46px;
   height: 46px;
   margin: 56px 0 0 20px;
 
-  ${(props) => (props.edit ? `display:block` : `display:none`)};
+  ${(props: CheckboxContainerProps) =>
+    props.edit ? `display:block` : `display:none`};
 `;
+
 const ContentContainer = styled.div`
   display: block;
   font-size: 28px;
@@ -20,13 +25,16 @@ const ContentContainer = styled.div`
 
 const ListItem = styled.div`
   width: 100%;
-  margin: 20px auto;
   min-height: 155px;
 `;
-const MsgTitle = styled.div`
+
+type MsgTitleProps = {
+  isread: boolean;
+};
+const MsgTitle = styled.div<MsgTitleProps>`
   color: #2e2426;
   width: 100%;
-  font-weight: ${(props) => (props.isread === true ? "normal" : "600")};
+  font-weight: ${(props: MsgTitleProps) => (props.isread ? "normal" : "600")};
   font-size: 30px;
   float: left;
   white-space: nowrap;
@@ -41,9 +49,9 @@ const MsgTitleSpan = styled.span`
   text-overflow: ellipsis;
   width: 100%;
 `;
+
 const MsgDate = styled.div`
   color: #949494;
-
   float: left;
   margin-top: 15px;
   font-size: 28px;
@@ -51,20 +59,23 @@ const MsgDate = styled.div`
 
 const ItemContainer = styled.div`
   float: right;
-  width: ${(props) => (props.edit ? `648px` : `688px`)};
   min-height: 150px;
   border-radius: 12px;
   box-shadow: 0 4px 12px 0 rgba(58, 58, 58, 0.2);
   border: solid 2px #f3f3f3;
   background-color: #ffffff;
   padding: 30px 20px 0 35px;
-  margin-right: 30px;
 `;
-const CheckboxCircle = styled.div`
+
+type CheckboxCircleProps = {
+  checked: boolean;
+  onClick: () => void;
+};
+const CheckboxCircle = styled.div<CheckboxCircleProps>`
   width: 46px;
   height: 46px;
 
-  ${(props) =>
+  ${(props: CheckboxCircleProps) =>
     props.checked
       ? `background: url(${
           process.env.PUBLIC_URL + `/assets/images/wapp/icon-inbox-checked.png`
@@ -78,8 +89,15 @@ const LetterContent = styled.div`
   padding: 20px 0px;
 `;
 
-const InboxList = ({
-  index,
+interface InboxListProps {
+  row: InboxMessage;
+  edit: boolean;
+  handleCheckboxClick: (id: string, GUID: string) => void;
+  selected: string[];
+  handleItemClick: (id: string) => void;
+}
+
+const InboxList: React.FC<InboxListProps> = ({
   row,
   edit,
   handleCheckboxClick,
@@ -88,8 +106,8 @@ const InboxList = ({
 }) => {
   const [opened, setOpened] = useState(false);
 
-  const handleShowDetail = (index, isread) => {
-    if (!opened && isread === false) handleItemClick(row.id);
+  const handleShowDetail = (isread: boolean) => {
+    if (!opened && !isread) handleItemClick(row.id);
     setOpened(!opened);
   };
 
@@ -97,12 +115,12 @@ const InboxList = ({
     <ListItem>
       <CheckboxContainer edit={edit}>
         <CheckboxCircle
-          onClick={() => handleCheckboxClick(row.id, row.id)}
+          onClick={() => handleCheckboxClick(row.id, row.id.toString())}
           checked={selected.includes(row.id)}
         ></CheckboxCircle>
       </CheckboxContainer>
       <ItemContainer key={row.id} edit={edit}>
-        <ContentContainer onClick={() => handleShowDetail(index, row.isread)}>
+        <ContentContainer onClick={() => handleShowDetail(row.isread)}>
           <MsgTitle isread={row.isread}>
             <MsgTitleSpan>
               {row.localization !== null && row.localization.subject
@@ -117,10 +135,9 @@ const InboxList = ({
             dangerouslySetInnerHTML={{
               __html:
                 "<div style='width: 100%; height: 1px; background: #efefef;margin-top: 2px;'>123</div>" +
-                  row.localization !==
-                  null && row.localization.content
+                (row.localization !== null && row.localization.content
                   ? row.localization.content
-                  : row.content,
+                  : row.content),
             }}
           />
         </Collapse>
