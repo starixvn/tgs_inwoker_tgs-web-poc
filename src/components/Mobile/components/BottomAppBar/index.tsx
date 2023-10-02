@@ -29,7 +29,7 @@ const bottomNavItemList: BottomNavItem[] = [
     iconActiveUrl:
       process.env.PUBLIC_URL +
       `/assets/images/mobile/bottomAppBar/icon_home_active.svg`,
-    routePath: "/main/home",
+    routePath: "/",
   },
   {
     navType: "item",
@@ -55,14 +55,14 @@ const bottomNavItemList: BottomNavItem[] = [
   },
   {
     navType: "item",
-    label: "Email",
+    label: "Inbox",
     iconUrl:
       process.env.PUBLIC_URL +
       `/assets/images/mobile/bottomAppBar/icon_email.svg`,
     iconActiveUrl:
       process.env.PUBLIC_URL +
       `/assets/images/mobile/bottomAppBar/icon_email_active.svg`,
-    routePath: "/main/support",
+    routePath: "/support",
   },
   {
     navType: "item",
@@ -80,16 +80,16 @@ const bottomNavItemList: BottomNavItem[] = [
 const BottomAppBar = () => {
   const [selectedBottomNavItem, setSelectedBottomNavItem] =
     useState<null | BottomNavItem>(null);
-  const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
-    const currentPathname = history.location.pathname;
+    const currentPathname = location.pathname;
     const matchNavItem = bottomNavItemList.find((bottomNavItem) =>
-      currentPathname.includes(bottomNavItem.routePath)
+      bottomNavItem.routePath.includes(currentPathname)
     );
 
     setSelectedBottomNavItem(matchNavItem || null);
-  }, [history]);
+  }, [location]);
 
   const handleClick = (appBarItem: BottomNavItem) => {
     setSelectedBottomNavItem(appBarItem);

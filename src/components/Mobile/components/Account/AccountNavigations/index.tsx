@@ -13,6 +13,7 @@ import {
   NavDialogFactory,
   useAccountNavigations,
 } from "@/hooks/account/useAccountNavigations";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 const AccountNavsContainer = styled.div`
   padding: 15px 0 0;
@@ -35,6 +36,7 @@ const AccountNavigations = (props: Props) => {
   const history = useHistory();
   const { navCardItemList, navCardDictionary, openInDialogDictionary } =
     useAccountNavigations();
+  const { handleLogout } = useAuth();
 
   const { dialogOpenState, handleToggleDialog } =
     useDialogOpenState<NavCardItem>(navCardDictionary);
@@ -98,7 +100,13 @@ const AccountNavigations = (props: Props) => {
           })}
         </AccountNavCardsContainer>
         <LanguageSwitch />
-        <Button fullWidth variant={"contained"} color={"primary"}>
+
+        <Button
+          fullWidth
+          variant={"contained"}
+          color={"primary"}
+          onClick={handleLogout}
+        >
           Logout
         </Button>
       </AccountNavsContainer>
