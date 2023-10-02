@@ -1,11 +1,6 @@
 import { useCallback, useState } from "react";
 import { useHistory } from "react-router";
-import { useAuthDialog } from "@/hooks/useAuthDialog";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import { useWalletStore } from "@/hooks/stores/useWalletStore";
-import { useInboxStore } from "@/hooks/stores/useInboxStore";
-import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
-import i18n from "@/utils/i18n";
 
 export type RegisterState = {
   data: any | null;
@@ -21,11 +16,7 @@ export function useRegister() {
   });
 
   const history = useHistory();
-  const { toggleLoginDialog } = useAuthDialog();
   const accountStore = useAccountStore();
-  const walletStore = useWalletStore();
-  const inboxStore = useInboxStore();
-  const generalStore = useGeneralStore();
 
   const handleRegister = useCallback(async () => {
     try {
@@ -37,7 +28,7 @@ export function useRegister() {
       const result = await accountStore.accountLogout(token);
       // await handleLoginSuccess(username, needToRemember);
       setRegisterState({ isLoading: false, data: result.data, error: null });
-      toggleLoginDialog();
+      history.push("/");
     } catch (error: any) {
       console.log(error);
 
@@ -48,7 +39,6 @@ export function useRegister() {
       });
 
       if (error.message === "banned") {
-        toggleLoginDialog();
         history.push("/banned");
       }
     }

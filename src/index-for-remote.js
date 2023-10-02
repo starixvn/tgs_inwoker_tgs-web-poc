@@ -27,7 +27,6 @@ import AudioPlayer from "./components/Share/audioplayer";
 import { GlobalStyles } from "./global";
 import { themeList } from "./theme";
 import Mobile from "@/components/Mobile";
-import { AuthDialogContextProvider } from "@/contexts/authDialogContext";
 
 require("es6-promise").polyfill();
 
@@ -139,17 +138,15 @@ const muiTheme = createTheme({
 const AppWrapper = () => {
   return (
     <Provider store={store}>
-      <AuthDialogContextProvider>
-        {Config.features.BackgroundMusic && <AudioPlayer />}
-        <StylesProvider injectFirst>
-          <MuiThemeProvider theme={muiTheme}>
-            <ThemeProvider theme={muiThemeMode}>
-              <GlobalStyles />
-              <Mobile />
-            </ThemeProvider>
-          </MuiThemeProvider>
-        </StylesProvider>
-      </AuthDialogContextProvider>
+      {Config.features.BackgroundMusic && <AudioPlayer />}
+      <StylesProvider injectFirst>
+        <MuiThemeProvider theme={muiTheme}>
+          <ThemeProvider theme={muiThemeMode}>
+            <GlobalStyles />
+            <Mobile />
+          </ThemeProvider>
+        </MuiThemeProvider>
+      </StylesProvider>
     </Provider>
   );
 };

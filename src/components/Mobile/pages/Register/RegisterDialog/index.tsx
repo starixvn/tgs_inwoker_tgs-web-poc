@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import Checkbox from "@/components/Mobile/components/UI/Checkbox";
-import { useAuthDialog } from "@/hooks/useAuthDialog";
 import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
 import { themeList } from "@/theme";
 import i18n from "@/utils/i18n";
-import RedirectToLoginHint from "@/components/Mobile/components/auth/RegisterDialog/components/RedirectToLoginHint";
+import RedirectToLoginHint from "@/components/Mobile/pages/Register/RegisterDialog/components/RedirectToLoginHint";
 import { useRegisterForm } from "@/hooks/auth/useRegisterForm";
 import FormikForm from "@/components/Mobile/components/FormikForm";
 
@@ -37,15 +36,17 @@ const VerifyAgeContainer = styled.div`
   align-items: start;
 `;
 
-const RegisterDialog = () => {
-  const { isRegisterOpen, toggleRegisterDialog, toggleLoginDialog } =
-    useAuthDialog();
+type Props = {
+  isOpen: boolean;
+  handleCloseDialog: () => void;
+};
 
+const RegisterDialog = ({ isOpen, handleCloseDialog }: Props) => {
   const { formInputConfigList, formik, isLoading, buttonText } =
     useRegisterForm();
 
   return (
-    <Dialog isOpen={isRegisterOpen} handleCloseDialog={toggleRegisterDialog}>
+    <Dialog isOpen={isOpen} handleCloseDialog={handleCloseDialog}>
       <>
         <TitleContainer>
           REGISTER

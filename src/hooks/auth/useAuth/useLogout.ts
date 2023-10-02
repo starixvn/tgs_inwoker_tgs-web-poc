@@ -1,11 +1,6 @@
 import { useCallback, useState } from "react";
 import { useHistory } from "react-router";
-import { useAuthDialog } from "@/hooks/useAuthDialog";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import { useWalletStore } from "@/hooks/stores/useWalletStore";
-import { useInboxStore } from "@/hooks/stores/useInboxStore";
-import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
-import i18n from "@/utils/i18n";
 
 export type LogoutState = {
   data: any | null;

@@ -1,17 +1,10 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import { useAuthDialog } from "@/hooks/useAuthDialog";
-import LoginForm from "@/components/Mobile/components/auth/LoginDialog/LoginForm";
 import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
 import { themeList } from "@/theme";
-import { useAuth } from "@/hooks/auth/useAuth";
 import FormikForm from "@/components/Mobile/components/FormikForm";
-import Checkbox from "@/components/Mobile/components/UI/Checkbox";
-import i18n from "@/utils/i18n";
-import RedirectToLoginHint from "@/components/Mobile/components/auth/RegisterDialog/components/RedirectToLoginHint";
-import { useRegisterForm } from "@/hooks/auth/useRegisterForm";
 import { useLoginForm } from "@/hooks/auth/useLoginForm";
-import RedirectToRegisterHint from "@/components/Mobile/components/auth/LoginDialog/RedirectToRegisterHint";
+import RedirectToRegisterHint from "@/components/Mobile/pages/Login/LoginDialog/RedirectToRegisterHint";
 
 const theme = themeList["mobileT18"];
 
@@ -56,12 +49,16 @@ const CreateAccountContainer = styled.div`
   }
 `;
 
-const LoginDialog = () => {
-  const { isLoginOpen, toggleLoginDialog } = useAuthDialog();
+type Props = {
+  isOpen: boolean;
+  handleCloseDialog: () => void;
+};
+
+const LoginDialog = ({ isOpen, handleCloseDialog }: Props) => {
   const { formInputConfigList, formik, isLoading, buttonText } = useLoginForm();
 
   return (
-    <Dialog isOpen={isLoginOpen} handleCloseDialog={toggleLoginDialog}>
+    <Dialog isOpen={isOpen} handleCloseDialog={handleCloseDialog}>
       <>
         <TitleContainer>
           LOGIN

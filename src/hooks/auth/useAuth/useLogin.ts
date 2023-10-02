@@ -1,9 +1,6 @@
 import { useCallback, useState } from "react";
-import { accountAction } from "@/api-services/actions/accountAction";
 import i18n from "@/utils/i18n";
 import { useHistory } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { useAuthDialog } from "@/hooks/useAuthDialog";
 import config from "@/config/config";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
@@ -25,7 +22,6 @@ export function useLogin() {
 
   const history = useHistory();
   const location = useLocation();
-  const { toggleLoginDialog } = useAuthDialog();
   const accountStore = useAccountStore();
   const walletStore = useWalletStore();
   const inboxStore = useInboxStore();
@@ -46,7 +42,7 @@ export function useLogin() {
 
         await handleLoginSuccess(username, needToRemember);
         setLoginState({ isLoading: false, data: result.data, error: null });
-        toggleLoginDialog();
+        history.push("/");
       } catch (error: any) {
         console.log(error);
 
@@ -57,7 +53,6 @@ export function useLogin() {
         });
 
         if (error.message === "banned") {
-          toggleLoginDialog();
           history.push("/banned");
         }
       }

@@ -25,6 +25,8 @@ import ProfileQQ from "@/components/Mobile/pages/Profile/QQ";
 import ProfileEmail from "@/components/Mobile/pages/Profile/Email";
 import ProfilePhone from "@/components/Mobile/pages/Profile/Phone";
 import ProfilePassword from "@/components/Mobile/pages/Profile/Password";
+import Login from "@/components/Mobile/pages/Login";
+import Register from "@/components/Mobile/pages/Register";
 
 const Mine = React.lazy(() => import("@/components/Mobile/pages/Account/Mine"));
 
@@ -82,17 +84,16 @@ const routes: Route[] = [
     component: BettingBonus,
     navigate: true,
   },
-  // {
-  //   path: "/login",
-  //   component: LoginDialog,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/register",
-  //   // path: "/register&visitor_id=:subid",
-  //   component: RegisterDialog,
-  //   alert: true,
-  // },
+  {
+    path: "/login",
+    component: Login,
+    alert: true,
+  },
+  {
+    path: "/register",
+    component: Register,
+    alert: true,
+  },
   // {
   //   path: "/a/:promotionid",
   //   component: Login,

@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
-import { useAuthDialog } from "@/hooks/useAuthDialog";
+import { useHistory } from "react-router-dom";
 
 const CreateAccountContainer = styled.div`
   color: white;
@@ -18,22 +18,21 @@ const CreateAccountContainer = styled.div`
 `;
 
 type Props = {};
-const RedirectToLoginHint = (props: Props) => {
-  const { toggleRegisterDialog, toggleLoginDialog } = useAuthDialog();
+const RedirectToRegisterHint = (props: Props) => {
+  const history = useHistory();
 
-  const handleRedirectToLogin = useCallback(() => {
-    toggleRegisterDialog();
-    toggleLoginDialog();
+  const handleRedirectToRegister = useCallback(() => {
+    history.push("/register");
   }, []);
 
   return (
     <CreateAccountContainer>
-      <span>Already Have An Account?</span>
-      <span className={"login"} onClick={handleRedirectToLogin}>
-        Login
+      <span>Don't have an account?</span>
+      <span className="register" onClick={handleRedirectToRegister}>
+        Create Account
       </span>
     </CreateAccountContainer>
   );
 };
 
-export default React.memo(RedirectToLoginHint);
+export default React.memo(RedirectToRegisterHint);

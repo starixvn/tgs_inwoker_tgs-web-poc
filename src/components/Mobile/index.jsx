@@ -24,12 +24,9 @@ import Loading from "./components/_PrevShare/Loading";
 import ForcedVerification from "./components/ForcedVerification";
 import LiveChat from "../Share/live-chat";
 import { routes } from "./router";
-import { AuthDialogContextProvider } from "@/contexts/authDialogContext";
 import MobileLayout from "@/components/Mobile/layouts/mobileLayout";
 import PopupAlertModal from "@/components/Mobile/components/Popup/PopupAlertDialog";
 import PopupAnnouncement from "@/components/Mobile/components/Popup/PopupAnnouncement";
-import LoginDialog from "@/components/Mobile/components/auth/LoginDialog";
-import RegisterDialog from "@/components/Mobile/components/auth/RegisterDialog";
 import { AuthContextProvider } from "@/contexts/authContext";
 
 class Mobile extends Component {
@@ -480,204 +477,200 @@ class Mobile extends Component {
     } else {
       return (
         <>
-          <AuthDialogContextProvider>
-            <AuthContextProvider>
-              <Router history={AppHistory}>
-                <MobileLayout>
-                  <Switch>
-                    {routes.map((route, index) => {
-                      // add correspond method via config
-                      let propsObj = {};
-                      if (route.alert === true) {
-                        propsObj["alert"] = this.handleOpenPopupAlert;
-                      }
-                      if (route.navigate === true) {
-                        propsObj["navigate"] = this.handleNavigate;
-                      }
-                      if (route.popup === true) {
-                        propsObj["popup"] = this.handleOpenPopup;
-                      }
-                      if (route.screenHeight === true) {
-                        propsObj["screenHeight"] = this.props.screenHeight;
-                      }
-                      propsObj["GetSupportUrl"] = this.getSupportUrl;
-                      propsObj["appHistory"] = AppHistory;
-                      propsObj["brandComm"] =
-                        this.props.getBrandCommunicationList;
+          <AuthContextProvider>
+            <Router history={AppHistory}>
+              <MobileLayout>
+                <Switch>
+                  {routes.map((route, index) => {
+                    // add correspond method via config
+                    let propsObj = {};
+                    if (route.alert === true) {
+                      propsObj["alert"] = this.handleOpenPopupAlert;
+                    }
+                    if (route.navigate === true) {
+                      propsObj["navigate"] = this.handleNavigate;
+                    }
+                    if (route.popup === true) {
+                      propsObj["popup"] = this.handleOpenPopup;
+                    }
+                    if (route.screenHeight === true) {
+                      propsObj["screenHeight"] = this.props.screenHeight;
+                    }
+                    propsObj["GetSupportUrl"] = this.getSupportUrl;
+                    propsObj["appHistory"] = AppHistory;
+                    propsObj["brandComm"] =
+                      this.props.getBrandCommunicationList;
 
-                      return (
-                        <Route
-                          exact
-                          key={index}
-                          path={route.path}
-                          render={(props) => {
-                            // add correspond property via path
-                            if (route.path === "/deposit/manual") {
-                              propsObj["order"] = props.location.state;
-                            }
-                            if (route.path === "/ip-restrict-mobile") {
-                              propsObj["ip"] =
-                                props.location.state != null
-                                  ? props.location.state.ip
-                                  : null;
-                            }
-                            if (route.path === "/promotion/:activityId?") {
-                              propsObj["promo"] =
-                                props.location.state != null
-                                  ? props.location.state.promo
-                                  : null;
-                            }
-                            if (route.path === "/deposit/details") {
-                              propsObj["order"] = props.location.state;
-                            }
-                            if (route.path === "/withdrawal/details") {
-                              propsObj["order"] =
-                                props.location.state != null
-                                  ? props.location.state.order
-                                  : null;
-                            }
-                            if (
-                              route.path === "/chat/:userid?/:name?/:question?"
-                            ) {
-                              propsObj["login"] =
-                                props.location.state != null
-                                  ? props.location.state.login
-                                  : null;
-                            }
-                            if (route.path === "/forgot-password/option") {
-                              propsObj["details"] =
-                                props.location.state != null
-                                  ? props.location.state.details
-                                  : null;
-                            }
-                            if (route.path === "/forgot-password/reset") {
-                              propsObj["forget_token"] =
-                                props.location.state != null
-                                  ? props.location.state.forget_token
-                                  : null;
-                            }
-                            if (route.path === "/card/name") {
-                              propsObj["from"] =
-                                props.location.state != null
-                                  ? props.location.state.from
-                                  : null;
-                            }
-                            return (
-                              <Suspense fallback={<Loading opacity={0} />}>
-                                <route.component
-                                  {...propsObj}
-                                  {...this.props.general}
-                                />
-                              </Suspense>
-                            );
-                          }}
-                        />
-                      );
-                    })}{" "}
-                    <Redirect to="/" />
-                  </Switch>
-                </MobileLayout>
-              </Router>
-              {(() => {
-                const matchingPath =
-                  this.props.location.pathname === "/" ||
-                  this.props.location.pathname === "/main/home";
-                if (
-                  config.features.PopupAnnouncement &&
-                  this.props.ui.mains &&
-                  this.props.ui.mains.length > 0 &&
-                  matchingPath
-                ) {
-                  var row = this.props.ui.mains[0];
+                    return (
+                      <Route
+                        exact
+                        key={index}
+                        path={route.path}
+                        render={(props) => {
+                          // add correspond property via path
+                          if (route.path === "/deposit/manual") {
+                            propsObj["order"] = props.location.state;
+                          }
+                          if (route.path === "/ip-restrict-mobile") {
+                            propsObj["ip"] =
+                              props.location.state != null
+                                ? props.location.state.ip
+                                : null;
+                          }
+                          if (route.path === "/promotion/:activityId?") {
+                            propsObj["promo"] =
+                              props.location.state != null
+                                ? props.location.state.promo
+                                : null;
+                          }
+                          if (route.path === "/deposit/details") {
+                            propsObj["order"] = props.location.state;
+                          }
+                          if (route.path === "/withdrawal/details") {
+                            propsObj["order"] =
+                              props.location.state != null
+                                ? props.location.state.order
+                                : null;
+                          }
+                          if (
+                            route.path === "/chat/:userid?/:name?/:question?"
+                          ) {
+                            propsObj["login"] =
+                              props.location.state != null
+                                ? props.location.state.login
+                                : null;
+                          }
+                          if (route.path === "/forgot-password/option") {
+                            propsObj["details"] =
+                              props.location.state != null
+                                ? props.location.state.details
+                                : null;
+                          }
+                          if (route.path === "/forgot-password/reset") {
+                            propsObj["forget_token"] =
+                              props.location.state != null
+                                ? props.location.state.forget_token
+                                : null;
+                          }
+                          if (route.path === "/card/name") {
+                            propsObj["from"] =
+                              props.location.state != null
+                                ? props.location.state.from
+                                : null;
+                          }
+                          return (
+                            <Suspense fallback={<Loading opacity={0} />}>
+                              <route.component
+                                {...propsObj}
+                                {...this.props.general}
+                              />
+                            </Suspense>
+                          );
+                        }}
+                      />
+                    );
+                  })}{" "}
+                  <Redirect to="/" />
+                </Switch>
+              </MobileLayout>
+            </Router>
+            {(() => {
+              const matchingPath =
+                this.props.location.pathname === "/" ||
+                this.props.location.pathname === "/main/home";
+              if (
+                config.features.PopupAnnouncement &&
+                this.props.ui.mains &&
+                this.props.ui.mains.length > 0 &&
+                matchingPath
+              ) {
+                var row = this.props.ui.mains[0];
 
-                  return (
-                    <PopupAnnouncement
-                      open={this.state.openAnnouncement}
-                      onClose={() => {
-                        this.setState({
-                          ...this.state,
-                          openAnnouncement: false,
-                          showPromotion: true,
-                        });
-                      }}
-                      text={
-                        row.localization !== null && row.localization.content
-                          ? row.localization.content
-                          : row.content
-                      }
-                      header={
-                        row.localization !== null && row.localization.subject
-                          ? row.localization.subject
-                          : row.subject
-                      }
-                    ></PopupAnnouncement>
-                  );
-                }
-              })()}
-
-              {config.features.PopupPromotion &&
-                this.props.general.promotionList.items.length > 0 && (
+                return (
                   <PopupAnnouncement
-                    open={this.state.showPromotion}
-                    type="promo"
+                    open={this.state.openAnnouncement}
                     onClose={() => {
-                      if (document.getElementById("audio") != null)
-                        document.getElementById("audio").play();
-                      this.setState({ ...this.state, showPromotion: false });
+                      this.setState({
+                        ...this.state,
+                        openAnnouncement: false,
+                        showPromotion: true,
+                      });
                     }}
-                    content={this.props.general.promotionList.items}
-                    header={i18n.t("promotion.title")}
+                    text={
+                      row.localization !== null && row.localization.content
+                        ? row.localization.content
+                        : row.content
+                    }
+                    header={
+                      row.localization !== null && row.localization.subject
+                        ? row.localization.subject
+                        : row.subject
+                    }
                   ></PopupAnnouncement>
-                )}
+                );
+              }
+            })()}
 
-              {(() => {
-                if (
-                  config.features.LiveChatVendor.brand &&
-                  config.features.LiveChatVendor.license
-                ) {
-                  return (
-                    <LiveChat
-                      license={config.features.LiveChatVendor.license}
-                      vendor={config.features.LiveChatVendor.brand}
-                      group={
-                        config.features.LiveChatVendor.group
-                          ? config.features.LiveChatVendor.group
-                          : 0
-                      }
-                    />
-                  );
-                }
-              })()}
+            {config.features.PopupPromotion &&
+              this.props.general.promotionList.items.length > 0 && (
+                <PopupAnnouncement
+                  open={this.state.showPromotion}
+                  type="promo"
+                  onClose={() => {
+                    if (document.getElementById("audio") != null)
+                      document.getElementById("audio").play();
+                    this.setState({ ...this.state, showPromotion: false });
+                  }}
+                  content={this.props.general.promotionList.items}
+                  header={i18n.t("promotion.title")}
+                ></PopupAnnouncement>
+              )}
 
-              {config.features.SMSVerification &&
-                this.props.account.registercompleted === false &&
-                config.features.ForcedVerification && (
-                  <>
-                    <ForcedVerification
-                      forcedverify={true}
-                      alert={this.handleOpenPopupAlert}
-                    />
-                  </>
-                )}
+            {(() => {
+              if (
+                config.features.LiveChatVendor.brand &&
+                config.features.LiveChatVendor.license
+              ) {
+                return (
+                  <LiveChat
+                    license={config.features.LiveChatVendor.license}
+                    vendor={config.features.LiveChatVendor.brand}
+                    group={
+                      config.features.LiveChatVendor.group
+                        ? config.features.LiveChatVendor.group
+                        : 0
+                    }
+                  />
+                );
+              }
+            })()}
 
-              {/*<PopupAlertModal*/}
-              {/*  isOpen={this.state.open}*/}
-              {/*  handleClose={this.handleClosePopupAlert}*/}
-              {/*  title={this.state.title}*/}
-              {/*  message={this.state.message}*/}
-              {/*  action={this.state.action}*/}
-              {/*/>*/}
-              {/*<PopupModal*/}
-              {/*  isOpen={this.state.openPopup}*/}
-              {/*  handleClose={this.handleClosePopup}*/}
-              {/*  handleClickUrl={this.handleClickUrl}*/}
-              {/*/>*/}
-              <LoginDialog />
-              <RegisterDialog />
-              <PopupAnnouncement />
-              <PopupAlertModal />
-            </AuthContextProvider>
-          </AuthDialogContextProvider>
+            {config.features.SMSVerification &&
+              this.props.account.registercompleted === false &&
+              config.features.ForcedVerification && (
+                <>
+                  <ForcedVerification
+                    forcedverify={true}
+                    alert={this.handleOpenPopupAlert}
+                  />
+                </>
+              )}
+
+            {/*<PopupAlertModal*/}
+            {/*  isOpen={this.state.open}*/}
+            {/*  handleClose={this.handleClosePopupAlert}*/}
+            {/*  title={this.state.title}*/}
+            {/*  message={this.state.message}*/}
+            {/*  action={this.state.action}*/}
+            {/*/>*/}
+            {/*<PopupModal*/}
+            {/*  isOpen={this.state.openPopup}*/}
+            {/*  handleClose={this.handleClosePopup}*/}
+            {/*  handleClickUrl={this.handleClickUrl}*/}
+            {/*/>*/}
+            <PopupAnnouncement />
+            <PopupAlertModal />
+          </AuthContextProvider>
         </>
       );
     }
