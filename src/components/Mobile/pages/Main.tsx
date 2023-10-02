@@ -6,15 +6,18 @@ import vendorsIcon from "@/assets/images/home/mobile/vendors.png";
 import CardPrompt from "@/components/Mobile/components/CardPrompt";
 import Category from "@/components/Mobile/components/Category";
 import Input from "@/components/Mobile/components/Input";
+import Slider from "@/components/Mobile/components/Slider";
 import SocialMedia from "@/components/Mobile/components/SocialMedia";
 import Tab from "@/components/Mobile/components/Tab";
 import TabPanel from "@/components/Mobile/components/TabPanel";
 import Tag from "@/components/Mobile/components/Tag";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useGameStore } from "@/hooks/stores/useGameStore";
+import Common from "@/utils/Common";
+import { ChangeEvent, useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { badgeList, gamesList } from "../constants/games";
 import { tabIconList } from "../constants/tab";
-import { useHistory } from "react-router-dom";
 
 type Props = {
   imageUrl: string;
@@ -104,6 +107,7 @@ const Main = (props: Props) => {
   const [activeGameTypeTab, setActiveGameTypeTab] = useState("Lobby");
   const [searchString, setSearchString] = useState("");
   const history = useHistory();
+  const { game } = useGameStore();
 
   const handleClick = (item: string) => {
     setActiveGameTypeTab(item);
@@ -114,9 +118,48 @@ const Main = (props: Props) => {
     setSearchString(value);
   };
 
+  const getDisplayedGameList = (homePageGameList) => {
+    const displayGameType = Common.GetDisplayGameType();
+    console.log("homePageGameList", homePageGameList)
+
+    // return homePageGameList
+    //   .filter(
+    //     (a) =>
+    //       (displayGameType.indexOf(a.type) >= 0 &&
+    //         a.type !== GameTypeEnum.RNGSPORTS) ||
+    //       (a.type === GameTypeEnum.RNGSPORTS && a.abbreviation === "PPTF")
+    //   )
+    //   .sort((a, b) => {
+    //     if (config.features.LiveGame_Sorting_SKY) {
+    //       var sortDGFirst = ["DG"];
+    //       return (
+    //         sortDGFirst.indexOf(b.abbreviation) -
+    //         sortDGFirst.indexOf(a.abbreviation)
+    //       );
+    //     } else return b - a;
+    //   })
+    //   .sort((a, b) => {
+    //     return (
+    //       gameTypeListSorting.indexOf(a.type) -
+    //       gameTypeListSorting.indexOf(b.type)
+    //     );
+    //   });
+  };
+
+  // useEffect(() => {
+  //   const displayGameType = Common.GetDisplayGameType();
+  //   console.log("displayGameType", displayGameType)
+  // }, []);
+
+  const displayedGameList = getDisplayedGameList(
+    game.homePageGameList
+  );
+
+  console.log("displayedGameList", displayedGameList)
+
   return (
     <MainWrapper>
-      <Banner />
+      <Slider />
       <CardPrompt />
 
       <TabContainer>
@@ -140,8 +183,8 @@ const Main = (props: Props) => {
       </TabContainer>
 
       {activeGameTypeTab === "Slots" ||
-      activeGameTypeTab === "Fishing" ||
-      activeGameTypeTab === "Egame" ? (
+        activeGameTypeTab === "Fishing" ||
+        activeGameTypeTab === "Egame" ? (
         <>
           <Tag />
           <Input
