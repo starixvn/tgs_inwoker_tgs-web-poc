@@ -18,6 +18,13 @@ import Report from "@/components/Mobile/pages/Report";
 import Inbox from "@/components/Mobile/pages/Inbox";
 import Affiliate from "@/components/Mobile/pages/Affiliate";
 import ContactUs from "@/components/Mobile/pages/ContactUs";
+import ProfileName from "@/components/Mobile/pages/Profile/Name";
+import ProfileWeChat from "@/components/Mobile/pages/Profile/WeChat";
+import ProfileBirth from "@/components/Mobile/pages/Profile/Birth";
+import ProfileQQ from "@/components/Mobile/pages/Profile/QQ";
+import ProfileEmail from "@/components/Mobile/pages/Profile/Email";
+import ProfilePhone from "@/components/Mobile/pages/Profile/Phone";
+import ProfilePassword from "@/components/Mobile/pages/Profile/Password";
 
 const Mine = React.lazy(() => import("@/components/Mobile/pages/Account/Mine"));
 
@@ -113,26 +120,26 @@ const routes: Route[] = [
     component: Profile,
     alert: true,
   },
-  // {
-  //   path: "/profile/name",
-  //   component: NameVerify,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/profile/wechat",
-  //   component: WeChat,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/profile/birthdate",
-  //   component: Birthdate,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/profile/qq",
-  //   component: QQ,
-  //   alert: true,
-  // },
+  {
+    path: "/profile/name",
+    component: ProfileName,
+    alert: true,
+  },
+  {
+    path: "/profile/wechat",
+    component: ProfileWeChat,
+    alert: true,
+  },
+  {
+    path: "/profile/birthdate",
+    component: ProfileBirth,
+    alert: true,
+  },
+  {
+    path: "/profile/qq",
+    component: ProfileQQ,
+    alert: true,
+  },
   // {
   //   path: "/profile/fb",
   //   component: FacebookMessenger,
@@ -158,11 +165,11 @@ const routes: Route[] = [
   //   component: Whatsapp,
   //   alert: true,
   // },
-  // {
-  //   path: "/profile/email",
-  //   component: Email,
-  //   alert: true,
-  // },
+  {
+    path: "/profile/email",
+    component: ProfileEmail,
+    alert: true,
+  },
   // {
   //   path: "/profile/changeemail",
   //   component: ChangeEmail,
@@ -173,16 +180,16 @@ const routes: Route[] = [
   //   component: ChangePhone,
   //   alert: true,
   // },
-  // {
-  //   path: "/profile/phone",
-  //   component: Phone,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/profile/changepassword",
-  //   component: ChangePassword,
-  //   alert: true,
-  // },
+  {
+    path: "/profile/phone",
+    component: ProfilePhone,
+    alert: true,
+  },
+  {
+    path: "/profile/changepassword",
+    component: ProfilePassword,
+    alert: true,
+  },
   // {
   //   path: "/profile/withdrawalpassword",
   //   component: WithdrawalPassword,
