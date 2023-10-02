@@ -141,7 +141,7 @@ export function useLogin() {
         localStorage.removeItem("username");
       }
 
-      history.push("/main/home");
+      history.push("/");
     }
   };
 
