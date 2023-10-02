@@ -25,18 +25,13 @@ export function usePageProps() {
   // specific to routePath
 
   // if (route.path === "/deposit/manual")
-  // const order = location.state;
-  // TODO: fix conflict
+  const order = location.state;
 
   // if (route.path === "/ip-restrict-mobile")
   const ip = location.state?.ip || null;
 
   // if (route.path === "/promotion/:activityId?")
   const promo = location.state?.promo || null;
-
-  // if (route.path === "/deposit/details")
-  // if (route.path === "/withdrawal/details")
-  const order = location.state?.order || null;
 
   // if (route.path === "/chat/:userid?/:name?/:question?")
   const login = location.state?.login || null;

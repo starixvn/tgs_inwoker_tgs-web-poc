@@ -1,24 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-
+import { Slide } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Dialog";
-import Header from "../Share/Header";
+import Header from "@/components/Mobile/components/_PrevShare/Header";
+import Button from "@/components/Mobile/components/_PrevShare/Button";
+import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import i18n from "@/utils/i18n";
+import { walletAction } from "@/api-services/actions/walletAction";
+import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-import Button from "../Share/Button";
-
-import Loading from "../Share/Loading";
-import i18n from "../../../../utils/i18n";
-import { walletAction } from "../../../../api-services/actions/walletAction";
-import { RESET_WALLETRESULT } from "../../../../api-services/constant/actionType";
-
-import Slide from "@material-ui/core/Slide";
 const Container = styled.div``;
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
