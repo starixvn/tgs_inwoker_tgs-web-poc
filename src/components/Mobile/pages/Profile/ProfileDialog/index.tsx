@@ -3,14 +3,14 @@ import styled from "styled-components";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import NameDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/NameDialog";
+import NameDialog from "@/components/Mobile/pages/Profile/ProfileDialog/NameDialog";
 import { useDialogOpenState } from "@/hooks/account/useDialogOpenState";
-import PhoneDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/PhoneDialog";
-import EmailDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/EmailDialog";
-import BirthDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/BirthDialog";
-import QQDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/QQDialog";
-import WeChatDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/WeChatDialog";
-import PasswordDialog from "@/components/Mobile/components/Account/AccountNavigations/AccountDialog/PasswordDialog";
+import PhoneDialog from "@/components/Mobile/pages/Profile/ProfileDialog/PhoneDialog";
+import EmailDialog from "@/components/Mobile/pages/Profile/ProfileDialog/EmailDialog";
+import BirthDialog from "@/components/Mobile/pages/Profile/ProfileDialog/BirthDialog";
+import QQDialog from "@/components/Mobile/pages/Profile/ProfileDialog/QQDialog";
+import WeChatDialog from "@/components/Mobile/pages/Profile/ProfileDialog/WeChatDialog";
+import PasswordDialog from "@/components/Mobile/pages/Profile/ProfileDialog/PasswordDialog";
 import i18n from "@/utils/i18n";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import config from "@/config/config";
@@ -93,7 +93,7 @@ interface ProfileItem {
   status: string;
 }
 
-const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
+const ProfileDialog = ({ isOpen, handleCloseDialog }: Props) => {
   const { account } = useAccountStore();
 
   const getStatus = useCallback(() => {
@@ -291,4 +291,4 @@ const AccountDialog = ({ isOpen, handleCloseDialog }: Props) => {
   );
 };
 
-export default React.memo(AccountDialog);
+export default React.memo(ProfileDialog);

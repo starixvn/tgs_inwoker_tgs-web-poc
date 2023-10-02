@@ -11,8 +11,15 @@ import Card from "@/components/Mobile/components/Card";
 import AddCard from "@/components/Mobile/components/Card/AddCard";
 import MaintenancePrev from "@/components/Share/Maintenance";
 import MaintenancePage from "@/components/Mobile/pages/MaintenancePage";
+import TransferDialog from "@/components/Mobile/pages/Transfer/TransferDialog";
+import Transfer from "@/components/Mobile/pages/Transfer";
+import Profile from "@/components/Mobile/pages/Profile";
+import Report from "@/components/Mobile/pages/Report";
+import Inbox from "@/components/Mobile/pages/Inbox";
+import Affiliate from "@/components/Mobile/pages/Affiliate";
+import ContactUs from "@/components/Mobile/pages/ContactUs";
 
-const Mine = React.lazy(() => import("@/components/Mobile/pages/Mine"));
+const Mine = React.lazy(() => import("@/components/Mobile/pages/Account/Mine"));
 
 interface Route {
   path: string;
@@ -54,12 +61,12 @@ const routes: Route[] = [
     alert: true,
   },
   {
-    path: "/account/deposit",
+    path: "/deposit",
     component: Deposit,
     alert: true,
   },
   {
-    path: "/account/withdraw",
+    path: "/withdrawal",
     component: Withdraw,
     alert: true,
   },
@@ -101,11 +108,11 @@ const routes: Route[] = [
   //   alert: true,
   // },
 
-  // {
-  //   path: "/profile",
-  //   component: Profile,
-  //   alert: true,
-  // },
+  {
+    path: "/profile",
+    component: Profile,
+    alert: true,
+  },
   // {
   //   path: "/profile/name",
   //   component: NameVerify,
@@ -212,12 +219,12 @@ const routes: Route[] = [
     promoProps: true,
   },
   //
-  // {
-  //   path: "/inbox",
-  //   component: Inbox,
-  //   alert: true,
-  //   navigate: true,
-  // },
+  {
+    path: "/inbox",
+    component: Inbox,
+    alert: true,
+    navigate: true,
+  },
   // {
   //   path: "/memo",
   //   component: memo,
@@ -232,12 +239,6 @@ const routes: Route[] = [
   //   screenHeight: true,
   // },
   //
-  // {
-  //   path: "/withdrawal",
-  //   component: Withdrawal,
-  //   alert: true,
-  //   navigate: true,
-  // },
   // {
   //   path: "/withdrawal/details",
   //   component: WithdrawalDetails,
@@ -306,12 +307,12 @@ const routes: Route[] = [
   // //   navigate: true,
   // // },
   //
-  // {
-  //   path: "/report/:tab?",
-  //   component: Report,
-  //   alert: true,
-  //   navigate: true,
-  // },
+  {
+    path: "/report/:tab?",
+    component: Report,
+    alert: true,
+    navigate: true,
+  },
   // // {
   // //   path: "/customer-service",
   // //   component: CustomerService,
@@ -339,11 +340,11 @@ const routes: Route[] = [
   // //   alert: true,
   // // },
   //
-  // {
-  //   path: "/affiliate",
-  //   component: Affiliate,
-  //   navigate: true,
-  // },
+  {
+    path: "/affiliate",
+    component: Affiliate,
+    navigate: true,
+  },
   // //{
   // //  path: "/affiliate/member",
   // //  component: AffiliateMember,
@@ -380,15 +381,20 @@ const routes: Route[] = [
   //   alert: true,
   //   navigate: true,
   // },
+  {
+    path: "/support",
+    component: ContactUs,
+    navigate: true,
+  },
 ];
 
 if (!config.features.NewTransferUI) {
-  // routes.push({
-  //   path: "/transfer",
-  //   component: Transfer,
-  //   alert: true,
-  //   navigate: true,
-  // });
+  routes.push({
+    path: "/transfer",
+    component: Transfer,
+    alert: true,
+    navigate: true,
+  });
 }
 
 export { routes };

@@ -5,12 +5,10 @@ import Button from "@/components/Mobile/components/UI/Button";
 import styled from "styled-components";
 import NavCard from "@/components/Mobile/components/Account/AccountNavigations/NavCard";
 import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloadButton";
-import { useDialogOpenState } from "@/hooks/account/useDialogOpenState";
 import { useHistory } from "react-router-dom";
 import {
   NavCardItem,
   NavCardKey,
-  NavDialogFactory,
   useAccountNavigations,
 } from "@/hooks/account/useAccountNavigations";
 import { useAuth } from "@/hooks/auth/useAuth";
@@ -34,42 +32,11 @@ const AccountNavCardsContainer = styled.div`
 type Props = {};
 const AccountNavigations = (props: Props) => {
   const history = useHistory();
-  const { navCardItemList, navCardDictionary, openInDialogDictionary } =
-    useAccountNavigations();
+  const { navCardItemList } = useAccountNavigations();
   const { handleLogout } = useAuth();
 
-  const { dialogOpenState, handleToggleDialog } =
-    useDialogOpenState<NavCardItem>(navCardDictionary);
-
   const handleClickNav = useCallback((navCardItem: NavCardItem) => {
-    if (openInDialogDictionary[navCardItem.key]) {
-      handleToggleDialog(navCardItem.key);
-      history.push(navCardItem.routePath);
-      return;
-    }
     history.push(navCardItem.routePath);
-  }, []);
-
-  const handleCloseNav = useCallback(() => {
-    handleToggleDialog();
-    history.push("/account");
-  }, []);
-
-  // open correspond dialog via url
-  // ex: url: domain/account, then "click" accountDialog
-  // ex: url: domain/withdraw, then "click" accountDialog
-  const handleInitNav = useCallback(() => {
-    const { pathname, search } = history.location;
-    const matchedNavCardItem = navCardItemList.find((navCardItem) => {
-      return navCardItem.routePath === `${pathname}${search}`;
-    });
-    if (!matchedNavCardItem) return;
-
-    handleClickNav(matchedNavCardItem);
-  }, []);
-
-  useEffect(() => {
-    handleInitNav();
   }, []);
 
   return (
@@ -110,20 +77,6 @@ const AccountNavigations = (props: Props) => {
           Logout
         </Button>
       </AccountNavsContainer>
-
-      {/* Dialogs */}
-      {navCardItemList.map((navCardItem) => {
-        if (!navCardItem.isOpenInDialog) return null;
-
-        const NavDialogComponent = NavDialogFactory[navCardItem.key];
-        return (
-          <NavDialogComponent
-            key={navCardItem.key}
-            isOpen={dialogOpenState[navCardItem.key]}
-            handleCloseDialog={handleCloseNav}
-          />
-        );
-      })}
     </>
   );
 };
