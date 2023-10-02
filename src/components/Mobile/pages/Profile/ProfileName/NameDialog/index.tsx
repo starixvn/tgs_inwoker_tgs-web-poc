@@ -3,7 +3,7 @@ import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWit
 import { LeftTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useHistory } from "react-router-dom";
-import NameVerify from "@/components/_Share_Domain/Account/Profile/id-verification";
+import NameVerify from "@/components/_Share_Domain/Account/Profile/NameVerify";
 import i18n from "@/utils/i18n";
 
 type Props = {

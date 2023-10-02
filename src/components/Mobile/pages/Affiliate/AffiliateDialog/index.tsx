@@ -1,8 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import Affiliate from "@/components/_Share_Domain/Account/Affiliate";
 
 const theme = themeList["mobileT18"];
