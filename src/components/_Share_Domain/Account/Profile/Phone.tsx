@@ -145,8 +145,6 @@ function Phone() {
         },
       });
 
-      console.log(response);
-
       //@ts-ignore
       if (response.IsSuccess) {
         setCountdownToken(60);

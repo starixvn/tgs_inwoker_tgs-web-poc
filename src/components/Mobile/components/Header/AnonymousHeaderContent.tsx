@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import Button from "@/components/Mobile/components/UI/Button";
-import { useAuthDialog } from "@/hooks/useAuthDialog";
+import { useHistory } from "react-router-dom";
 
 const ButtonContainer = styled.div`
   display: flex;
 `;
 type Props = {};
 const AnonymousHeaderContent = (props: Props) => {
-  const { toggleLoginDialog, toggleRegisterDialog } = useAuthDialog();
+  const history = useHistory();
+
+  const toggleLoginDialog = useCallback(() => {
+    history.push("/login");
+  }, []);
+  const toggleRegisterDialog = useCallback(() => {
+    history.push("/register");
+  }, []);
 
   return (
     <ButtonContainer>

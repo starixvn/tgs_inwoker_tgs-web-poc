@@ -18,13 +18,25 @@ import Report from "@/components/Mobile/pages/Report";
 import Inbox from "@/components/Mobile/pages/Inbox";
 import Affiliate from "@/components/Mobile/pages/Affiliate";
 import ContactUs from "@/components/Mobile/pages/ContactUs";
-import ProfileName from "@/components/Mobile/pages/Profile/Name";
-import ProfileWeChat from "@/components/Mobile/pages/Profile/WeChat";
-import ProfileBirth from "@/components/Mobile/pages/Profile/Birth";
-import ProfileQQ from "@/components/Mobile/pages/Profile/QQ";
-import ProfileEmail from "@/components/Mobile/pages/Profile/Email";
-import ProfilePhone from "@/components/Mobile/pages/Profile/Phone";
-import ProfilePassword from "@/components/Mobile/pages/Profile/Password";
+import ProfileName from "@/components/Mobile/pages/Profile/ProfileName";
+import ProfileWeChat from "@/components/Mobile/pages/Profile/ProfileWeChat";
+import ProfileBirthDate from "@/components/Mobile/pages/Profile/ProfileBirthDate";
+import ProfileQQ from "@/components/Mobile/pages/Profile/ProfileQQ";
+import ProfileEmail from "@/components/Mobile/pages/Profile/ProfileEmail";
+import ProfilePhone from "@/components/Mobile/pages/Profile/ProfilePhone";
+import Login from "@/components/Mobile/pages/Login";
+import Register from "@/components/Mobile/pages/Register";
+import ProfileChangeEmail from "@/components/Mobile/pages/Profile/ProfileChangeEmail";
+import ProfileChangePhone from "@/components/Mobile/pages/Profile/ProfileChangePhone";
+import ProfileChangePassword from "@/components/Mobile/pages/Profile/ProfileChangePassword";
+import ProfileWithdrawalPassword from "@/components/Mobile/pages/Profile/ProfileWIthdrawalPassword";
+import ProfileResetWithdrawalPassword from "@/components/Mobile/pages/Profile/ProfileResetWithdrawalPassword";
+import ProfileChangeWithdrawalPassword from "@/components/Mobile/pages/Profile/ProfileChangeWithdrawalPassword";
+import ProfileFacebookMessenger from "@/components/Mobile/pages/Profile/ProfileFacebookMessenger";
+import ProfileTelegram from "@/components/Mobile/pages/Profile/ProfileTelegram";
+import ProfileLine from "@/components/Mobile/pages/Profile/ProfileLine";
+import ProfileViber from "@/components/Mobile/pages/Profile/ProfileViber";
+import ProfileWhatsapp from "@/components/Mobile/pages/Profile/ProfileWhatsapp";
 
 const Mine = React.lazy(() => import("@/components/Mobile/pages/Account/Mine"));
 
@@ -82,17 +94,16 @@ const routes: Route[] = [
     component: BettingBonus,
     navigate: true,
   },
-  // {
-  //   path: "/login",
-  //   component: LoginDialog,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/register",
-  //   // path: "/register&visitor_id=:subid",
-  //   component: RegisterDialog,
-  //   alert: true,
-  // },
+  {
+    path: "/login",
+    component: Login,
+    alert: true,
+  },
+  {
+    path: "/register",
+    component: Register,
+    alert: true,
+  },
   // {
   //   path: "/a/:promotionid",
   //   component: Login,
@@ -132,7 +143,7 @@ const routes: Route[] = [
   },
   {
     path: "/profile/birthdate",
-    component: ProfileBirth,
+    component: ProfileBirthDate,
     alert: true,
   },
   {
@@ -140,46 +151,46 @@ const routes: Route[] = [
     component: ProfileQQ,
     alert: true,
   },
-  // {
-  //   path: "/profile/fb",
-  //   component: FacebookMessenger,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/profile/telegram",
-  //   component: Telegram,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/profile/line",
-  //   component: Line,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/profile/viber",
-  //   component: Viber,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/profile/whatsapp",
-  //   component: Whatsapp,
-  //   alert: true,
-  // },
+  {
+    path: "/profile/fb",
+    component: ProfileFacebookMessenger,
+    alert: true,
+  },
+  {
+    path: "/profile/telegram",
+    component: ProfileTelegram,
+    alert: true,
+  },
+  {
+    path: "/profile/line",
+    component: ProfileLine,
+    alert: true,
+  },
+  {
+    path: "/profile/viber",
+    component: ProfileViber,
+    alert: true,
+  },
+  {
+    path: "/profile/whatsapp",
+    component: ProfileWhatsapp,
+    alert: true,
+  },
   {
     path: "/profile/email",
     component: ProfileEmail,
     alert: true,
   },
-  // {
-  //   path: "/profile/changeemail",
-  //   component: ChangeEmail,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/profile/changephone",
-  //   component: ChangePhone,
-  //   alert: true,
-  // },
+  {
+    path: "/profile/changeemail",
+    component: ProfileChangeEmail,
+    alert: true,
+  },
+  {
+    path: "/profile/changephone",
+    component: ProfileChangePhone,
+    alert: true,
+  },
   {
     path: "/profile/phone",
     component: ProfilePhone,
@@ -187,25 +198,25 @@ const routes: Route[] = [
   },
   {
     path: "/profile/changepassword",
-    component: ProfilePassword,
+    component: ProfileChangePassword,
     alert: true,
   },
-  // {
-  //   path: "/profile/withdrawalpassword",
-  //   component: WithdrawalPassword,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/profile/resetwithdrawalpassword",
-  //   component: ResetWithdrawalPassword,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/profile/changewithdrawalpassword",
-  //   component: ChangeWithdrawalPassword,
-  //   alert: true,
-  // },
-  //
+  {
+    path: "/profile/withdrawalpassword",
+    component: ProfileWithdrawalPassword,
+    alert: true,
+  },
+  {
+    path: "/profile/resetwithdrawalpassword",
+    component: ProfileResetWithdrawalPassword,
+    alert: true,
+  },
+  {
+    path: "/profile/changewithdrawalpassword",
+    component: ProfileChangeWithdrawalPassword,
+    alert: true,
+  },
+
   // {
   //   path: "/slots/:platform?/:type?",
   //   component: Slot,

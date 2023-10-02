@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import ProfileDialog from "@/components/Mobile/pages/Profile/ProfileDialog";
+import ProfileMenuDialog from "@/components/Mobile/pages/Profile/ProfileMenuDialog";
 
 type Props = {};
 const Profile = (props: Props) => {
@@ -13,7 +13,7 @@ const Profile = (props: Props) => {
   }, []);
 
   return (
-    <ProfileDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />
+    <ProfileMenuDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />
   );
 };
 

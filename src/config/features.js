@@ -55,7 +55,7 @@ const featureList = {
     LiveChatVendor: "",
 
     Home_CustomFPPosition: false,
-    CustomMessaging: [],
+    CustomMessaging: ["fb", "telegram", "line", "viber", "whatsapp"],
     Deposit_FPSWithName: false,
     Register_ShowPhone: false,
     Withdrawal_Ignore_Verification: false,
