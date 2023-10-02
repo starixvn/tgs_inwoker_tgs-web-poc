@@ -1,13 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
-import { themeList } from "@/theme";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import InboxPrev from "@/components/_Share_Domain/Account/InboxPrev";
-import { useNotifications } from "@/hooks/pageProps/useNotifications";
-import { useHistory } from "react-router-dom";
-
-const theme = themeList["mobileT18"];
+import Inbox from "@/components/_Share_Domain/Account/Inbox";
 
 type Props = {
   isOpen: boolean;
@@ -15,9 +8,6 @@ type Props = {
 };
 
 const InboxDialog = ({ isOpen, handleCloseDialog }: Props) => {
-  const { alert } = useNotifications();
-  const history = useHistory();
-
   return (
     <>
       <DialogWithHeader
@@ -25,7 +15,7 @@ const InboxDialog = ({ isOpen, handleCloseDialog }: Props) => {
         handleCloseDialog={handleCloseDialog}
         dialogHeaderTitle={"Inbox"}
       >
-        <InboxPrev alert={alert} history={history} />
+        <Inbox />
       </DialogWithHeader>
     </>
   );

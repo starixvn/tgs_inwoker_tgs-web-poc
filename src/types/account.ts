@@ -1,5 +1,17 @@
 import { keys } from "@material-ui/core/styles/createBreakpoints";
 
+export interface InboxMessage {
+  content: string;
+  createon: string;
+  id: string;
+  isread: boolean;
+  localization: {
+    subject: string;
+    content: string;
+  } | null;
+  subject: string;
+}
+
 export interface AccountState {
   pending: boolean;
   updateCardResult: null | any;
@@ -106,7 +118,7 @@ export interface AccountState {
     };
   };
   inbox: {
-    items: any[];
+    items: InboxMessage[];
     totalcount: number;
   };
   promote_user: {
