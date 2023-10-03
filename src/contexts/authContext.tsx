@@ -4,6 +4,7 @@ import { LogoutState, useLogout } from "@/hooks/auth/useAuth/useLogout";
 import { RegisterState, useRegister } from "@/hooks/auth/useAuth/useRegister";
 import Register from "@/components/App/Register";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
+import { RegisterResDto } from "@/models/dto/player/RegisterReqDto";
 
 export const initialState: {
   loginState: LoginState;
@@ -15,7 +16,7 @@ export const initialState: {
     needToRemember?: boolean
   ) => Promise<void>;
   handleLogout: () => void;
-  handleRegister: () => void;
+  handleRegister: (registerReqDto: RegisterResDto) => void;
   isLogin: boolean;
 } = {
   loginState: {

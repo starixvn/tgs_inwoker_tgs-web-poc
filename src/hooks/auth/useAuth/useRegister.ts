@@ -1,6 +1,8 @@
 import { useCallback, useState } from "react";
 import { useHistory } from "react-router";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
+import { RegisterResDto } from "@/models/dto/player/RegisterReqDto";
+import { useSnackbar } from "notistack";
 
 export type RegisterState = {
   data: any | null;
@@ -17,16 +19,13 @@ export function useRegister() {
 
   const history = useHistory();
   const accountStore = useAccountStore();
+  const { enqueueSnackbar } = useSnackbar();
 
-  const handleRegister = useCallback(async () => {
+  const handleRegister = useCallback(async (registerReqDto: RegisterResDto) => {
     try {
       setRegisterState((prevState) => ({ ...prevState, isLoading: true }));
 
-      const token = accountStore.account.token;
-      if (!token) return;
-
-      const result = await accountStore.accountLogout(token);
-      // await handleLoginSuccess(username, needToRemember);
+      const result = await accountStore.registerAccount(registerReqDto);
       setRegisterState({ isLoading: false, data: result.data, error: null });
       history.push("/");
     } catch (error: any) {

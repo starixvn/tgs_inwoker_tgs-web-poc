@@ -42,7 +42,13 @@ type Props = {
 };
 
 const RegisterDialog = ({ isOpen, handleCloseDialog }: Props) => {
-  const { formInputConfigList, formik, isLoading } = useRegisterForm();
+  const {
+    formInputConfigList,
+    formik,
+    isLoading,
+    isConfirmedAdult,
+    handleClickConfirmAdult,
+  } = useRegisterForm();
 
   return (
     <Dialog isOpen={isOpen} handleCloseDialog={handleCloseDialog}>
@@ -59,7 +65,10 @@ const RegisterDialog = ({ isOpen, handleCloseDialog }: Props) => {
           buttonText={i18n.t("common.register")}
         >
           <VerifyAgeContainer>
-            <Checkbox />
+            <Checkbox
+              value={isConfirmedAdult}
+              onClick={handleClickConfirmAdult}
+            />
             {i18n.t("web.register.contract")}
           </VerifyAgeContainer>
         </FormikForm>

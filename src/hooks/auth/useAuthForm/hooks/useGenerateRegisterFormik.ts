@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { FormikValues, useFormik } from "formik";
 import { useFormikInitValue } from "@/hooks/auth/useAuthForm/hooks/useFormikInitValue";
 import config from "@/config/config";
+import { UserTypeEnum } from "@/hooks/auth/useAuthForm/useRegisterForm";
 
 type Props = {
   handleClickRegister: (values: FormikValues) => Promise<void>;
@@ -48,7 +49,7 @@ export function useGenerateRegisterFormik({ handleClickRegister }: Props) {
           .oneOf([Yup.ref("password"), null], "Passwords must match"),
       },
       (() => {
-        if (config.features.Register_ShowPhone) return;
+        if (!config.features.Register_ShowPhone) return;
 
         return {
           label: i18n.t("forgotPassword.plsEnterPhoneNumber"),
@@ -71,7 +72,7 @@ export function useGenerateRegisterFormik({ handleClickRegister }: Props) {
         };
       })(),
       (() => {
-        if (config.features.Register_ShowPhone) return;
+        if (!config.features.Register_ShowPhone) return;
         return {
           label: "",
           name: "areaCode",
@@ -101,8 +102,13 @@ export function useGenerateRegisterFormik({ handleClickRegister }: Props) {
         label: i18n.t("wap.register.promoteCode"),
         name: "promoteCode",
         initialValue: "",
-        type: FormInputTypeEnum.TEXT,
-        validationSchema: Yup.string(),
+        type: FormInputTypeEnum.PROMOTION_CODE,
+      },
+      {
+        label: i18n.t("wap.register.promoteCode"),
+        name: "userType",
+        initialValue: UserTypeEnum.PLAYER,
+        type: FormInputTypeEnum.USER_TYPE,
       },
     ].filter((item) => !!item) as FormikFormInput[];
   }, []);
