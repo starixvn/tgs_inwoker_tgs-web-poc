@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
-import IMHandler from "@/components/Wap/components/Main/Support/IMHandler";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { BrandCommunication } from "@/models/dto/general/GetBrandCommunicationResDto";
 import { useUiService } from "@/hooks/services/useUiService";
@@ -352,10 +351,10 @@ const MaintenancePrev = (props) => {
             {imList.map((data, index) => {
               return (
                 <IMWrapper
-                  onClick={() => {
-                    IMHandler(data.type, data.phone);
-                    // props.alert('', i18n.t('affiliate.copied'))
-                  }}
+                  // onClick={() => {
+                  //   IMHandler(data.type, data.phone);
+                  //   // props.alert('', i18n.t('affiliate.copied'))
+                  // }}
                 >
                   <Icon icon={`${data.type}.png`} />
                   <SMType>{data.type}</SMType>
