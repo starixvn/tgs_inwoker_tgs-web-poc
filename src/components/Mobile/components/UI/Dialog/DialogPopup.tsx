@@ -40,8 +40,7 @@ const CloseIconContainer = styled.div`
 
 const ChildContainer = styled.div<ChildContainerType>`
   width: 100%;
-  height: ${(props) =>
-    props.type === "announcement" ? "calc(100% - 60px)" : "auto"}};
+  height: auto;
   overflow: scroll;
 `;
 

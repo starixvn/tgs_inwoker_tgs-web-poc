@@ -11,6 +11,16 @@ const PromotionTag = styled.div`
   width: 213px;
   height: 43px;
   background: url(${TagBg}) no-repeat center center;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const PopupPromotion = () => {
@@ -37,9 +47,13 @@ const PopupPromotion = () => {
 
   if (isEmptyData || disableDialog) return null;
   return (
-    <DialogPopup isOpen={open} handleCloseDialog={handleCloseDialog}>
+    <DialogPopup
+      isOpen={open}
+      handleCloseDialog={handleCloseDialog}
+      type="promotion"
+    >
       <>
-        <PromotionTag />
+        <PromotionTag>PROMOTIONS</PromotionTag>
         <NotShowAgainHint onClick={handleClickCheckbox} isCheck={isCheck} />
       </>
     </DialogPopup>
