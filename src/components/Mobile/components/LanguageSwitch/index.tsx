@@ -7,12 +7,23 @@ import {
 import styled from "styled-components";
 import iconImg from "@/assets/images/account/icon_uk.png";
 import { themeList } from "@/theme";
+import i18n from "@/utils/i18n";
+import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
+import { BrandLanguage } from "@/types/general";
+
+const imageMap = {
+  "zh-CN": process.env.PUBLIC_URL + `/assets/images/language/zh-CN.png`,
+  "zh-TW": process.env.PUBLIC_URL + `/assets/images/language/zh-TW.png`,
+  "en-US": process.env.PUBLIC_URL + `/assets/images/language/en-US.png`,
+  "th-TH": process.env.PUBLIC_URL + `/assets/images/language/th-TH.png`,
+  "vi-VN": process.env.PUBLIC_URL + `/assets/images/language/vi-VN.png`,
+  "id-ID": process.env.PUBLIC_URL + `/assets/images/language/id-ID.png`,
+};
 
 const theme = themeList["mobileT18"];
 
 const StyledFormControl = styled(MuiFormControl)`
-  background: ${theme.tertiaryDark};
-  border-radius: 8px;
+  border-radius: 10px;
   width: 100%;
   margin-right: 10px;
   overflow: visible;
@@ -28,12 +39,15 @@ const StyledFormControl = styled(MuiFormControl)`
   & .MuiSelect-root {
     overflow: visible;
   }
+
+  .MuiOutlinedInput-input {
+    padding: 12px !important;
+  }
 `;
 
 const StyledSelect = styled(MuiSelect)`
-  background: ${theme.primaryDark};
   border: 1px solid ${theme.tertiary};
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: visible;
 
   & .MuiSelect-root {
@@ -61,41 +75,38 @@ const StyledMenuItem = styled(MuiMenuItem)`
   }
 `;
 
-interface languageItem {
-  label: string;
-  value: string;
-  icon: string;
-}
+const FlagContainer = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 10px;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
 
 const LanguageSwitch = () => {
-  const languageList = useMemo<languageItem[]>(() => {
-    return [
-      {
-        label: "English",
-        value: "english",
-        icon: iconImg,
-      },
-      {
-        label: "繁體中文",
-        value: "zh-tw",
-        icon: iconImg,
-      },
-    ];
-  }, []);
+  const { general } = useGeneralStore();
+  const languageList = general.brandLanguage;
 
-  const [currentLanguage, setCurrentLanguage] = useState<languageItem | null>(
-    languageList[0]
-  );
+  const [currentLanguage, setCurrentLanguage] = useState<BrandLanguage>({
+    culturecode: i18n.language,
+  });
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const selectedLanguage = languageList.find(
-      (languageItem) => languageItem.value === event.target.value
+      (languageItem) => languageItem.culturecode === event.target.value
     );
 
     setCurrentLanguage(selectedLanguage || null);
+    i18n.changeLanguage(selectedLanguage.culturecode);
+    window.location.reload();
   };
 
-  const value = currentLanguage?.value || "";
+  const culturecode = currentLanguage?.culturecode || "";
 
   return (
     <StyledFormControl variant="outlined">
@@ -103,16 +114,18 @@ const LanguageSwitch = () => {
       <StyledSelect
         labelId="demo-simple-select-outlined-label"
         id="demo-simple-select-outlined"
-        value={value}
+        value={culturecode}
         onChange={handleChange}
         label="Age"
       >
         {languageList.map((languageItem) => {
-          const { label, value, icon } = languageItem;
+          const { culturecode } = languageItem;
           return (
-            <StyledMenuItem key={label} value={value}>
-              <img src={icon} alt={label} />
-              {label}
+            <StyledMenuItem key={culturecode} value={culturecode}>
+              <FlagContainer>
+                <img src={imageMap[culturecode]} alt={culturecode} />
+              </FlagContainer>
+              {i18n.t("lang." + culturecode)}
             </StyledMenuItem>
           );
         })}

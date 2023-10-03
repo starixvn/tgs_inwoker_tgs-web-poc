@@ -7,6 +7,7 @@ import birthImg from "@/assets/images/account/icon_birth.png";
 import { themeList } from "@/theme";
 import { ReactI18NextChild } from "react-i18next";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
+import Avatar from "@/components/Mobile/components/Avatar";
 
 const theme = themeList["mobileT18"];
 
@@ -64,12 +65,10 @@ interface InfoItem {
 }
 
 const InfoCard = (props: any) => {
-  const accountStore = useAccountStore();
-  const username = accountStore.account.info.member_username;
+  const { account } = useAccountStore();
+  const accountInfo = account.info;
 
   const infoItemList: InfoItem[] = useMemo(() => {
-    const accountInfo = accountStore.account.info;
-
     return [
       {
         infoType: "phone",
@@ -90,17 +89,12 @@ const InfoCard = (props: any) => {
         isNotValid: !accountInfo.member_birthday,
       },
     ];
-  }, [accountStore.account.info]);
+  }, [accountInfo]);
 
   return (
     // @ts-ignore
     <InfoCardContainer {...props}>
-      <AvatarContainer>
-        <div className={".avatar"}>
-          <img src={avatarImg} alt={"avatar"} />
-        </div>
-        {username}
-      </AvatarContainer>
+      <Avatar />
 
       <Border />
 

@@ -62,7 +62,7 @@ const bottomNavItemList: BottomNavItem[] = [
     iconActiveUrl:
       process.env.PUBLIC_URL +
       `/assets/images/mobile/bottomAppBar/icon_email_active.svg`,
-    routePath: "/support",
+    routePath: "/inbox",
   },
   {
     navType: "item",
