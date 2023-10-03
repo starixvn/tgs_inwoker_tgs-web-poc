@@ -11,6 +11,8 @@ const theme = themeList["mobileT18"];
 const dialogBgUrl =
   process.env.PUBLIC_URL + "/assets/images/announcement/announcement_bg.png";
 
+const doNotShowAnnouncementDialogKey = "doNotShowAnnouncementDialog";
+
 const Title = styled.div`
   font-size: 1.8rem;
   font-weight: 700;
@@ -90,18 +92,18 @@ const AnnouncementCard = ({
 };
 
 const PopupAnnouncement = () => {
-  const [open, setOpen] = useState(false);
-  const [isCheck, setIsCheck] = useState(false);
+  const disableDialog =
+    window.sessionStorage &&
+    sessionStorage.getItem(doNotShowAnnouncementDialogKey) === "true";
 
-  const handleCloseDialog = () => {
-    setOpen(false);
-  };
+  const [open, setOpen] = useState(!disableDialog);
+  const [isCheck, setIsCheck] = useState(false);
 
   const { ui } = useUiStore();
   const { mains: announcementList } = ui;
 
-  console.log("%c⧭", "color: #735656", "announcementList", announcementList);
   useEffect(() => {
+    if (disableDialog) return;
     const hasData = announcementList.length > 0;
     const dataChanged =
       JSON.stringify(announcementList) !== JSON.stringify(ui.mains);
@@ -109,6 +111,13 @@ const PopupAnnouncement = () => {
       setOpen(true);
     }
   }, [announcementList]);
+
+  const handleCloseDialog = () => {
+    if (isCheck) {
+      sessionStorage.setItem(doNotShowAnnouncementDialogKey, "true");
+    }
+    setOpen(false);
+  };
 
   const handleClickCheckbox = () => {
     setIsCheck((prevIsCheck) => !prevIsCheck);
@@ -136,7 +145,7 @@ const PopupAnnouncement = () => {
             );
           })}
         </Carousel>
-        <Button>Got It!</Button>
+        <Button onClick={handleCloseDialog}>Got It!</Button>
         <NotShowAgainHint onClick={handleClickCheckbox}>
           <CheckBox isCheck={isCheck} />
           Don't show again
