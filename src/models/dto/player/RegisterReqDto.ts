@@ -1,4 +1,4 @@
-export class RegisterResDto {
+export class RegisterReqDto {
   username: string = "";
   pwd: string = "";
   confirmpwd: string = "";

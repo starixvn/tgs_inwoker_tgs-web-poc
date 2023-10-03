@@ -26,7 +26,7 @@ import {
   UPDATECARDNO_SUCCESS,
 } from "@/api-services/constant/actionType";
 import { useAccountService } from "@/hooks/services/useAccountService";
-import { RegisterResDto } from "@/models/dto/player/RegisterReqDto";
+import { RegisterReqDto } from "@/models/dto/player/RegisterReqDto";
 
 export function useAccountStore() {
   const dispatch = useDispatch();
@@ -240,7 +240,7 @@ export function useAccountStore() {
       confirmpwd,
       invitationcode,
       upper,
-    }: RegisterResDto) => {
+    }: RegisterReqDto) => {
       try {
         return await AccountService.Register(
           username,

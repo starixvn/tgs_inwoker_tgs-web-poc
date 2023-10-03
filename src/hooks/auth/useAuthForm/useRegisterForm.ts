@@ -12,9 +12,8 @@ export enum UserTypeEnum {
   PLAYER = "p",
 }
 export function useRegisterForm() {
-  const { handleRegister } = useAuth();
+  const { registerState, handleRegister } = useAuth();
   const { promotionData } = usePromotionCode();
-  const [isLoading, setIsLoading] = useState(false);
   const { isConfirmedAdult, handleClickConfirmAdult } = useConfirmAdult();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -30,8 +29,7 @@ export function useRegisterForm() {
 
       const userType = values.userType as UserTypeEnum;
       try {
-        setIsLoading(true);
-        handleRegister({
+        await handleRegister({
           username: values.username as string,
           pwd: values.password as string,
           confirmpwd: values.confirmpwd as string,
@@ -41,25 +39,22 @@ export function useRegisterForm() {
         });
       } catch (error: any) {
         console.error(error);
-      } finally {
-        setIsLoading(false);
+        enqueueSnackbar(error.message, {
+          variant: "warning",
+        });
       }
     },
-    [promotionData.promoId]
+    [promotionData.promoId, isConfirmedAdult]
   );
 
   const { formInputConfigList, formik } = useGenerateRegisterFormik({
     handleClickRegister,
   });
 
-  useEffect(() => {
-    return () => {};
-  }, []);
-
   return {
     formInputConfigList,
     formik,
-    isLoading,
+    isLoading: registerState.isLoading,
     isConfirmedAdult,
     handleClickConfirmAdult,
   };

@@ -1,8 +1,11 @@
 import { useCallback, useState } from "react";
 import { useHistory } from "react-router";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import { RegisterResDto } from "@/models/dto/player/RegisterReqDto";
+import { RegisterReqDto } from "@/models/dto/player/RegisterReqDto";
 import { useSnackbar } from "notistack";
+import ErrorSwitcher from "@/utils/ErrorSwitcher";
+import i18n from "@/utils/i18n";
+import config from "@/config/config";
 
 export type RegisterState = {
   data: any | null;
@@ -21,12 +24,45 @@ export function useRegister() {
   const accountStore = useAccountStore();
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleRegister = useCallback(async (registerReqDto: RegisterResDto) => {
+  const handleRegister = useCallback(async (registerReqDto: RegisterReqDto) => {
     try {
       setRegisterState((prevState) => ({ ...prevState, isLoading: true }));
 
-      const result = await accountStore.registerAccount(registerReqDto);
-      setRegisterState({ isLoading: false, data: result.data, error: null });
+      const registerResDto = await accountStore.registerAccount(registerReqDto);
+
+      if (!registerResDto.IsSuccess) {
+        enqueueSnackbar(ErrorSwitcher.getTranslation(registerResDto.info), {
+          variant: "warning",
+        });
+      }
+
+      if (!registerResDto.data.isnew) {
+        enqueueSnackbar(i18n.t("common.msgAlreadyExist"), {
+          variant: "warning",
+        });
+      }
+
+      //TODO: register workflow
+      // const {username,pwd} = registerReqDto
+      // if (config.features.SMSVerification) {
+      //
+      //   props.onRegisterSuccess(username, password);
+      // } else if (
+      //   config.features.Register_ShowEmail &&
+      //   config.features.Register_ShowPhone
+      // ) {
+      //   props.doLoginWithHpEmail(username, password, phone, email);
+      // } else if (config.features.Register_ShowPhone) {
+      //   props.doLoginWithHp(username, password, phone);
+      // } else {
+      //   props.doLogin(username, password);
+      // }
+
+      setRegisterState({
+        isLoading: false,
+        data: registerResDto.data,
+        error: null,
+      });
       history.push("/");
     } catch (error: any) {
       console.log(error);
