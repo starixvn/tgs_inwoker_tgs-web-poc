@@ -6,8 +6,6 @@ import { Dialog } from "@material-ui/core";
 import { connect } from "react-redux";
 import Common from "../../utils/Common";
 import { generalAction } from "../../api-services/actions/generalAction";
-import { withSnackbar } from "notistack";
-import { AppHistory } from "../../history/History";
 import IMHandler from "./IMHandler";
 import config from "../../config/config";
 import { UiService } from "../../api-services/services/UiService";
@@ -411,7 +409,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withSnackbar(Maintenance));
+export default connect(mapStateToProps, mapDispatchToProps)(Maintenance);
