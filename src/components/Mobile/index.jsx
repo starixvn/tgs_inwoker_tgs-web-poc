@@ -27,6 +27,7 @@ import { routes } from "./router";
 import MobileLayout from "@/components/Mobile/layouts/mobileLayout";
 import PopupAlertModal from "@/components/Mobile/components/Popup/PopupAlertDialog";
 import PopupAnnouncement from "@/components/Mobile/components/Popup/PopupAnnouncement";
+import PopupPromotion from "@/components/Mobile/components/Popup/PopupPromotion";
 import { AuthContextProvider } from "@/contexts/authContext";
 
 class Mobile extends Component {
@@ -271,35 +272,6 @@ class Mobile extends Component {
   };
 
   componentDidUpdate(preProps) {
-    const isInHomePage =
-      this.props.ui.mains &&
-      this.props.ui.mains !== preProps.ui.mains &&
-      this.props.ui.mains.length > 0;
-
-    if (config.features.PopupAnnouncement) {
-      if (isInHomePage) {
-        this.setState({
-          openAnnouncement: true,
-          showPromotion: false,
-        });
-      }
-    }
-
-    if (config.features.PopupPromotion) {
-      if (
-        isInHomePage &&
-        this.props.general.promotionList.items !==
-          preProps.general.promotionList.items &&
-        this.props.general.promotionList.items.length > 0
-      ) {
-        if (!this.state.openAnnouncement) {
-          this.setState({
-            showPromotion: true,
-          });
-        }
-      }
-    }
-
     if (preProps.general.token !== this.props.general.token) {
       if (this.props.general.token == null || this.props.general.token == "") {
         this.props.getSiteToken();
@@ -574,57 +546,6 @@ class Mobile extends Component {
                 </Switch>
               </MobileLayout>
             </Router>
-            {(() => {
-              const matchingPath =
-                this.props.location.pathname === "/" ||
-                this.props.location.pathname === "/main/home";
-              if (
-                config.features.PopupAnnouncement &&
-                this.props.ui.mains &&
-                this.props.ui.mains.length > 0 &&
-                matchingPath
-              ) {
-                var row = this.props.ui.mains[0];
-
-                return (
-                  <PopupAnnouncement
-                    open={this.state.openAnnouncement}
-                    onClose={() => {
-                      this.setState({
-                        ...this.state,
-                        openAnnouncement: false,
-                        showPromotion: true,
-                      });
-                    }}
-                    text={
-                      row.localization !== null && row.localization.content
-                        ? row.localization.content
-                        : row.content
-                    }
-                    header={
-                      row.localization !== null && row.localization.subject
-                        ? row.localization.subject
-                        : row.subject
-                    }
-                  ></PopupAnnouncement>
-                );
-              }
-            })()}
-
-            {config.features.PopupPromotion &&
-              this.props.general.promotionList.items.length > 0 && (
-                <PopupAnnouncement
-                  open={this.state.showPromotion}
-                  type="promo"
-                  onClose={() => {
-                    if (document.getElementById("audio") != null)
-                      document.getElementById("audio").play();
-                    this.setState({ ...this.state, showPromotion: false });
-                  }}
-                  content={this.props.general.promotionList.items}
-                  header={i18n.t("promotion.title")}
-                ></PopupAnnouncement>
-              )}
 
             {(() => {
               if (
@@ -668,7 +589,8 @@ class Mobile extends Component {
             {/*  handleClose={this.handleClosePopup}*/}
             {/*  handleClickUrl={this.handleClickUrl}*/}
             {/*/>*/}
-            <PopupAnnouncement />
+            {config.features.PopupAnnouncement && <PopupAnnouncement />}
+            {config.features.PopupPromotion && <PopupPromotion />}
             <PopupAlertModal />
           </AuthContextProvider>
         </>
