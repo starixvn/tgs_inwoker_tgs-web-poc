@@ -7,6 +7,7 @@ import { useLoginForm } from "@/hooks/auth/useAuthForm/useLoginForm";
 import RedirectToRegisterHint from "@/components/Mobile/pages/Login/components/RedirectToRegisterHint";
 import i18n from "@/utils/i18n";
 import Checkbox from "@/components/Mobile/components/UI/Checkbox";
+import Button from "@/components/Mobile/components/UI/Button";
 
 const theme = themeList["mobileT18"];
 
@@ -72,8 +73,13 @@ type Props = {
 };
 
 const LoginDialog = ({ isOpen, handleCloseDialog }: Props) => {
-  const { formInputConfigList, formik, isLoading, buttonText } = useLoginForm();
-  const [needToRemember, setNeedToRemember] = useState(false);
+  const {
+    formInputConfigList,
+    formik,
+    isLoading,
+    needToRemember,
+    handleClickNeedToRemember,
+  } = useLoginForm();
 
   return (
     <Dialog isOpen={isOpen} handleCloseDialog={handleCloseDialog}>
@@ -87,13 +93,13 @@ const LoginDialog = ({ isOpen, handleCloseDialog }: Props) => {
           formInputList={formInputConfigList}
           formik={formik}
           isLoading={isLoading}
-          buttonText={buttonText}
+          buttonText={i18n.t("common.login")}
         >
           <FormSubContainer>
             <RememberMeContainer>
               <Checkbox
                 value={needToRemember}
-                onChange={() => setNeedToRemember((prevState) => !prevState)}
+                onChange={handleClickNeedToRemember}
                 style={{
                   padding: "0px 5px 0px",
                 }}
