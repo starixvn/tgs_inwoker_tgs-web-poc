@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import config from "@/config/config";
-import IMHandler from "@/components/Wap/components/Main/Support/IMHandler";
+// import IMHandler from "@/components/Wap/components/Main/Support/IMHandler";
 import { BrandsSupport } from "@/types/general";
 import styled from "styled-components";
 import { themeList } from "@/theme";
@@ -49,7 +49,7 @@ const Support = ({
     if (brandsSupport.qrcodeurl) {
       setSelectedBrandsSupport(brandsSupport);
     } else {
-      IMHandler(brandsSupport.type, brandsSupport.phone);
+      // IMHandler(brandsSupport.type, brandsSupport.phone); // TODO: IMHandler
     }
   };
 
