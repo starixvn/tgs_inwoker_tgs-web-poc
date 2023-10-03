@@ -1,13 +1,11 @@
-import { Promotion } from 'src/models/dto/general/GetPromotionListResDto'
+import { Promotion } from "src/models/dto/general/GetPromotionListResDto";
 export interface GeneralState {
   banner: any[];
   brand: {
     hasInvitationCode: boolean;
     loadingUrl: string;
   };
-  brandLanguage: {
-    culturecode: string;
-  }[];
+  brandLanguage: BrandLanguage[];
   brandsSupport: BrandsSupport[];
   haveAffiliate: boolean;
   isIPRestrict: boolean;
@@ -35,4 +33,8 @@ export interface BrandsSupport {
   phone: string | null;
   qrcodeurl: string | null;
   type: string;
+}
+
+export interface BrandLanguage {
+  culturecode: string;
 }

@@ -6,6 +6,7 @@ import cardBonus from "@/assets/images/header/card_bonus.png";
 import cardVip from "@/assets/images/header/card_vip.png";
 import cardPromotions from "@/assets/images/header/card_promotions.png";
 import { AppHistory } from "@/history/History";
+import LanguageSwitch from "@/components/Mobile/components/LanguageSwitch";
 
 const CustomDrawer = styled(Drawer)`
   height: calc(100% - 70px);
@@ -40,13 +41,13 @@ type Props = {
 const MenuDrawer = ({ isOpen, handleClose }: Props) => {
   const handleEnterVip = () => {
     AppHistory.push("/vip");
-    handleClose()
-  }
+    handleClose();
+  };
 
   const handleEnterBettingBonus = () => {
     AppHistory.push("/betting-bonus");
-    handleClose()
-  }
+    handleClose();
+  };
 
   return (
     <CustomDrawer anchor={"left"} open={isOpen} onClose={handleClose}>
@@ -61,6 +62,8 @@ const MenuDrawer = ({ isOpen, handleClose }: Props) => {
       <DrawerCard>
         <img src={cardPromotions} alt={"promotions"} />
       </DrawerCard>
+
+      <LanguageSwitch />
     </CustomDrawer>
   );
 };
