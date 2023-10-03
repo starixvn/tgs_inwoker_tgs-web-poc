@@ -1,4 +1,4 @@
-class Vip {
+export class VipData {
   birthBenefit: number = 0;
   cardGameRebate: number = 0;
   level: number = 0;
@@ -16,7 +16,7 @@ class Vip {
 }
 
 class DataDto {
-  items: Vip[] = [];
+  items: VipData[] = [];
   totalCount: number = 0;
 }
 
