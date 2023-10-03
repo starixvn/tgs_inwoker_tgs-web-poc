@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import MenuButton from "@/components/Mobile/components/Header/MenuButton";
-import { useHistory } from "react-router";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import AnonymousHeaderContent from "@/components/Mobile/components/Header/AnonymousHeaderContent";
 import AccountHeaderContent from "@/components/Mobile/components/Header/AccountHeaderContent";
+import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 
 const HeaderContainer = styled.div`
   position: fixed;
@@ -22,15 +23,29 @@ const HeaderWrapper = styled.div`
   padding: 10px 17px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
+`;
+
+const LogoImgContainer = styled.div`
+  height: 33px;
+  justify-self: start;
+  padding: 0 10px;
+
+  & > img {
+    height: 100%;
+  }
+`;
+
+const HeaderContentContainer = styled.div`
+  flex-grow: 1;
+  display: flex;
+  justify-content: end;
 `;
 
 type Props = {};
 const Header = (props: Props) => {
-  const history = useHistory();
-
+  const { general } = useGeneralStore();
   const { account } = useAccountStore();
-
   const noLoginAccount = account.token !== account.info.token;
 
   return (
@@ -38,9 +53,19 @@ const Header = (props: Props) => {
       <HeaderWrapper>
         <MenuButton />
 
-        <h3>Logo</h3>
+        <Link to={"/"}>
+          <LogoImgContainer>
+            <img src={general.brand && general.brand.loadingUrl} alt={"logo"} />
+          </LogoImgContainer>
+        </Link>
 
-        {noLoginAccount ? <AnonymousHeaderContent /> : <AccountHeaderContent />}
+        <HeaderContentContainer>
+          {noLoginAccount ? (
+            <AnonymousHeaderContent />
+          ) : (
+            <AccountHeaderContent />
+          )}
+        </HeaderContentContainer>
       </HeaderWrapper>
     </HeaderContainer>
   );

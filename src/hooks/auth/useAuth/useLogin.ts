@@ -128,7 +128,6 @@ export function useLogin() {
         await Promise.all(promiseList);
       }
 
-      console.log(needToRemember);
       if (needToRemember) {
         localStorage.setItem("remember", "true");
         localStorage.setItem("username", `${username}`);
