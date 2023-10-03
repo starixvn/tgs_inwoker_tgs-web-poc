@@ -1,3 +1,4 @@
+import { GameTypeEnum } from "@/api-services/utils/Enum";
 import banner from "@/assets/images/home/mobile/banner_1.png";
 import dislikeIcon from "@/assets/images/home/mobile/dislike.png";
 import likeIcon from "@/assets/images/home/mobile/like.png";
@@ -11,9 +12,11 @@ import SocialMedia from "@/components/Mobile/components/SocialMedia";
 import Tab from "@/components/Mobile/components/Tab";
 import TabPanel from "@/components/Mobile/components/TabPanel";
 import Tag from "@/components/Mobile/components/Tag";
+import config from "@/config/config";
 import { useGameStore } from "@/hooks/stores/useGameStore";
+import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import Common from "@/utils/Common";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { badgeList, gamesList } from "../constants/games";
@@ -108,6 +111,32 @@ const Main = (props: Props) => {
   const [searchString, setSearchString] = useState("");
   const history = useHistory();
   const { game } = useGameStore();
+  const { general } = useGeneralStore();
+  const [state, setState] = useState({
+    value: 0,
+    marqueeText: [],
+    banner_list: [],
+    gameTypeListSorting: [],
+    downloadButton: true,
+    anchorEl: false,
+    selectedGameType: 0,
+    tab1: {
+      limit: 10,
+      page: 0,
+      totalPage: 0,
+      list: [],
+      verifyList: [],
+    },
+    tab2: {
+      limit: 10,
+      page: 0,
+      totalPage: 0,
+      list: [],
+    },
+    loading: true,
+  });
+
+  const scrollRef = useRef(null);
 
   const handleClick = (item: string) => {
     setActiveGameTypeTab(item);
@@ -118,48 +147,43 @@ const Main = (props: Props) => {
     setSearchString(value);
   };
 
+  const gameTypeListSorting = state.gameTypeListSorting;
+
   const getDisplayedGameList = (homePageGameList) => {
     const displayGameType = Common.GetDisplayGameType();
-    console.log("homePageGameList", homePageGameList)
 
-    // return homePageGameList
-    //   .filter(
-    //     (a) =>
-    //       (displayGameType.indexOf(a.type) >= 0 &&
-    //         a.type !== GameTypeEnum.RNGSPORTS) ||
-    //       (a.type === GameTypeEnum.RNGSPORTS && a.abbreviation === "PPTF")
-    //   )
-    //   .sort((a, b) => {
-    //     if (config.features.LiveGame_Sorting_SKY) {
-    //       var sortDGFirst = ["DG"];
-    //       return (
-    //         sortDGFirst.indexOf(b.abbreviation) -
-    //         sortDGFirst.indexOf(a.abbreviation)
-    //       );
-    //     } else return b - a;
-    //   })
-    //   .sort((a, b) => {
-    //     return (
-    //       gameTypeListSorting.indexOf(a.type) -
-    //       gameTypeListSorting.indexOf(b.type)
-    //     );
-    //   });
+    return homePageGameList
+      .filter(
+        (a: { type: number; abbreviation: string; }) =>
+          (displayGameType.indexOf(a.type) >= 0 &&
+            a.type !== GameTypeEnum.RNGSPORTS) ||
+          (a.type === GameTypeEnum.RNGSPORTS && a.abbreviation === "PPTF")
+      )
+      .sort((a: { abbreviation: string, type: number }, b: { abbreviation: string, type: number }) => {
+        if (typeof config !== 'undefined' && config.features.LiveGame_Sorting_SKY) {
+          var sortDGFirst = ["DG"];
+          return (
+            sortDGFirst.indexOf(b.abbreviation) -
+            sortDGFirst.indexOf(a.abbreviation)
+          );
+        } else return b.type - a.type;
+      })
+      .sort((a: { type: any; }, b: { type: any; }) => {
+        return (
+          gameTypeListSorting.indexOf(a.type) -
+          gameTypeListSorting.indexOf(b.type)
+        );
+      });
   };
-
-  // useEffect(() => {
-  //   const displayGameType = Common.GetDisplayGameType();
-  //   console.log("displayGameType", displayGameType)
-  // }, []);
 
   const displayedGameList = getDisplayedGameList(
     game.homePageGameList
   );
 
-  console.log("displayedGameList", displayedGameList)
-
   return (
     <MainWrapper>
-      <Slider />
+      {general.banner.length && <Slider />}
+
       <CardPrompt />
 
       <TabContainer>
