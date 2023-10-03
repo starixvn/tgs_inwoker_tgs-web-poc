@@ -9,34 +9,41 @@ const type3 = "type3";
 const type5 = "type5";
 
 const iconBaseWidthHeight = 70;
+interface LevelIconContainerProps {
+  readonly width: string;
+  readonly img: string;
+}
 
-const LevelIconContainer = styled.div`
-  width: ${iconBaseWidthHeight}px;
-  height: ${iconBaseWidthHeight}px;
+interface LevelTextProps {
+  readonly levelType: string;
+  readonly scale: number;
+}
+
+const LevelIconContainer = styled.div<LevelIconContainerProps>`
+  width: ${props => props.width};
+  height: ${props => props.width};
   position: relative;
-  transform: ${({ scale }: { scale: number }) => `scale(${scale})`};
-  transform-origin: center;
   overflow: visible;
+  background-image: url(${props => props.img});
+  background-size: cover;
+  background-position: center center;
 `;
-const ImageIconWrapper = styled.div`
-  width: ${iconBaseWidthHeight}px;
-  height: ${iconBaseWidthHeight}px;
-`;
-const LevelText = styled.div`
+
+const LevelText = styled.div<LevelTextProps>`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: ${({ levelType }: { levelType: string }) => {
     switch (levelType) {
       case type1:
-        return `translateX(-60%) translateY(-70%);`;
+        return `translateX(-60%) translateY(-70%)`;
       case type3:
-        return `translateX(-60%) translateY(-60%);`;
+        return `translateX(-60%) translateY(-60%)`;
       case type5:
-        return `translateX(-60%) translateY(-50%);`;
+        return `translateX(-60%) translateY(-50%)`;
     }
-  }};
-  font-style: italic;
+  }}
+  scale(${({ scale }: { scale: number }) => scale});
   color: #ffffff;
   font-size: 1.2rem;
   text-stroke: 2px #e5c0a2;
@@ -46,6 +53,7 @@ const CurrentLevelTagWrapper = styled.div`
   width: ${iconBaseWidthHeight}px;
   position: absolute;
   top: 5px;
+  left: -8px;
 `;
 
 const levelTypeMap: {
@@ -87,11 +95,11 @@ const LevelIcon = ({
 
   return (
     <>
-      <LevelIconContainer scale={scale}>
-        <ImageIconWrapper>
-          <img src={levelIcon} width={"100%"} height={"100%"} />
-        </ImageIconWrapper>
-        <LevelText levelType={levelType}>{level}</LevelText>
+      <LevelIconContainer width={width} img={levelIcon}>
+        {/* <ImageIconWrapper img={levelIcon}> */}
+          {/* <img src={levelIcon} width={"100%"} height={"100%"} /> */}
+        {/* </ImageIconWrapper> */}
+        <LevelText scale={scale} levelType={levelType}>{level}</LevelText>
       </LevelIconContainer>
       {isCurrentLevel && (
         <CurrentLevelTagWrapper>

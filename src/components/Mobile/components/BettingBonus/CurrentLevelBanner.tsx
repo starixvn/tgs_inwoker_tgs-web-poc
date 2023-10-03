@@ -16,8 +16,8 @@ const CurrentLevelBannerContainer = styled.div`
 `;
 const LevelIconContainer = styled.div`
   position: absolute;
-  top: 131px;
-  left: 31px;
+  top: 120px;
+  left: 15px;
   transform: translateY(-50%);
   width: 100px;
   height: 100px;
