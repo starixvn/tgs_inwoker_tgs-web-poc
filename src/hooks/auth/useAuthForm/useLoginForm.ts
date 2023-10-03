@@ -2,12 +2,9 @@ import { useCallback, useMemo, useState } from "react";
 import * as Yup from "yup";
 import i18n from "@/utils/i18n";
 import { FormikValues, useFormik } from "formik";
-import {
-  FormikFormInput,
-  FormInputTypeEnum,
-} from "@/components/Mobile/components/FormikForm";
-import config from "@/config/config";
+import { FormikFormInput } from "@/components/Mobile/components/FormikForm";
 import { useAuth } from "@/hooks/auth/useAuth";
+import { FormInputTypeEnum } from "@/components/Mobile/components/FormikForm/FormInputFactory";
 
 export function useLoginForm() {
   // ===== init form input config =====

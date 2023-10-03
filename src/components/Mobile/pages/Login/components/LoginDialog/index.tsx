@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
 import { themeList } from "@/theme";
 import FormikForm from "@/components/Mobile/components/FormikForm";
-import { useLoginForm } from "@/hooks/auth/useLoginForm";
+import { useLoginForm } from "@/hooks/auth/useAuthForm/useLoginForm";
 import RedirectToRegisterHint from "@/components/Mobile/pages/Login/components/RedirectToRegisterHint";
 import i18n from "@/utils/i18n";
 import Checkbox from "@/components/Mobile/components/UI/Checkbox";

@@ -5,7 +5,7 @@ import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
 import { themeList } from "@/theme";
 import i18n from "@/utils/i18n";
 import RedirectToLoginHint from "@/components/Mobile/pages/Register/components/RedirectToLoginHint";
-import { useRegisterForm } from "@/hooks/auth/useRegisterForm";
+import { useRegisterForm } from "@/hooks/auth/useAuthForm/useRegisterForm";
 import FormikForm from "@/components/Mobile/components/FormikForm";
 
 const theme = themeList["mobileT18"];

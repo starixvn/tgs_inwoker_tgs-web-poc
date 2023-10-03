@@ -2,11 +2,9 @@ import { useCallback, useMemo, useState } from "react";
 import * as Yup from "yup";
 import i18n from "@/utils/i18n";
 import { FormikValues, useFormik } from "formik";
-import {
-  FormikFormInput,
-  FormInputTypeEnum,
-} from "@/components/Mobile/components/FormikForm";
+import { FormikFormInput } from "@/components/Mobile/components/FormikForm";
 import config from "@/config/config";
+import { FormInputTypeEnum } from "@/components/Mobile/components/FormikForm/FormInputFactory";
 
 export function useRegisterForm() {
   // ===== init form input config =====
@@ -45,13 +43,13 @@ export function useRegisterForm() {
           .oneOf([Yup.ref("password"), null], "Passwords must match"),
       },
       (() => {
-        if (!config.features.Register_ShowPhone) return;
+        if (config.features.Register_ShowPhone) return;
 
         return {
           label: i18n.t("forgotPassword.plsEnterPhoneNumber"),
           name: "phone",
           initialValue: "",
-          type: FormInputTypeEnum.TEXT,
+          type: FormInputTypeEnum.PHONE,
           validationSchema: Yup.string()
             .required("Phone is required")
             .matches(
@@ -94,6 +92,7 @@ export function useRegisterForm() {
       },
     ].filter((item) => !!item) as FormikFormInput[];
   }, []);
+
   const { initialValues, validationSchemaSpec } = useMemo(() => {
     const initialValues: FormikValues = {};
     const validationSchemaSpec: { [key in string]: any } = {};
