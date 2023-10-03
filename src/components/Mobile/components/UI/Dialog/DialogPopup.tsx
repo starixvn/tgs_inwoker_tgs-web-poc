@@ -8,7 +8,7 @@ import styled from "styled-components";
 const theme = themeList["mobileT18"];
 
 interface DialogContainerType {
-  bgUrl?: string;
+  bgurl?: string;
 }
 interface ChildContainerType {
   type?: string;
@@ -16,8 +16,10 @@ interface ChildContainerType {
 
 const DialogContainer = styled(MuiDialog)<DialogContainerType>`
   & .MuiPaper-root {
-    background: ${theme.primaryLight};
-    background: url(${(props) => props.bgUrl}) no-repeat center center;
+    background: ${(props) =>
+      props.bgurl
+        ? `url(${props.bgurl}) no-repeat center center`
+        : theme.primaryLight};
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,7 +50,7 @@ type Props = {
   handleCloseDialog: () => void;
   children: React.ReactElement;
   type?: string;
-  bgUrl?: string;
+  bgurl?: string;
 };
 
 const DialogPopup = ({
@@ -56,14 +58,14 @@ const DialogPopup = ({
   handleCloseDialog,
   children,
   type,
-  bgUrl,
+  bgurl,
 }: Props) => {
   return (
     <>
       <DialogContainer
         open={isOpen}
         TransitionComponent={UpTransition}
-        bgUrl={bgUrl}
+        bgurl={bgurl}
       >
         <ChildContainer type={type}>{children}</ChildContainer>
         <CloseIconContainer>
