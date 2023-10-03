@@ -1,6 +1,7 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import i18n from "@/utils/i18n";
 
 const CreateAccountContainer = styled.div`
   color: white;
@@ -11,7 +12,7 @@ const CreateAccountContainer = styled.div`
   display: flex;
   align-items: center;
 
-  .login {
+  .link {
     color: #5d50e0;
     margin-left: 8px;
   }
@@ -19,18 +20,12 @@ const CreateAccountContainer = styled.div`
 
 type Props = {};
 const RedirectToLoginHint = (props: Props) => {
-  const history = useHistory();
-
-  const handleRedirectToLogin = useCallback(() => {
-    history.push("/login");
-  }, []);
-
   return (
     <CreateAccountContainer>
-      <span>Already Have An Account?</span>
-      <span className={"login"} onClick={handleRedirectToLogin}>
-        Login
-      </span>
+      <span>{i18n.t("T13.proceedLogin")}</span>
+      <Link to={"/login"} className={"link"}>
+        {i18n.t("common.login")}
+      </Link>
     </CreateAccountContainer>
   );
 };

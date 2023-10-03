@@ -1,14 +1,18 @@
-import { useCallback, useMemo, useState } from "react";
-import * as Yup from "yup";
+import { useMemo } from "react";
+import { FormikFormInput } from "@/components/Mobile/components/FormikForm";
 import i18n from "@/utils/i18n";
+import { FormInputTypeEnum } from "@/components/Mobile/components/FormikForm/FormInputFactory";
+import * as Yup from "yup";
 import { FormikValues, useFormik } from "formik";
-import {
-  FormikFormInput,
-  FormInputTypeEnum,
-} from "@/components/Mobile/components/FormikForm";
+import { useFormikInitValue } from "@/hooks/auth/useAuthForm/hooks/useFormikInitValue";
 import config from "@/config/config";
+import { UserTypeEnum } from "@/hooks/auth/useAuthForm/useRegisterForm";
 
-export function useRegisterForm() {
+type Props = {
+  handleClickRegister: (values: FormikValues) => Promise<void>;
+};
+
+export function useGenerateRegisterFormik({ handleClickRegister }: Props) {
   // ===== init form input config =====
   const formInputConfigList = useMemo<FormikFormInput[]>(() => {
     return [
@@ -51,7 +55,7 @@ export function useRegisterForm() {
           label: i18n.t("forgotPassword.plsEnterPhoneNumber"),
           name: "phone",
           initialValue: "",
-          type: FormInputTypeEnum.TEXT,
+          type: FormInputTypeEnum.PHONE,
           validationSchema: Yup.string()
             .required("Phone is required")
             .matches(
@@ -65,6 +69,15 @@ export function useRegisterForm() {
                   ),
               }
             ),
+        };
+      })(),
+      (() => {
+        if (!config.features.Register_ShowPhone) return;
+        return {
+          label: "",
+          name: "areaCode",
+          initialValue: config.features.PhonePrefix,
+          type: FormInputTypeEnum.AREA_CODE,
         };
       })(),
       (() => {
@@ -89,58 +102,20 @@ export function useRegisterForm() {
         label: i18n.t("wap.register.promoteCode"),
         name: "promoteCode",
         initialValue: "",
-        type: FormInputTypeEnum.TEXT,
-        validationSchema: Yup.string(),
+        type: FormInputTypeEnum.PROMOTION_CODE,
+      },
+      {
+        label: i18n.t("wap.register.promoteCode"),
+        name: "userType",
+        initialValue: UserTypeEnum.PLAYER,
+        type: FormInputTypeEnum.USER_TYPE,
       },
     ].filter((item) => !!item) as FormikFormInput[];
   }, []);
-  const { initialValues, validationSchemaSpec } = useMemo(() => {
-    const initialValues: FormikValues = {};
-    const validationSchemaSpec: { [key in string]: any } = {};
 
-    formInputConfigList.forEach((registerInput) => {
-      const { name, initialValue, validationSchema } = registerInput;
-      initialValues[name] = initialValue;
-      validationSchemaSpec[name] = validationSchema;
-    });
-    return {
-      initialValues,
-      validationSchemaSpec,
-    };
-  }, [formInputConfigList]);
-
-  // ===== handle click register =====
-  const [isLoading, setIsLoading] = useState(false);
-  const handleClickRegister = useCallback(async (values: FormikValues) => {
-    console.log(values);
-  }, []);
-
-  // ===== promotion =====
-  const [promotionData, setPromotionData] = useState({
-    withPromo: !(
-      config.affiliateId === "" &&
-      localStorage.getItem("promotionId") === "" &&
-      !localStorage.getItem("promotionId")
-    ),
-    promoId:
-      config.affiliateId !== ""
-        ? config.affiliateId
-        : localStorage.getItem("promotionId"),
-    promotionChannelId: localStorage.getItem("promotionChannelId"),
-    //TGS-357
-    upper: localStorage.getItem("upper"),
-    promoteType:
-      localStorage.getItem("invitationtype") === ""
-        ? "a"
-        : localStorage.getItem("invitationtype"),
-    prefill: !!(
-      localStorage.getItem("upper") ||
-      localStorage.getItem("promotionId") ||
-      localStorage.getItem("invitationtype") !== ""
-    ),
-    fromCustomDomain: false,
-    email: "",
-  });
+  const { getFormikInitValue } = useFormikInitValue();
+  const { initialValues, validationSchemaSpec } =
+    getFormikInitValue(formInputConfigList);
 
   // ===== formik =====
   const formik = useFormik({
@@ -151,11 +126,8 @@ export function useRegisterForm() {
     },
   });
 
-  const buttonText = i18n.t("common.register");
   return {
     formInputConfigList,
     formik,
-    isLoading,
-    buttonText,
   };
 }

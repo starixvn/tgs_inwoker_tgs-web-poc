@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { TextField as MuiTextField, TextFieldProps } from "@material-ui/core";
+import { themeList } from "@/theme";
+
+const theme = themeList["mobileT18"];
 
 const StyledTextField = styled(MuiTextField)`
   overflow: visible;
@@ -24,3 +27,9 @@ const TextField = (props: Props) => {
 };
 
 export default TextField;
+
+export const GrayInputWrapper = styled.div`
+  border-radius: 8px;
+  background: ${theme.tertiaryDark};
+  overflow: visible;
+`;

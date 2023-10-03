@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { generalAction } from "../../api-services/actions/generalAction";
 import Common from "../../utils/Common";
 import { AppHistory } from "../../history/History";
-import { withSnackbar } from "notistack";
 import IMHandler from "./IMHandler";
 const MaintenanceBg = styled.div`
   z-index: 10;
@@ -285,7 +284,4 @@ const mapDispatchToProps = (dispatch) => {
     getLiveChatURL: () => dispatch(generalAction.getLiveChatURL()),
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withSnackbar(MaintenanceMobile));
+export default connect(mapStateToProps, mapDispatchToProps)(MaintenanceMobile);

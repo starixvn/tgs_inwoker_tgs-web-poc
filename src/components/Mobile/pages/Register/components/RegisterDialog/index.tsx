@@ -1,10 +1,12 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import Checkbox from "@/components/Mobile/components/UI/Checkbox";
 import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
 import { themeList } from "@/theme";
+import i18n from "@/utils/i18n";
+import RedirectToLoginHint from "@/components/Mobile/pages/Register/components/RedirectToLoginHint";
+import { useRegisterForm } from "@/hooks/auth/useAuthForm/useRegisterForm";
 import FormikForm from "@/components/Mobile/components/FormikForm";
-import { useLoginForm } from "@/hooks/auth/useLoginForm";
-import RedirectToRegisterHint from "@/components/Mobile/pages/Login/LoginDialog/RedirectToRegisterHint";
 
 const theme = themeList["mobileT18"];
 
@@ -25,28 +27,13 @@ const TitleContainer = styled.div`
   }
 `;
 
-const ForgotPasswordContainer = styled.a`
-  color: #5d50e0;
-  font-size: 1.062rem;
-  font-weight: 400;
-  line-height: 1.245;
-  align-self: baseline;
-  margin-bottom: 18px;
-`;
-
-const CreateAccountContainer = styled.div`
+const VerifyAgeContainer = styled.div`
+  width: 100%;
   color: white;
-  font-size: 1.062rem;
-  font-weight: 400;
-  line-height: 1.245;
-  align-self: baseline;
+  font-size: 0.937rem;
+  margin: 8px 0;
   display: flex;
-  align-items: center;
-
-  & .register {
-    color: #5d50e0;
-    margin-left: 12px;
-  }
+  align-items: start;
 `;
 
 type Props = {
@@ -54,14 +41,20 @@ type Props = {
   handleCloseDialog: () => void;
 };
 
-const LoginDialog = ({ isOpen, handleCloseDialog }: Props) => {
-  const { formInputConfigList, formik, isLoading, buttonText } = useLoginForm();
+const RegisterDialog = ({ isOpen, handleCloseDialog }: Props) => {
+  const {
+    formInputConfigList,
+    formik,
+    isLoading,
+    isConfirmedAdult,
+    handleClickConfirmAdult,
+  } = useRegisterForm();
 
   return (
     <Dialog isOpen={isOpen} handleCloseDialog={handleCloseDialog}>
       <>
         <TitleContainer>
-          LOGIN
+          {i18n.t("common.register")}
           <div className="bottom-border" />
         </TitleContainer>
 
@@ -69,15 +62,21 @@ const LoginDialog = ({ isOpen, handleCloseDialog }: Props) => {
           formInputList={formInputConfigList}
           formik={formik}
           isLoading={isLoading}
-          buttonText={buttonText}
+          buttonText={i18n.t("common.register")}
         >
-          <ForgotPasswordContainer>Forgot Password?</ForgotPasswordContainer>
+          <VerifyAgeContainer>
+            <Checkbox
+              value={isConfirmedAdult}
+              onClick={handleClickConfirmAdult}
+            />
+            {i18n.t("web.register.contract")}
+          </VerifyAgeContainer>
         </FormikForm>
 
-        <RedirectToRegisterHint />
+        <RedirectToLoginHint />
       </>
     </Dialog>
   );
 };
 
-export default React.memo(LoginDialog);
+export default React.memo(RegisterDialog);

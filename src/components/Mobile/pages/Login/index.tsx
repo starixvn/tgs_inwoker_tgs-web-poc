@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import LoginDialog from "@/components/Mobile/pages/Login/LoginDialog";
+import LoginDialog from "@/components/Mobile/pages/Login/components/LoginDialog";
 
 type Props = {};
 const Inbox = (props: Props) => {

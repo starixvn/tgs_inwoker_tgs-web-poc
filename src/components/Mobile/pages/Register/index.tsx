@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import RegisterDialog from "@/components/Mobile/pages/Register/RegisterDialog";
+import RegisterDialog from "@/components/Mobile/pages/Register/components/RegisterDialog";
 
 type Props = {};
 const Inbox = (props: Props) => {
