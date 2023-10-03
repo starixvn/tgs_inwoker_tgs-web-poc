@@ -7,9 +7,17 @@ import styled from "styled-components";
 
 const theme = themeList["mobileT18"];
 
-const DialogContainer = styled(MuiDialog)`
+interface DialogContainerType {
+  bgUrl?: string;
+}
+interface ChildContainerType {
+  type?: string;
+}
+
+const DialogContainer = styled(MuiDialog)<DialogContainerType>`
   & .MuiPaper-root {
     background: ${theme.primaryLight};
+    background: url(${(props) => props.bgUrl}) no-repeat center center;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,38 +36,36 @@ const CloseIconContainer = styled.div`
   align-items: center;
 `;
 
-const ChildContainer = styled.div`
+const ChildContainer = styled.div<ChildContainerType>`
   width: 100%;
-  height: auto;
+  height: ${(props) =>
+    props.type === "announcement" ? "calc(100% - 60px)" : "auto"}};
   overflow: scroll;
-`;
-
-const DontShowAgainHint = styled.div`
-  background: ${theme.primaryLight};
-  width: 171px;
-  height: 38px;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  top: calc(50% + 149px);
-  z-index: 99;
-  color: #ffffff;
-  border-radius: 50px;
-  text-align: center;
 `;
 
 type Props = {
   isOpen: boolean;
   handleCloseDialog: () => void;
   children: React.ReactElement;
+  type?: string;
+  bgUrl?: string;
 };
 
-const DialogPopup = ({ isOpen, handleCloseDialog, children }: Props) => {
+const DialogPopup = ({
+  isOpen,
+  handleCloseDialog,
+  children,
+  type,
+  bgUrl,
+}: Props) => {
   return (
     <>
-      <DialogContainer open={isOpen} TransitionComponent={UpTransition}>
+      <DialogContainer
+        open={isOpen}
+        TransitionComponent={UpTransition}
+        bgUrl={bgUrl}
+      >
+        <ChildContainer type={type}>{children}</ChildContainer>
         <CloseIconContainer>
           <CloseIcon
             onClick={handleCloseDialog}
@@ -69,11 +75,6 @@ const DialogPopup = ({ isOpen, handleCloseDialog, children }: Props) => {
             }}
           />
         </CloseIconContainer>
-        <ChildContainer>{children}</ChildContainer>
-        {/* TODO: handle later */}
-        {/* <DontShowAgainHint>
-                  Don't show again
-              </DontShowAgainHint> */}
       </DialogContainer>
     </>
   );
