@@ -1,6 +1,7 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import i18n from "@/utils/i18n";
 
 const CreateAccountContainer = styled.div`
   color: white;
@@ -11,7 +12,7 @@ const CreateAccountContainer = styled.div`
   display: flex;
   align-items: center;
 
-  .login {
+  .link {
     color: #5d50e0;
     margin-left: 8px;
   }
@@ -19,18 +20,12 @@ const CreateAccountContainer = styled.div`
 
 type Props = {};
 const RedirectToRegisterHint = (props: Props) => {
-  const history = useHistory();
-
-  const handleRedirectToRegister = useCallback(() => {
-    history.push("/register");
-  }, []);
-
   return (
     <CreateAccountContainer>
-      <span>Don't have an account?</span>
-      <span className="register" onClick={handleRedirectToRegister}>
-        Create Account
-      </span>
+      <span>{i18n.t("T13.proceedRegister")}</span>
+      <Link to={"/register"} className="link">
+        {i18n.t("common.register")}
+      </Link>
     </CreateAccountContainer>
   );
 };

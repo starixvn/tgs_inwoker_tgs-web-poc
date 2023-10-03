@@ -1,5 +1,7 @@
 import React from "react";
-import TextField from "@/components/Mobile/components/UI/TextField";
+import TextField, {
+  GrayInputWrapper,
+} from "@/components/Mobile/components/UI/TextField";
 import Button from "@/components/Mobile/components/UI/Button";
 import * as Yup from "yup";
 import styled from "styled-components";
@@ -70,28 +72,28 @@ const FormikForm = ({
           type === FormInputTypeEnum.PASSWORD ? "password" : "text";
 
         return (
-          <TextField
-            key={name}
-            type={inputType}
-            label={label}
-            variant={"outlined"}
-            fullWidth
-            name={name}
-            value={formik.values[name]}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            style={{ marginBottom: "21px" }}
-            helperText={
-              showErrorOn === "input" &&
-              formik.touched[name] &&
-              formik.errors[name]
-            }
-            error={
-              showErrorOn === "input" &&
-              !!formik.touched[name] &&
-              !!formik.errors[name]
-            }
-          />
+          <GrayInputWrapper key={name} style={{ marginBottom: "21px" }}>
+            <TextField
+              type={inputType}
+              label={label}
+              variant={"outlined"}
+              fullWidth
+              name={name}
+              value={formik.values[name]}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              helperText={
+                showErrorOn === "input" &&
+                formik.touched[name] &&
+                formik.errors[name]
+              }
+              error={
+                showErrorOn === "input" &&
+                !!formik.touched[name] &&
+                !!formik.errors[name]
+              }
+            />
+          </GrayInputWrapper>
         );
       })}
 
