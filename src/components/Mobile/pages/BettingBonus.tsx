@@ -2,6 +2,7 @@ import CurrentLevelBanner from "@/components/Mobile/components/BettingBonus/Curr
 import LevelTable from "@/components/Mobile/components/BettingBonus/LevelTable";
 import styled from "styled-components";
 import useVipStore, { VipData as TypeVipData } from "../hooks/useVipStore";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
 
 const Container = styled.div`
   padding: 20px 10px;
@@ -37,8 +38,9 @@ export interface TypeProductRebateByLevel {
 
 const BettingBonus = () => {
   const { vipData, isLoading } = useVipStore();
+  const accountStore = useAccountStore();
+  const currentLevel = accountStore.account.info.member_level_id;
 
-  const currentLevel = 3; // TODO: 待確認VIP level
   const productList = Object.keys(productColumnNameMap);
   const productRebateByLevel: TypeProductRebateByLevel[] = productList.map(
     (product) => {
