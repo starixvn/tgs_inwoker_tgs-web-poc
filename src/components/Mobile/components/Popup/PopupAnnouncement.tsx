@@ -103,7 +103,7 @@ const PopupAnnouncement = () => {
       isOpen={open}
       handleCloseDialog={handleCloseDialog}
       type="announcement"
-      bgurl={dialogBgUrl}
+      style={{ background: `url(${dialogBgUrl}) no-repeat center center` }}
     >
       <>
         <Carousel>

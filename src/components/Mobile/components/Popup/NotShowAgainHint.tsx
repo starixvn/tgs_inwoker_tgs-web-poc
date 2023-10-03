@@ -35,12 +35,14 @@ const CheckBox = styled.div<{ isCheck: boolean }>`
 const NotShowAgainHint = ({
   onClick,
   isCheck,
+  ...others
 }: {
   onClick: () => void;
   isCheck: boolean;
+  style?: React.CSSProperties;
 }) => {
   return (
-    <NotShowAgainHintContainer onClick={onClick}>
+    <NotShowAgainHintContainer onClick={onClick} {...others}>
       <CheckBox isCheck={isCheck} />
       Don't show again
     </NotShowAgainHintContainer>
