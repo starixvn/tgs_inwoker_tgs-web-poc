@@ -15,6 +15,7 @@ const dialogBgUrl =
 const doNotShowAnnouncementDialogKey = "doNotShowAnnouncementDialog";
 
 const DialogContainer = styled(MuiDialog)`
+  position: relative;
   & .MuiPaper-root {
     background: url(${dialogBgUrl}) no-repeat center center !important;
     display: flex;
@@ -29,7 +30,7 @@ const DialogContainer = styled(MuiDialog)`
 
 const ChildContainer = styled.div`
   width: 100%;
-  height: auto;
+  height: calc(283px - 20px - 20px);
   overflow: scroll;
 `;
 
@@ -74,6 +75,8 @@ const Button = styled.div`
 
 const AnnouncementCardContainer = styled.div`
   padding: 20px;
+  height: calc(283px - 52px - 20px - 20px);
+  overflow: scroll;
 `;
 
 const AnnouncementCard = ({
@@ -144,15 +147,15 @@ const PopupAnnouncement = ({
         </Carousel>
         <Button onClick={handleCloseDialog}>Got It!</Button>
         <NotShowAgainHint onClick={handleClickCheckbox} isCheck={isCheck} />
-        <CloseIconContainer>
-          <CloseIcon
-            onClick={handleCloseDialog}
-            style={{
-              color: "white",
-            }}
-          />
-        </CloseIconContainer>
       </ChildContainer>
+      <CloseIconContainer>
+        <CloseIcon
+          onClick={handleCloseDialog}
+          style={{
+            color: "white",
+          }}
+        />
+      </CloseIconContainer>
     </DialogContainer>
   );
 };
