@@ -76,12 +76,17 @@ const PromotionBanner = ({ promotionData }: { promotionData: Promotion }) => {
   );
 };
 
-const PopupPromotion = () => {
+const PopupPromotion = ({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) => {
   const disableDialog =
     window.sessionStorage &&
     sessionStorage.getItem(doNotShowPromotionDialogKey) === "true";
 
-  const [open, setOpen] = useState(!disableDialog);
   const [isCheck, setIsCheck] = useState(false);
 
   const { displayPromotionList } = usePromotion();
@@ -93,12 +98,13 @@ const PopupPromotion = () => {
     if (isCheck) {
       sessionStorage.setItem(doNotShowPromotionDialogKey, "true");
     }
-    setOpen(false);
+    onClose();
   };
 
   const isEmptyData = displayPromotionList.length === 0;
 
   if (isEmptyData || disableDialog) return null;
+
   return (
     <>
       <DialogPopup open={open} TransitionComponent={UpTransition}>

@@ -1,10 +1,8 @@
-import DialogPopup from "@/components/Mobile/components/UI/Dialog/DialogPopup";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import Carousel from "@/components/Mobile/components/UI/Carousel";
 import { themeList } from "@/theme";
 import { useUiStore } from "@/hooks/stores/useUiStore";
-import { checkInHomePage } from "@/utils/checkUrlParams";
 import NotShowAgainHint from "@/components/Mobile/components/Popup/NotShowAgainHint";
 import { Dialog as MuiDialog } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
@@ -93,40 +91,36 @@ const AnnouncementCard = ({
   );
 };
 
-const PopupAnnouncement = () => {
+const PopupAnnouncement = ({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) => {
   const disableDialog =
     window.sessionStorage &&
     sessionStorage.getItem(doNotShowAnnouncementDialogKey) === "true";
 
-  const [open, setOpen] = useState(!disableDialog);
   const [isCheck, setIsCheck] = useState(false);
 
   const { ui } = useUiStore();
   const { mains: announcementList } = ui;
 
-  useEffect(() => {
-    if (disableDialog) return;
-    const hasData = announcementList.length > 0;
-    const dataChanged =
-      JSON.stringify(announcementList) !== JSON.stringify(ui.mains);
-    if (hasData || dataChanged) {
-      setOpen(true);
-    }
-  }, [announcementList]);
-
   const handleCloseDialog = () => {
     if (isCheck) {
       sessionStorage.setItem(doNotShowAnnouncementDialogKey, "true");
     }
-    setOpen(false);
+    onClose();
   };
 
   const handleClickCheckbox = () => {
     setIsCheck((prevIsCheck) => !prevIsCheck);
   };
 
-  const isInHomePage = checkInHomePage();
-  if (!isInHomePage) return null;
+  const isEmptyData = announcementList.length === 0;
+
+  if (isEmptyData || disableDialog) return null;
 
   return (
     <DialogContainer open={open} TransitionComponent={UpTransition}>
