@@ -4,6 +4,7 @@ import { useUiService } from "@/hooks/services/useUiService";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import i18n from "@/utils/i18n";
 import Common from "@/utils/Common";
+import { useHistory } from "react-router-dom";
 
 const MaintenanceContainer = styled.div`
   display: flex;
@@ -71,6 +72,7 @@ const DefaultMaintenance = () => {
   );
 };
 const Maintenance = () => {
+  const history = useHistory();
   const { GetMaintenance } = useUiService();
   const {
     general: { livechat, brandsSupport },
@@ -89,7 +91,9 @@ const Maintenance = () => {
   };
 
   const handleIMClick = () => {
+    // TODO: handle IM click
     console.log("%c⧭", "color: #d90000", "brandsSupport", brandsSupport);
+    history.push("/support");
   };
 
   useEffect(() => {
