@@ -44,69 +44,64 @@ import WithdrawalDetails from "@/components/Mobile/pages/Withdrawal/WithdrawalDe
 
 const Mine = React.lazy(() => import("@/components/Mobile/pages/Account/Mine"));
 
-interface Route {
+export enum RouteCategoryEnum {
+  HOME,
+  REFER,
+  PROMOTION,
+  INBOX,
+  MINE,
+}
+export interface Route {
   path: string;
   component: any;
-  alert?: boolean;
-  popup?: boolean;
-  navigate?: boolean;
-  promoProps?: boolean;
-  screenHeight?: boolean;
-  GetSupportUrl?: boolean;
-  brandComm?: boolean;
+  category: RouteCategoryEnum;
 }
 
 const routes: Route[] = [
   {
     path: "/",
     component: Main,
-    alert: true,
-    popup: true,
-    navigate: true,
+    category: RouteCategoryEnum.HOME,
   },
   {
     path: "/main",
     component: Main,
-    alert: true,
-    popup: true,
-    navigate: true,
+    category: RouteCategoryEnum.HOME,
   },
   {
     path: "/main/:page",
     component: Main,
-    alert: true,
-    popup: true,
-    navigate: true,
+    category: RouteCategoryEnum.HOME,
   },
   {
     path: "/account",
     component: Mine,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/deposit",
     component: Deposit,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/withdrawal",
     component: Withdrawal,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/betting-bonus",
     component: BettingBonus,
-    navigate: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/login",
     component: Login,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/register",
     component: Register,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   // {
   //   path: "/a/:promotionid",
@@ -133,92 +128,92 @@ const routes: Route[] = [
   {
     path: "/profile",
     component: Profile,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/name",
     component: ProfileName,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/wechat",
     component: ProfileWeChat,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/birthdate",
     component: ProfileBirthDate,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/qq",
     component: ProfileQQ,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/fb",
     component: ProfileFacebookMessenger,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/telegram",
     component: ProfileTelegram,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/line",
     component: ProfileLine,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/viber",
     component: ProfileViber,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/whatsapp",
     component: ProfileWhatsapp,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/email",
     component: ProfileEmail,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/changeemail",
     component: ProfileChangeEmail,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/changephone",
     component: ProfileChangePhone,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/phone",
     component: ProfilePhone,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/changepassword",
     component: ProfileChangePassword,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/withdrawalpassword",
     component: ProfileWithdrawalPassword,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/resetwithdrawalpassword",
     component: ProfileResetWithdrawalPassword,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/profile/changewithdrawalpassword",
     component: ProfileChangeWithdrawalPassword,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
 
   // {
@@ -230,22 +225,18 @@ const routes: Route[] = [
   {
     path: "/promotion-list",
     component: Promotion,
-    alert: true,
-    navigate: true,
+    category: RouteCategoryEnum.PROMOTION,
   },
   {
     path: "/promotion/:id?",
     component: PromotionDetail,
-    alert: true,
-    navigate: true,
-    promoProps: true,
+    category: RouteCategoryEnum.PROMOTION,
   },
   //
   {
     path: "/inbox",
     component: Inbox,
-    alert: true,
-    navigate: true,
+    category: RouteCategoryEnum.INBOX,
   },
   // {
   //   path: "/memo",
@@ -265,63 +256,53 @@ const routes: Route[] = [
   {
     path: "/withdrawal/details",
     component: WithdrawalDetails,
-    alert: true,
-    navigate: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/deposit/:promotionid?",
     component: Deposit,
-    alert: true,
-    navigate: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/manual/:paymentId?",
     component: Deposit,
-    alert: true,
-    navigate: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/deposit/payment/:id/:bank/:amount/:bonus?",
     component: DepositPayment,
-    alert: true,
-    navigate: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/deposit/details",
     component: DepositDetails,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/deposit/manual",
     component: DepositManual,
-    alert: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/card",
     component: Card,
-    alert: true,
-    navigate: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/card/add",
     component: AddCard,
-    alert: true,
-    navigate: true,
+    category: RouteCategoryEnum.MINE,
   },
   {
     path: "/maintenance",
     component: MaintenancePage,
-    navigate: true,
-    alert: true,
-    GetSupportUrl: true,
-    brandComm: true,
+    category: RouteCategoryEnum.HOME,
   },
 
   {
     path: "/report/:tab?",
     component: Report,
-    alert: true,
-    navigate: true,
+    category: RouteCategoryEnum.MINE,
   },
 
   // {
@@ -336,7 +317,7 @@ const routes: Route[] = [
   {
     path: "/affiliate",
     component: Affiliate,
-    navigate: true,
+    category: RouteCategoryEnum.MINE,
   },
   // {
   //   path: "/setting/language",
@@ -351,7 +332,7 @@ const routes: Route[] = [
   {
     path: "/vip",
     component: VIP,
-    navigate: true,
+    category: RouteCategoryEnum.MINE,
   },
   // {
   //   path: "/sports/:platform",
@@ -362,7 +343,7 @@ const routes: Route[] = [
   {
     path: "/support",
     component: ContactUs,
-    navigate: true,
+    category: RouteCategoryEnum.MINE,
   },
 ];
 
@@ -370,8 +351,7 @@ if (!config.features.NewTransferUI) {
   routes.push({
     path: "/transfer",
     component: Transfer,
-    alert: true,
-    navigate: true,
+    category: RouteCategoryEnum.MINE,
   });
 }
 
