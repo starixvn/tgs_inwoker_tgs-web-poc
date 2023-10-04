@@ -454,25 +454,6 @@ class Mobile extends Component {
               <MobileLayout>
                 <Switch>
                   {routes.map((route, index) => {
-                    // add correspond method via config
-                    let propsObj = {};
-                    if (route.alert === true) {
-                      propsObj["alert"] = this.handleOpenPopupAlert;
-                    }
-                    if (route.navigate === true) {
-                      propsObj["navigate"] = this.handleNavigate;
-                    }
-                    if (route.popup === true) {
-                      propsObj["popup"] = this.handleOpenPopup;
-                    }
-                    if (route.screenHeight === true) {
-                      propsObj["screenHeight"] = this.props.screenHeight;
-                    }
-                    propsObj["GetSupportUrl"] = this.getSupportUrl;
-                    propsObj["appHistory"] = AppHistory;
-                    propsObj["brandComm"] =
-                      this.props.getBrandCommunicationList;
-
                     return (
                       <Route
                         exact
@@ -480,62 +461,9 @@ class Mobile extends Component {
                         path={route.path}
                         render={(props) => {
                           // add correspond property via path
-                          if (route.path === "/deposit/manual") {
-                            propsObj["order"] = props.location.state;
-                          }
-                          if (route.path === "/ip-restrict-mobile") {
-                            propsObj["ip"] =
-                              props.location.state != null
-                                ? props.location.state.ip
-                                : null;
-                          }
-                          if (route.path === "/promotion/:activityId?") {
-                            propsObj["promo"] =
-                              props.location.state != null
-                                ? props.location.state.promo
-                                : null;
-                          }
-                          if (route.path === "/deposit/details") {
-                            propsObj["order"] = props.location.state;
-                          }
-                          if (route.path === "/withdrawal/details") {
-                            propsObj["order"] =
-                              props.location.state != null
-                                ? props.location.state.order
-                                : null;
-                          }
-                          if (
-                            route.path === "/chat/:userid?/:name?/:question?"
-                          ) {
-                            propsObj["login"] =
-                              props.location.state != null
-                                ? props.location.state.login
-                                : null;
-                          }
-                          if (route.path === "/forgot-password/option") {
-                            propsObj["details"] =
-                              props.location.state != null
-                                ? props.location.state.details
-                                : null;
-                          }
-                          if (route.path === "/forgot-password/reset") {
-                            propsObj["forget_token"] =
-                              props.location.state != null
-                                ? props.location.state.forget_token
-                                : null;
-                          }
-                          if (route.path === "/card/name") {
-                            propsObj["from"] =
-                              props.location.state != null
-                                ? props.location.state.from
-                                : null;
-                          }
                           return (
                             <Suspense fallback={<Loading opacity={0} />}>
-                              <route.component
-                                {...propsObj}
-                                {...this.props.general}
-                              />
+                              <route.component />
                             </Suspense>
                           );
                         }}

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BottomNav, { BottomNavItem } from "./BottomNav";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { AppHistory } from "@/history/History";
+import { useRoute } from "@/components/Mobile/hooks/useRoute";
+import { RouteCategoryEnum } from "@/components/Mobile/router";
 
 const BottomAppBarContainer = styled.div`
   position: fixed;
@@ -30,6 +32,7 @@ const bottomNavItemList: BottomNavItem[] = [
       process.env.PUBLIC_URL +
       `/assets/images/mobile/bottomAppBar/icon_home_active.svg`,
     routePath: "/",
+    routeCategory: RouteCategoryEnum.HOME,
   },
   {
     navType: "item",
@@ -41,6 +44,7 @@ const bottomNavItemList: BottomNavItem[] = [
       process.env.PUBLIC_URL +
       `/assets/images/mobile/bottomAppBar/icon_refer_active.svg`,
     routePath: "/promotion-list",
+    routeCategory: RouteCategoryEnum.REFER,
   },
   {
     navType: "item",
@@ -52,6 +56,7 @@ const bottomNavItemList: BottomNavItem[] = [
       process.env.PUBLIC_URL +
       `/assets/images/mobile/bottomAppBar/icon_promotion_active.svg`,
     routePath: "/promotion-list",
+    routeCategory: RouteCategoryEnum.PROMOTION,
   },
   {
     navType: "item",
@@ -63,6 +68,7 @@ const bottomNavItemList: BottomNavItem[] = [
       process.env.PUBLIC_URL +
       `/assets/images/mobile/bottomAppBar/icon_email_active.svg`,
     routePath: "/inbox",
+    routeCategory: RouteCategoryEnum.INBOX,
   },
   {
     navType: "item",
@@ -74,6 +80,7 @@ const bottomNavItemList: BottomNavItem[] = [
       process.env.PUBLIC_URL +
       `/assets/images/mobile/bottomAppBar/icon_mine_active.svg`,
     routePath: "/account",
+    routeCategory: RouteCategoryEnum.MINE,
   },
 ];
 
@@ -81,15 +88,15 @@ const BottomAppBar = () => {
   const [selectedBottomNavItem, setSelectedBottomNavItem] =
     useState<null | BottomNavItem>(null);
   const location = useLocation();
+  const { route } = useRoute();
 
   useEffect(() => {
-    const currentPathname = location.pathname;
-    const matchNavItem = bottomNavItemList.find((bottomNavItem) =>
-      bottomNavItem.routePath.includes(currentPathname)
+    const matchNavItem = bottomNavItemList.find(
+      (bottomNavItem) => bottomNavItem.routeCategory === route.category
     );
 
     setSelectedBottomNavItem(matchNavItem || null);
-  }, [location]);
+  }, [route]);
 
   const handleClick = (appBarItem: BottomNavItem) => {
     setSelectedBottomNavItem(appBarItem);

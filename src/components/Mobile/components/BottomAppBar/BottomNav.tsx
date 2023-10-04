@@ -1,5 +1,6 @@
 import React, { MouseEventHandler } from "react";
 import styled from "styled-components";
+import { RouteCategoryEnum } from "@/components/Mobile/router";
 
 const BottomNavContainer = styled.div<{ isSelected: boolean }>`
   flex: 1;
@@ -29,6 +30,7 @@ export type BottomNavItem = {
   iconUrl: string;
   iconActiveUrl: string;
   routePath: string;
+  routeCategory: RouteCategoryEnum;
 };
 type Props = {
   bottomNavItem: BottomNavItem;
