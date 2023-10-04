@@ -26,6 +26,12 @@ const DialogPopup = styled(MuiDialog)`
   }
 `;
 
+const ChildContainer = styled.div`
+  width: 100%;
+  height: auto;
+  overflow: scroll;
+`;
+
 const PromotionTag = styled.div`
   width: 213px;
   height: 43px;
@@ -46,6 +52,8 @@ const CloseBtn = styled.div`
   position: fixed;
   z-index: 99;
   top: calc(50% + 150px);
+  left: 50%;
+  transform: translateX(-50%);
   width: 36px;
   height: 36px;
   cursor: pointer;
@@ -94,7 +102,7 @@ const PopupPromotion = () => {
   return (
     <>
       <DialogPopup open={open} TransitionComponent={UpTransition}>
-        <>
+        <ChildContainer>
           <Carousel>
             {displayPromotionList.map((promotionData: Promotion) => (
               <PromotionBanner
@@ -112,7 +120,7 @@ const PopupPromotion = () => {
           <CloseBtn onClick={handleCloseDialog}>
             <img src={IconCloseButton} />
           </CloseBtn>
-        </>
+        </ChildContainer>
       </DialogPopup>
     </>
   );

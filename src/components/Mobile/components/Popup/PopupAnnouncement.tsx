@@ -6,12 +6,42 @@ import { themeList } from "@/theme";
 import { useUiStore } from "@/hooks/stores/useUiStore";
 import { checkInHomePage } from "@/utils/checkUrlParams";
 import NotShowAgainHint from "@/components/Mobile/components/Popup/NotShowAgainHint";
+import { Dialog as MuiDialog } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
 
 const theme = themeList["mobileT18"];
 const dialogBgUrl =
   process.env.PUBLIC_URL + "/assets/images/announcement/announcement_bg.png";
 
 const doNotShowAnnouncementDialogKey = "doNotShowAnnouncementDialog";
+
+const DialogContainer = styled(MuiDialog)`
+  & .MuiPaper-root {
+    background: url(${dialogBgUrl}) no-repeat center center !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 321px;
+    height: 283px;
+    border-radius: 10px;
+  }
+`;
+
+const ChildContainer = styled.div`
+  width: 100%;
+  height: auto;
+  overflow: scroll;
+`;
+
+const CloseIconContainer = styled.div`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+`;
 
 const Title = styled.div`
   font-size: 1.8rem;
@@ -99,13 +129,8 @@ const PopupAnnouncement = () => {
   if (!isInHomePage) return null;
 
   return (
-    <DialogPopup
-      isOpen={open}
-      handleCloseDialog={handleCloseDialog}
-      type="announcement"
-      style={{ background: `url(${dialogBgUrl}) no-repeat center center` }}
-    >
-      <>
+    <DialogContainer open={open} TransitionComponent={UpTransition}>
+      <ChildContainer>
         <Carousel>
           {announcementList
             .sort((a, b) => a.order - b.order)
@@ -125,8 +150,16 @@ const PopupAnnouncement = () => {
         </Carousel>
         <Button onClick={handleCloseDialog}>Got It!</Button>
         <NotShowAgainHint onClick={handleClickCheckbox} isCheck={isCheck} />
-      </>
-    </DialogPopup>
+        <CloseIconContainer>
+          <CloseIcon
+            onClick={handleCloseDialog}
+            style={{
+              color: "white",
+            }}
+          />
+        </CloseIconContainer>
+      </ChildContainer>
+    </DialogContainer>
   );
 };
 
