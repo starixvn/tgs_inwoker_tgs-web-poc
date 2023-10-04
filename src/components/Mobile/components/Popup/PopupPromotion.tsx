@@ -9,6 +9,7 @@ import { Dialog as MuiDialog } from "@material-ui/core";
 import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
 import { themeList } from "@/theme";
 import IconCloseButton from "@/assets/images/promotion/close_icon.svg";
+import { useHistory } from "react-router-dom";
 
 const doNotShowPromotionDialogKey = "doNotShowPromotionDialog";
 const theme = themeList["mobileT18"];
@@ -68,9 +69,21 @@ const PromotionBannerWrapper = styled.div`
     object-fit: cover;
   }
 `;
-const PromotionBanner = ({ promotionData }: { promotionData: Promotion }) => {
+const PromotionBanner = ({
+  handleCloseDialog,
+  promotionData,
+}: {
+  handleCloseDialog: () => void;
+  promotionData: Promotion;
+}) => {
+  const history = useHistory();
+
+  const handleClickBanner = () => {
+    handleCloseDialog();
+    history.push("/promotion/" + promotionData.id);
+  };
   return (
-    <PromotionBannerWrapper>
+    <PromotionBannerWrapper onClick={handleClickBanner}>
       <img src={promotionData.mobileBanner} alt={promotionData.name} />
     </PromotionBannerWrapper>
   );
@@ -114,6 +127,7 @@ const PopupPromotion = ({
               <PromotionBanner
                 key={promotionData.id}
                 promotionData={promotionData}
+                handleCloseDialog={handleCloseDialog}
               />
             ))}
           </Carousel>

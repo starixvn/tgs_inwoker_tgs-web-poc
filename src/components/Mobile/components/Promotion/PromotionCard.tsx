@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { themeList } from "@/theme";
-import { AppHistory } from "@/history/History";
+import { useHistory } from "react-router-dom";
 import { Promotion } from "@/models/dto/general/GetPromotionListResDto";
 import BannerImage from "./BannerImage";
 
@@ -48,10 +48,10 @@ const ClickMoreText = styled.div`
 `;
 
 const PromotionCard = ({ promotionData }: { promotionData: Promotion }) => {
+  const history = useHistory();
+
   const handleEnterDetail = () => {
-    AppHistory.replace({
-      pathname: "/promotion/" + promotionData.id,
-    });
+    history.push("/promotion/" + promotionData.id);
   };
 
   return (
