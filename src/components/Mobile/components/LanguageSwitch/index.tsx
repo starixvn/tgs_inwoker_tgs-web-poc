@@ -108,6 +108,7 @@ const LanguageSwitch = () => {
 
   const culturecode = currentLanguage?.culturecode || "";
 
+  if (languageList.length < 2) return null;
   return (
     <StyledFormControl variant="outlined">
       {/*<InputLabel id="demo-simple-select-outlined-label">Language</InputLabel>*/}
@@ -118,17 +119,18 @@ const LanguageSwitch = () => {
         onChange={handleChange}
         label="Age"
       >
-        {languageList.map((languageItem) => {
-          const { culturecode } = languageItem;
-          return (
-            <StyledMenuItem key={culturecode} value={culturecode}>
-              <FlagContainer>
-                <img src={imageMap[culturecode]} alt={culturecode} />
-              </FlagContainer>
-              {i18n.t("lang." + culturecode)}
-            </StyledMenuItem>
-          );
-        })}
+        {languageList.length > 1 &&
+          languageList.map((languageItem) => {
+            const { culturecode } = languageItem;
+            return (
+              <StyledMenuItem key={culturecode} value={culturecode}>
+                <FlagContainer>
+                  <img src={imageMap[culturecode]} alt={culturecode} />
+                </FlagContainer>
+                {i18n.t("lang." + culturecode)}
+              </StyledMenuItem>
+            );
+          })}
       </StyledSelect>
     </StyledFormControl>
   );
