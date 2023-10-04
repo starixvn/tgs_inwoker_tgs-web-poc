@@ -7,7 +7,6 @@ import { useLoginForm } from "@/hooks/auth/useAuthForm/useLoginForm";
 import RedirectToRegisterHint from "@/components/Mobile/pages/Login/components/RedirectToRegisterHint";
 import i18n from "@/utils/i18n";
 import Checkbox from "@/components/Mobile/components/UI/Checkbox";
-import Button from "@/components/Mobile/components/UI/Button";
 
 const theme = themeList["mobileT18"];
 

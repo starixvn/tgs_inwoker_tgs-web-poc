@@ -12,9 +12,9 @@ import {
   LabelContainer,
   ItemContainer,
 } from "@/components/_Share_Domain/Account/DepositPrev/styles";
-import Button from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/Mobile/components/UI/Button";
 import { Select } from "@/components/Mobile/components/UI/Select";
-import TextField from "@/components/Mobile/components/UI/TextField";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
 
 const MainContainer = styled.div`
   padding: 12px 0;
@@ -55,11 +55,11 @@ const ExchangeRateContainer = styled.div`
 `;
 
 const Remark = styled.div`
-  font-size: ${() => (config.brand === "WGHK" ? `24px` : `20px`)};
-  font-weight: ${() => (config.brand === "WGHK" ? `400` : `normal`)};
-  padding: 0px 50px;
+  font-size: 0.937rem;
+  font-weight: 400;
   color: ${({ theme }) => theme.primary};
   opacity: 0.75;
+  margin-bottom: 20px;
 `;
 const QRCodeImg = styled.img`
   display: block;
@@ -600,29 +600,6 @@ class Main extends Component {
                 ) +
                 i18n.t("deposit.dollor")
               }
-              // custom={
-              //   this.props.wallet.depositTypeList[
-              //     this.props.selectedPaymentIndex
-              //   ].method[this.props.selectedMethodIndex].channel[
-              //     this.props.selectedChannelIndex
-              //   ].fees > 0 && (
-              //     <>
-              //       <FeeSpot>
-              //         {i18n.t("fees.deposit")}:{" "}
-              //         <span>
-              //           {
-              //             this.props.wallet.depositTypeList[
-              //               this.props.selectedPaymentIndex
-              //             ].method[this.props.selectedMethodIndex].channel[
-              //               this.props.selectedChannelIndex
-              //             ].fees
-              //           }
-              //           %
-              //         </span>
-              //       </FeeSpot>
-              //     </>
-              //   )
-              // }
             />
           </FormControl>
         </ItemContainer>
