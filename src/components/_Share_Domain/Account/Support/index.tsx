@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import config from "@/config/config";
-// import IMHandler from "@/components/Wap/components/Main/Support/IMHandler";
 import { BrandsSupport } from "@/types/general";
 import styled from "styled-components";
 import { themeList } from "@/theme";
 import SupportCard from "@/components/_Share_Domain/Account/Support/SupportCard";
 import QrCodeDialog from "@/components/_Share_Domain/Account/Support/QRCodeHolder";
 import contactGirlImg from "@/assets/images/account/girl/contact.png";
+import IMHandler from "@/components/_Share_Domain/Account/Support/IMHandler";
 
 const theme = themeList["mobileT18"];
 
@@ -49,7 +49,7 @@ const Support = ({
     if (brandsSupport.qrcodeurl) {
       setSelectedBrandsSupport(brandsSupport);
     } else {
-      // IMHandler(brandsSupport.type, brandsSupport.phone); // TODO: IMHandler
+      IMHandler(brandsSupport.type, brandsSupport.phone); // TODO: IMHandler
     }
   };
 

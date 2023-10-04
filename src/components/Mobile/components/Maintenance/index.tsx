@@ -7,6 +7,7 @@ import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { BrandCommunication } from "@/models/dto/general/GetBrandCommunicationResDto";
 import { useUiService } from "@/hooks/services/useUiService";
 import { useHistory } from "react-router-dom";
+import IMHandler from "@/components/_Share_Domain/Account/Support/IMHandler";
 
 const MaintenanceBg = styled.div`
   z-index: 10;
@@ -351,10 +352,10 @@ const MaintenancePrev = (props) => {
             {imList.map((data, index) => {
               return (
                 <IMWrapper
-                  // onClick={() => {
-                  //   IMHandler(data.type, data.phone);
-                  //   // props.alert('', i18n.t('affiliate.copied'))
-                  // }}
+                  onClick={() => {
+                    IMHandler(data.type, data.phone);
+                    // props.alert('', i18n.t('affiliate.copied'))
+                  }}
                 >
                   <Icon icon={`${data.type}.png`} />
                   <SMType>{data.type}</SMType>
