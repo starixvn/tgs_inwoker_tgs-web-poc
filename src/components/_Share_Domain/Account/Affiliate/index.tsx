@@ -1,6 +1,6 @@
 import AffiliateInfoRow from "@/components/_Share_Domain/Account/Affiliate/AffiliateInfoRow";
 import RebateTable from "@/components/_Share_Domain/Account/Affiliate/RebateTable";
-import Button from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/Mobile/components/UI/Button";
 import Select from "@/components/Mobile/components/UI/_Trash/Select";
 import DarkSelect from "@/components/Mobile/components/UI/_Trash/Select/DarkSelect";
 import { useRebateTable } from "@/hooks/account/affiliate/useRebateTable";

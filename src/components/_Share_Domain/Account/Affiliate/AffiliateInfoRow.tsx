@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { themeList } from "@/theme";
-import Button from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/Mobile/components/UI/Button";
 
 const theme = themeList["mobileT18"];
 

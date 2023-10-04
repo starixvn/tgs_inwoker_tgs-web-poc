@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/Mobile/components/UI/Button";
 import * as Yup from "yup";
 import styled from "styled-components";
 import { themeList } from "@/theme";

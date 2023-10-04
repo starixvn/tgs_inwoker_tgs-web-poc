@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
-import Button from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/Mobile/components/UI/Button";
 import { useHistory } from "react-router-dom";
 
 const ButtonContainer = styled.div`
