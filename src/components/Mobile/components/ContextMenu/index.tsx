@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import ContextMenuItem from "./ContextMenuItem";
-import AvatarLevel from "@/components/Mobile/components/UI/AvatarLevel";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useHistory } from "react-router-dom";
+import Avatar from "@/components/Mobile/components/Avatar";
 
 const contextMenuList = [
   {
@@ -77,8 +77,7 @@ const ContextMenu = () => {
   return (
     <ContextMenuContainer>
       <AvatarLevelWrapper>
-        {/* TODO: fake data */}
-        <AvatarLevel level="V0" />
+        <Avatar />
       </AvatarLevelWrapper>
       <ContextMenuItemWrapper>
         {contextMenuList.map((contextMenuItem) => {
