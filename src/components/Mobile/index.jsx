@@ -29,6 +29,7 @@ import PopupAlertModal from "@/components/Mobile/components/Popup/PopupAlertDial
 import PopupAnnouncement from "@/components/Mobile/components/Popup/PopupAnnouncement";
 import PopupPromotion from "@/components/Mobile/components/Popup/PopupPromotion";
 import { AuthContextProvider } from "@/contexts/authContext";
+import { checkInHomePage } from "@/utils/checkUrlParams";
 
 class Mobile extends Component {
   constructor(props) {
@@ -272,6 +273,35 @@ class Mobile extends Component {
   };
 
   componentDidUpdate(preProps) {
+    var isInHomePage =
+      this.props.ui.mains &&
+      this.props.ui.mains !== preProps.ui.mains &&
+      this.props.ui.mains.length > 0;
+
+    if (config.features.PopupAnnouncement) {
+      if (isInHomePage) {
+        this.setState({
+          openAnnouncement: true,
+          showPromotion: false,
+        });
+      }
+    }
+
+    if (config.features.PopupPromotion) {
+      if (
+        isInHomePage &&
+        this.props.general.promotionList.items !==
+          preProps.general.promotionList.items &&
+        this.props.general.promotionList.items.length > 0
+      ) {
+        if (!this.state.openAnnouncement) {
+          this.setState({
+            showPromotion: true,
+          });
+        }
+      }
+    }
+
     if (preProps.general.token !== this.props.general.token) {
       if (this.props.general.token == null || this.props.general.token == "") {
         this.props.getSiteToken();
@@ -436,8 +466,39 @@ class Mobile extends Component {
     window.open(this.state.popupUrl, "_blank");
   };
 
+  handleCloseAudio = () => {
+    if (document.getElementById("audio") != null)
+      document.getElementById("audio").play();
+  };
+
+  handleCloseAnnouncement = () => {
+    this.setState({
+      ...this.state,
+      openAnnouncement: false,
+      showPromotion: true,
+    });
+    this.handleCloseAudio();
+  };
+
+  handleClosePromotion = () => {
+    this.setState({ ...this.state, showPromotion: false });
+    this.handleCloseAudio();
+  }
+
   render() {
     const scale = this.props.screenWidth / 750;
+    const matchingpath =
+    this.props.location.pathname === "/" ||
+    this.props.location.pathname === "/main/home";
+
+    const showPopupAnnouncement = 
+      config.features.PopupAnnouncement &&
+      this.props.ui.mains &&
+      this.props.ui.mains.length > 0 &&
+      matchingpath
+
+    const showPopupPromotion = config.features.PopupPromotion &&
+      this.props.general.promotionList.items.length > 0
 
     if (
       (this.state.loading === true ||
@@ -517,8 +578,19 @@ class Mobile extends Component {
             {/*  handleClose={this.handleClosePopup}*/}
             {/*  handleClickUrl={this.handleClickUrl}*/}
             {/*/>*/}
-            {config.features.PopupAnnouncement && <PopupAnnouncement />}
-            {config.features.PopupPromotion && <PopupPromotion />}
+            
+            {showPopupAnnouncement && (
+              <PopupAnnouncement 
+                open={this.state.openAnnouncement} 
+                onClose={this.handleCloseAnnouncement}
+              />
+            )}
+            {showPopupPromotion && (
+              <PopupPromotion 
+                open={this.state.showPromotion} 
+                onClose={this.handleClosePromotion}
+              />
+            )}
             <PopupAlertModal />
           </AuthContextProvider>
         </>

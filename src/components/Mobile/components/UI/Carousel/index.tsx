@@ -11,6 +11,9 @@ const NextArrowContainer = styled.div`
   transform: translateY(-50%);
   cursor: pointer;
   z-index: 99;
+  background: url(${CarouselArrow}) no-repeat center center;
+  width: 22px;
+  height: 44px;
 `;
 
 const PrevArrowContainer = styled(NextArrowContainer)`
@@ -19,36 +22,15 @@ const PrevArrowContainer = styled(NextArrowContainer)`
   transform: translateY(-50%) rotate(180deg);
 `;
 
-const ContentContainer = styled.div`
-  padding: 20px;
-`
-
-function SampleNextArrow({
-  onClick
-}: {
-  onClick: () => void
-}) {
-  return (
-    <NextArrowContainer onClick={onClick}>
-      <img src={CarouselArrow}/>
-    </NextArrowContainer>   
-  );
+function SampleNextArrow({ onClick }: { onClick: () => void }) {
+  return <NextArrowContainer onClick={onClick} />;
 }
 
-function SamplePrevArrow({
-  onClick
-}: {
-  onClick: () => void
-}) {
-  return (
-    <PrevArrowContainer onClick={onClick}>
-      <img src={CarouselArrow}/>
-    </PrevArrowContainer>   
-  );
+function SamplePrevArrow({ onClick }: { onClick: () => void }) {
+  return <PrevArrowContainer onClick={onClick} />;
 }
 
 const settings = {
-  dots: true,
   className: "center",
   centerMode: true,
   infinite: true,
@@ -56,23 +38,24 @@ const settings = {
   slidesToShow: 1,
   speed: 500,
   autoplay: true,
-  nextArrow: <SampleNextArrow onClick={function (): void {
-    throw new Error("Function not implemented.");
-  } } />,
-  prevArrow: <SamplePrevArrow onClick={function (): void {
-    throw new Error("Function not implemented.");
-  } } />
+  nextArrow: (
+    <SampleNextArrow
+      onClick={function (): void {
+        throw new Error("Function not implemented.");
+      }}
+    />
+  ),
+  prevArrow: (
+    <SamplePrevArrow
+      onClick={function (): void {
+        throw new Error("Function not implemented.");
+      }}
+    />
+  ),
 };
 
-const Carousel = ({ children }: {
-  children: React.ReactNode
-}) => {
+const Carousel = ({ children }: { children: React.ReactNode }) => {
+  return <Slider {...settings}>{children}</Slider>;
+};
 
-  return (
-    <Slider {...settings}>
-      {children}
-    </Slider>
-  )
-}
-
-export default Carousel
+export default Carousel;

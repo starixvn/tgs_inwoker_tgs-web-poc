@@ -1,17 +1,45 @@
-import DialogPopup from "@/components/Mobile/components/UI/Dialog/DialogPopup";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import Carousel from "@/components/Mobile/components/UI/Carousel";
 import { themeList } from "@/theme";
 import { useUiStore } from "@/hooks/stores/useUiStore";
-import { checkInHomePage } from "@/utils/checkUrlParams";
-import IconCheckBox from "@/assets/images/checkbox.svg";
+import NotShowAgainHint from "@/components/Mobile/components/Popup/NotShowAgainHint";
+import { Dialog as MuiDialog } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
 
 const theme = themeList["mobileT18"];
 const dialogBgUrl =
   process.env.PUBLIC_URL + "/assets/images/announcement/announcement_bg.png";
 
 const doNotShowAnnouncementDialogKey = "doNotShowAnnouncementDialog";
+
+const DialogContainer = styled(MuiDialog)`
+  & .MuiPaper-root {
+    background: url(${dialogBgUrl}) no-repeat center center !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 321px;
+    height: 283px;
+    border-radius: 10px;
+  }
+`;
+
+const ChildContainer = styled.div`
+  width: 100%;
+  height: auto;
+  overflow: scroll;
+`;
+
+const CloseIconContainer = styled.div`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+`;
 
 const Title = styled.div`
   font-size: 1.8rem;
@@ -48,34 +76,6 @@ const AnnouncementCardContainer = styled.div`
   padding: 20px;
 `;
 
-const NotShowAgainHint = styled.div`
-  background: ${theme.primaryLight};
-  width: 171px;
-  height: 38px;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  top: calc(50% + 149px);
-  z-index: 99;
-  color: #ffffff;
-  border-radius: 50px;
-  text-align: center;
-  left: 50%;
-  transform: translateX(-50%);
-`;
-
-const CheckBox = styled.div<{ isCheck: boolean }>`
-  width: 18px;
-  height: 18px;
-  background: ${(props) =>
-    props.isCheck ? `url(${IconCheckBox}) no-repeat center center;` : null};
-  margin-right: 10px;
-  border: ${(props) => (props.isCheck ? "0" : "1px")} solid #ffffff;
-  border-radius: 5px;
-`;
-
 const AnnouncementCard = ({
   subject,
   content,
@@ -91,67 +91,69 @@ const AnnouncementCard = ({
   );
 };
 
-const PopupAnnouncement = () => {
+const PopupAnnouncement = ({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) => {
   const disableDialog =
     window.sessionStorage &&
     sessionStorage.getItem(doNotShowAnnouncementDialogKey) === "true";
 
-  const [open, setOpen] = useState(!disableDialog);
   const [isCheck, setIsCheck] = useState(false);
 
   const { ui } = useUiStore();
   const { mains: announcementList } = ui;
 
-  useEffect(() => {
-    if (disableDialog) return;
-    const hasData = announcementList.length > 0;
-    const dataChanged =
-      JSON.stringify(announcementList) !== JSON.stringify(ui.mains);
-    if (hasData || dataChanged) {
-      setOpen(true);
-    }
-  }, [announcementList]);
-
   const handleCloseDialog = () => {
     if (isCheck) {
       sessionStorage.setItem(doNotShowAnnouncementDialogKey, "true");
     }
-    setOpen(false);
+    onClose();
   };
 
   const handleClickCheckbox = () => {
     setIsCheck((prevIsCheck) => !prevIsCheck);
   };
 
-  const isInHomePage = checkInHomePage();
-  if (!isInHomePage) return null;
+  const isEmptyData = announcementList.length === 0;
+
+  if (isEmptyData || disableDialog) return null;
 
   return (
-    <DialogPopup
-      isOpen={open}
-      handleCloseDialog={handleCloseDialog}
-      type="announcement"
-      bgUrl={dialogBgUrl}
-    >
-      <>
+    <DialogContainer open={open} TransitionComponent={UpTransition}>
+      <ChildContainer>
         <Carousel>
-          {announcementList.map((announcement, index) => {
-            return (
-              <AnnouncementCard
-                key={index}
-                subject={announcement.subject}
-                content={announcement.content}
-              />
-            );
-          })}
+          {announcementList
+            .sort((a, b) => a.order - b.order)
+            .map((announcement, index) => {
+              const subject =
+                announcement.localization?.subject || announcement.subject;
+              const content =
+                announcement.localization?.content || announcement.content;
+              return (
+                <AnnouncementCard
+                  key={index}
+                  subject={subject}
+                  content={content}
+                />
+              );
+            })}
         </Carousel>
         <Button onClick={handleCloseDialog}>Got It!</Button>
-        <NotShowAgainHint onClick={handleClickCheckbox}>
-          <CheckBox isCheck={isCheck} />
-          Don't show again
-        </NotShowAgainHint>
-      </>
-    </DialogPopup>
+        <NotShowAgainHint onClick={handleClickCheckbox} isCheck={isCheck} />
+        <CloseIconContainer>
+          <CloseIcon
+            onClick={handleCloseDialog}
+            style={{
+              color: "white",
+            }}
+          />
+        </CloseIconContainer>
+      </ChildContainer>
+    </DialogContainer>
   );
 };
 
