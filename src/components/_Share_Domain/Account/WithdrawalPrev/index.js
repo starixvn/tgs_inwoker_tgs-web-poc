@@ -17,6 +17,7 @@ import config from "@/config/config";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import WithdrawInfoCard from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawInfoCard";
 import ManageBankCardButton from "@/components/_Share_Domain/Account/WithdrawalPrev/components/ManageBankCardButton";
+import TransferAllToWallet from "@/components/_Share_Domain/Account/WithdrawalPrev/components/TransferAllToWallet";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -389,25 +390,7 @@ class WithdrawalPrev extends Component {
         <ManageBankCardButtonContainer>
           <ManageBankCardButton />
         </ManageBankCardButtonContainer>
-        {config.features.NewTransferUI && (
-          <CustomSelectContainer>
-            {/*從所有子錢包轉移到主錢包*/}
-            <CustomLabel>{i18n.t("transfer.msgTransferOutFromGP")}</CustomLabel>
-            {/*一键傳輸*/}
-            <ButtonWrapper>
-              <GameWalletButton
-                style={{ marginTop: 0, marginLeft: 10 }}
-                onClick={() => {
-                  this.props.performWithdrawFromEveryBrand().then((e) => {
-                    this.getAllGameBalance();
-                  });
-                }}
-              >
-                {i18n.t("transfer.oneKeyTransferAll")}
-              </GameWalletButton>
-            </ButtonWrapper>
-          </CustomSelectContainer>
-        )}
+        {config.features.NewTransferUI && <TransferAllToWallet />}
         {/*管理銀行卡*/}
         <CustomSelectContainer>
           <CustomLabel>{i18n.t("withdrawal.bankCard")}</CustomLabel>

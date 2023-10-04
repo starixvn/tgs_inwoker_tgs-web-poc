@@ -3,8 +3,17 @@ export interface GameState {
   kyGameList: any[];
   kyHotGameList: any[];
   homePageGameList: any[];
-  providerList: any[];
+  providerList: Provider[];
   error: null | any;
   favGame: any[];
   containTransferWallet: boolean;
+}
+
+interface Provider {
+  abbreviation: string;
+  balance: number;
+  gpcode: string;
+  name: string;
+  status: number;
+  transferwallet: boolean;
 }

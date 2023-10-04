@@ -95,6 +95,7 @@ import { PerformEWalletDepositResDto } from "@/models/dto/wallet/PerformEWalletD
 import { PerformLeePayDepositResDto } from "@/models/dto/wallet/PerformLeePayDepositResDto";
 import { PerformManualFPSDepositWithNameResDto } from "@/models/dto/wallet/PerformManualFPSDepositWithNameResDto";
 import { GetListOfWithdrawChannelResDto } from "@/models/dto/wallet/GetListOfWithdrawChannelResDto";
+import { GetGameBalanceResDto } from "@/models/dto/game/GetGameBalanceResDto";
 
 export function useWalletStore() {
   const dispatch = useDispatch();
@@ -1303,42 +1304,43 @@ export function useWalletStore() {
     return result;
   }, []);
 
-  const getGameBalance = useCallback((gpcode: string) => {
+  const getGameBalance = useCallback(async (gpcode: string) => {
     dispatch({
       type: GETGAMEBALANCE_BEGIN,
       loading: true,
     });
-    const result = WalletService.GetGameBalance(gpcode)
-      .then((response) => {
-        if (response?.IsSuccess) {
-          dispatch({
-            type: GETGAMEBALANCE_SUCCESS,
-            payload: response,
-            gpcode: gpcode,
-            loading: false,
-          });
 
-          // AppHistory.push("/");
-        } else {
-          dispatch({
-            type: GETGAMEBALANCE_FAIL,
-            payload: response,
-            gpcode: gpcode,
-            loading: false,
-          });
-        }
-        return response;
-      })
-      .catch((e) => {
+    try {
+      const response = (await WalletService.GetGameBalance(
+        gpcode
+      )) as unknown as GetGameBalanceResDto;
+
+      if (response?.IsSuccess) {
         dispatch({
-          type: GETGAMEBALANCE_FAIL,
-          payload: e.status,
+          type: GETGAMEBALANCE_SUCCESS,
+          payload: response,
           gpcode: gpcode,
           loading: false,
         });
-      });
+        // AppHistory.push("/");
+      } else {
+        dispatch({
+          type: GETGAMEBALANCE_FAIL,
+          payload: response,
+          gpcode: gpcode,
+          loading: false,
+        });
+      }
 
-    return result;
+      return response;
+    } catch (error: any) {
+      dispatch({
+        type: GETGAMEBALANCE_FAIL,
+        payload: error.status,
+        gpcode: gpcode,
+        loading: false,
+      });
+    }
   }, []);
 
   const doBankDeposit2 = useCallback(

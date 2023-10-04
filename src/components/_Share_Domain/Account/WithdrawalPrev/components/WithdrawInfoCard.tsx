@@ -38,7 +38,6 @@ const WithdrawInfoCard = (props: Props) => {
   const getMinWithdrawLimit = useCallback(async () => {
     const result =
       (await WalletService.GetMinWithdrawLimit()) as unknown as GetMinWithdrawLimitResDto;
-    console.log(result);
     if (!result.IsSuccess) {
       return;
     }
