@@ -78,9 +78,10 @@ export function useGetBottomNavItemList() {
   useEffect(() => {
     const matchNavItem =
       bottomNavItemList.find(
-        (bottomNavItem) => bottomNavItem.routeCategory === route.category
+        (bottomNavItem) => bottomNavItem.routeCategory === route?.category
       ) || null;
 
+    if (!matchNavItem) return
     setSelectedBottomNavItem(matchNavItem);
   }, [route]);
 
