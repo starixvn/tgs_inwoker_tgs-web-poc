@@ -14,6 +14,7 @@ import InboxDialog from "@/components/Mobile/pages/Inbox/InboxDialog";
 import AffiliateDialog from "@/components/Mobile/pages/Affiliate/AffiliateDialog";
 import ContactUsDialog from "@/components/Mobile/pages/ContactUs/ContactUsDialog";
 import DownloadAppDialog from "@/components/Mobile/pages/AppDownload/DownloadAppDialog";
+import i18n from "@/utils/i18n";
 
 export enum NavCardKey {
   PROFILE,
@@ -39,55 +40,55 @@ export function useAccountNavigations() {
     return [
       {
         key: NavCardKey.PROFILE,
-        label: "Account",
+        label: i18n.t("wap.main.my"),
         iconUrl: profileImg,
         routePath: "/profile",
       },
       {
         key: NavCardKey.DEPOSIT,
-        label: "Deposit",
+        label: i18n.t("common.deposit"),
         iconUrl: depositImg,
         routePath: "/deposit",
       },
       {
         key: NavCardKey.WITHDRAW,
-        label: "Withdraw",
+        label: i18n.t("common.withdrawal"),
         iconUrl: withdrawImg,
         routePath: "/withdrawal",
       },
       {
         key: NavCardKey.TRANSFER,
-        label: "Transfer",
+        label: i18n.t("common.transfer"),
         iconUrl: transferImg,
         routePath: "/transfer",
       },
       {
         key: NavCardKey.REPORT,
-        label: "Report",
+        label: i18n.t("report.title"),
         iconUrl: reportImg,
         routePath: "/report",
       },
       {
         key: NavCardKey.INBOX,
-        label: "Inbox",
+        label: i18n.t("wap.main.account.inbox"),
         iconUrl: inboxImg,
         routePath: "/inbox",
       },
       {
         key: NavCardKey.AFFILIATE,
-        label: "Affiliate",
+        label: i18n.t("wap.main.account.affiliate"),
         iconUrl: affiliateImg,
         routePath: "/affiliate",
       },
       {
         key: NavCardKey.CONTACT_US,
-        label: "Contact Us",
+        label: i18n.t("common.contact"),
         iconUrl: profileImg,
         routePath: "/contact",
       },
       {
         key: NavCardKey.APP_DOWNLOAD,
-        label: "App Download",
+        label: i18n.t("wap.main.account.appDownload"),
         iconUrl: downloadImg,
         routePath: "/appDownload",
       },

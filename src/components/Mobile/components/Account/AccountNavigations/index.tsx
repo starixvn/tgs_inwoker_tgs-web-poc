@@ -12,6 +12,7 @@ import {
   useAccountNavigations,
 } from "@/hooks/account/useAccountNavigations";
 import { useAuth } from "@/hooks/auth/useAuth";
+import i18n from "@/utils/i18n";
 
 const AccountNavsContainer = styled.div`
   padding: 15px 0 0;
@@ -74,7 +75,7 @@ const AccountNavigations = (props: Props) => {
           color={"primary"}
           onClick={handleLogout}
         >
-          Logout
+          {i18n.t("web.header.logout")}
         </Button>
       </AccountNavsContainer>
     </>
