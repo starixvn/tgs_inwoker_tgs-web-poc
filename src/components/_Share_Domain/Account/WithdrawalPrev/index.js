@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import Header from "@/components/Mobile/components/_PrevShare/Header";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Dialog";
 import Button from "@/components/Mobile/components/_PrevShare/Button";
 import Textbox from "@/components/Mobile/components/_PrevShare/Textbox";
 import Common from "@/utils/Common";
 import { walletAction } from "@/api-services/actions/walletAction";
-import { WalletService } from "@/api-services/services/WalletService";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -17,66 +15,19 @@ import i18n from "@/utils/i18n";
 import Slide from "@material-ui/core/Slide";
 import config from "@/config/config";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import WithdrawInfoCard from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawInfoCard";
+import ManageBankCardButton from "@/components/_Share_Domain/Account/WithdrawalPrev/components/ManageBankCardButton";
+import TransferAllToWallet from "@/components/_Share_Domain/Account/WithdrawalPrev/components/TransferAllToWallet";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const Container = styled.div`
-  width: 100%;
-  overflow: hidden;
-`;
-const BalanceLabel = styled.div`
-  float: right;
-
-  font-size: 30px;
-  font-weight: 600;
-
-  text-align: right;
-  color: #fde73f;
-`;
-const InnerContainer = styled.div`
-  margin: 40px auto 40px auto;
-
-  background-color: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px 0 rgba(35, 31, 27, 0.1);
-  padding 20px 0 20px 10px;
-`;
-const RowContainer = styled.div`
-  min-height: 80px;
-  margin: 10px 0 10px 30px;
-`;
-
-const LeftLabel = styled.div`
-  float: left;
-  border-left: 3px solid #000;
-
-  font-size: 32px;
-  padding-left: 30px;
-  color: #4a4a4a;
-  width: 450px;
-  margin: 10px 0 0 0;
-`;
-const LeftLabelValue = styled.div`
-  float: left;
-  font-size: 28px;
-  width: 450px;
-  color: ${({ theme }) => theme.secondary};
-  padding-left: 30px;
-`;
 
 const BottomDesc = styled.div`
   margin: 0 auto;
   width: 86%;
   font-size: 26px;
 
-  color: ${({ theme }) => theme.secondary};
-`;
-const ButtonCardManage = styled.div`
-  float: right;
-  margin: 0px 50px 20px 0;
-  font-size: 26px;
-  display: flex;
   color: ${({ theme }) => theme.secondary};
 `;
 
@@ -136,17 +87,6 @@ const StyledModalPopup = withStyles((theme) => ({
   },
 }))(Modal);
 
-const Icon = styled.div`
-  width: 40px;
-  height: 40px;
-  margin-right: 20px;
-  background-color: ${({ theme }) => theme.secondary};
-  mask: ${({ icon }) => {
-    return `url(${icon}) no-repeat center /
-    contain;`;
-  }};
-`;
-
 const CustomSelect = styled.select`
   font-size: 28px;
   margin-top: 25px;
@@ -174,19 +114,6 @@ const CustomSelectContainer = styled.div`
   margin: 20px auto;
 `;
 
-const LimitLabel = styled.span`
-  color: #747474;
-`;
-
-const LimitAmount = styled.span`
-  color: #c0252d;
-`;
-const ExchangeRateContainer = styled.div`
-  margin: 20px auto;
-  font-size: 28px;
-  padding: 0px 20px 20px 48px;
-`;
-
 const ButtonWrapper = styled.div`
   margin: 15px 0 0 0;
   display: flex;
@@ -203,6 +130,12 @@ const GameWalletButton = styled.div`
   color: #ffffff;
   text-align: center;
   width: 100%;
+`;
+
+const ManageBankCardButtonContainer = styled.div`
+  display: flex;
+  justify-content: end;
+  margin: 15px auto 19px;
 `;
 
 class WithdrawalPrev extends Component {
@@ -223,7 +156,6 @@ class WithdrawalPrev extends Component {
       password: "",
       otp: false,
       disabled: false,
-      minWithdrawLimit: 0,
 
       min: 0,
       max: 0,
@@ -249,14 +181,6 @@ class WithdrawalPrev extends Component {
           .paymentchannelid
       );
     }
-    WalletService.GetMinWithdrawLimit().then((e) => {
-      if (e.IsSuccess) {
-        this.setState({
-          ...this.state,
-          minWithdrawLimit: e.data,
-        });
-      }
-    });
 
     if (this.props.token != null) {
       if (this.props.wallet.bankCardList.length === 0)
@@ -310,16 +234,6 @@ class WithdrawalPrev extends Component {
         });
       } else {
         this.props.alert("", this.props.wallet.withdrawalResult.info);
-        // if (this.props.wallet.withdrawalResult.code === 207) {
-        //   this.props.alert('', i18n.t('common.msgRequiredTurnover'))
-        // } else if (this.props.wallet.withdrawalResult.code === 901) {
-        //   this.props.alert(
-        //     '',
-        //     i18n.t('common.msgInvalidWithdrawalPassword')
-        //   )
-        // } else {
-        //   this.props.alert('', this.props.wallet.withdrawalResult.info)
-        // }
       }
     }
   }
@@ -471,54 +385,12 @@ class WithdrawalPrev extends Component {
 
   render() {
     return (
-      <Container>
-        <InnerContainer>
-          {/*您可提款餘額為*/}
-          <RowContainer>
-            <LeftLabel>{i18n.t("withdrawal.msgCanWithdrawal")}</LeftLabel>
-            <LeftLabelValue>
-              {this.props.wallet.mainSymbol}
-              {Common.formatNumberWithThousand(this.props.wallet.mainBalance)}
-            </LeftLabelValue>
-          </RowContainer>
-          <RowContainer>
-            {/*流水需求*/}
-            <LeftLabel>{i18n.t("withdrawal.turnover")}</LeftLabel>
-            <LeftLabelValue>
-              {this.props.wallet.mainSymbol}
-              {Common.formatNumberWithThousand(this.state.minWithdrawLimit)}
-            </LeftLabelValue>
-          </RowContainer>
-        </InnerContainer>
-        {/*管理银行卡*/}
-        <ButtonCardManage onClick={() => this.props.appHistory.push("/card")}>
-          <Icon
-            icon={
-              process.env.PUBLIC_URL +
-              `/assets/images/wapp//icon-card-manage.png`
-            }
-          />
-          {i18n.t("withdrawal.manageBank")}
-        </ButtonCardManage>
-        {config.features.NewTransferUI && (
-          <CustomSelectContainer>
-            {/*從所有子錢包轉移到主錢包*/}
-            <CustomLabel>{i18n.t("transfer.msgTransferOutFromGP")}</CustomLabel>
-            {/*一键傳輸*/}
-            <ButtonWrapper>
-              <GameWalletButton
-                style={{ marginTop: 0, marginLeft: 10 }}
-                onClick={() => {
-                  this.props.performWithdrawFromEveryBrand().then((e) => {
-                    this.getAllGameBalance();
-                  });
-                }}
-              >
-                {i18n.t("transfer.oneKeyTransferAll")}
-              </GameWalletButton>
-            </ButtonWrapper>
-          </CustomSelectContainer>
-        )}
+      <>
+        <WithdrawInfoCard />
+        <ManageBankCardButtonContainer>
+          <ManageBankCardButton />
+        </ManageBankCardButtonContainer>
+        {config.features.NewTransferUI && <TransferAllToWallet />}
         {/*管理銀行卡*/}
         <CustomSelectContainer>
           <CustomLabel>{i18n.t("withdrawal.bankCard")}</CustomLabel>
@@ -693,7 +565,7 @@ class WithdrawalPrev extends Component {
           />
         </StyledModalPopup>
         <Loading show={this.state.loading || this.props.wallet.loading} />
-      </Container>
+      </>
     );
   }
 }

@@ -77,11 +77,15 @@ export function useGetBottomNavItemList() {
 
   useEffect(() => {
     const matchNavItem =
-      bottomNavItemList.find(
-        (bottomNavItem) => bottomNavItem.routeCategory === route?.category
-      ) || null;
+      bottomNavItemList.find((bottomNavItem) => {
+        return bottomNavItem.routeCategory === route?.category;
+      }) || null;
 
-    if (!matchNavItem) return
+    if (!matchNavItem) {
+      console.log(route);
+      return;
+    }
+
     setSelectedBottomNavItem(matchNavItem);
   }, [route]);
 

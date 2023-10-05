@@ -2,16 +2,37 @@ import { useLocation } from "react-router";
 import { Route, routes } from "@/components/Mobile/router";
 import { useEffect, useState } from "react";
 
+function compareRoutePathAndCurrentPathIsEqual(
+  routePath: string,
+  currentPath: string
+) {
+  //ex:
+  // currentPath = /promotion/018af00e-0f30-0000-0002-07e7b5970319’
+  // routePath = "/promotion/:id?"
+  // it'll return true
+
+  const paramRegex = /\/:[a-zA-Z0-9]+/g;
+  const routePathWithoutParams = routePath.replace(paramRegex, ""); // 去除路由中的参数部分
+
+  if (!paramRegex.test(routePath)) {
+    return routePath === currentPath;
+  }
+
+  const regex = new RegExp(`^${routePathWithoutParams}`);
+  return regex.test(currentPath);
+}
+
 function getCurrentRoute(currentPath: string) {
   return (
     routes.find((route) => {
-      return route.path.includes(currentPath);
+      return compareRoutePathAndCurrentPathIsEqual(route.path, currentPath);
     }) || null
   );
 }
 
 export function useRoute() {
   const location = useLocation();
+
   const [currentRoute, setCurrentRoute] = useState<Route>(
     getCurrentRoute(location.pathname)
   );
