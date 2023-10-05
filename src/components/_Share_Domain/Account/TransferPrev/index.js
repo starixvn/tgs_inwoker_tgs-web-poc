@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import { accountAction } from "@/api-services/actions/accountAction";
 import { walletAction } from "@/api-services/actions/walletAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
@@ -10,11 +9,15 @@ import i18n from "@/utils/i18n";
 import { Button } from "@/components/Mobile/components/UI/Button";
 import TransferCard from "@/components/_Share_Domain/Account/TransferPrev/components/TransferCard";
 import AutoTransferSwitch from "@/components/_Share_Domain/Account/TransferPrev/components/AutoTransferSwitch";
+import WithdrawAllToMainWallet from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawAllToMainWallet";
 
 const Container = styled.div`
   width: 100%;
   overflow: hidden;
-  min-height: 100vh;
+
+  & > * {
+    margin-bottom: 20px;
+  }
 `;
 
 class Transfer extends Component {
@@ -169,35 +172,29 @@ class Transfer extends Component {
           transferAmount={this.state.transferAmount}
           handleChangeTransferAmount={this.handleTransferAmountChanged}
           mainAccountId={this.state.mainAccountId}
+        >
+          <Button
+            onClick={this.handleSubmitClicked}
+            variant={"contained"}
+            color={"primary"}
+            fullWidth
+            disabled={
+              this.state.transferAmount === 0 ||
+              this.state.transferAmount === "" ||
+              this.state.toWallet === this.state.fromWallet ||
+              this.state.disabled === true
+            }
+          >
+            {i18n.t("common.confirm")}
+          </Button>
+        </TransferCard>
+
+        <WithdrawAllToMainWallet
+          label={i18n.t("transfer.msgTransferOutFromGP")}
+          buttonText={i18n.t("transfer.oneKeyTransferOut")}
         />
 
         <AutoTransferSwitch />
-
-        <Button
-          variant={"contained"}
-          color={"primary"}
-          fullWidth
-          onClick={() => {
-            this.props.performWithdrawFromEveryBrand();
-          }}
-        >
-          {i18n.t("transfer.oneKeyTransferOut")}
-        </Button>
-
-        <Button
-          onClick={this.handleSubmitClicked}
-          variant={"contained"}
-          color={"primary"}
-          fullWidth
-          disabled={
-            this.state.transferAmount === 0 ||
-            this.state.transferAmount === "" ||
-            this.state.toWallet === this.state.fromWallet ||
-            this.state.disabled === true
-          }
-        >
-          {i18n.t("common.confirm")}
-        </Button>
 
         <Loading
           show={
@@ -213,34 +210,21 @@ class Transfer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    account: state.account,
-    game: state.game,
     wallet: state.wallet,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    getAllWallet: (token, platformList) =>
-      dispatch(accountAction.getAllWallet(token, platformList)),
-    getAccountProfile: (token, showVip) =>
-      dispatch(accountAction.getAccountProfile(token, showVip)),
     getBalanceList: () => dispatch(walletAction.getBalanceList()),
     resetResult: () =>
       dispatch({
         type: RESET_WALLETRESULT,
       }),
 
-    doWithdrawAll: () => dispatch(walletAction.doWithdrawAll()),
     doTransfer: (gpcode, amount) =>
       dispatch(walletAction.doTransfer(gpcode, amount)),
     doWithdrawalFromGame: (gpcode, amount) =>
       dispatch(walletAction.doWithdrawalFromGame(gpcode, amount)),
-    getGameBalance: (gpcode) => dispatch(walletAction.getGameBalance(gpcode)),
-    updateAutoTransferStatus: () =>
-      dispatch(walletAction.updateAutoTransferStatus()),
-    getAutoTransferStatus: () => dispatch(walletAction.getAutoTransferStatus()),
-    performWithdrawFromEveryBrand: () =>
-      dispatch(walletAction.performWithdrawFromEveryBrand()),
   };
 };
 

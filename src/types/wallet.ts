@@ -57,7 +57,7 @@ export interface WalletState {
   mainBalance: number;
   mainSymbol: string;
   mainId: string;
-  autotransfer: boolean;
+  autotransfer: null | boolean;
   depositMinLimit: number;
   depositMaxLimit: number;
   withdrawalMinLimit: number;

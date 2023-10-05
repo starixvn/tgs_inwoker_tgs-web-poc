@@ -1,44 +1,62 @@
-import { withStyles } from "@material-ui/core/styles";
-import { Switch as MuiSwitch } from "@material-ui/core";
+import { createStyles, withStyles } from "@material-ui/core/styles";
+import {
+  Switch as MuiSwitch,
+  SwitchClassKey,
+  SwitchProps,
+  Theme,
+} from "@material-ui/core";
 import React from "react";
+import { themeList } from "@/theme";
 
-export const Switch = withStyles((theme) => ({
-  root: {
-    width: 42,
-    height: 26,
-    padding: 0,
-    marginLeft: 8,
-  },
-  switchBase: {
-    padding: 1,
-    "&$checked": {
-      transform: "translateX(16px)",
-      color: theme.palette.common.white,
-      "& + $track": {
-        backgroundColor: "primay",
-        opacity: 1,
-        border: "none",
+const theme = themeList["mobileT18"];
+
+interface Styles extends Partial<Record<SwitchClassKey, string>> {
+  focusVisible?: string;
+}
+
+interface Props extends SwitchProps {
+  classes: Styles;
+}
+
+export const Switch = withStyles((muiTheme: Theme) =>
+  createStyles({
+    root: {
+      width: 42,
+      height: 26,
+      padding: 0,
+      margin: muiTheme.spacing(1),
+    },
+    switchBase: {
+      padding: 1,
+      "&$checked": {
+        transform: "translateX(16px)",
+        color: muiTheme.palette.common.white,
+        "& + $track": {
+          backgroundColor: theme.primary,
+          opacity: 1,
+          border: "none",
+        },
+      },
+      "&$focusVisible $thumb": {
+        color: theme.primary,
+        border: "6px solid #fff",
       },
     },
-    "&$focusVisible $thumb": {
-      color: "#52d869",
-      border: "6px solid #fff",
+    thumb: {
+      width: 24,
+      height: 24,
     },
-  },
-  thumb: {
-    width: 24,
-    height: 24,
-  },
-  track: {
-    borderRadius: 26 / 2,
-    border: `1px solid ${theme.palette.grey[400]}`,
-    backgroundColor: theme.palette.grey[50],
-    opacity: 1,
-    transition: theme.transitions.create(["background-color", "border"]),
-  },
-  checked: {},
-  focusVisible: {},
-}))(({ classes, ...props }) => {
+    track: {
+      borderRadius: 26 / 2,
+      border: `1px solid ${muiTheme.palette.grey[400]}`,
+      backgroundColor: muiTheme.palette.grey[50],
+      opacity: 1,
+      transition: muiTheme.transitions.create(["background-color", "border"]),
+    },
+    checked: {},
+    focusVisible: {},
+  })
+)(({ classes, ...props }: Props) => {
   return (
     <MuiSwitch
       focusVisibleClassName={classes.focusVisible}

@@ -12,7 +12,6 @@ import config from "@/config/config";
 import styled from "styled-components";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
 import {
-  FormControl,
   LabelContainer,
   ItemContainer,
   Remark,
@@ -20,21 +19,56 @@ import {
 import { Button } from "@/components/Mobile/components/UI/Button";
 import { Select } from "@/components/Mobile/components/UI/Select";
 import { TextField } from "@/components/Mobile/components/UI/TextField";
-import { MenuItem } from "@material-ui/core";
+import { FormControl as MuiFormControl, MenuItem } from "@material-ui/core";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import { Provider } from "@/types/game";
 import WalletSelect from "@/components/_Share_Domain/Account/TransferPrev/components/WalletSelect";
+import { themeList } from "@/theme";
+import { withStyles } from "@material-ui/core/styles";
+
+const theme = themeList["mobileT18"];
 
 const TransferCardContainer = styled.div`
-  background: gray;
+  background: ${theme.primaryLight};
+  color: ${theme.white};
+  padding: 12px;
+  & * {
+    font-size: 15px !important;
+  }
+
+  input,
+  input::placeholder {
+    font-size: 15px !important;
+    padding: 0;
+  }
 `;
 
 const RowContainer = styled.div`
+  min-height: 34px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
 `;
 
-const ColContainer = styled.div``;
+const ColContainer = styled.div`
+  width: 50%;
+`;
+
+const FormControl = withStyles(() => ({
+  root: {
+    borderRadius: "5px",
+    border: `1px solid ${theme.tertiary}`,
+    width: "100%",
+    fontSize: "0.937rem",
+    "& fieldset": {
+      border: "none",
+    },
+  },
+}))(MuiFormControl);
+
+const Spacing = styled.div`
+  margin-bottom: 10px;
+`;
 
 export interface TransferWallet {
   abbreviation: string;
@@ -48,7 +82,8 @@ type Props = {
   handleChangeToWallet: (e: ChangeEvent) => void;
   transferAmount: string;
   handleChangeTransferAmount: (e: ChangeEvent) => void;
-  mainAccountId: string; // "0"
+  mainAccountId: string; // "0",
+  children: React.ReactElement;
 };
 const TransferCard = ({
   fromWallet,
@@ -58,6 +93,7 @@ const TransferCard = ({
   transferAmount,
   handleChangeTransferAmount,
   mainAccountId,
+  children,
 }: Props) => {
   const { wallet, getGameBalance } = useWalletStore();
   const { game } = useGameStore();
@@ -117,35 +153,48 @@ const TransferCard = ({
 
       <RowContainer>
         <ColContainer>{i18n.t("transfer.transferFromWallet")}</ColContainer>
-        <WalletSelect
-          value={fromWallet}
-          handleChange={handleChangeFromWallet}
-          walletBalance={transferWallets}
-          mainAccountId={mainAccountId}
-        />
+        <ColContainer>
+          <WalletSelect
+            value={fromWallet}
+            handleChange={handleChangeFromWallet}
+            walletBalance={transferWallets}
+            mainAccountId={mainAccountId}
+          />
+        </ColContainer>
       </RowContainer>
 
       <RowContainer>
         <ColContainer>{i18n.t("transfer.transferToWallet")}</ColContainer>
-        <WalletSelect
-          value={toWallet}
-          handleChange={handleChangeToWallet}
-          walletBalance={transferWallets}
-          mainAccountId={mainAccountId}
-        />
+        <ColContainer>
+          <WalletSelect
+            value={toWallet}
+            handleChange={handleChangeToWallet}
+            walletBalance={transferWallets}
+            mainAccountId={mainAccountId}
+          />
+        </ColContainer>
       </RowContainer>
 
       <RowContainer>
         <ColContainer>{i18n.t("common.amount")}</ColContainer>
-        <TextField
-          type={"number"}
-          placeholder={i18n.t("transfer.msgEnterAmount")}
-          value={transferAmount}
-          onChange={handleChangeTransferAmount}
-        />
+        <ColContainer>
+          <FormControl>
+            <TextField
+              type={"number"}
+              placeholder={i18n.t("transfer.msgEnterAmount")}
+              value={transferAmount}
+              onChange={handleChangeTransferAmount}
+              style={{ padding: "6.5px 8px" }}
+            />
+          </FormControl>
+        </ColContainer>
       </RowContainer>
+
+      <Spacing />
+
+      {children}
     </TransferCardContainer>
   );
 };
 
-export default TransferCard;
+export default React.memo(TransferCard);

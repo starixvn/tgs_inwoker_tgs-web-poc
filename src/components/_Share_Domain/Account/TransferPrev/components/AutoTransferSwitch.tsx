@@ -18,12 +18,16 @@ const CustomSwitchContainer = styled.div`
   align-items: center;
   font-weight: normal;
   color: ${theme.white};
+
+  & > :first-child {
+    margin-right: 10px;
+  }
 `;
 
 type Props = {};
 const AutoTransferSwitch = (props: Props) => {
   const { wallet, updateAutoTransferStatus } = useWalletStore();
-  const [isChecked, setIsChecked] = useState(wallet.autotransfer);
+  const [isChecked, setIsChecked] = useState(!!wallet.autotransfer);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSwitchAutoTransfer = async () => {
@@ -33,7 +37,7 @@ const AutoTransferSwitch = (props: Props) => {
   };
 
   useEffect(() => {
-    setIsChecked(wallet.autotransfer);
+    setIsChecked(!!wallet.autotransfer);
   }, [wallet.autotransfer]);
 
   return (
@@ -57,4 +61,4 @@ const AutoTransferSwitch = (props: Props) => {
   );
 };
 
-export default AutoTransferSwitch;
+export default React.memo(AutoTransferSwitch);
