@@ -96,6 +96,8 @@ import { PerformLeePayDepositResDto } from "@/models/dto/wallet/PerformLeePayDep
 import { PerformManualFPSDepositWithNameResDto } from "@/models/dto/wallet/PerformManualFPSDepositWithNameResDto";
 import { GetListOfWithdrawChannelResDto } from "@/models/dto/wallet/GetListOfWithdrawChannelResDto";
 import { GetGameBalanceResDto } from "@/models/dto/game/GetGameBalanceResDto";
+import { DoTransferResDto } from "@/models/dto/wallet/DoTransferResDto";
+import { UpdateAutoTransferStatusResDto } from "@/models/dto/player/UpdateAutoTransferStatusResDto";
 
 export function useWalletStore() {
   const dispatch = useDispatch();
@@ -1201,39 +1203,42 @@ export function useWalletStore() {
       });
   }, []);
 
-  const doTransfer = useCallback((gpcode: string, amount: number) => {
-    dispatch({
-      type: DOTRANSFER_BEGIN,
-      loading: true,
-    });
-    const result = WalletService.Transfer(gpcode, amount)
-      .then((response) => {
-        if (response?.IsSuccess) {
-          dispatch({
-            type: DOTRANSFER_SUCCESS,
-            payload: response,
-            loading: false,
-          });
-
-          // AppHistory.push("/");
-        } else {
-          dispatch({
-            type: DOTRANSFER_FAIL,
-            payload: response,
-            loading: false,
-          });
-        }
-        return response;
-      })
-      .catch((e) => {
-        dispatch({
-          type: DOTRANSFER_FAIL,
-          payload: e.status,
-          loading: false,
-        });
+  const doTransfer = useCallback(async (gpcode: string, amount: number) => {
+    try {
+      dispatch({
+        type: DOTRANSFER_BEGIN,
+        loading: true,
       });
 
-    return result;
+      const response = (await WalletService.Transfer(
+        gpcode,
+        amount
+      )) as unknown as DoTransferResDto;
+
+      if (response?.IsSuccess) {
+        dispatch({
+          type: DOTRANSFER_SUCCESS,
+          payload: response,
+          loading: false,
+        });
+
+        // AppHistory.push("/");
+      } else {
+        dispatch({
+          type: DOTRANSFER_FAIL,
+          payload: response,
+          loading: false,
+        });
+      }
+
+      return response;
+    } catch (error) {
+      dispatch({
+        type: DOTRANSFER_FAIL,
+        payload: error.status,
+        loading: false,
+      });
+    }
   }, []);
 
   const doWithdrawalFromGame = useCallback((gpcode: string, amount: number) => {
@@ -1593,36 +1598,36 @@ export function useWalletStore() {
     return result;
   }, []);
 
-  const updateAutoTransferStatus = useCallback(() => {
-    dispatch({
-      type: UPDATEAUTOTRANSFER_BEGIN,
-      loading: true,
-    });
-    const result = WalletService.UpdateAutoTransferStatus()
-      .then((response) => {
-        if (response?.IsSuccess) {
-          dispatch({
-            type: UPDATEAUTOTRANSFER_SUCCESS,
-            payload: response,
-            loading: true,
-          });
-        } else {
-          dispatch({
-            type: UPDATEAUTOTRANSFER_FAIL,
-            payload: response,
-            loading: false,
-          });
-        }
-        return response;
-      })
-      .catch((error) => {
+  const updateAutoTransferStatus = useCallback(async () => {
+    try {
+      dispatch({
+        type: UPDATEAUTOTRANSFER_BEGIN,
+        loading: true,
+      });
+      const response =
+        (await WalletService.UpdateAutoTransferStatus()) as unknown as UpdateAutoTransferStatusResDto;
+      if (response.IsSuccess) {
+        dispatch({
+          type: UPDATEAUTOTRANSFER_SUCCESS,
+          payload: response,
+          loading: true,
+        });
+      } else {
         dispatch({
           type: UPDATEAUTOTRANSFER_FAIL,
-          payload: error,
+          payload: response,
           loading: false,
         });
+      }
+
+      return response;
+    } catch (error: any) {
+      dispatch({
+        type: UPDATEAUTOTRANSFER_FAIL,
+        payload: error,
+        loading: false,
       });
-    return result;
+    }
   }, []);
 
   const doBankDepositWithDetail = useCallback(

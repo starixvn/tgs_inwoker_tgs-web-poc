@@ -1,3 +1,5 @@
+import { DoTransferResDto } from "@/models/dto/wallet/DoTransferResDto";
+
 interface TransferChannel {
   channelcode: string;
   channelid: string;
@@ -43,7 +45,7 @@ export interface WalletState {
   deleteBankCardResult: null;
   addBillingResult: null;
   withdrawalResult: null;
-  transferResult: null;
+  transferResult: null | DoTransferResDto;
   withdrawalAllResult: null;
   balanceList: any[];
   bankCardList: any[];

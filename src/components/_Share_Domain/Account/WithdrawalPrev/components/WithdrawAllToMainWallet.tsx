@@ -21,7 +21,7 @@ const ButtonWrapper = styled.div`
 `;
 
 type Props = {};
-const TransferAllToWallet = (props: Props) => {
+const WithdrawAllToMainWallet = (props: Props) => {
   const { game } = useGameStore();
   const { performWithdrawFromEveryBrand, getGameBalance } = useWalletStore();
   const [isLoading, setIsLoading] = useState(false);
@@ -66,4 +66,4 @@ const TransferAllToWallet = (props: Props) => {
   );
 };
 
-export default TransferAllToWallet;
+export default WithdrawAllToMainWallet;

@@ -8,6 +8,7 @@ const BadgeContainer = styled.div`
   display: flex;
   gap: 5px 14px;
   flex-wrap: wrap;
+  margin-bottom: 12px;
 `;
 
 type Props = {
