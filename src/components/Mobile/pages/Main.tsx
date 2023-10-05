@@ -18,21 +18,13 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { GameTypeEnum } from "../../../api-services/utils/Enum";
 import Category from "../components/Category";
+import CategoryLobby from "../components/CategoryLobby";
 import { badgeList, gamesList } from "../constants/games";
 import { gameTypeList } from "../constants/tab";
 
 type Props = {
   imageUrl: string;
 };
-
-type GameItemProps = {
-  desktopurl: string,
-  id: string,
-  mobileurl: string,
-  navurl: string,
-  alt: string,
-  title: string
-}
 
 const MainWrapper = styled.div`
   width: 100%;
@@ -125,11 +117,15 @@ const Main = (props: Props) => {
   const history = useHistory();
   const { game, getHomePageGameList } = useGameStore();
   const { general } = useGeneralStore();
-  const [activeGameTypeTab, setActiveGameTypeTab] = useState(GameTypeEnum.LOBBYALL);
+  const [activeGameTypeTab, setActiveGameTypeTab] = useState(0);
   const [searchString, setSearchString] = useState("");
+  const [isLobby, setIsLobby] = useState(true);
 
-  const handleGameTypeClick = (item: number) => {
-    setActiveGameTypeTab(item);
+  const handleGameTypeClick = (gameType: number) => {
+    setActiveGameTypeTab(gameType);
+    if (gameType) {
+      setIsLobby(false);
+    }
   };
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -207,58 +203,69 @@ const Main = (props: Props) => {
         )}
       </TabContainer>
 
-      {activeGameTypeTab === GameTypeEnum.SLOT ||
-        activeGameTypeTab === GameTypeEnum.FISH ||
-        activeGameTypeTab === GameTypeEnum.TABLEGAME ? (
-        <>
-          <Tag />
-          <Input
-            placeholder={"Search"}
-            imageUrl={searchIcon}
-            handleChange={handleSearch}
-            value={searchString}
-          />
-          <GameCardContainer>
-            {gamesList.map(
-              (item: {
-                isFavorite: any;
-                key: string;
-                iconUrl: string;
-                tag: string;
-              }) => (
-                <>
-                  <GameCard key={item.key} imageUrl={item.iconUrl}>
-                    {item.isFavorite ? (
-                      <LikeIcon imageUrl={likeIcon} />
-                    ) : (
-                      <LikeIcon imageUrl={dislikeIcon} />
-                    )}
-
-                    {item.tag === "hot" && (
-                      <BadgeIcon imageUrl={badgeList.hot} />
-                    )}
-                    {item.tag === "new" && (
-                      <BadgeIcon imageUrl={badgeList.new} />
-                    )}
-                  </GameCard>
-                </>
-              )
-            )}
-          </GameCardContainer>
-        </>
-      ) : (
+      {!activeGameTypeTab &&
         <LobbyContainer>
-          {Array.isArray(lobbyAllGroupByData) && lobbyAllGroupByData.slice(1).map((item: any) => (
-            <Category
+          {lobbyAllGroupByData.slice(1).map((item: any) => (
+            <CategoryLobby
               key={item.gameType}
-              gameType={item.gameType}
               iconUrl={item.iconUrl}
               text={item.text}
-              gameData={item.gameData}
+              lobbyAllGameData={item.gameData}
             />
           ))}
         </LobbyContainer>
-      )}
+      }
+
+      {(activeGameTypeTab === GameTypeEnum.LIVELOBBY ||
+        activeGameTypeTab === GameTypeEnum.LOTTERYLOBBY ||
+        activeGameTypeTab === GameTypeEnum.SPORTS ||
+        activeGameTypeTab === GameTypeEnum.COCKFIGHT ||
+        activeGameTypeTab === GameTypeEnum.QIPAILOBBY) &&
+        <Category
+          gameTypeData={groupBy_gameType[activeGameTypeTab] || []}
+        />
+      }
+
+      {activeGameTypeTab === GameTypeEnum.SLOT ||
+        activeGameTypeTab === GameTypeEnum.FISH ||
+        activeGameTypeTab === GameTypeEnum.TABLEGAME && (
+          <>
+            <Tag />
+            <Input
+              placeholder={"Search"}
+              imageUrl={searchIcon}
+              handleChange={handleSearch}
+              value={searchString}
+            />
+            <GameCardContainer>
+              {gamesList.map(
+                (item: {
+                  isFavorite: any;
+                  key: string;
+                  iconUrl: string;
+                  tag: string;
+                }) => (
+                  <>
+                    <GameCard key={item.key} imageUrl={item.iconUrl}>
+                      {item.isFavorite ? (
+                        <LikeIcon imageUrl={likeIcon} />
+                      ) : (
+                        <LikeIcon imageUrl={dislikeIcon} />
+                      )}
+
+                      {item.tag === "hot" && (
+                        <BadgeIcon imageUrl={badgeList.hot} />
+                      )}
+                      {item.tag === "new" && (
+                        <BadgeIcon imageUrl={badgeList.new} />
+                      )}
+                    </GameCard>
+                  </>
+                )
+              )}
+            </GameCardContainer>
+          </>
+        )}
 
       <TabPanel />
       <SocialMedia />

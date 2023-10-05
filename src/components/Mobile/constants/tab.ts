@@ -22,11 +22,11 @@ type TabIcon = {
 
 export const gameTypeList: TabIcon[] = [
   {
-    key: "Lobby",
+    key: "lobby",
     iconUrl: lobby,
     text: "Lobby",
     fontSize: "small",
-    gameType: GameTypeEnum.LOBBYALL
+    gameType: 0
   },
   {
     key: "slots",
@@ -36,7 +36,7 @@ export const gameTypeList: TabIcon[] = [
     gameType: GameTypeEnum.SLOT
   },
   {
-    key: "Live",
+    key: "live",
     iconUrl: live,
     text: "Live Casino",
     fontSize: "smaller",

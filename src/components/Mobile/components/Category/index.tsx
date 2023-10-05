@@ -1,19 +1,9 @@
-import example from '@/assets/images/home/mobile/example.png';
-import ButtonText from '@/components/Mobile/components/ButtonText';
-import CategoryLabel from '@/components/Mobile/components/CategoryLabel';
 import styled from 'styled-components';
-import CardVendor from "../CardVender";
+import CardVendor from '../CardVender';
 
 const Wrapper = styled.div`
     width: 100%;
     margin: 15px 0;
-`;
-
-const CategoryTitle = styled.div`    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
 `;
 
 const CategoryContent = styled.div`
@@ -25,59 +15,39 @@ const CategoryContent = styled.div`
     margin-bottom: 30px;
 `;
 
-const ButtonContainer = styled.div`    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
 type Props = {
-  gameType: string;
-  iconUrl: string;
-  text: string;
-  gameData: [
+  gameTypeData: [
     {
       name: string;
       abbreviation: string;
+      game_platform_id: number;
+      game_platform_name: string;
+      gpcode: string;
+      is_try: number;
+      params: string;
+      status: number;
     }
   ];
 }
 
 const Category = ({
-  gameType,
-  iconUrl,
-  text,
-  gameData
+  gameTypeData
 }: Props) => {
-
   return (
     <Wrapper>
-      <CategoryTitle>
-        <CategoryLabel imageUrl={iconUrl} text={text} />
-        <ButtonText size="small" text={"View all"} />
-      </CategoryTitle>
-
       <CategoryContent>
-        {gameData.map((game) => {
+        {gameTypeData && gameTypeData.map((game) => {
           return (
             <CardVendor
-              key={game.abbreviation}
-              imageUrl={example}
-              gameName={game.name}
-              venderName={game.abbreviation}
+              key={game?.abbreviation}
+              imageUrl={process.env.PUBLIC_URL + "/assets/images/home/liveCasino/" + game?.abbreviation + ".png"}
+              venderLogo={process.env.PUBLIC_URL + "/assets/images/home/provider/liveCasino/" + game?.abbreviation + ".png"}
+            // gameName={game.name}
+            // venderName={game.abbreviation}
             />
           )
         })}
-        {/* <CardVendor
-          imageUrl={example}
-          venderLogo={venderLogo}
-        /> */}
-        {/* to-do : confirm card design */}
       </CategoryContent>
-
-      <ButtonContainer>
-        <ButtonText size="large" text={"Load more"} />
-      </ButtonContainer>
     </Wrapper>
   );
 };

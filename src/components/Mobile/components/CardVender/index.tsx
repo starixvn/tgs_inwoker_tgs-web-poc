@@ -2,10 +2,10 @@ import bg from "@/assets/images/home/mobile/vender_card_bg.png";
 import styled from 'styled-components';
 
 type Props = {
-    imageUrl: string;
-    gameName?: string;
-    venderName?: string;
-    venderLogo?: string;
+  imageUrl: string;
+  gameName?: string;
+  venderName?: string;
+  venderLogo?: string;
 }
 
 const CardVendorBg = styled.div`
@@ -42,7 +42,11 @@ const GradientBg = styled.div`
 
 const CardContent = styled.div`
     width: 100%;
-    text-align: center;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 18px;
 `;
 
 const GameName = styled.div`
@@ -59,24 +63,29 @@ const VenderName = styled.div`
     font-weight: 400;
 `;
 
-const VenderLogo = styled.div`
+const VenderLogo = styled.div<Props>`
+    display: inline-flex;
     width: 100%;
-    height: 100%;
+    max-width: 77px
+    min-height: 38px;
+    background-image: url(${props => props.imageUrl});
+    background-size: contain;
+    background-repeat: no-repeat;
 `;
 
 const CardVendor = ({ imageUrl, gameName, venderName, venderLogo }: Props) => {
-    return (
-        <CardVendorBg>
-            <GameIcon imageUrl={imageUrl}></GameIcon>
-            <GradientBg>
-                <CardContent>
-                    {gameName && <GameName>{gameName}</GameName>}
-                    {venderName && <VenderName>{venderName}</VenderName>}
-                    {venderLogo && <VenderLogo><img src={venderLogo} alt={venderName} /></VenderLogo>}
-                </CardContent>
-            </GradientBg>
-        </CardVendorBg>
-    );
+  return (
+    <CardVendorBg>
+      <GameIcon imageUrl={imageUrl}></GameIcon>
+      <GradientBg>
+        <CardContent>
+          {gameName && <GameName>{gameName}</GameName>}
+          {venderName && <VenderName>{venderName}</VenderName>}
+          {venderLogo && <VenderLogo imageUrl={venderLogo}></VenderLogo>}
+        </CardContent>
+      </GradientBg>
+    </CardVendorBg>
+  );
 };
 
 export default CardVendor;
