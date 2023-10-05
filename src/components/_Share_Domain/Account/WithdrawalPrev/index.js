@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Dialog";
-import Button from "@/components/Mobile/components/_PrevShare/Button";
 import Textbox from "@/components/Mobile/components/_PrevShare/Textbox";
 import Common from "@/utils/Common";
 import { walletAction } from "@/api-services/actions/walletAction";
@@ -18,6 +17,15 @@ import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import WithdrawInfoCard from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawInfoCard";
 import ManageBankCardButton from "@/components/_Share_Domain/Account/WithdrawalPrev/components/ManageBankCardButton";
 import TransferAllToWallet from "@/components/_Share_Domain/Account/WithdrawalPrev/components/TransferAllToWallet";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+  Remark,
+} from "@/components/Mobile/styles/forms";
+import { Button } from "@/components/Mobile/components/UI/Button";
+import { Select } from "@/components/Mobile/components/UI/Select";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -29,12 +37,6 @@ const BottomDesc = styled.div`
   font-size: 26px;
 
   color: ${({ theme }) => theme.secondary};
-`;
-
-const CustomPlaceholderWrapper = styled.div`
-  & input::placeholder {
-    font-size: 22px;
-  }
 `;
 
 const StyledModalBank = withStyles((theme) => ({
@@ -86,51 +88,6 @@ const StyledModalPopup = withStyles((theme) => ({
     display: "block",
   },
 }))(Modal);
-
-const CustomSelect = styled.select`
-  font-size: 28px;
-  margin-top: 25px;
-  border-radius: 16px;
-  border: solid 1px transparent;
-  width: 100%;
-  color: ${({ theme }) => theme.secondary};
-`;
-
-const CustomLabel = styled.div`
-  font-size: 20px;
-  font-weight: 600;
-  margin-left: 3px;
-  color: #212e31;
-`;
-
-const CustomSelectContainer = styled.div`
-  height: 170px;
-
-  box-shadow: 0 2px 6px 0 rgba(58, 58, 58, 0.2);
-  border: solid 1px #f3f3f3;
-  background-color: #ffffff;
-  border-radius: 20px;
-  padding: 40px 20px 0 20px;
-  margin: 20px auto;
-`;
-
-const ButtonWrapper = styled.div`
-  margin: 15px 0 0 0;
-  display: flex;
-`;
-
-const GameWalletButton = styled.div`
-  background: ${({ theme }) => {
-    return theme.primary;
-  }};
-
-  border-radius: 10px;
-  font-size: 24px;
-  padding: 10px 0;
-  color: #ffffff;
-  text-align: center;
-  width: 100%;
-`;
 
 const ManageBankCardButtonContainer = styled.div`
   display: flex;
@@ -355,9 +312,6 @@ class WithdrawalPrev extends Component {
       ].id
     );
   };
-  handlePasswordChange = (e) => {
-    this.setState({ ...this.state, password: e.target.value });
-  };
 
   getAllGameBalance = () => {
     this.props.game.providerList
@@ -392,63 +346,64 @@ class WithdrawalPrev extends Component {
         </ManageBankCardButtonContainer>
         {config.features.NewTransferUI && <TransferAllToWallet />}
         {/*管理銀行卡*/}
-        <CustomSelectContainer>
-          <CustomLabel>{i18n.t("withdrawal.bankCard")}</CustomLabel>
-          <CustomSelect
-            value={this.state.selectedBankCardIndex}
-            native
-            onChange={(e) => {
-              this.handleBankClick(e);
-              this.getTransferLimit(
-                this.handleFilterCardList(this.props.wallet.bankCardList)[
-                  e.target.value
-                ].paymentchannelid
-              );
-            }}
-          >
-            <option disabled value="">
-              {i18n.t("withdrawal.msgEnterBank")}
-            </option>
-            {this.handleFilterCardList(this.props.wallet.bankCardList).map(
-              (item, index) => {
-                return (
-                  <option key={index} value={index} id={`optionValue-${index}`}>
-                    {item.banktype} (
-                    {item.detail.address ||
-                      item.detail.bankAccount ||
-                      item.detail.phone}
-                    )
-                  </option>
+        <ItemContainer>
+          <LabelContainer>{i18n.t("withdrawal.bankCard")}</LabelContainer>
+          <FormControl variant="outlined">
+            <Select
+              value={this.state.selectedBankCardIndex}
+              native
+              onChange={(e) => {
+                this.handleBankClick(e);
+                this.getTransferLimit(
+                  this.handleFilterCardList(this.props.wallet.bankCardList)[
+                    e.target.value
+                  ].paymentchannelid
                 );
-              }
-            )}
-          </CustomSelect>
-        </CustomSelectContainer>
+              }}
+            >
+              <option disabled value="">
+                {i18n.t("withdrawal.msgEnterBank")}
+              </option>
+              {this.handleFilterCardList(this.props.wallet.bankCardList).map(
+                (item, index) => {
+                  return (
+                    <option
+                      key={index}
+                      value={index}
+                      id={`optionValue-${index}`}
+                    >
+                      {item.banktype} (
+                      {item.detail.address ||
+                        item.detail.bankAccount ||
+                        item.detail.phone}
+                      )
+                    </option>
+                  );
+                }
+              )}
+            </Select>
+          </FormControl>
+        </ItemContainer>
         {/*請輸入提款金額*/}
-        <CustomPlaceholderWrapper>
-          <Textbox
-            style={{ margin: "50px auto 20px auto" }}
-            value={this.state.amount}
-            onChange={this.handleChangeAmount}
-            placeholder={
-              this.state.selectedBankCardIndex
-                ? i18n.t("withdrawal.enterAmount") +
-                  ` (${Common.formatNumberWithThousand(
-                    this.state.min
-                  )} - ${Common.formatNumberWithThousand(this.state.max)})`
-                : i18n.t("withdrawal.enterAmount")
-            }
-            label={i18n.t("common.amount")}
-            type={"number"}
-            // custom={
-            //   <>
-            //     <FeeSpot>
-            //       {i18n.t("fees.withdraw")}: <span>{this.state.fees}%</span>
-            //     </FeeSpot>
-            //   </>
-            // }
-          />
-        </CustomPlaceholderWrapper>
+        <ItemContainer>
+          <LabelContainer>{i18n.t("common.amount")}</LabelContainer>
+          <FormControl variant="outlined">
+            <TextField
+              fullWidth
+              value={this.state.amount}
+              onChange={this.handleChangeAmount}
+              type={"number"}
+              placeholder={
+                this.state.selectedBankCardIndex
+                  ? i18n.t("withdrawal.enterAmount") +
+                    ` (${Common.formatNumberWithThousand(
+                      this.state.min
+                    )} - ${Common.formatNumberWithThousand(this.state.max)})`
+                  : i18n.t("withdrawal.enterAmount")
+              }
+            />
+          </FormControl>
+        </ItemContainer>
         {/*金额 USDT*/}
         {this.handleFilterCardList(this.props.wallet.bankCardList)[
           this.state.selectedBankCardIndex
@@ -456,17 +411,18 @@ class WithdrawalPrev extends Component {
           this.handleFilterCardList(this.props.wallet.bankCardList)[
             this.state.selectedBankCardIndex
           ].banktype === "Usdt" && (
-            <Textbox
-              style={{ margin: "50px auto 20px auto" }}
-              value={
-                isNaN(this.state.amount) === false
-                  ? (this.state.amount * this.state.exchangeRate).toFixed(2)
-                  : 0
-              }
-              label={i18n.t("withdrawal.usdtAmount")}
-              type={"number"}
-              disabled={true}
-            />
+            <ItemContainer>
+              <LabelContainer>{i18n.t("withdrawal.usdtAmount")}</LabelContainer>
+              <TextField
+                value={
+                  isNaN(this.state.amount) === false
+                    ? (this.state.amount * this.state.exchangeRate).toFixed(2)
+                    : 0
+                }
+                type={"number"}
+                disabled={true}
+              />
+            </ItemContainer>
           )}
         }{/*玩家備註*/}
         {config.features.Deposit_Withdrawal_PlayerNote &&
@@ -491,12 +447,13 @@ class WithdrawalPrev extends Component {
             />
           )}
         {/*此银行卡的开户名必须与您账号所填写真实姓名一致，否则提款可能失败*/}
-        <BottomDesc>{i18n.t("withdrawal.notice")}</BottomDesc>
+        <Remark>{i18n.t("withdrawal.notice")}</Remark>
         {/*提交*/}
         <Button
-          style={{ margin: "40px auto 0 auto" }}
-          label={i18n.t("common.submit")}
           onClick={this.handleSubmitClick}
+          variant={"contained"}
+          color={"primary"}
+          fullWidth
           disabled={
             isNaN(parseFloat(this.state.amount.toString().replace(/,/g, ""))) ||
             parseFloat(this.state.amount.toString().replace(/,/g, "")) <
@@ -505,7 +462,9 @@ class WithdrawalPrev extends Component {
               this.state.max ||
             this.state.disabled === true
           }
-        />
+        >
+          {i18n.t("common.submit")}
+        </Button>
         <StyledModalBank
           onClose={() => this.setState({ ...this.state, bankOpen: false })}
           open={this.state.bankOpen}
