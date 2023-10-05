@@ -5,6 +5,13 @@ import { themeList } from "@/theme";
 
 const theme = themeList["mobileT18"];
 
+export const Remark = styled.div`
+  font-size: 0.937rem;
+  font-weight: 400;
+  color: ${theme.white};
+  margin-bottom: 20px;
+`;
+
 export const ItemContainer = styled.div`
   display: flex;
   flex-direction: column;

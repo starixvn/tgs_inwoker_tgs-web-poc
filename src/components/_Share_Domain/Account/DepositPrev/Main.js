@@ -11,7 +11,8 @@ import {
   FormControl,
   LabelContainer,
   ItemContainer,
-} from "@/components/_Share_Domain/Account/DepositPrev/styles";
+  Remark,
+} from "@/components/Mobile/styles/forms";
 import { Button } from "@/components/Mobile/components/UI/Button";
 import { Select } from "@/components/Mobile/components/UI/Select";
 import { TextField } from "@/components/Mobile/components/UI/TextField";
@@ -54,13 +55,6 @@ const ExchangeRateContainer = styled.div`
   padding: 0px 20px 20px 48px;
 `;
 
-const Remark = styled.div`
-  font-size: 0.937rem;
-  font-weight: 400;
-  color: ${({ theme }) => theme.primary};
-  opacity: 0.75;
-  margin-bottom: 20px;
-`;
 const QRCodeImg = styled.img`
   display: block;
   margin-top: 10px;
