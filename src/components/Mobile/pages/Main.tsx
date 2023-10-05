@@ -21,7 +21,7 @@ import Category from "../components/Category";
 import { badgeList, gamesList } from "../constants/games";
 import { gameTypeList } from "../constants/tab";
 
-type MainProps = {
+type Props = {
   imageUrl: string;
 };
 
@@ -166,16 +166,18 @@ const Main = (props: Props) => {
 
   }, [game.homePageGameList]);
 
-  let lobbyAllGroupByData: { [s: string]: any; } | ArrayLike<any> = [];
+  const lobbyAllGroupByData = useMemo(() => {
+    if (Object.keys(groupBy_gameType).length === 0) {
+      return [];
+    }
 
-  if (Object.keys(groupBy_gameType).length > 0) {
-    lobbyAllGroupByData = gameTypeList.map((item) => ({
+    return gameTypeList.map((item) => ({
       gameType: item.gameType,
       iconUrl: item.iconUrl,
       text: item.text,
       gameData: groupBy_gameType[item.gameType] || [],
     }));
-  }
+  }, [gameTypeList, groupBy_gameType]);
 
   return (
     <MainWrapper>
