@@ -1,11 +1,5 @@
 import Card from "@/components/Mobile/components/Card";
 import AddCard from "@/components/Mobile/components/Card/AddCard";
-import Maintenance from "@/components/Mobile/pages/Maintenance";
-import TransferDialog from "@/components/Mobile/pages/Transfer/TransferDialog";
-import Transfer from "@/components/Mobile/pages/Transfer";
-import Profile from "@/components/Mobile/pages/Profile";
-import Report from "@/components/Mobile/pages/Report";
-import Inbox from "@/components/Mobile/pages/Inbox";
 import Affiliate from "@/components/Mobile/pages/Affiliate";
 import BettingBonus from "@/components/Mobile/pages/BettingBonus";
 import ContactUs from "@/components/Mobile/pages/ContactUs";
@@ -16,7 +10,7 @@ import DepositPayment from "@/components/Mobile/pages/Deposit/DepositPayment";
 import Inbox from "@/components/Mobile/pages/Inbox";
 import Login from "@/components/Mobile/pages/Login";
 import Main from "@/components/Mobile/pages/Main";
-import MaintenancePage from "@/components/Mobile/pages/MaintenancePage";
+import Maintenance from "@/components/Mobile/pages/Maintenance";
 import Profile from "@/components/Mobile/pages/Profile";
 import ProfileBirthDate from "@/components/Mobile/pages/Profile/ProfileBirthDate";
 import ProfileChangeEmail from "@/components/Mobile/pages/Profile/ProfileChangeEmail";
@@ -44,6 +38,7 @@ import Withdrawal from "@/components/Mobile/pages/Withdrawal";
 import WithdrawalDetails from "@/components/Mobile/pages/Withdrawal/WithdrawalDetails";
 import config from "@/config/config";
 import React from "react";
+import PromotionDetail from "../components/Promotion/PromotionDetail";
 
 const Mine = React.lazy(() => import("@/components/Mobile/pages/Account/Mine"));
 

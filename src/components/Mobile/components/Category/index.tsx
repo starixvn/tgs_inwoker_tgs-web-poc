@@ -1,5 +1,4 @@
 import example from '@/assets/images/home/mobile/example.png';
-import venderLogo from '@/assets/images/home/mobile/vendor_logo.png';
 import ButtonText from '@/components/Mobile/components/ButtonText';
 import CategoryLabel from '@/components/Mobile/components/CategoryLabel';
 import styled from 'styled-components';
@@ -62,22 +61,18 @@ const Category = ({
         {gameData.map((game) => {
           return (
             <CardVendor
+              key={game.abbreviation}
               imageUrl={example}
               gameName={game.name}
               venderName={game.abbreviation}
             />
           )
         })}
-
-        <CardVendor
-          imageUrl={example}
-          gameName={"SLOT"}
-          venderName={"PG SLOTS"}
-        />
-        <CardVendor
+        {/* <CardVendor
           imageUrl={example}
           venderLogo={venderLogo}
-        />
+        /> */}
+        {/* to-do : confirm card design */}
       </CategoryContent>
 
       <ButtonContainer>
