@@ -519,7 +519,6 @@ class WithdrawalPrev extends Component {
               backgroundImage: "none",
               backgroundColor: "#b7b7b7",
             }}
-            labelStyle={{ color: "#fff" }}
             label={i18n.t("common.cancel")}
             onClick={() => this.setState({ ...this.state, otp: false })}
           />

@@ -4,10 +4,19 @@ import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import i18n from "@/utils/i18n";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useInboxStore } from "@/hooks/stores/useInboxStore";
-import InboxList from "./InboxList";
+import InboxItem from "./InboxItem";
 import { InboxMessage } from "@/types/account";
+import { useAuth } from "@/hooks/auth/useAuth";
+import styled from "styled-components";
+
+const InboxListContainer = styled.div`
+  & > div {
+    margin-bottom: 10px;
+  }
+`;
 
 const Inbox = () => {
+  const { isLogin } = useAuth();
   const { account } = useAccountStore();
   const { inbox, token } = account;
   const { getMessages, setMessageRead } = useInboxStore();
@@ -28,7 +37,7 @@ const Inbox = () => {
   };
 
   useEffect(() => {
-    if (!!token) {
+    if (isLogin) {
       getMessageList(0, true);
     }
   }, [token]);
@@ -70,25 +79,27 @@ const Inbox = () => {
   };
 
   return (
-    <div>
-      {inbox
-        ? inbox.items.map((inboxMessage: InboxMessage, index: number) => {
-            return (
-              <InboxList
-                key={index}
-                row={inboxMessage}
-                selected={selected}
-                edit={edit}
-                handleCheckboxClick={handleCheckboxClick}
-                handleItemClick={handleItemClick}
-              />
-            );
-          })
-        : null}
+    <>
+      <InboxListContainer>
+        {inbox
+          ? inbox.items.map((inboxMessage: InboxMessage, index: number) => {
+              return (
+                <InboxItem
+                  key={index}
+                  row={inboxMessage}
+                  selected={selected}
+                  edit={edit}
+                  handleCheckboxClick={handleCheckboxClick}
+                  handleItemClick={handleItemClick}
+                />
+              );
+            })
+          : null}
+      </InboxListContainer>
       <BottomScrollListener onBottom={handleScrollBottom} />
 
       <Loading show={loading}></Loading>
-    </div>
+    </>
   );
 };
 

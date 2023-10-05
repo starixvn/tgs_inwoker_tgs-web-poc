@@ -3,6 +3,15 @@ import styled from "styled-components";
 import { Collapse } from "@material-ui/core";
 import moment from "moment";
 import { InboxMessage } from "@/types/account";
+import { themeList } from "@/theme";
+
+const theme = themeList["mobileT18"];
+
+const InboxItemContainer = styled.div`
+  width: 100%;
+  padding: 8px 15px;
+  background: ${theme.primaryLight};
+`;
 
 type CheckboxContainerProps = {
   edit: boolean;
@@ -19,31 +28,23 @@ const CheckboxContainer = styled.div<CheckboxContainerProps>`
 
 const ContentContainer = styled.div`
   display: block;
-  font-size: 28px;
   width: 90%;
 `;
 
-const ListItem = styled.div`
-  width: 100%;
-  min-height: 155px;
-`;
+const ItemContainer = styled.div``;
 
 type MsgTitleProps = {
   isread: boolean;
 };
 const MsgTitle = styled.div<MsgTitleProps>`
-  color: #2e2426;
-  width: 100%;
-  font-weight: ${(props: MsgTitleProps) => (props.isread ? "normal" : "600")};
-  font-size: 30px;
-  float: left;
+  font-size: 1.25rem;
+  font-weight: ${(props: MsgTitleProps) => (props.isread ? "400" : "600")};
+  color: ${theme.white};
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin-bottom: 5px;
 `;
 
 const MsgTitleSpan = styled.span`
-  float: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -51,20 +52,8 @@ const MsgTitleSpan = styled.span`
 `;
 
 const MsgDate = styled.div`
-  color: #949494;
-  float: left;
-  margin-top: 15px;
-  font-size: 28px;
-`;
-
-const ItemContainer = styled.div`
-  float: right;
-  min-height: 150px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px 0 rgba(58, 58, 58, 0.2);
-  border: solid 2px #f3f3f3;
-  background-color: #ffffff;
-  padding: 30px 20px 0 35px;
+  font-size: 0.937rem;
+  color: ${theme.tertiaryLight};
 `;
 
 type CheckboxCircleProps = {
@@ -85,7 +74,8 @@ const CheckboxCircle = styled.div<CheckboxCircleProps>`
 `;
 
 const LetterContent = styled.div`
-  font-size: 30px;
+  font-size: 1rem;
+  color: ${theme.tertiaryLight};
   padding: 20px 0px;
 `;
 
@@ -97,7 +87,7 @@ interface InboxListProps {
   handleItemClick: (id: string) => void;
 }
 
-const InboxList: React.FC<InboxListProps> = ({
+const InboxItem: React.FC<InboxListProps> = ({
   row,
   edit,
   handleCheckboxClick,
@@ -112,14 +102,15 @@ const InboxList: React.FC<InboxListProps> = ({
   };
 
   return (
-    <ListItem>
+    <InboxItemContainer>
       <CheckboxContainer edit={edit}>
         <CheckboxCircle
           onClick={() => handleCheckboxClick(row.id, row.id.toString())}
           checked={selected.includes(row.id)}
         ></CheckboxCircle>
       </CheckboxContainer>
-      <ItemContainer key={row.id} edit={edit}>
+
+      <ItemContainer>
         <ContentContainer onClick={() => handleShowDetail(row.isread)}>
           <MsgTitle isread={row.isread}>
             <MsgTitleSpan>
@@ -129,21 +120,20 @@ const InboxList: React.FC<InboxListProps> = ({
             </MsgTitleSpan>
           </MsgTitle>
           <MsgDate>{moment(row.createon).format("YYYY-MM-DD hh:mm a")}</MsgDate>
-        </ContentContainer>{" "}
+        </ContentContainer>
         <Collapse in={opened}>
           <LetterContent
             dangerouslySetInnerHTML={{
               __html:
-                "<div style='width: 100%; height: 1px; background: #efefef;margin-top: 2px;'>123</div>" +
-                (row.localization !== null && row.localization.content
+                row.localization !== null && row.localization.content
                   ? row.localization.content
-                  : row.content),
+                  : row.content,
             }}
-          />
+          ></LetterContent>
         </Collapse>
       </ItemContainer>
-    </ListItem>
+    </InboxItemContainer>
   );
 };
 
-export default InboxList;
+export default InboxItem;
