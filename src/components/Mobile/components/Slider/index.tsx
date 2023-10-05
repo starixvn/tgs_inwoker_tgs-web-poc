@@ -3,6 +3,7 @@ import Slick from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import styled from "styled-components";
+
 const SlickWrapper = styled.div`
   margin: 0 auto;
   width: 100%;
@@ -47,19 +48,17 @@ type Props = {
 
 const Slider = () => {
   const { general } = useGeneralStore();
-
-  if (general.banner.length)
-    return (
-      <SlickWrapper>
-        <Slick {...settings}>
-          {general.banner.map(item => (
-            <a href={item.navurl} key={item.id} target="_blank">
-              <SlickImage src={item.mobileurl} alt={item.alt}></SlickImage>
-            </a>
-          ))}
-        </Slick>
-      </SlickWrapper>
-    );
+  return (
+    <SlickWrapper>
+      <Slick {...settings}>
+        {general.banner.map((item: Props) => (
+          <a href={item.navurl} key={item.id} target="_blank">
+            <SlickImage src={item.mobileurl} alt={item.alt}></SlickImage>
+          </a>
+        ))}
+      </Slick>
+    </SlickWrapper>
+  );
 };
 
 export default Slider;
