@@ -16,7 +16,6 @@ import Details from "./Details";
 import DetailsManual from "./DetailsManual";
 import config from "@/config/config";
 import Main from "./Main";
-import MainHKJP from "./MainHKJP";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import DepositNotificationDialog from "@/components/_Share_Domain/Account/DepositPrev/components/DepositNotificationDialog";
@@ -675,72 +674,46 @@ class DepositPrev extends Component {
   switchView = (view) => {
     switch (view) {
       case 1:
-        if (config.features.Deposit_DualPage) {
-          return (
-            <MainHKJP
-              name={this.state.name}
-              handleNameChange={this.handleNameChange}
-              handleMethodChange={this.handleMethodChange}
-              handleChannelChange={this.handleChannelChange}
-              handleAccountChange={this.handleAccountChange}
-              handlePromotionChange={this.handlePromotionChange}
-              handleAmountChange={this.handleAmountChange}
-              handleDepositClick={this.handleDepositClick}
-              selectedPaymentIndex={this.state.selectedPaymentIndex}
-              selectedMethodIndex={this.state.selectedMethodIndex}
-              selectedChannelIndex={this.state.selectedChannelIndex}
-              depositPromotion={this.state.depositPromotion}
-              account={this.state.account}
-              amount={this.state.amount}
-              exchangeRate={this.state.exchangeRate}
-              step={this.state.step}
-              disabled={this.state.disabled}
-              playerNote={this.state.playerNote}
-              handlePlayerNoteChange={this.handlePlayerNoteChange}
-            ></MainHKJP>
-          );
-        } else {
-          return (
-            <Main
-              name={this.state.name}
-              handleNameChange={this.handleNameChange}
-              handleMethodChange={this.handleMethodChange}
-              handleChannelChange={this.handleChannelChange}
-              handleAccountChange={this.handleAccountChange}
-              handlePromotionChange={this.handlePromotionChange}
-              handleAmountChange={this.handleAmountChange}
-              handleDepositClick={this.handleDepositClick}
-              handleSelectAccountChange={this.handleSelectAccountChange}
-              selectedPaymentIndex={this.state.selectedPaymentIndex}
-              selectedMethodIndex={this.state.selectedMethodIndex}
-              selectedChannelIndex={this.state.selectedChannelIndex}
-              depositPromotion={this.state.depositPromotion}
-              account={this.state.account}
-              amount={this.state.amount}
-              exchangeRate={this.state.exchangeRate}
-              step={this.state.step}
-              disabled={this.state.disabled}
-              handleFileChange={this.handleFileChange}
-              key={this.state.fileInput}
-              files={this.state.files}
-              handleClosePopup={this.handleClosePopup}
-              openPopup={this.state.openPopup}
-              handleOpenPopupUrl={this.handleOpenPopupUrl}
-              alert={this.props.alert}
-              playerNote={this.state.playerNote}
-              handlePlayerNoteChange={this.handlePlayerNoteChange}
-              selectedBankCard={this.state.selectedBankCard}
-              handleBankCardChange={this.handleBankCardChange}
-              bankCardList={
-                config.features.Deposit_AddCard
-                  ? this.props.wallet.bankCardList.sort(
-                      (a, b) => b.default - a.default
-                    )
-                  : this.props.wallet.bankCardList
-              }
-            ></Main>
-          );
-        }
+        return (
+          <Main
+            name={this.state.name}
+            handleNameChange={this.handleNameChange}
+            handleMethodChange={this.handleMethodChange}
+            handleChannelChange={this.handleChannelChange}
+            handleAccountChange={this.handleAccountChange}
+            handlePromotionChange={this.handlePromotionChange}
+            handleAmountChange={this.handleAmountChange}
+            handleDepositClick={this.handleDepositClick}
+            handleSelectAccountChange={this.handleSelectAccountChange}
+            selectedPaymentIndex={this.state.selectedPaymentIndex}
+            selectedMethodIndex={this.state.selectedMethodIndex}
+            selectedChannelIndex={this.state.selectedChannelIndex}
+            depositPromotion={this.state.depositPromotion}
+            account={this.state.account}
+            amount={this.state.amount}
+            exchangeRate={this.state.exchangeRate}
+            step={this.state.step}
+            disabled={this.state.disabled}
+            handleFileChange={this.handleFileChange}
+            key={this.state.fileInput}
+            files={this.state.files}
+            handleClosePopup={this.handleClosePopup}
+            openPopup={this.state.openPopup}
+            handleOpenPopupUrl={this.handleOpenPopupUrl}
+            alert={this.props.alert}
+            playerNote={this.state.playerNote}
+            handlePlayerNoteChange={this.handlePlayerNoteChange}
+            selectedBankCard={this.state.selectedBankCard}
+            handleBankCardChange={this.handleBankCardChange}
+            bankCardList={
+              config.features.Deposit_AddCard
+                ? this.props.wallet.bankCardList.sort(
+                    (a, b) => b.default - a.default
+                  )
+                : this.props.wallet.bankCardList
+            }
+          ></Main>
+        );
 
       case 2:
       case 3:

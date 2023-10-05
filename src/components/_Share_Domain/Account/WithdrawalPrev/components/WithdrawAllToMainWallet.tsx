@@ -9,8 +9,8 @@ import { Button } from "@/components/Mobile/components/UI/Button";
 const theme = themeList["mobileT18"];
 
 const CustomLabel = styled.div`
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 400;
   margin-left: 3px;
   color: ${theme.white};
 `;
@@ -20,8 +20,11 @@ const ButtonWrapper = styled.div`
   display: flex;
 `;
 
-type Props = {};
-const TransferAllToWallet = (props: Props) => {
+type Props = {
+  label?: string;
+  buttonText?: string;
+};
+const WithdrawAllToMainWallet = ({ label = "", buttonText = "" }: Props) => {
   const { game } = useGameStore();
   const { performWithdrawFromEveryBrand, getGameBalance } = useWalletStore();
   const [isLoading, setIsLoading] = useState(false);
@@ -48,8 +51,7 @@ const TransferAllToWallet = (props: Props) => {
   };
   return (
     <>
-      {/*從所有子錢包轉移到主錢包*/}
-      <CustomLabel>{i18n.t("transfer.msgTransferOutFromGP")}</CustomLabel>
+      {label && <CustomLabel>{label}</CustomLabel>}
       {/*一键傳輸*/}
       <ButtonWrapper>
         <Button
@@ -59,11 +61,11 @@ const TransferAllToWallet = (props: Props) => {
           fullWidth
           disabled={isLoading}
         >
-          {i18n.t("transfer.oneKeyTransferAll")}
+          {buttonText || i18n.t("transfer.oneKeyTransferAll")}
         </Button>
       </ButtonWrapper>
     </>
   );
 };
 
-export default TransferAllToWallet;
+export default React.memo(WithdrawAllToMainWallet);

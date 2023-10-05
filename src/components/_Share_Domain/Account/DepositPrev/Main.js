@@ -17,10 +17,6 @@ import { Button } from "@/components/Mobile/components/UI/Button";
 import { Select } from "@/components/Mobile/components/UI/Select";
 import { TextField } from "@/components/Mobile/components/UI/TextField";
 
-const MainContainer = styled.div`
-  padding: 12px 0;
-`;
-
 const GMOstyle = config.brand === "GMO";
 
 const LimitLabel = styled.span`
@@ -166,7 +162,7 @@ class Main extends Component {
     };
 
     return (
-      <MainContainer>
+      <>
         {!config.features.Deposit_AddCard ? (
           <>
             {this.props.wallet.depositTypeList[this.props.selectedPaymentIndex]
@@ -835,7 +831,7 @@ class Main extends Component {
         >
           {i18n.t("common.submit")}
         </Button>
-      </MainContainer>
+      </>
     );
   }
 }

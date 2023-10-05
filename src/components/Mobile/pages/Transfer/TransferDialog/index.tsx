@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";

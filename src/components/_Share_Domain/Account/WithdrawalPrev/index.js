@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Dialog";
-import Textbox from "@/components/Mobile/components/_PrevShare/Textbox";
 import Common from "@/utils/Common";
 import { walletAction } from "@/api-services/actions/walletAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
@@ -16,7 +15,7 @@ import config from "@/config/config";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import WithdrawInfoCard from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawInfoCard";
 import ManageBankCardButton from "@/components/_Share_Domain/Account/WithdrawalPrev/components/ManageBankCardButton";
-import TransferAllToWallet from "@/components/_Share_Domain/Account/WithdrawalPrev/components/TransferAllToWallet";
+import WithdrawAllToMainWallet from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawAllToMainWallet";
 import {
   FormControl,
   LabelContainer,
@@ -157,16 +156,18 @@ class WithdrawalPrev extends Component {
     }
   }
   componentDidUpdate(preProps) {
-    if (
+    const isAddBillingResultChanged =
       preProps.wallet.addBillingResult !== this.props.wallet.addBillingResult &&
-      this.props.wallet.addBillingResult !== null
-    ) {
+      this.props.wallet.addBillingResult !== null;
+    if (isAddBillingResultChanged) {
       this.props.getBalanceList();
     }
-    if (
+
+    const isWalletWithdrawalResultChanged =
       preProps.wallet.withdrawalResult !== this.props.wallet.withdrawalResult &&
-      this.props.wallet.withdrawalResult !== null
-    ) {
+      this.props.wallet.withdrawalResult !== null;
+
+    if (isWalletWithdrawalResultChanged) {
       if (this.props.wallet.withdrawalResult.IsSuccess) {
         this.props.resetResult();
         this.props.getBalanceList();
@@ -344,7 +345,12 @@ class WithdrawalPrev extends Component {
         <ManageBankCardButtonContainer>
           <ManageBankCardButton />
         </ManageBankCardButtonContainer>
-        {config.features.NewTransferUI && <TransferAllToWallet />}
+        {config.features.NewTransferUI && (
+          <WithdrawAllToMainWallet
+            label={i18n.t("transfer.msgTransferOutFromGP")}
+            buttonText={i18n.t("transfer.oneKeyTransferAll")}
+          />
+        )}
         {/*管理銀行卡*/}
         <ItemContainer>
           <LabelContainer>{i18n.t("withdrawal.bankCard")}</LabelContainer>
@@ -438,13 +444,16 @@ class WithdrawalPrev extends Component {
             this.handleFilterCardList(this.props.wallet.bankCardList)[
               this.state.selectedBankCardIndex
             ].banktype.toUpperCase() === "PULSA") && (
-            <Textbox
-              style={{ margin: "50px auto 20px auto" }}
-              value={this.state.playerNote}
-              onChange={this.handlePlayerNoteChange}
-              placeholder={i18n.t("withdrawal.plsEnterPlayerNote")}
-              label={i18n.t("withdrawal.playerNote")}
-            />
+            <ItemContainer>
+              <LabelContainer>{i18n.t("withdrawal.playerNote")}</LabelContainer>
+              <FormControl>
+                <TextField
+                  value={this.state.playerNote}
+                  onChange={this.handlePlayerNoteChange}
+                  placeholder={i18n.t("withdrawal.plsEnterPlayerNote")}
+                />
+              </FormControl>
+            </ItemContainer>
           )}
         {/*此银行卡的开户名必须与您账号所填写真实姓名一致，否则提款可能失败*/}
         <Remark>{i18n.t("withdrawal.notice")}</Remark>

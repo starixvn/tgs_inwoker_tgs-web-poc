@@ -9,7 +9,7 @@ export interface GameState {
   containTransferWallet: boolean;
 }
 
-interface Provider {
+export interface Provider {
   abbreviation: string;
   balance: number;
   gpcode: string;
