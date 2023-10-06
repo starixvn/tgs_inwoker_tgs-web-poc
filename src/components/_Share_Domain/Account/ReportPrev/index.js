@@ -24,11 +24,10 @@ import { GameService } from "@/api-services/services/GameService";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { GeneralService } from "@/api-services/services/GeneralService";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
-import Header from "@/components/Mobile/components/_PrevShare/Header";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
-import Common from "@/utils/Common";
 import ErrorSwitcher from "@/utils/ErrorSwitcher";
+import ReportTypeTabs from "@/components/_Share_Domain/Account/ReportPrev/components/ReportTypeTabs";
 
 const moment = require("moment");
 const localeMap = {
@@ -38,27 +37,6 @@ const localeMap = {
 };
 const Container = styled.div`
   width: 100%;
-`;
-const StyledAppBar = withStyles((theme) => ({
-  root: {
-    background:
-      `linear-gradient(rgba(` +
-      theme.palette.primary.mainRgb +
-      `, 0.8), rgba(` +
-      theme.palette.primary.mainGradientRgb +
-      `, 0.8)), url(${
-        process.env.PUBLIC_URL + `/assets/images/wapp/bg-profile.png`
-      })`,
-    display: "block",
-  },
-}))(AppBar);
-
-const BalanceLabel = styled.div`
-  font-size: 36px;
-
-  text-align: center;
-  color: #fff;
-  margin: 0 auto 20px auto;
 `;
 
 const DateContainer = styled.div``;
@@ -430,76 +408,8 @@ class Report extends Component {
     };
   }
 
-  theMenu = [
-    {
-      index: 2,
-      label: i18n.t("report.bettingDetails"),
-    },
-    {
-      index: 3,
-      label: i18n.t("report.withdrawalDetails"),
-    },
-    {
-      index: 4,
-      label: i18n.t("report.depositDetails"),
-    },
-    {
-      index: 6,
-      label: i18n.t("common.transfer"),
-    },
-    {
-      index: 8,
-      label: i18n.t("report.balanceChanges.title"),
-    },
-    {
-      index: 7,
-      label: i18n.t("report.joinedPromo.title"),
-    },
-  ];
-
-  noTransfer = [
-    {
-      index: 2,
-      label: i18n.t("report.bettingDetails"),
-    },
-    {
-      index: 3,
-      label: i18n.t("report.withdrawalDetails"),
-    },
-    {
-      index: 4,
-      label: i18n.t("report.depositDetails"),
-    },
-    {
-      index: 8,
-      label: i18n.t("report.balanceChanges.title"),
-    },
-    {
-      index: 7,
-      label: i18n.t("report.joinedPromo.title"),
-    },
-  ];
-
-  CTabs = (index, label) => {
-    return (
-      <Tab
-        key={index}
-        selected={index === this.state.selectedType}
-        index={index}
-        label={label}
-        value={index}
-      ></Tab>
-    );
-  };
-
   componentDidMount() {
     this.GetDepositWithdrawalStatus();
-    // this.handleAccountGetReportTrigger(
-    //   this.state.page,
-    //   this.state.pageSize,
-    //   0,
-    //   0
-    // );
 
     if (this.state.selectedType === 1) {
       this.handleAccountGetReportTrigger(this.state.page, this.state.type);
@@ -604,13 +514,7 @@ class Report extends Component {
       }
     }
   }
-  GetGameList = () => {
-    GameService.GetGameList(this.props.token).then((response) => {
-      if (response.IsSuccess) {
-        this.setState({ ...this.state, gameList: response.data });
-      }
-    });
-  };
+
   GetDepositWithdrawalStatus = () => {
     ReportService.GetDepositStatus().then((response) => {
       if (response.IsSuccess) {
@@ -1158,99 +1062,10 @@ class Report extends Component {
 
     return (
       <Container>
-        {/*<StyledAppBar>*/}
-        {/*  <Header*/}
-        {/*    onBackClick={this.handleBackClick}*/}
-        {/*    title={(() => {*/}
-        {/*      switch (this.state.selectedType) {*/}
-        {/*        case 1:*/}
-        {/*          return i18n.t("report.transferDetails");*/}
-        {/*        case 2:*/}
-        {/*          return i18n.t("report.bettingDetails");*/}
-        {/*        case 3:*/}
-        {/*          return i18n.t("report.withdrawalDetails");*/}
-        {/*        case 4:*/}
-        {/*          return i18n.t("report.depositDetails");*/}
-        {/*        case 5:*/}
-        {/*          return;*/}
-        {/*        case 6:*/}
-        {/*          return i18n.t("report.transfer.title");*/}
-        {/*        case 7:*/}
-        {/*          return i18n.t("report.joinedPromo.title");*/}
-        {/*        case 8:*/}
-        {/*          return i18n.t("report.balanceChanges.title");*/}
-        {/*        default:*/}
-        {/*          return i18n.t("report.rebateDetails");*/}
-        {/*      }*/}
-        {/*    })()}*/}
-        {/*    position={"sticky"}*/}
-        {/*    backgroundColor={"transparent"}*/}
-        {/*  ></Header>*/}
-        {/*  <BalanceLabel>*/}
-        {/*    {this.props.wallet.mainSymbol}*/}
-        {/*    {Common.formatNumberWithThousand(*/}
-        {/*      this.props.wallet.mainBalance +*/}
-        {/*        this.props.game.providerList*/}
-        {/*          .filter(*/}
-        {/*            (item) => item.status === 0 && item.transferwallet === true*/}
-        {/*          )*/}
-        {/*          .reduce((a, v) => (a = a + v.balance), 0)*/}
-        {/*    )}*/}
-        {/*  </BalanceLabel>*/}
-        {/*  {*/}
-        {/*    //         <Tabs value={this.state.selectedType} onChange={this.handleChangeTab}>*/}
-        {/*    //         /!**/}
-        {/*    //       <Tab*/}
-        {/*    //           style={{ width: "calc(750px/5)" }}*/}
-        {/*    //           index={1}*/}
-        {/*    //           label={i18n.t("report.transferDetails")}*/}
-        {/*    //           value={1}*/}
-        {/*    //         />*/}
-        {/*    //       *!/*/}
-        {/*    //         <Tab*/}
-        {/*    //           style={{ width: 'calc(750px/4)' }}*/}
-        {/*    //           index={2}*/}
-        {/*    //           label={i18n.t('report.bettingDetails')}*/}
-        {/*    //           value={2}*/}
-        {/*    //         />*/}
-        {/*    //         <Tab*/}
-        {/*    //           style={{ width: 'calc(750px/4)' }}*/}
-        {/*    //           index={3}*/}
-        {/*    //           label={i18n.t('report.withdrawalDetails')}*/}
-        {/*    //           value={3}*/}
-        {/*    //         />*/}
-        {/*    //         <Tab*/}
-        {/*    //           style={{ width: 'calc(750px/4)' }}*/}
-        {/*    //           index={4}*/}
-        {/*    //           label={i18n.t('report.depositDetails')}*/}
-        {/*    //           value={4}*/}
-        {/*    //         />*/}
-        {/*    //         /!*<Tab*/}
-        {/*    //           style={{ width: "calc(750px/5)" }}*/}
-        {/*    //           index={5}*/}
-        {/*    //           label={i18n.t("report.rebateDetails")}*/}
-        {/*    //           value={5}*/}
-        {/*    //         /> *!/{' '}*/}
-        {/*    //         <Tab*/}
-        {/*    //           style={{ width: 'calc(750px/4)' }}*/}
-        {/*    //           index={6}*/}
-        {/*    //           label={i18n.t('common.transfer')}*/}
-        {/*    //           value={6}*/}
-        {/*    //         />*/}
-        {/*    //       </Tabs>*/}
-        {/*  }*/}
-        {/*</StyledAppBar>*/}
-        <CustomTabs
-          value={this.state.selectedType}
-          onChange={this.handleChangeTab}
-        >
-          {(this.props.game.containTransferWallet
-            ? this.theMenu
-            : this.noTransfer
-          ).map((data, index) => {
-            return this.CTabs(data.index, data.label);
-          })}
-        </CustomTabs>
+        <ReportTypeTabs
+          selectedType={this.state.selectedType}
+          handleChangeTab={this.handleChangeTab}
+        />
 
         <DateContainer>
           <FlatStraightLine>
