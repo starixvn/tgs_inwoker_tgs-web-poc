@@ -175,6 +175,11 @@ const Main = (props: Props) => {
     }));
   }, [gameTypeList, groupBy_gameType]);
 
+  // console.log(activeGameTypeTab)
+  // console.log("groupBy_gameType", groupBy_gameType[activeGameTypeTab])
+  // console.log("homePageGameList", game.homePageGameList)
+  // console.log("providerList", game.providerList)
+
   return (
     <MainWrapper>
       {!!general.banner.length && <Slider />}
@@ -216,13 +221,15 @@ const Main = (props: Props) => {
         </LobbyContainer>
       }
 
-      {(activeGameTypeTab === GameTypeEnum.LIVELOBBY ||
+      {(
+        activeGameTypeTab === GameTypeEnum.LIVELOBBY ||
         activeGameTypeTab === GameTypeEnum.LOTTERYLOBBY ||
         activeGameTypeTab === GameTypeEnum.SPORTS ||
         activeGameTypeTab === GameTypeEnum.COCKFIGHT ||
         activeGameTypeTab === GameTypeEnum.QIPAILOBBY) &&
         <Category
           gameTypeData={groupBy_gameType[activeGameTypeTab] || []}
+          gameType={activeGameTypeTab}
         />
       }
 
