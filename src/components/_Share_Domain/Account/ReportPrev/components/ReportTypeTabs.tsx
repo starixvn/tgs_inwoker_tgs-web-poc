@@ -30,13 +30,18 @@ const TabButton = styled.button<TabButtonProps>`
     return isSelected ? "none" : `1px solid ${theme.tertiaryLight}`;
   }};
   border-radius: 5px;
+  font-size: 0.937rem;
 `;
 
 type Props = {
   selectedType: number;
   handleChangeTab: (e: ChangeEvent, newValue: number) => void;
 };
-const ReportTypeTabs = ({ selectedType, handleChangeTab }: Props) => {
+const ReportTypeTabs = ({
+  selectedType,
+  handleChangeTab,
+  ...others
+}: Props) => {
   const { displayedTabList } = useReportTypeTabs();
 
   const handleButtonClick = (newIndex: number) => {
@@ -44,7 +49,8 @@ const ReportTypeTabs = ({ selectedType, handleChangeTab }: Props) => {
   };
 
   return (
-    <ReportTypeTabsContainer>
+    //@ts-ignore
+    <ReportTypeTabsContainer {...others}>
       {displayedTabList.map((reportTab) => {
         const { index, label } = reportTab;
         return (

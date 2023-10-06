@@ -7,7 +7,6 @@ import BottomScrollListener from "react-bottom-scroll-listener";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 
 import { ReportService } from "@/api-services/services/ReportService";
 import { accountAction } from "@/api-services/actions/accountAction";
@@ -20,6 +19,10 @@ import ReportTypeTabs from "@/components/_Share_Domain/Account/ReportPrev/compon
 import DateRangeWithDatePicker from "@/components/_Share_Domain/Account/ReportPrev/components/DateRangeWithDatePicker";
 import DateRangeWithIntervalSelector from "@/components/_Share_Domain/Account/ReportPrev/components/DateRangeWithIntervalSelector";
 import NoRecord from "@/components/_Share_Domain/Account/ReportPrev/components/NoRecord";
+import { themeList } from "@/theme";
+import { Select } from "@/components/Mobile/components/UI/Select";
+
+const theme = themeList["mobileT18"];
 
 const moment = require("moment");
 
@@ -27,48 +30,55 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const DataContent = styled.div`
-  margin: 0 auto;
+const ReportContainer = styled.div``;
 
-  border: solid 2px #f9f9f9;
-  background-color: #fff;
-  font-size: 26px;
-  color: #4a4a4a;
-  padding: 0 20px;
+const ReportSummary = styled.div`
+  font-size: 0.8rem;
+  color: ${theme.white};
+  border-radius: 5px;
+  margin-bottom: 5px;
 `;
-const DataHeader = styled.div`
-  font-weight: 600;
-  margin: 0 auto;
 
-  font-size: 26px;
-  color: ${({ theme }) => theme.secondary};
-  padding: 0 20px;
+const ReportSummaryRow = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 `;
-const DataRowId = styled.div`
+
+const ReportSummaryCol = styled.div``;
+
+const ReportCardsContainer = styled.div`
+  font-size: 0.8rem;
+  color: ${theme.white};
+  border-radius: 5px;
+  margin-bottom: 5px;
+`;
+
+const ReportCard = styled.div`
+  padding: 8px;
+  font-size: 0.8rem;
+  color: ${theme.white};
+  background: ${theme.tertiaryDark};
+  border-radius: 5px;
+  margin-bottom: 10px;
+`;
+
+const ReportCardRow = styled.div`
   width: 100%;
   min-height: 40px;
-  padding: 14px 0px 0px 0px;
   font-weight: 600;
-  font-size: 26px;
 `;
-const IDCell = styled.span`
+const ReportCardCol = styled.span`
   font-weight: normal;
-  font-size: 26px;
 `;
+
 const DataRow = styled.div`
   border-bottom: 2px solid #d7d7d7;
   width: 100%;
   min-height: 78px;
   padding: 20px 0;
 `;
-const DataHeaderRow = styled(DataRow)`
-  border-bottom: none;
-`;
-const DataDateCell3 = styled.div`
-  float: left;
-  width: calc(100% / 3 * 1);
-  text-align: left;
-`;
+
 const DataDateCellAmount = styled.div`
   float: left;
   width: calc(100% / 3 * 1);
@@ -79,19 +89,6 @@ const DataDateCell = styled.div`
   width: calc(100% / 4 * 1);
   text-align: left;
 `;
-const DataWinlossCell = styled.div`
-  float: left;
-  width: calc(100% / 4 * 1);
-  text-align: right;
-`;
-
-const CustomFormControl = withStyles((theme) => ({
-  root: {
-    "& fieldset": {
-      border: "none",
-    },
-  },
-}))(FormControl);
 
 const CustomSelect = withStyles((theme) => ({
   root: {
@@ -101,25 +98,41 @@ const CustomSelect = withStyles((theme) => ({
   },
 }))(Select);
 
-const SelectContainer = styled.div`
-  float: left;
-  padding: 0 0 0 30px;
-
-  margin: 20px auto 20px 30px;
-
-  background-color: #ffffff;
-  border-radius: 20px;
+const StatusSelectContainer = styled.div`
+  padding: 15px 29px;
+  background: ${theme.tertiaryDark};
+  font-size: 0.937rem;
+  color: ${theme.white};
+  border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(35, 31, 27, 0.1);
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 
 const SelectLabel = styled.div`
-  font-size: 28px;
-  color: #303030;
-  margin-left: 20px;
-  width: 140px;
-  float: left;
-  margin-top: 20px;
+  margin-right: 80px;
 `;
+
+const SelectFormControl = withStyles(() => ({
+  root: {
+    flexGrow: 1,
+    padding: 0,
+    "& fieldset": {
+      border: "none",
+    },
+
+    "& select": {
+      padding: 0,
+      color: theme.white,
+      fontSize: "0.937rem",
+    },
+
+    "& .MuiSvgIcon-root": {
+      color: theme.tertiary,
+    },
+  },
+}))(FormControl);
 
 const TheDepositButton = styled.div`
   display: flex;
@@ -132,24 +145,10 @@ const TheDepositButton = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 `;
 
-const DateTimeDisplay = styled.div``;
-
 const CustomWinLose = styled.span`
   color: ${({ value }) => {
     return value === 0 ? "" : value > 0 ? "rgb(3,189, 0)" : "rgb(255, 0, 0)";
   }};
-`;
-
-const CustomDataRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const AnotherCustomDataRow = styled.div`
-  display: grid;
-  grid-template-columns: 33.33% 33.33% 33.33%;
-  padding-bottom: 20px;
-  border-bottom: 2px solid #d7d7d7;
 `;
 
 class Report extends Component {
@@ -826,6 +825,7 @@ class Report extends Component {
   };
 
   handleScrollBottom = () => {
+    console.log("handleScrollBottom");
     if (this.state.isMaxPage === false) {
       this.setState({
         ...this.state,
@@ -847,27 +847,26 @@ class Report extends Component {
         <ReportTypeTabs
           selectedType={this.state.selectedType}
           handleChangeTab={this.handleChangeTab}
+          style={{ marginBottom: "20px" }}
         />
-
         <DateRangeWithDatePicker
           dateFrom={this.state.dateFrom}
           handleDateFromChange={this.handleDateFromChange}
           dateTo={this.state.dateTo}
           handleDateToChange={this.handleDateToChange}
           selectedType={this.state.selectedType}
+          style={{ marginBottom: "16px" }}
         />
-
         <DateRangeWithIntervalSelector
           dateRange={this.state.dateRange}
           handleDateRangeChange={this.handleDateRangeChange}
         />
-
         {(() => {
           if (this.state.selectedType === 1) {
             return (
-              <SelectContainer>
+              <StatusSelectContainer>
                 <SelectLabel>{i18n.t("report.platform")}</SelectLabel>
-                <CustomFormControl variant="outlined" style={{}}>
+                <SelectFormControl variant="outlined" style={{}}>
                   <CustomSelect
                     native
                     value={this.state.type}
@@ -894,23 +893,20 @@ class Report extends Component {
                       });
                     })()}
                   </CustomSelect>
-                </CustomFormControl>
-              </SelectContainer>
+                </SelectFormControl>
+              </StatusSelectContainer>
             );
           } else if (this.state.selectedType === 3) {
             return (
-              <SelectContainer>
+              <StatusSelectContainer>
                 <SelectLabel>{i18n.t("report.status")}</SelectLabel>
-                <CustomFormControl variant="outlined" style={{}}>
-                  <CustomSelect
+
+                <SelectFormControl variant="outlined">
+                  <Select
                     native
-                    style={{
-                      fontSize: "28px",
-                      height: "78px",
-                      border: "none",
-                    }}
                     onChange={this.handleStatusChange}
                     value={this.state.status}
+                    fullWidth
                   >
                     <option value={""}>{i18n.t("report.all")}</option>
 
@@ -921,22 +917,17 @@ class Report extends Component {
                         </option>
                       );
                     })}
-                  </CustomSelect>
-                </CustomFormControl>
-              </SelectContainer>
+                  </Select>
+                </SelectFormControl>
+              </StatusSelectContainer>
             );
           } else if (this.state.selectedType === 4) {
             return (
-              <SelectContainer>
+              <StatusSelectContainer>
                 <SelectLabel>{i18n.t("report.status")}</SelectLabel>
-                <CustomFormControl variant="outlined" style={{}}>
-                  <CustomSelect
+                <SelectFormControl variant="outlined">
+                  <Select
                     native
-                    style={{
-                      fontSize: "28px",
-                      height: "78px",
-                      border: "none",
-                    }}
                     onChange={this.handleStatusChange}
                     value={this.state.status}
                   >
@@ -948,101 +939,108 @@ class Report extends Component {
                         </option>
                       );
                     })}
-                  </CustomSelect>
-                </CustomFormControl>
-              </SelectContainer>
+                  </Select>
+                </SelectFormControl>
+              </StatusSelectContainer>
             );
           }
         })()}
 
+        {/* Main content */}
+
         {(() => {
           if (this.state.selectedType === 1) {
             return (
-              <React.Fragment>
-                <DataHeader>
-                  <DataHeaderRow>
-                    <DataDateCell>{i18n.t("report.submitDate")}</DataDateCell>
-                    <DataWinlossCell>{i18n.t("report.status")}</DataWinlossCell>
-                    <DataWinlossCell>
+              <ReportContainer>
+                <ReportSummary>
+                  <ReportSummaryRow>
+                    <ReportSummaryCol>
+                      {i18n.t("report.submitDate")}
+                    </ReportSummaryCol>
+                    <ReportSummaryCol>
+                      {i18n.t("report.status")}
+                    </ReportSummaryCol>
+                    <ReportSummaryCol>
                       {i18n.t("report.transferOut")}
                       <br />
                       {i18n.t("report.transferIn")}
-                    </DataWinlossCell>
+                    </ReportSummaryCol>
 
-                    <DataWinlossCell>{i18n.t("common.amount")}</DataWinlossCell>
-                  </DataHeaderRow>
-                </DataHeader>
+                    <ReportSummaryCol>
+                      {i18n.t("common.amount")}
+                    </ReportSummaryCol>
+                  </ReportSummaryRow>
+                </ReportSummary>
+
                 {(() => {
                   if (this.state.dataList.length <= 0) {
                     return <NoRecord />;
                   } else {
                     return (
-                      <DataContent>
+                      <ReportCardsContainer>
                         {this.state.dataList.map((row, index) => {
                           return (
-                            <DataRow key={index}>
-                              <DataDateCell>
-                                {moment(row.create_time_text).format(
-                                  "YYYY-MM-DD hh:mm a"
-                                )}
-                              </DataDateCell>
-                              <DataDateCell>{row.status_text}</DataDateCell>
-                              <DataDateCell>
-                                {row.transform_out}
-                                <br />
-                                {row.transform_in}
-                              </DataDateCell>
+                            <ReportCard key={index}>
+                              <ReportCardRow>
+                                <ReportCardCol>
+                                  {moment(row.create_time_text).format(
+                                    "YYYY-MM-DD hh:mm a"
+                                  )}
+                                </ReportCardCol>
+                                <ReportCardCol>{row.status_text}</ReportCardCol>
+                                <ReportCardCol>
+                                  {row.transform_out}
+                                  <br />
+                                  {row.transform_in}
+                                </ReportCardCol>
 
-                              <DataDateCell>{row.amount_text}</DataDateCell>
-                            </DataRow>
+                                <ReportCardCol>{row.amount_text}</ReportCardCol>
+                              </ReportCardRow>
+                            </ReportCard>
                           );
                         })}
-                      </DataContent>
+                      </ReportCardsContainer>
                     );
                   }
                 })()}
-              </React.Fragment>
+              </ReportContainer>
             );
           } else if (this.state.selectedType === 2) {
             return (
-              <React.Fragment>
-                <DataHeader></DataHeader>
+              <ReportContainer>
                 {config.features.Report_ShowRoundsTotal &&
                   this.state.tab2.roundTotal &&
                   (this.state.tab2.roundTotal.betAmount ||
                     this.state.tab2.roundTotal.validBetAmount ||
                     this.state.tab2.roundTotal.validBetAmount) && (
-                    <DataContent
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 1fr 1fr",
-                      }}
-                    >
-                      <div style={{ textAlign: "left" }}>
-                        {this.state.tab2.roundTotal &&
-                          i18n.t("report.totalBetAmount") +
-                            ": " +
-                            this.state.tab2.roundTotal.betAmount}
-                      </div>
-                      <div style={{ textAlign: "left" }}>
-                        {this.state.tab2.roundTotal &&
-                          i18n.t("report.totalValidBet") +
-                            ": " +
-                            this.state.tab2.roundTotal.validBetAmount}
-                      </div>
-                      <div style={{ textAlign: "left" }}>
-                        {i18n.t("report.totalWinLose") + ": "}
-                        <CustomWinLose
-                          value={
-                            this.state.tab2.roundTotal &&
-                            this.state.tab2.roundTotal.winLoss
-                          }
-                        >
+                    <ReportSummary>
+                      <ReportSummaryRow>
+                        <ReportSummaryCol>
                           {this.state.tab2.roundTotal &&
-                            this.state.tab2.roundTotal.winLoss}
-                        </CustomWinLose>
-                      </div>
-                    </DataContent>
+                            i18n.t("report.totalBetAmount") +
+                              ": " +
+                              this.state.tab2.roundTotal.betAmount}
+                        </ReportSummaryCol>
+                        <ReportSummaryCol>
+                          {this.state.tab2.roundTotal &&
+                            i18n.t("report.totalValidBet") +
+                              ": " +
+                              this.state.tab2.roundTotal.validBetAmount}
+                        </ReportSummaryCol>
+                        <ReportSummaryCol>
+                          {i18n.t("report.totalWinLose") + ": "}
+                          <CustomWinLose
+                            value={
+                              this.state.tab2.roundTotal &&
+                              this.state.tab2.roundTotal.winLoss
+                            }
+                          >
+                            {this.state.tab2.roundTotal &&
+                              this.state.tab2.roundTotal.winLoss}
+                          </CustomWinLose>
+                        </ReportSummaryCol>
+                      </ReportSummaryRow>
+                    </ReportSummary>
                   )}
 
                 {(() => {
@@ -1050,135 +1048,134 @@ class Report extends Component {
                     return <NoRecord />;
                   } else {
                     return (
-                      <DataContent>
+                      <ReportCardsContainer>
                         {this.state.dataList.map((row, index) => {
                           const date = moment(row.createdOn).format(
                             "YYYY-MM-DD hh:mm a"
                           );
                           return (
-                            <React.Fragment key={index}>
-                              <DataRowId>
+                            <ReportCard key={index}>
+                              <ReportCardRow>
                                 {i18n.t("report.betid")} :{" "}
-                                <IDCell>{row.id}</IDCell>
-                              </DataRowId>
-                              <DataRowId>
-                                <CustomDataRow>
-                                  <IDCell>
-                                    {config.features.WGHK_Setup
-                                      ? row.subGameProviderName
+                                <ReportCardCol>{row.id}</ReportCardCol>
+                              </ReportCardRow>
+
+                              <ReportCardRow>
+                                <ReportCardCol>
+                                  {config.features.WGHK_Setup
+                                    ? row.subGameProviderName
+                                    : row.gameProviderName
+                                    ? row.gameProviderName === "BTI" &&
+                                      config.currency === "PHP"
+                                      ? "PHSB"
                                       : row.gameProviderName
-                                      ? row.gameProviderName === "BTI" &&
-                                        config.currency === "PHP"
-                                        ? "PHSB"
-                                        : row.gameProviderName
-                                      : ""}
-                                    - {row.gameName}
-                                  </IDCell>
-                                  <IDCell> {date}</IDCell>
-                                </CustomDataRow>
-                              </DataRowId>
-                              <DataRowId>
-                                <AnotherCustomDataRow>
-                                  <IDCell>
-                                    {i18n.t("report.betAmount")} :
-                                    {row.betAmount}
-                                  </IDCell>{" "}
-                                  <IDCell>
-                                    {i18n.t("report.validBet")} :
-                                    {row.validBetAmount}
-                                  </IDCell>{" "}
-                                  <IDCell>
-                                    {i18n.t("report.winloss")} :
-                                    <CustomWinLose value={row.winLoss}>
-                                      {row.winLoss}
-                                    </CustomWinLose>
-                                  </IDCell>
-                                </AnotherCustomDataRow>
-                              </DataRowId>
-                            </React.Fragment>
+                                    : ""}
+                                  - {row.gameName}
+                                </ReportCardCol>
+                                <ReportCardCol> {date}</ReportCardCol>
+                              </ReportCardRow>
+
+                              <ReportCardRow>
+                                <ReportCardCol>
+                                  {i18n.t("report.betAmount")} :{row.betAmount}
+                                </ReportCardCol>{" "}
+                                <ReportCardCol>
+                                  {i18n.t("report.validBet")} :
+                                  {row.validBetAmount}
+                                </ReportCardCol>{" "}
+                                <ReportCardCol>
+                                  {i18n.t("report.winloss")} :
+                                  <CustomWinLose value={row.winLoss}>
+                                    {row.winLoss}
+                                  </CustomWinLose>
+                                </ReportCardCol>
+                              </ReportCardRow>
+                            </ReportCard>
                           );
                         })}
-                      </DataContent>
+                      </ReportCardsContainer>
                     );
                   }
                 })()}
-              </React.Fragment>
+              </ReportContainer>
             );
           } else if (this.state.selectedType === 3) {
             return (
-              <React.Fragment>
-                <DataHeader>
-                  <DataHeaderRow>
-                    <DataDateCell3>{i18n.t("report.dateTime")}</DataDateCell3>
+              <ReportContainer>
+                <ReportSummary>
+                  <ReportSummaryRow>
+                    <ReportSummaryCol>
+                      {i18n.t("report.dateTime")}
+                    </ReportSummaryCol>
 
-                    <DataDateCell3>{i18n.t("report.status")}</DataDateCell3>
+                    <ReportSummaryCol>
+                      {i18n.t("report.status")}
+                    </ReportSummaryCol>
                     <DataDateCellAmount>
                       {i18n.t("common.amount")}
                     </DataDateCellAmount>
-                  </DataHeaderRow>
-                </DataHeader>
+                  </ReportSummaryRow>
+                </ReportSummary>
+
                 {(() => {
                   if (this.state.dataList.length <= 0) {
                     return <NoRecord />;
                   } else {
                     return (
-                      <DataContent>
+                      <ReportCardsContainer>
                         {this.state.dataList.map((row, index) => {
                           const date = moment(row.createdon).format(
                             "YYYY-MM-DD hh:mm a"
                           );
                           return (
-                            <React.Fragment key={index}>
-                              <DataRowId>
+                            <ReportCard key={index}>
+                              <ReportCardRow>
                                 {i18n.t("report.NewOrderNumber")} :{" "}
-                                <IDCell>{row.orderno}</IDCell>
-                              </DataRowId>
-                              <DataRow>
-                                <DataDateCell3>{date}</DataDateCell3>
-                                <DataDateCell3>
+                                <ReportCardCol>{row.orderno}</ReportCardCol>
+                              </ReportCardRow>
+                              <ReportCardRow>
+                                <ReportCardCol>{date}</ReportCardCol>
+                                <ReportCardCol>
                                   {i18n.t(
                                     `report.withdrawal.status${row.status}`
                                   )}
-                                </DataDateCell3>
-                                <DataDateCellAmount>
-                                  {row.amount}
-                                </DataDateCellAmount>
-                              </DataRow>
-                            </React.Fragment>
+                                </ReportCardCol>
+                                <ReportCardCol>{row.amount}</ReportCardCol>
+                              </ReportCardRow>
+                            </ReportCard>
                           );
                         })}
-                      </DataContent>
+                      </ReportCardsContainer>
                     );
                   }
                 })()}
-              </React.Fragment>
+              </ReportContainer>
             );
           } else if (this.state.selectedType === 4) {
             return (
-              <React.Fragment>
+              <ReportContainer>
                 {(() => {
                   if (this.state.dataList.length <= 0) {
                     return <NoRecord />;
                   } else {
                     return (
-                      <DataContent>
+                      <ReportCardsContainer>
                         {this.state.dataList.map((row, index) => {
                           const date = moment(row.createdon).format(
                             "YYYY-MM-DD hh:mm a"
                           );
                           return (
-                            <React.Fragment key={index}>
-                              <DataRowId>
+                            <ReportCard key={index}>
+                              <ReportCardRow>
                                 {i18n.t("report.NewOrderNumber")} :{" "}
-                                <IDCell>{row.orderno}</IDCell>
-                              </DataRowId>
-                              <DataRow>
-                                <DataDateCell3></DataDateCell3>
-                                <DataDateCell3>
+                                <ReportCardCol>{row.orderno}</ReportCardCol>
+                              </ReportCardRow>
+                              <ReportCardRow>
+                                <ReportCardCol>
                                   {i18n.t(`report.deposit.status${row.status}`)}
-                                </DataDateCell3>
-                                <DataDateCell3>{row.amount}</DataDateCell3>
-                                <DataDateCellAmount>
+                                </ReportCardCol>
+                                <ReportCardCol>{row.amount}</ReportCardCol>
+                                <ReportCardCol>
                                   {row.status === 1 &&
                                     row.canuploadcerts === true && (
                                       <TheDepositButton
@@ -1189,195 +1186,216 @@ class Report extends Component {
                                         {i18n.t("deposit.uploadReceipt")}
                                       </TheDepositButton>
                                     )}
-                                </DataDateCellAmount>
-                                <DataRowId>
-                                  <DateTimeDisplay>{date}</DateTimeDisplay>
-                                </DataRowId>
-                              </DataRow>
-                            </React.Fragment>
+                                </ReportCardCol>
+                                <ReportCardRow>
+                                  <ReportCardCol>{date}</ReportCardCol>
+                                </ReportCardRow>
+                              </ReportCardRow>
+                            </ReportCard>
                           );
                         })}
-                      </DataContent>
+                      </ReportCardsContainer>
                     );
                   }
                 })()}
-              </React.Fragment>
+              </ReportContainer>
             );
           } else if (this.state.selectedType === 5) {
             return (
-              <React.Fragment>
-                <DataHeader>
-                  <DataHeaderRow>
-                    <DataDateCell>{i18n.t("report.rebate.sn")}</DataDateCell>
-                    <DataDateCell>
+              <ReportContainer>
+                <ReportSummary>
+                  <ReportSummaryRow>
+                    <ReportSummaryCol>
+                      {i18n.t("report.rebate.sn")}
+                    </ReportSummaryCol>
+                    <ReportSummaryCol>
                       {i18n.t("report.rebate.cycleDate")}
-                    </DataDateCell>
-                    <DataDateCell>{i18n.t("report.status")}</DataDateCell>
-                    <DataDateCell style={{ "text-align": "right" }}>
+                    </ReportSummaryCol>
+                    <ReportSummaryCol>
+                      {i18n.t("report.status")}
+                    </ReportSummaryCol>
+                    <ReportSummaryCol style={{ "text-align": "right" }}>
                       {i18n.t("report.rebate.validBet")}
                       <br />
                       {i18n.t("report.rebate.amount")}
-                    </DataDateCell>
-                  </DataHeaderRow>
-                </DataHeader>
+                    </ReportSummaryCol>
+                  </ReportSummaryRow>
+                </ReportSummary>
                 {(() => {
                   if (this.state.dataList.length <= 0) {
                     return <NoRecord />;
                   } else {
                     return (
-                      <DataContent>
+                      <ReportCardsContainer>
                         {this.state.dataList.map((row, index) => {
                           return (
-                            <DataRow key={index}>
-                              <DataDateCell>{row.sn}</DataDateCell>
-                              <DataDateCell>{row.date}</DataDateCell>
-                              <DataDateCell>{row.status_text}</DataDateCell>
-                              <DataDateCell style={{ "text-align": "right" }}>
-                                {row.bet_valid_text}
-                                <br />
-                                {row.rebate_amount_text}
-                              </DataDateCell>
-                            </DataRow>
+                            <ReportCard key={index}>
+                              <DataRow>
+                                <DataDateCell>{row.sn}</DataDateCell>
+                                <DataDateCell>{row.date}</DataDateCell>
+                                <DataDateCell>{row.status_text}</DataDateCell>
+                                <DataDateCell style={{ "text-align": "right" }}>
+                                  {row.bet_valid_text}
+                                  <br />
+                                  {row.rebate_amount_text}
+                                </DataDateCell>
+                              </DataRow>
+                            </ReportCard>
                           );
                         })}
-                      </DataContent>
+                      </ReportCardsContainer>
                     );
                   }
                 })()}
-              </React.Fragment>
+              </ReportContainer>
             );
           } else if (this.state.selectedType === 6) {
             return (
-              <React.Fragment>
+              <ReportContainer>
                 {(() => {
                   if (this.state.dataList.length <= 0) {
                     return <NoRecord />;
                   } else {
                     return (
-                      <DataContent>
+                      <ReportCardsContainer>
                         {this.state.dataList.map((row, index) => {
                           return (
-                            <div key={index}>
-                              <DataRowId>
+                            <ReportCard key={index}>
+                              <ReportCardRow>
                                 {i18n.t("report.transfer.table.from")} :{" "}
-                                <IDCell>
+                                <ReportCardCol>
                                   {row.from
                                     ? row.from === "BTI" &&
                                       config.currency === "PHP"
                                       ? "PHSB"
                                       : row.from
                                     : ""}
-                                </IDCell>
-                              </DataRowId>
-                              <DataRowId>
+                                </ReportCardCol>
+                              </ReportCardRow>
+                              <ReportCardRow>
                                 {i18n.t("report.transfer.table.to")} :{" "}
-                                <IDCell>
+                                <ReportCardCol>
                                   {row.to
                                     ? row.to === "BTI" &&
                                       config.currency === "PHP"
                                       ? "PHSB"
                                       : row.to
                                     : ""}
-                                </IDCell>
-                              </DataRowId>
-                              <DataRowId>
+                                </ReportCardCol>
+                              </ReportCardRow>
+                              <ReportCardRow>
                                 {i18n.t("report.amount")} :{" "}
-                                <IDCell>{row.amount}</IDCell>
-                              </DataRowId>
-                              <DataRow>
-                                <DateTimeDisplay>
+                                <ReportCardCol>{row.amount}</ReportCardCol>
+                              </ReportCardRow>
+                              <ReportCardRow>
+                                <ReportCardCol>
                                   {moment(row.balancetime).format(
                                     "YYYY-MM-DD hh:mm a"
                                   )}
-                                </DateTimeDisplay>
-                              </DataRow>
-                            </div>
+                                </ReportCardCol>
+                              </ReportCardRow>
+                            </ReportCard>
                           );
                         })}
-                      </DataContent>
+                      </ReportCardsContainer>
                     );
                   }
                 })()}
-              </React.Fragment>
+              </ReportContainer>
             );
           } else if (this.state.selectedType === 7) {
             return (
-              <React.Fragment>
+              <ReportContainer>
                 {(() => {
                   if (this.state.dataList.length <= 0) {
                     return <NoRecord />;
                   } else {
                     return (
-                      <DataContent>
+                      <ReportCardsContainer>
                         {this.state.dataList.map((row, index) => {
                           const date = moment(row.joinedOn).format(
                             "YYYY-MM-DD hh:mm a"
                           );
                           return (
-                            <div key={index}>
-                              <DataRow>
-                                <DataRowId>
+                            <ReportCard key={index}>
+                              <ReportCardRow>
+                                <ReportCardCol>
                                   {i18n.t("report.dateTime")} :{" "}
-                                  <IDCell>{date}</IDCell>
-                                </DataRowId>
-                                <DataRowId>
+                                </ReportCardCol>
+                                <ReportCardCol>{date}</ReportCardCol>
+                              </ReportCardRow>
+
+                              <ReportCardRow>
+                                <ReportCardCol>
                                   {i18n.t("report.joinedPromo.promoName")}:{" "}
-                                  <IDCell>{row.promotionName}</IDCell>
-                                </DataRowId>
-                              </DataRow>
-                            </div>
+                                </ReportCardCol>
+                                <ReportCardCol>
+                                  {row.promotionName}
+                                </ReportCardCol>
+                              </ReportCardRow>
+                            </ReportCard>
                           );
                         })}
-                      </DataContent>
+                      </ReportCardsContainer>
                     );
                   }
                 })()}
-              </React.Fragment>
+              </ReportContainer>
             );
           } else if (this.state.selectedType === 8) {
             return (
-              <React.Fragment>
+              <ReportContainer>
                 {(() => {
                   if (this.state.dataList.length <= 0) {
                     return <NoRecord />;
                   } else {
                     return (
-                      <DataContent>
+                      <ReportCardsContainer>
                         {this.state.dataList.map((row, index) => {
                           const date = moment(row.recordedon).format(
                             "YYYY/MM/DD hh:mm:ss"
                           );
                           return (
-                            <div key={index}>
-                              <DataRow>
-                                <DataRowId>
+                            <ReportCard key={index}>
+                              <ReportCardRow>
+                                <ReportCardCol>
                                   {i18n.t("report.dateTime")} :{" "}
-                                  <IDCell>{date}</IDCell>
-                                </DataRowId>
-                                <DataRowId>
+                                </ReportCardCol>
+                                <ReportCardCol>{date}</ReportCardCol>
+                              </ReportCardRow>
+                              <ReportCardRow>
+                                <ReportCardCol>
                                   {i18n.t("report.balanceChanges.type")}:{" "}
-                                  <IDCell>
-                                    {ErrorSwitcher.getTranslation(row.type)}
-                                  </IDCell>
-                                </DataRowId>
-                                <DataRowId>
+                                </ReportCardCol>
+                                <ReportCardCol>
+                                  {ErrorSwitcher.getTranslation(row.type)}
+                                </ReportCardCol>
+                              </ReportCardRow>
+                              <ReportCardRow>
+                                <ReportCardCol>
                                   {i18n.t("report.balanceChanges.amount")}:{" "}
-                                  <IDCell>{row.amount}</IDCell>
-                                </DataRowId>
-                              </DataRow>
-                            </div>
+                                </ReportCardCol>
+                                <ReportCardCol>{row.amount}</ReportCardCol>
+                              </ReportCardRow>
+                            </ReportCard>
                           );
                         })}
-                      </DataContent>
+                      </ReportCardsContainer>
                     );
                   }
                 })()}
-              </React.Fragment>
+              </ReportContainer>
             );
           }
         })()}
-        <BottomScrollListener onBottom={this.handleScrollBottom} />
+        {/*<BottomScrollListener onBottom={this.handleScrollBottom} offset={300} />*/}
         <Loading show={this.state.loading}></Loading>
+        <BottomScrollListener
+          onBottom={() => {
+            console.log("FUCK");
+          }}
+          offset={300}
+        />
       </Container>
     );
   }

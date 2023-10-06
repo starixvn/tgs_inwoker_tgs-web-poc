@@ -1,12 +1,15 @@
 import React, { useMemo } from "react";
 import i18n from "@/utils/i18n";
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import styled from "styled-components";
 import zhLocale from "date-fns/locale/zh-CN";
 import enLocale from "date-fns/locale/en-US";
 import thLocale from "date-fns/locale/th";
 import addDays from "date-fns/addDays";
+import { themeList } from "@/theme";
+import { DatePicker } from "@/components/Mobile/components/UI/DatePicker";
+const theme = themeList["mobileT18"];
 
 const localeMap = {
   zh: zhLocale,
@@ -16,29 +19,39 @@ const localeMap = {
 
 const DateContainer = styled.div``;
 
+const DateTitle = styled.div`
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.465rem;
+  color: ${theme.white};
+  margin-bottom: 20px;
+`;
+
 const FlatStraightLine = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const DateSpliter = styled.div`
   font-size: 22px;
   font-weight: 600;
   color: #4a4a4a;
-  margin: 75px 0 0 10px;
+  width: 48px;
+  text-align: center;
 `;
 const DateInner = styled.div`
-  padding: 5px;
-`;
-const DateLabel = styled.div`
-  border-left: 5px solid ${({ theme }) => theme.primary};
-  padding-left: 20px;
-  padding-top: 5px;
-  margin-left: 10px;
-  font-size: 22px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.secondary};
+  padding: 10px;
+
+  border: 1px solid ${theme.tertiaryLight};
+  border-radius: 5px;
+
+  & input {
+    color: ${theme.tertiaryLight};
+    padding: 0;
+  }
 `;
 
 type Props = {
@@ -55,6 +68,7 @@ const DateRangeWithDatePicker = ({
   dateTo,
   handleDateToChange,
   selectedType,
+  ...others
 }: Props) => {
   const minDateFrom = useMemo(() => {
     switch (selectedType) {
@@ -76,10 +90,13 @@ const DateRangeWithDatePicker = ({
     }
   }, [selectedType, dateTo]);
   return (
-    <DateContainer>
+    //@ts-ignore
+    <DateContainer {...others}>
+      <DateTitle>{i18n.t("report.date")}</DateTitle>
+
       <FlatStraightLine>
         <DateInner>
-          <DateLabel>{i18n.t("report.startDate")}</DateLabel>
+          {/*<DateLabel>{i18n.t("report.startDate")}</DateLabel>*/}
           <MuiPickersUtilsProvider
             utils={DateFnsUtils}
             locale={localeMap[i18n.language.substring(0, 2)]}
@@ -96,9 +113,11 @@ const DateRangeWithDatePicker = ({
             />
           </MuiPickersUtilsProvider>
         </DateInner>
+
         <DateSpliter>-</DateSpliter>
+
         <DateInner>
-          <DateLabel>{i18n.t("report.endDate")}</DateLabel>
+          {/*<DateLabel>{i18n.t("report.endDate")}</DateLabel>*/}
           <MuiPickersUtilsProvider
             utils={DateFnsUtils}
             locale={localeMap[i18n.language.substring(0, 2)]}

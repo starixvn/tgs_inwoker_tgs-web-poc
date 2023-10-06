@@ -1,6 +1,10 @@
 import React from "react";
 import i18n from "@/utils/i18n";
 import styled from "styled-components";
+import noResultImg from "@/assets/images/report/no_result.svg";
+import { themeList } from "@/theme";
+
+const theme = themeList["mobileT18"];
 
 const NoRecordWrapper = styled.div`
   display: flex;
@@ -13,27 +17,32 @@ const NoRecordWrapper = styled.div`
 `;
 
 const NoRecordContainer = styled.div`
-  background: url(${process.env.PUBLIC_URL +
-    `/assets/images/wapp/no-record.png`})
-    no-repeat center;
-  width: 96px;
-  height: 136px;
+  width: 53px;
+  height: 53px;
+  margin-bottom: 8px;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const NoDataText = styled.div`
-  font-size: 24px;
-  user-select: none;
-  opacity: 0.5;
+  font-size: 1.062rem;
+  color: ${theme.tertiary};
 `;
 
 type Props = {};
 const NoRecord = (props: Props) => {
   return (
     <NoRecordWrapper>
-      <NoRecordContainer language={i18n.language} />
+      <NoRecordContainer>
+        <img src={noResultImg} alt={"no-result"} />
+      </NoRecordContainer>
       <NoDataText>{i18n.t("common.nodata")}</NoDataText>
     </NoRecordWrapper>
   );
 };
 
-export default NoRecord;
+export default React.memo(NoRecord);
