@@ -15,20 +15,20 @@ const CategoryContent = styled.div`
     margin-bottom: 30px;
 `;
 
+type GameTypeDataItem = {
+  name: string;
+  abbreviation: string;
+  game_platform_id: number;
+  game_platform_name: string;
+  gpcode: string;
+  is_try: number;
+  params: string;
+  status: number;
+};
+
 type Props = {
-  gameTypeData: [
-    {
-      name: string;
-      abbreviation: string;
-      game_platform_id: number;
-      game_platform_name: string;
-      gpcode: string;
-      is_try: number;
-      params: string;
-      status: number;
-    }
-  ];
-}
+  gameTypeData: GameTypeDataItem[];
+};
 
 const Category = ({
   gameTypeData
