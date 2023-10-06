@@ -2,8 +2,18 @@ import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useMemo } from "react";
 import i18n from "@/utils/i18n";
 
+export enum ReportTabIndexEnum {
+  "PLATFORM" = 1,
+  "BETTING" = 2,
+  "WITHDRAW" = 3,
+  "DEPOSIT" = 4,
+  "REBATE" = 5,
+  "TRANSFER" = 6,
+  "JOIN_PROMOTION" = 7,
+  "BALANCE_CHANGE" = 8,
+}
 export interface ReportTab {
-  index: number;
+  index: ReportTabIndexEnum;
   label: string;
 }
 
@@ -13,31 +23,31 @@ export function useReportTypeTabs() {
   const displayedTabList = useMemo<ReportTab[]>(() => {
     return [
       {
-        index: 2,
+        index: ReportTabIndexEnum.BETTING,
         label: i18n.t("report.bettingDetails"),
       },
       {
-        index: 3,
+        index: ReportTabIndexEnum.WITHDRAW,
         label: i18n.t("report.withdrawalDetails"),
       },
       {
-        index: 4,
+        index: ReportTabIndexEnum.DEPOSIT,
         label: i18n.t("report.depositDetails"),
       },
       (() => {
         if (game.containTransferWallet) {
           return {
-            index: 6,
+            index: ReportTabIndexEnum.TRANSFER,
             label: i18n.t("common.transfer"),
           };
         }
       })(),
       {
-        index: 8,
+        index: ReportTabIndexEnum.BALANCE_CHANGE,
         label: i18n.t("report.balanceChanges.title"),
       },
       {
-        index: 7,
+        index: ReportTabIndexEnum.JOIN_PROMOTION,
         label: i18n.t("report.joinedPromo.title"),
       },
     ].filter((reportTab) => reportTab);
