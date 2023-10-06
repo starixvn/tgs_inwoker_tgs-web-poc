@@ -41,12 +41,6 @@ const DateLabel = styled.div`
   color: ${({ theme }) => theme.secondary};
 `;
 
-export enum DateRangeEnum {
-  TODAY,
-  WEEKLY,
-  MONTHLY,
-}
-
 type Props = {
   dateFrom: Date;
   handleDateFromChange: (newDate?: Date) => void;
@@ -54,6 +48,7 @@ type Props = {
   handleDateToChange: (newDate?: Date) => void;
   selectedType: number;
 };
+
 const DateRangeWithDatePicker = ({
   dateFrom,
   handleDateFromChange,

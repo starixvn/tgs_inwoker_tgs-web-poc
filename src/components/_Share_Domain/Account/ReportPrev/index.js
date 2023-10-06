@@ -2,25 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
-import zhLocale from "date-fns/locale/zh-CN";
-import enLocale from "date-fns/locale/en-US";
-import thLocale from "date-fns/locale/th";
-import AppBar from "@material-ui/core/AppBar";
 import { withStyles } from "@material-ui/core/styles";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import { createTheme } from "@material-ui/core";
-import { MuiThemeProvider as ThemeProvider } from "@material-ui/core/styles";
-import DateFnsUtils from "@date-io/date-fns"; // import
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
 import { ReportService } from "@/api-services/services/ReportService";
-import { GameService } from "@/api-services/services/GameService";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { GeneralService } from "@/api-services/services/GeneralService";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
@@ -30,58 +19,14 @@ import ErrorSwitcher from "@/utils/ErrorSwitcher";
 import ReportTypeTabs from "@/components/_Share_Domain/Account/ReportPrev/components/ReportTypeTabs";
 import DateRangeWithDatePicker from "@/components/_Share_Domain/Account/ReportPrev/components/DateRangeWithDatePicker";
 import DateRangeWithIntervalSelector from "@/components/_Share_Domain/Account/ReportPrev/components/DateRangeWithIntervalSelector";
+import NoRecord from "@/components/_Share_Domain/Account/ReportPrev/components/NoRecord";
 
 const moment = require("moment");
-const localeMap = {
-  zh: zhLocale,
-  en: enLocale,
-  th: thLocale,
-};
+
 const Container = styled.div`
   width: 100%;
 `;
 
-const DateContainer = styled.div``;
-const DateSpliter = styled.div`
-  font-size: 22px;
-  font-weight: 600;
-  color: #4a4a4a;
-  margin: 75px 0 0 10px;
-`;
-const DateInner = styled.div`
-  padding: 5px;
-`;
-const DateLabel = styled.div`
-  border-left: 5px solid ${({ theme }) => theme.primary};
-  padding-left: 20px;
-  padding-top: 5px;
-  margin-left: 10px;
-  font-size: 22px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.secondary};
-`;
-const DateRangContainer = styled.div`
-  margin-top: 20px;
-`;
-const DateRangSelection = styled.div`
-  float: left;
-  font-weight: 600;
-
-  letter-spacing: normal;
-  text-align: center;
-  font-size: 32px;
-  ${(props) =>
-    props.selected
-      ? `  
-  color: ` +
-        props.theme.primary +
-        `;`
-      : `
-
-  color: ` +
-        props.theme.secondary +
-        `;`}
-`;
 const DataContent = styled.div`
   margin: 0 auto;
 
@@ -139,50 +84,7 @@ const DataWinlossCell = styled.div`
   width: calc(100% / 4 * 1);
   text-align: right;
 `;
-const NoRecordContainer = styled.div`
-  background: url(${process.env.PUBLIC_URL +
-    `/assets/images/wapp/no-record.png`})
-    no-repeat center;
-  width: 96px;
-  height: 136px;
-`;
-const materialTheme = createTheme({
-  overrides: {
-    MuiPickersModal: {
-      dialogAction: {
-        color: "red",
-      },
-    },
-    MuiPaper: {
-      root: {
-        transform: "scale(1.5)",
-      },
-    },
-    MuiFormControl: {
-      root: {
-        width: "312px",
-        height: "76px",
-        marginTop: "10px",
-        borderRadius: "20px",
-        boxShadow: "0 4px 8px 0 rgba(35, 31, 27, 0.1)",
-        border: "solid 1px #f3f3f3",
-        backgroundColor: "#ffffff",
-      },
-    },
-    MuiInput: {
-      root: {
-        fontSize: "30px",
-        height: "75px",
-        "&::before": {
-          display: "none",
-        },
-        "& input": {
-          textAlign: "center",
-        },
-      },
-    },
-  },
-});
+
 const CustomFormControl = withStyles((theme) => ({
   root: {
     "& fieldset": {
@@ -230,63 +132,6 @@ const TheDepositButton = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 `;
 
-const CustomTabs = styled(Tabs)`
-  height: 80px;
-  font-size: 25px;
-  display: flex;
-
-  .MuiTabs-fixed {
-    overflow: overlay !important;
-  }
-`;
-
-const CustomTabText = styled.div`
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CustomBorderBottom = styled.div`
-  height: 5px;
-`;
-
-const CustomTab = styled.div`
-  width: calc(100vw / 4);
-  display: flex;
-  flex-direction: column;
-  padding: 0px 10px;
-
-  ${CustomTabText} {
-    color: ${({ selected, theme }) => {
-      return selected ? theme.primary : theme.secondary;
-    }};
-  }
-
-  ${CustomBorderBottom} {
-    background: ${({ selected, theme }) => {
-      return selected ? theme.primary : theme.secondary;
-    }};
-  }
-`;
-
-const CustomDatepicker = styled.div`
-  background: white;
-  zoom: 1.5;
-  padding: 10px 20px;
-  border-radius: 8px;
-  margin-top: 10px;
-
-  .MuiInputBase-input {
-    background: none;
-  }
-
-  .MuiInput-underline:before,
-  .MuiInput-underline:after {
-    border-bottom: 0px;
-  }
-`;
-
 const DateTimeDisplay = styled.div``;
 
 const CustomWinLose = styled.span`
@@ -305,28 +150,6 @@ const AnotherCustomDataRow = styled.div`
   grid-template-columns: 33.33% 33.33% 33.33%;
   padding-bottom: 20px;
   border-bottom: 2px solid #d7d7d7;
-`;
-
-const FlatStraightLine = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-`;
-
-const NoRecordWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 30px auto;
-  justify-content: center;
-  align-items: center;
-  padding-top: 60px;
-  width: 100px;
-`;
-
-const NoDataText = styled.div`
-  font-size: 24px;
-  user-select: none;
-  opacity: 0.5;
 `;
 
 class Report extends Component {
@@ -1019,15 +842,6 @@ class Report extends Component {
   };
 
   render() {
-    const NoRecord = () => {
-      return (
-        <NoRecordWrapper>
-          <NoRecordContainer language={i18n.language} />
-          <NoDataText>{i18n.t("common.nodata")}</NoDataText>
-        </NoRecordWrapper>
-      );
-    };
-
     return (
       <Container>
         <ReportTypeTabs
@@ -1192,23 +1006,7 @@ class Report extends Component {
           } else if (this.state.selectedType === 2) {
             return (
               <React.Fragment>
-                <DataHeader>
-                  {
-                    //    <DataHeaderRow>
-                    //      <DataDateCell>
-                    //        {i18n.t("report.betDateTime")}
-                    //      </DataDateCell>
-                    //      <DataDateCell>{i18n.t("report.platform")}</DataDateCell>
-                    //      <DataDateCell>{i18n.t("report.gamename")}</DataDateCell>
-                    //      <DataWinlossCell>
-                    //        {i18n.t("report.betAmount")}
-                    //      </DataWinlossCell>
-                    //      <DataWinlossCell>
-                    //        {i18n.t("report.winloss")}
-                    //      </DataWinlossCell>
-                    //    </DataHeaderRow>
-                  }
-                </DataHeader>
+                <DataHeader></DataHeader>
                 {config.features.Report_ShowRoundsTotal &&
                   this.state.tab2.roundTotal &&
                   (this.state.tab2.roundTotal.betAmount ||

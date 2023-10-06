@@ -1,6 +1,5 @@
 import React from "react";
 import i18n from "@/utils/i18n";
-import { DateRangeEnum } from "@/components/_Share_Domain/Account/ReportPrev/components/DateRangeWithDatePicker";
 import styled from "styled-components";
 
 const DateRangContainer = styled.div`
