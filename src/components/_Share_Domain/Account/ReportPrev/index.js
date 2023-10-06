@@ -28,6 +28,8 @@ import i18n from "@/utils/i18n";
 import config from "@/config/config";
 import ErrorSwitcher from "@/utils/ErrorSwitcher";
 import ReportTypeTabs from "@/components/_Share_Domain/Account/ReportPrev/components/ReportTypeTabs";
+import DateRangeWithDatePicker from "@/components/_Share_Domain/Account/ReportPrev/components/DateRangeWithDatePicker";
+import DateRangeWithIntervalSelector from "@/components/_Share_Domain/Account/ReportPrev/components/DateRangeWithIntervalSelector";
 
 const moment = require("moment");
 const localeMap = {
@@ -669,64 +671,50 @@ class Report extends Component {
     }
   };
 
-  handleWeeklyClick = () => {
+  handleDateRangeChange = (dateRangeEnum) => {
     let today = new Date();
     today.setHours(0);
     today.setMinutes(0);
     today.setSeconds(0);
     today.setMilliseconds(0);
-    let newdateFrom = addDays(today, -7);
+
+    let newDateFrom = today;
+
+    switch (dateRangeEnum) {
+      // today
+      case 0:
+        break;
+
+      // weekly
+      case 1:
+        newDateFrom = addDays(today, -7);
+        break;
+
+      // monthly
+      case 2:
+        newDateFrom = addMonths(today, -1);
+        break;
+    }
 
     this.setState({
       ...this.state,
-      dateFrom: newdateFrom,
+      dateFrom: newDateFrom,
       dateTo: today,
-      dateRange: 1,
+      dateRange: dateRangeEnum,
       dataList: [],
       isMaxPage: false,
       page: 1,
     });
   };
-  handleMontlyClick = () => {
-    let today = new Date();
-    today.setHours(0);
-    today.setMinutes(0);
-    today.setSeconds(0);
-    today.setMilliseconds(0);
-    let newdateFrom = addMonths(today, -1);
 
-    this.setState({
-      ...this.state,
-      dateFrom: newdateFrom,
-      dateTo: today,
-      dateRange: 2,
-      dataList: [],
-      isMaxPage: false,
-      page: 1,
-    });
-  };
-  handleTodayClick = (date) => {
-    let today = new Date();
-    today.setHours(0);
-    today.setMinutes(0);
-    today.setSeconds(0);
-    today.setMilliseconds(0);
-    this.setState({
-      ...this.state,
-      dateFrom: today,
-      dateTo: today,
-      dateRange: 0,
-      dataList: [],
-      isMaxPage: false,
-      page: 1,
-    });
-  };
   handleDateFromChange = (e) => {
     this.setState({ ...this.state, dateFrom: e });
   };
+
   handleDateToChange = (e) => {
     this.setState({ ...this.state, dateTo: e });
   };
+
   handleAccountGetReportTrigger = (page, type) => {
     this.setState({ ...this.state, loading: true });
     ReportService.GetAccountDetails(
@@ -1030,26 +1018,6 @@ class Report extends Component {
     });
   };
 
-  getDateFromMinDate = () => {
-    switch (this.state.selectedType) {
-      case 8:
-        return addDays(new Date(this.state.dateTo), -44);
-      default:
-        return undefined;
-    }
-  };
-
-  getDateToMaxDate = () => {
-    switch (this.state.selectedType) {
-      case 8:
-        return addDays(new Date(this.state.dateTo), 44) > new Date()
-          ? new Date()
-          : addDays(new Date(this.state.dateTo), 44);
-      default:
-        return new Date();
-    }
-  };
-
   render() {
     const NoRecord = () => {
       return (
@@ -1067,72 +1035,19 @@ class Report extends Component {
           handleChangeTab={this.handleChangeTab}
         />
 
-        <DateContainer>
-          <FlatStraightLine>
-            <DateInner>
-              <DateLabel>{i18n.t("report.startDate")}</DateLabel>
-              <ThemeProvider theme={materialTheme}>
-                <MuiPickersUtilsProvider
-                  utils={DateFnsUtils}
-                  locale={localeMap[i18n.language.substring(0, 2)]}
-                >
-                  <DatePicker
-                    autoOk
-                    clearable
-                    disableFuture
-                    minDate={this.getDateFromMinDate()}
-                    maxDate={new Date(this.state.dateTo)}
-                    format="yyyy/MM/dd"
-                    value={this.state.dateFrom}
-                    onChange={this.handleDateFromChange}
-                  />
-                </MuiPickersUtilsProvider>
-              </ThemeProvider>
-            </DateInner>
-            <DateSpliter>-</DateSpliter>
-            <DateInner>
-              <DateLabel>{i18n.t("report.endDate")}</DateLabel>
-              <ThemeProvider theme={materialTheme}>
-                <MuiPickersUtilsProvider
-                  utils={DateFnsUtils}
-                  locale={localeMap[i18n.language.substring(0, 2)]}
-                >
-                  <DatePicker
-                    autoOk
-                    clearable
-                    disableFuture
-                    minDate={new Date(this.state.dateFrom)}
-                    maxDate={this.getDateToMaxDate()}
-                    format="yyyy/MM/dd"
-                    value={this.state.dateTo}
-                    onChange={this.handleDateToChange}
-                  />
-                </MuiPickersUtilsProvider>
-              </ThemeProvider>
-            </DateInner>
-          </FlatStraightLine>
-          <div className="clear"></div>
-          <DateRangContainer>
-            <DateRangSelection
-              onClick={this.handleTodayClick}
-              selected={this.state.dateRange === 0}
-            >
-              {i18n.t("report.today")}
-            </DateRangSelection>
-            <DateRangSelection
-              selected={this.state.dateRange === 1}
-              onClick={this.handleWeeklyClick}
-            >
-              {i18n.t("report.oneWeek")}
-            </DateRangSelection>
-            <DateRangSelection
-              selected={this.state.dateRange === 2}
-              onClick={this.handleMontlyClick}
-            >
-              {i18n.t("report.oneMonth")}
-            </DateRangSelection>
-          </DateRangContainer>
-        </DateContainer>
+        <DateRangeWithDatePicker
+          dateFrom={this.state.dateFrom}
+          handleDateFromChange={this.handleDateFromChange}
+          dateTo={this.state.dateTo}
+          handleDateToChange={this.handleDateToChange}
+          selectedType={this.state.selectedType}
+        />
+
+        <DateRangeWithIntervalSelector
+          dateRange={this.state.dateRange}
+          handleDateRangeChange={this.handleDateRangeChange}
+        />
+
         {(() => {
           if (this.state.selectedType === 1) {
             return (
