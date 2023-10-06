@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useUiService } from "@/hooks/services/useUiService";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import i18n from "@/utils/i18n";
 import Common from "@/utils/Common";
 import { useHistory } from "react-router-dom";
+import { UiService } from "@/services/UiService";
 
 const MaintenanceContainer = styled.div`
   display: flex;
@@ -73,7 +73,7 @@ const DefaultMaintenance = () => {
 };
 const Maintenance = () => {
   const history = useHistory();
-  const { GetMaintenance } = useUiService();
+  const { GetMaintenance } = UiService;
   const {
     general: { livechat, brandsSupport },
   } = useGeneralStore();

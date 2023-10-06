@@ -11,7 +11,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import config from "@/config/config";
-import { useAccountService } from "@/hooks/services/useAccountService";
+import { AccountService } from "@/services/AccountService";
 import zhLocale from "date-fns/locale/zh-CN";
 import enLocale from "date-fns/locale/en-US";
 import thLocale from "date-fns/locale/th";
@@ -67,7 +67,6 @@ const CustomLabel = styled.div`
 const Birthdate = () => {
   const { alert } = useNotifications();
   const { account, getAccountProfile } = useAccountStore();
-  const AccountService = useAccountService();
 
   const history = useHistory();
 

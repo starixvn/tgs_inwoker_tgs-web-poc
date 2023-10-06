@@ -25,12 +25,11 @@ import {
   UPDATECARDNO_FAILURE,
   UPDATECARDNO_SUCCESS,
 } from "@/api-services/constant/actionType";
-import { useAccountService } from "@/hooks/services/useAccountService";
+import { AccountService } from "@/services/AccountService";
 import { RegisterReqDto } from "@/models/dto/player/RegisterReqDto";
 
 export function useAccountStore() {
   const dispatch = useDispatch();
-  const AccountService = useAccountService();
 
   //@ts-ignore
   const account: AccountState = useSelector((state) => state.account);

@@ -17,19 +17,8 @@ import config from "@/config/config";
 import ReportTypeTabs from "@/components/_Share_Domain/Account/ReportPrev/components/ReportTypeTabs";
 import DateRangeWithDatePicker from "@/components/_Share_Domain/Account/ReportPrev/components/DateRangeWithDatePicker";
 import DateRangeWithIntervalSelector from "@/components/_Share_Domain/Account/ReportPrev/components/DateRangeWithIntervalSelector";
-import NoRecord from "@/components/_Share_Domain/Account/ReportPrev/components/NoRecord";
 import { themeList } from "@/theme";
 import { Select } from "@/components/Mobile/components/UI/Select";
-import {
-  ReportCard,
-  ReportCardCol,
-  ReportCardRow,
-  ReportCardsContainer,
-  ReportContainer,
-  ReportSummary,
-  ReportSummaryCol,
-  ReportSummaryRow,
-} from "@/components/_Share_Domain/Account/ReportPrev/styles";
 import ReportBetting from "@/components/_Share_Domain/Account/ReportPrev/components/reports/ReportBetting";
 import ReportWithdraw from "@/components/_Share_Domain/Account/ReportPrev/components/reports/ReportWithdraw";
 import ReportDeposit from "@/components/_Share_Domain/Account/ReportPrev/components/reports/ReportDeposit";

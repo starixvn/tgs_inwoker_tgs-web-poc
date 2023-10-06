@@ -313,12 +313,7 @@ const AppWrapper = () => {
                           );
                         }
                       })()}
-                      <Route
-                        path={"/"}
-                        render={(props) =>
-                           <Mobile />
-                        }
-                      />
+                      <Route path={"/"} render={(props) => <Mobile />} />
                       <Redirect to={`/`} />
                     </Switch>
                   </Router>

@@ -8,11 +8,10 @@ import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import Loading from "@/components/Mobile/components/UI/Loading";
 import BottomNote from "@/components/Mobile/components/_PrevShare/BottomNote";
-import { useAccountService } from "@/hooks/services/useAccountService";
+import { AccountService } from "@/services/AccountService";
 
 const WeChat = () => {
   const { account, getAccountProfile } = useAccountStore();
-  const AccountService = useAccountService();
   const { alert } = useNotifications();
 
   const [wechat, setWechat] = useState("");
