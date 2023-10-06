@@ -8,7 +8,7 @@ import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 import FormControl from "@material-ui/core/FormControl";
 
-import { ReportService } from "@/api-services/services/ReportService";
+import { ReportService } from "@/services/ReportService";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { GeneralService } from "@/api-services/services/GeneralService";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
@@ -459,36 +459,37 @@ class Report extends Component {
     this.setState({ ...this.state, dateTo: e });
   };
 
+  // NOTE: no ReportService.GetAccountDetails found
   handleAccountGetReportTrigger = (page, type) => {
-    this.setState({ ...this.state, loading: true });
-    ReportService.GetAccountDetails(
-      moment(this.state.dateFrom).utc().format(),
-      moment(this.state.dateTo).utc().add(1, "days").format(),
-      page,
-
-      type
-    ).then((response) => {
-      if (response.IsSuccess) {
-        const dataList =
-          page > 1
-            ? this.state.dataList.concat(response.data.list)
-            : response.data.list;
-        this.setState({
-          ...this.state,
-          dataList: dataList,
-          loading: false,
-
-          isMaxPage: response.data.count == dataList.length,
-        });
-      } else {
-        this.props.alert("", response.info);
-        this.setState({
-          ...this.state,
-
-          loading: false,
-        });
-      }
-    });
+    // this.setState({ ...this.state, loading: true });
+    // ReportService.GetAccountDetails(
+    //   moment(this.state.dateFrom).utc().format(),
+    //   moment(this.state.dateTo).utc().add(1, "days").format(),
+    //   page,
+    //
+    //   type
+    // ).then((response) => {
+    //   if (response.IsSuccess) {
+    //     const dataList =
+    //       page > 1
+    //         ? this.state.dataList.concat(response.data.list)
+    //         : response.data.list;
+    //     this.setState({
+    //       ...this.state,
+    //       dataList: dataList,
+    //       loading: false,
+    //
+    //       isMaxPage: response.data.count == dataList.length,
+    //     });
+    //   } else {
+    //     this.props.alert("", response.info);
+    //     this.setState({
+    //       ...this.state,
+    //
+    //       loading: false,
+    //     });
+    //   }
+    // });
   };
   handleTransactionGetReportTrigger = (page, game_platform_id) => {
     this.setState({ ...this.state, loading: true });

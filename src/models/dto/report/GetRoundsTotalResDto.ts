@@ -1,13 +1,13 @@
-export class RoundTotalDto {
-  betAmount: number = 0;
-  settleAmount: null | number = null;
-  validBetAmount: number = 0;
-  winloss: number = 0;
+export interface RoundTotalDto {
+  betAmount: number | null;
+  validBetAmount: number | null;
+  winLoss: number | null;
+  settleAmount: number | null;
 }
 
-export class GetRoundsTotalResDto {
-  IsSuccess: boolean = true;
-  code: number = 0;
-  data: RoundTotalDto = new RoundTotalDto();
-  info: string | null = null;
+export interface GetRoundsTotalResDto {
+  IsSuccess: boolean;
+  code: number;
+  data: RoundTotalDto;
+  info: string | null;
 }
