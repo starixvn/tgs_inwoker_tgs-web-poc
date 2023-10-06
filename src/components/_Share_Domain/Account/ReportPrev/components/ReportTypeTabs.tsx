@@ -1,16 +1,35 @@
-import React, { ChangeEvent, useCallback, useMemo } from "react";
+import React, { ChangeEvent } from "react";
 import styled from "styled-components";
-import { Tabs, Tab } from "@material-ui/core";
 import { useReportTypeTabs } from "@/components/_Share_Domain/Account/ReportPrev/hooks/useReportTypeTabs";
+import { themeList } from "@/theme";
 
-const CustomTabs = styled(Tabs)`
-  height: 80px;
-  font-size: 25px;
+const theme = themeList["mobileT18"];
+
+const ReportTypeTabsContainer = styled.div`
   display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+`;
 
-  .MuiTabs-fixed {
-    overflow: overlay !important;
-  }
+type TabButtonProps = {
+  isSelected: boolean;
+};
+
+const TabButton = styled.button<TabButtonProps>`
+  background: ${({ isSelected }: TabButtonProps) => {
+    return isSelected
+      ? `linear-gradient(180deg, #922ACF 0%, #2F26AD 100%)`
+      : "none";
+  }};
+  color: ${({ isSelected }: TabButtonProps) => {
+    return isSelected ? theme.white : theme.tertiaryLight;
+  }};
+  padding: 13px 23px;
+  width: calc((100% - 2 * 9px) / 3);
+  border: ${({ isSelected }: TabButtonProps) => {
+    return isSelected ? "none" : `1px solid ${theme.tertiaryLight}`;
+  }};
+  border-radius: 5px;
 `;
 
 type Props = {
@@ -20,21 +39,25 @@ type Props = {
 const ReportTypeTabs = ({ selectedType, handleChangeTab }: Props) => {
   const { displayedTabList } = useReportTypeTabs();
 
+  const handleButtonClick = (newIndex: number) => {
+    handleChangeTab({} as ChangeEvent, newIndex);
+  };
+
   return (
-    <CustomTabs value={selectedType} onChange={handleChangeTab}>
+    <ReportTypeTabsContainer>
       {displayedTabList.map((reportTab) => {
         const { index, label } = reportTab;
         return (
-          <Tab
+          <TabButton
             key={index}
-            selected={index === selectedType}
-            index={index}
-            label={label}
-            value={index}
-          />
+            isSelected={index === selectedType}
+            onClick={() => handleButtonClick(index)}
+          >
+            {label}
+          </TabButton>
         );
       })}
-    </CustomTabs>
+    </ReportTypeTabsContainer>
   );
 };
 
