@@ -1,24 +1,23 @@
+import { GameService } from "@/api-services/services/GameService";
 import banner from "@/assets/images/home/mobile/banner_1.png";
-import dislikeIcon from "@/assets/images/home/mobile/dislike.png";
-import likeIcon from "@/assets/images/home/mobile/like.png";
-import searchIcon from "@/assets/images/home/mobile/search.svg";
 import vendorsIcon from "@/assets/images/home/mobile/vendors.png";
 import CardPrompt from "@/components/Mobile/components/CardPrompt";
-import Input from "@/components/Mobile/components/Input";
+import Category from "@/components/Mobile/components/Category";
+import CategoryLobby from "@/components/Mobile/components/CategoryLobby";
 import Slider from "@/components/Mobile/components/Slider";
 import SocialMedia from "@/components/Mobile/components/SocialMedia";
 import Tab from "@/components/Mobile/components/Tab";
 import TabPanel from "@/components/Mobile/components/TabPanel";
-import Tag from "@/components/Mobile/components/Tag";
+import config from "@/config/config";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
+import Common from "@/utils/Common";
 import getDisplayGameType from "@/utils/getDisplayGameType";
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import Category from "../components/Category";
-import CategoryLobby from "../components/CategoryLobby";
-import { badgeList, gamesList } from "../constants/games";
+import Tag from "../components/Tag";
+import { badgeList } from "../constants/games";
 import { gameTypeList, isNotEnterLobby } from "../constants/tab";
 
 type Props = {
@@ -98,6 +97,18 @@ const BadgeIcon = styled.div`
   left: 0;
 `;
 
+const NewBadgeIcon = styled.div`
+  width: 45.5px;
+  height: 21px;
+  background-image: url(${(props: Props) => props.imageUrl});
+  background-size: cover;
+  box-sizing: border-box;
+  position: absolute;
+  top: 25px;
+  left: 0;
+`;
+
+
 const VendorIcon = styled.div`
   width: 392px;
   height: 296px;
@@ -112,19 +123,35 @@ const LobbyContainer = styled.div`
     width: 100%;
 `;
 
+const TagContainer = styled.div`
+    margin-bottom: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+`;
+
 const Main = (props: Props) => {
   const history = useHistory();
-  const { game, getHomePageGameList } = useGameStore();
+  const { game } = useGameStore();
   const { general } = useGeneralStore();
   const [activeGameTypeTab, setActiveGameTypeTab] = useState(0);
   const [searchString, setSearchString] = useState("");
   const [isEnterLobby, setIsEnterLobby] = useState(false);
+  const [selectedTag, setSelectedTag] = useState("All");
+  const [filteredGameList, setFilteredGameList] = useState<any[]>([]);
+  const [groupByProvider, setGroupByProvider] = useState<any>({});
 
   const handleGameTypeClick = (gameType: number) => {
     setActiveGameTypeTab(gameType);
     if (gameType) {
       setIsEnterLobby(!isNotEnterLobby.includes(gameType));
     }
+  };
+
+  const handleTagClick = (gpcode: string) => {
+    setSelectedTag(gpcode);
   };
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -174,6 +201,63 @@ const Main = (props: Props) => {
       gameData: groupBy_gameType[item.gameType] || [],
     }));
   }, [gameTypeList, groupBy_gameType]);
+
+  const tagList = useMemo(
+    () => {
+      const tags = Object.keys(groupByProvider);
+      const filteredTags = tags
+        .filter((key) => typeof key === 'string')
+        .map((provider) => ({ name: provider }));
+      return [
+        { name: "All" },
+        { name: "Hot" },
+        { name: "New" },
+        { name: "Recommend" },
+        ...filteredTags];
+    },
+    [groupByProvider]
+  );
+
+  const filterAndGroupGames = (gameList: any[]) => {
+    const groupByGpcode = gameList.reduce((accumulator, game) => {
+      const { gpcode, ...rest } = game;
+      if (!accumulator[gpcode]) {
+        accumulator[gpcode] = [];
+      }
+      // Add gpcode to the rest object
+      const gameWithGpcode = { ...rest, gpcode };
+      accumulator[gpcode].push(gameWithGpcode);
+      return accumulator;
+    }, {});
+
+    return groupByGpcode;
+  };
+
+  useEffect(() => {
+    if (activeGameTypeTab) {
+      GameService.GetGameList("", activeGameTypeTab).then((res) => {
+        if (res && res.IsSuccess && res.data) {
+          const groupByProvider = filterAndGroupGames(res.data);
+          setGroupByProvider(groupByProvider);
+
+          switch (selectedTag) {
+            case "All":
+              return setFilteredGameList(res.data);
+            case "Hot":
+              return setFilteredGameList(res.data.filter((item: any) => item.tag.hot));
+            case "New":
+              return setFilteredGameList(res.data.filter((item: any) => item.tag.new));
+            case "Recommend":
+              return setFilteredGameList(res.data.filter((item: any) => item.tag.recommend));
+            case selectedTag:
+              return setFilteredGameList(groupByProvider[selectedTag]);
+            default:
+              return setFilteredGameList(res.data);
+          }
+        }
+      });
+    }
+  }, [activeGameTypeTab, selectedTag]);
 
   return (
     <MainWrapper>
@@ -226,33 +310,63 @@ const Main = (props: Props) => {
       {/* Slot / Fishing / Egame */}
       {!isEnterLobby && !!activeGameTypeTab && (
         <>
-          <Tag />
-          <Input
+          <TagContainer>
+            {tagList.map(item => (
+              <Tag
+                key={item.name}
+                text={item.name}
+                isActive={item.name === selectedTag}
+                onClick={() => setSelectedTag(item.name)} />
+            ))}
+          </TagContainer>
+
+          {/* <Input
             placeholder={"Search"}
             imageUrl={searchIcon}
             handleChange={handleSearch}
             value={searchString}
-          />
+          /> */}
+
           <GameCardContainer>
-            {gamesList.map(
+            {filteredGameList.map(
               (item: {
-                isFavorite: any;
+                // isFavorite: any;  //to-do: 把 isFavorite 加回來
                 key: string;
-                iconUrl: string;
-                tag: string;
+                code: string;
+                description: string;
+                gpcode: string;
+                id: number;
+                isactive: boolean;
+                name: string;
+                tag: {
+                  hot: boolean;
+                  new: boolean;
+                  recommend: boolean;
+                };
+                type: number;
               }) => (
                 <>
-                  <GameCard key={item.key} imageUrl={item.iconUrl}>
-                    {item.isFavorite ? (
+                  <GameCard
+                    key={item.id}
+                    imageUrl={`${config.sourceUrl}${item.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${item.code}.jpg`}
+                  >
+                    {/* to-do: Favorite功能 */}
+                    {/* {item.isFavorite ? (
                       <LikeIcon imageUrl={likeIcon} />
                     ) : (
                       <LikeIcon imageUrl={dislikeIcon} />
-                    )}
+                    )} */}
 
-                    {item.tag === "hot" && (
+                    {item.tag.hot && item.tag.new && selectedTag === "All" && (
+                      <>
+                        <BadgeIcon imageUrl={badgeList.hot} />
+                        <NewBadgeIcon imageUrl={badgeList.new} />
+                      </>
+                    )}
+                    {item.tag.hot && selectedTag === "Hot" && (
                       <BadgeIcon imageUrl={badgeList.hot} />
                     )}
-                    {item.tag === "new" && (
+                    {item.tag.new && selectedTag === "New" && (
                       <BadgeIcon imageUrl={badgeList.new} />
                     )}
                   </GameCard>
