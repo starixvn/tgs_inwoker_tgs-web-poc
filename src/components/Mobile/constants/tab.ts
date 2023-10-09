@@ -93,4 +93,6 @@ export const gameTypeList: TabIcon[] = [
   }
 ];
 
+export const isNotEnterLobby: number[] = [GameTypeEnum.SLOT, GameTypeEnum.FISH, GameTypeEnum.TABLEGAME];
+
 export const rankingTabList: string[] = ['Latest Record', 'Winning Ranking'];

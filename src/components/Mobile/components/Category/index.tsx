@@ -28,25 +28,29 @@ type GameTypeDataItem = {
 
 type Props = {
   gameTypeData: GameTypeDataItem[];
+  gameTypeName: string;
 };
 
 const Category = ({
-  gameTypeData
+  gameTypeData,
+  gameTypeName
 }: Props) => {
   return (
     <Wrapper>
       <CategoryContent>
-        {gameTypeData && gameTypeData.map((game) => {
+        {!!gameTypeData.length && gameTypeData.map((game) => {
+          if (game?.gpcode === "BC") return null;
           return (
             <CardVendor
-              key={game?.abbreviation}
-              imageUrl={process.env.PUBLIC_URL + "/assets/images/home/liveCasino/" + game?.abbreviation + ".png"}
-              venderLogo={process.env.PUBLIC_URL + "/assets/images/home/provider/liveCasino/" + game?.abbreviation + ".png"}
+              key={game?.gpcode}
+              imageUrl={`${process.env.PUBLIC_URL}/assets/images/home/${gameTypeName}/${game?.gpcode}.png`}
+              venderLogo={`${process.env.PUBLIC_URL}/assets/images/home/provider_logo/${gameTypeName}/${game?.gpcode}.png`}
             // gameName={game.name}
-            // venderName={game.abbreviation}
+            // venderName={game.gpcode}
             />
           )
         })}
+        {!gameTypeData.length && <div>No data</div>}
       </CategoryContent>
     </Wrapper>
   );

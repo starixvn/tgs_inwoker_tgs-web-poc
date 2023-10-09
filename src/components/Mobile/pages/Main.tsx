@@ -16,11 +16,10 @@ import getDisplayGameType from "@/utils/getDisplayGameType";
 import { ChangeEvent, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { GameTypeEnum } from "../../../api-services/utils/Enum";
 import Category from "../components/Category";
 import CategoryLobby from "../components/CategoryLobby";
 import { badgeList, gamesList } from "../constants/games";
-import { gameTypeList } from "../constants/tab";
+import { gameTypeList, isNotEnterLobby } from "../constants/tab";
 
 type Props = {
   imageUrl: string;
@@ -119,12 +118,12 @@ const Main = (props: Props) => {
   const { general } = useGeneralStore();
   const [activeGameTypeTab, setActiveGameTypeTab] = useState(0);
   const [searchString, setSearchString] = useState("");
-  const [isLobby, setIsLobby] = useState(true);
+  const [isEnterLobby, setIsEnterLobby] = useState(false);
 
   const handleGameTypeClick = (gameType: number) => {
     setActiveGameTypeTab(gameType);
     if (gameType) {
-      setIsLobby(false);
+      setIsEnterLobby(!isNotEnterLobby.includes(gameType));
     }
   };
 
@@ -171,14 +170,10 @@ const Main = (props: Props) => {
       gameType: item.gameType,
       iconUrl: item.iconUrl,
       text: item.text,
+      key: item.key,
       gameData: groupBy_gameType[item.gameType] || [],
     }));
   }, [gameTypeList, groupBy_gameType]);
-
-  // console.log(activeGameTypeTab)
-  // console.log("groupBy_gameType", groupBy_gameType[activeGameTypeTab])
-  // console.log("homePageGameList", game.homePageGameList)
-  // console.log("providerList", game.providerList)
 
   return (
     <MainWrapper>
@@ -221,58 +216,52 @@ const Main = (props: Props) => {
         </LobbyContainer>
       }
 
-      {(
-        activeGameTypeTab === GameTypeEnum.LIVELOBBY ||
-        activeGameTypeTab === GameTypeEnum.LOTTERYLOBBY ||
-        activeGameTypeTab === GameTypeEnum.SPORTS ||
-        activeGameTypeTab === GameTypeEnum.COCKFIGHT ||
-        activeGameTypeTab === GameTypeEnum.QIPAILOBBY) &&
+      {isEnterLobby &&
         <Category
           gameTypeData={groupBy_gameType[activeGameTypeTab] || []}
-          gameType={activeGameTypeTab}
+          gameTypeName={gameTypeList.find((item) => item.gameType === activeGameTypeTab)?.key || ""}
         />
       }
 
-      {activeGameTypeTab === GameTypeEnum.SLOT ||
-        activeGameTypeTab === GameTypeEnum.FISH ||
-        activeGameTypeTab === GameTypeEnum.TABLEGAME && (
-          <>
-            <Tag />
-            <Input
-              placeholder={"Search"}
-              imageUrl={searchIcon}
-              handleChange={handleSearch}
-              value={searchString}
-            />
-            <GameCardContainer>
-              {gamesList.map(
-                (item: {
-                  isFavorite: any;
-                  key: string;
-                  iconUrl: string;
-                  tag: string;
-                }) => (
-                  <>
-                    <GameCard key={item.key} imageUrl={item.iconUrl}>
-                      {item.isFavorite ? (
-                        <LikeIcon imageUrl={likeIcon} />
-                      ) : (
-                        <LikeIcon imageUrl={dislikeIcon} />
-                      )}
+      {/* Slot / Fishing / Egame */}
+      {!isEnterLobby && !!activeGameTypeTab && (
+        <>
+          <Tag />
+          <Input
+            placeholder={"Search"}
+            imageUrl={searchIcon}
+            handleChange={handleSearch}
+            value={searchString}
+          />
+          <GameCardContainer>
+            {gamesList.map(
+              (item: {
+                isFavorite: any;
+                key: string;
+                iconUrl: string;
+                tag: string;
+              }) => (
+                <>
+                  <GameCard key={item.key} imageUrl={item.iconUrl}>
+                    {item.isFavorite ? (
+                      <LikeIcon imageUrl={likeIcon} />
+                    ) : (
+                      <LikeIcon imageUrl={dislikeIcon} />
+                    )}
 
-                      {item.tag === "hot" && (
-                        <BadgeIcon imageUrl={badgeList.hot} />
-                      )}
-                      {item.tag === "new" && (
-                        <BadgeIcon imageUrl={badgeList.new} />
-                      )}
-                    </GameCard>
-                  </>
-                )
-              )}
-            </GameCardContainer>
-          </>
-        )}
+                    {item.tag === "hot" && (
+                      <BadgeIcon imageUrl={badgeList.hot} />
+                    )}
+                    {item.tag === "new" && (
+                      <BadgeIcon imageUrl={badgeList.new} />
+                    )}
+                  </GameCard>
+                </>
+              )
+            )}
+          </GameCardContainer>
+        </>
+      )}
 
       <TabPanel />
       <SocialMedia />
