@@ -1,3 +1,4 @@
+import hot from "@/assets/images/home/mobile/hot.svg";
 import cardgame from "@/assets/images/home/mobile/tab/card_game.svg";
 import egame from "@/assets/images/home/mobile/tab/egame.svg";
 import esports from "@/assets/images/home/mobile/tab/esports.svg";
@@ -9,10 +10,17 @@ import sabong from "@/assets/images/home/mobile/tab/sabong.svg";
 import slot from "@/assets/images/home/mobile/tab/slot.svg";
 import sports from "@/assets/images/home/mobile/tab/sports.svg";
 import { GameTypeEnum } from "../../../api-services/utils/Enum";
-
 // Note : Horse belongs to SPORTS: 1,
 
 type TabIcon = {
+  key: string;
+  iconUrl: string;
+  text: string;
+  fontSize: string;
+  gameType: number;
+}
+
+type LobbyCategoryIcon = {
   key: string;
   iconUrl: string;
   text: string;
@@ -35,6 +43,86 @@ export const gameTypeList: TabIcon[] = [
     fontSize: "small",
     gameType: GameTypeEnum.SLOT
   },
+  {
+    key: "liveCasino",
+    iconUrl: live,
+    text: "Live Casino",
+    fontSize: "smaller",
+    gameType: GameTypeEnum.LIVELOBBY
+  },
+  {
+    key: "lottery",
+    iconUrl: lottery,
+    text: "Lottery",
+    fontSize: "small",
+    gameType: GameTypeEnum.LOTTERYLOBBY
+  },
+  {
+    key: "fishing",
+    iconUrl: fishing,
+    text: "Fishing",
+    fontSize: "small",
+    gameType: GameTypeEnum.FISH
+  },
+  {
+    key: "sports",
+    iconUrl: sports,
+    text: "Sports",
+    fontSize: "small",
+    gameType: GameTypeEnum.SPORTS
+  },
+  {
+    key: "sabong",
+    iconUrl: sabong,
+    text: "Sabong",
+    fontSize: "small",
+    gameType: GameTypeEnum.COCKFIGHT
+  },
+  {
+    key: "egame",
+    iconUrl: egame,
+    text: "Egame",
+    fontSize: "small",
+    gameType: GameTypeEnum.TABLEGAME
+  },
+  {
+    key: "cardGame",
+    iconUrl: cardgame,
+    text: "Card Game",
+    fontSize: "smaller",
+    gameType: GameTypeEnum.QIPAILOBBY
+  },
+  {
+    key: "esports",
+    iconUrl: esports,
+    text: "Esports",
+    fontSize: "smaller",
+    gameType: GameTypeEnum.ESPORTS
+  }
+];
+
+export const lobbyCategoryList: LobbyCategoryIcon[] = [
+  {
+    key: "slotsHot",
+    iconUrl: hot,
+    text: "Hot",
+    fontSize: "small",
+    gameType: GameTypeEnum.SLOT
+  },
+  // {
+  //   key: "slotsNew",
+  //   iconUrl: newIcon,
+  //   text: "New",
+  //   fontSize: "small",
+  //   gameType: -1
+  // },
+  // {
+  //   key: "slotsRecommend",
+  //   iconUrl: recommend,
+  //   text: "Recommend",
+  //   fontSize: "small",
+  //   gameType: -2
+  // },
   {
     key: "liveCasino",
     iconUrl: live,

@@ -1,13 +1,16 @@
+
 import { GameService } from "@/api-services/services/GameService";
 import banner from "@/assets/images/home/mobile/banner_1.png";
+import hot from "@/assets/images/home/mobile/hot.svg";
 import vendorsIcon from "@/assets/images/home/mobile/vendors.png";
 import CardPrompt from "@/components/Mobile/components/CardPrompt";
 import Category from "@/components/Mobile/components/Category";
-import CategoryLobby from "@/components/Mobile/components/CategoryLobby";
+import LobbyTagCategory from "@/components/Mobile/components/LobbyTagCategory";
 import Slider from "@/components/Mobile/components/Slider";
 import SocialMedia from "@/components/Mobile/components/SocialMedia";
 import Tab from "@/components/Mobile/components/Tab";
 import TabPanel from "@/components/Mobile/components/TabPanel";
+import Tag from "@/components/Mobile/components/Tag";
 import config from "@/config/config";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
@@ -16,13 +19,28 @@ import getDisplayGameType from "@/utils/getDisplayGameType";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import Tag from "../components/Tag";
 import { badgeList } from "../constants/games";
-import { gameTypeList, isNotEnterLobby } from "../constants/tab";
+import { gameTypeList, isNotEnterLobby, lobbyCategoryList } from "../constants/tab";
 
 type Props = {
   imageUrl: string;
 };
+
+type GameItem = {
+  key: string;
+  code: string;
+  description: string;
+  gpcode: string;
+  id: number;
+  isactive: boolean;
+  name: string;
+  tag: {
+    hot: boolean;
+    new: boolean;
+    recommend: boolean;
+  };
+  type: number;
+}
 
 const MainWrapper = styled.div`
   width: 100%;
@@ -108,7 +126,6 @@ const NewBadgeIcon = styled.div`
   left: 0;
 `;
 
-
 const VendorIcon = styled.div`
   width: 392px;
   height: 296px;
@@ -150,16 +167,12 @@ const Main = (props: Props) => {
     }
   };
 
-  const handleTagClick = (gpcode: string) => {
-    setSelectedTag(gpcode);
-  };
-
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setSearchString(value);
   };
 
-  // 這裡不包含 LOBBYALL
+  // groupBy_gameType : 除了Lobby之外的所有gameType
   const groupBy_gameType = useMemo(() => {
     const providedGameTypes: number[] = getDisplayGameType();
     const providedGameTypesSet = new Set(providedGameTypes);
@@ -188,19 +201,23 @@ const Main = (props: Props) => {
 
   }, [game.homePageGameList]);
 
+  // lobbyAllGroupByData : Lobby的所有gameType
   const lobbyAllGroupByData = useMemo(() => {
     if (Object.keys(groupBy_gameType).length === 0) {
       return [];
     }
 
-    return gameTypeList.map((item) => ({
+    return lobbyCategoryList.map((item) => ({
       gameType: item.gameType,
       iconUrl: item.iconUrl,
       text: item.text,
       key: item.key,
       gameData: groupBy_gameType[item.gameType] || [],
     }));
-  }, [gameTypeList, groupBy_gameType]);
+  }, [lobbyCategoryList, groupBy_gameType]);
+
+  const homeLobbyTabData = [];
+  // Hot要放Slot的hot
 
   const tagList = useMemo(
     () => {
@@ -236,7 +253,7 @@ const Main = (props: Props) => {
   useEffect(() => {
     if (activeGameTypeTab) {
       GameService.GetGameList("", activeGameTypeTab).then((res) => {
-        if (res && res.IsSuccess && res.data) {
+        if (res && res.data) {
           const groupByProvider = filterAndGroupGames(res.data);
           setGroupByProvider(groupByProvider);
 
@@ -244,11 +261,11 @@ const Main = (props: Props) => {
             case "All":
               return setFilteredGameList(res.data);
             case "Hot":
-              return setFilteredGameList(res.data.filter((item: any) => item.tag.hot));
+              return setFilteredGameList(res.data.filter((item: GameItem) => item.tag.hot));
             case "New":
-              return setFilteredGameList(res.data.filter((item: any) => item.tag.new));
+              return setFilteredGameList(res.data.filter((item: GameItem) => item.tag.new));
             case "Recommend":
-              return setFilteredGameList(res.data.filter((item: any) => item.tag.recommend));
+              return setFilteredGameList(res.data.filter((item: GameItem) => item.tag.recommend));
             case selectedTag:
               return setFilteredGameList(groupByProvider[selectedTag]);
             default:
@@ -289,17 +306,19 @@ const Main = (props: Props) => {
 
       {!activeGameTypeTab &&
         <LobbyContainer>
-          {lobbyAllGroupByData.slice(1).map((item: any) => (
-            <CategoryLobby
-              key={item.gameType}
-              iconUrl={item.iconUrl}
-              text={item.text}
-              lobbyAllGameData={item.gameData}
-            />
-          ))}
+          <LobbyTagCategory
+            iconUrl={hot}
+            text={"Hot"}
+            gameType={15}
+            gameTag={"Hot"}
+            showDataLength={9}
+            handleViewAllClick={() => {
+              const gameType = 15;
+              handleGameTypeClick(gameType);
+            }}
+          />
         </LobbyContainer>
       }
-
       {isEnterLobby &&
         <Category
           gameTypeData={groupBy_gameType[activeGameTypeTab] || []}
@@ -328,7 +347,7 @@ const Main = (props: Props) => {
           /> */}
 
           <GameCardContainer>
-            {filteredGameList.map(
+            {filteredGameList && filteredGameList.map(
               (item: {
                 // isFavorite: any;  //to-do: 把 isFavorite 加回來
                 key: string;
@@ -373,6 +392,7 @@ const Main = (props: Props) => {
                 </>
               )
             )}
+            {!filteredGameList.length && <div>Loading</div>}
           </GameCardContainer>
         </>
       )}
