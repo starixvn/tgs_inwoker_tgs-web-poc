@@ -2,11 +2,9 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
 import { UPDATE_INFO } from "@/api-services/constant/actionType";
-
-import Button from "../../../Mobile/components/_PrevShare/Button";
-import BottomNote from "../../../Mobile/components/_PrevShare/BottomNoteDepecrated";
-import Header from "../../../Mobile/components/_PrevShare/Header";
-import Loading from "../../../Mobile/components/_PrevShare/Loading";
+import { Button } from "@/components/Mobile/components/UI/Button";
+import BottomNote from "@/components/Mobile/components/_PrevShare/BottomNote";
+import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 
 const Container = styled.div`
   width: 100%;
@@ -83,21 +81,15 @@ class BaseProfile extends Component {
   ) {
     return (
       <Container>
-        <Header
-          background={true}
-          token={null}
-          balance={0}
-          onBackClick={this.handleBackClick}
-          title={title}
-          noBack={noBack}
-        ></Header>
         {body}
         {this.state.message}
         <Button
+          fullWidth
           disabled={this.checkButtonState() || this.state.disableButton}
           onClick={this.handleSubmitClicked}
-          label={buttonTitle}
-        ></Button>
+        >
+          {buttonTitle}
+        </Button>
         {bottomNode || <BottomNote></BottomNote>}
         <Loading show={this.state.loading}></Loading>
       </Container>

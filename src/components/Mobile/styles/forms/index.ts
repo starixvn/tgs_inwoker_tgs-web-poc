@@ -27,7 +27,7 @@ export const LabelContainer = styled.div`
 `;
 export const FormControl = withStyles(() => ({
   root: {
-    borderRadius: "10px",
+    borderRadius: "5px",
     border: `1px solid ${theme.tertiary}`,
     width: "100%",
     fontSize: "0.937rem",

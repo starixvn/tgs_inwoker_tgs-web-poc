@@ -8,7 +8,7 @@ const theme = themeList["mobileT18"];
 export const Button = withStyles(() => {
   return {
     root: {
-      borderRadius: "12px",
+      borderRadius: "5px",
       padding: "12px 20px",
       fontSize: "1.125rem",
       background: theme.primary,

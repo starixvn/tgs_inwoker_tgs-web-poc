@@ -139,6 +139,7 @@ const muiTheme = createTheme({
       main: muiThemeMode.tertiary,
     },
     type: "light",
+    white: muiThemeMode.white,
   },
   typography: {
     fontFamily: fontFamily,

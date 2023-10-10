@@ -1,16 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Textbox from "../../../../../Mobile/components/_PrevShare/Textbox";
-import i18n from "../../../../../../utils/i18n";
-
+import i18n from "@/utils/i18n";
 import BaseProfile from "../../BaseProfile";
 import styled from "styled-components";
-
-import { accountAction } from "../../../../../../api-services/actions/accountAction";
-import { RESET_ACCOUNTRESULT } from "../../../../../../api-services/constant/actionType";
-import config from "../../../../../../config/config";
-
+import { accountAction } from "@/api-services/actions/accountAction";
+import { RESET_ACCOUNTRESULT } from "@/api-services/constant/actionType";
+import config from "@/config/config";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+  Remark,
+} from "@/components/Mobile/styles/forms";
+import { Button } from "@material-ui/core";
 const AnotherWrapper = styled.div`
   width: 700px;
   min-height: 170px;
@@ -48,72 +52,81 @@ class Default extends BaseProfile {
   render() {
     return (
       <React.Fragment>
-        <Textbox
-          style={{ margin: "50px auto 20px auto" }}
-          value={this.props.name}
-          onChange={this.props.handleChangeName}
-          placeholder={
-            config.features.Profile_CustomIdentityPageTranslation
-              ? i18n.t("piso.profile.enterFullName")
-              : i18n.t("profile.nameVerify.title")
-          }
-          label={
-            config.features.Profile_CustomIdentityPageTranslation
+        <ItemContainer>
+          <LabelContainer>
+            {config.features.Profile_CustomIdentityPageTranslation
               ? i18n.t("piso.profile.fullName")
-              : i18n.t("profile.nameVerify.verifyName")
-          }
-          disabled={false}
-          maxLength={256}
-          isCustomProfileStyle={config.brand === "WGHK"}
-        ></Textbox>
+              : i18n.t("profile.nameVerify.verifyName")}
+          </LabelContainer>
+          <FormControl variant="outlined">
+            <TextField
+              fullWidth
+              value={this.props.name}
+              onChange={this.props.handleChangeName}
+              type={"text"}
+              placeholder={
+                config.features.Profile_CustomIdentityPageTranslation
+                  ? i18n.t("piso.profile.enterFullName")
+                  : i18n.t("profile.nameVerify.title")
+              }
+              disabled={false}
+              maxLength={256}
+            />
+          </FormControl>
+        </ItemContainer>
+
         {config.features.ICVerification && (
-          <Textbox
-            style={{ margin: "50px auto 20px auto" }}
-            value={this.props.ic}
-            onChange={this.props.handleChangeIC}
-            placeholder={
-              config.features.Profile_CustomIdentityPageTranslation
-                ? i18n.t("piso.profile.enterDocumentNumber")
-                : i18n.t("profile.nameVerify.msgEnterICNum")
-            }
-            label={
-              config.features.Profile_CustomIdentityPageTranslation
+          <ItemContainer>
+            <LabelContainer>
+              {config.features.Profile_CustomIdentityPageTranslation
                 ? i18n.t("piso.profile.documentNumber")
-                : i18n.t("profile.nameVerify.icNum")
-            }
-            disabled={false}
-            maxLength={256}
-            isCustomProfileStyle={config.brand === "WGHK"}
-          ></Textbox>
+                : i18n.t("profile.nameVerify.icNum")}
+            </LabelContainer>
+            <FormControl variant="outlined">
+              <TextField
+                fullWidth
+                value={this.props.ic}
+                onChange={this.props.handleChangeIC}
+                placeholder={
+                  config.features.Profile_CustomIdentityPageTranslation
+                    ? i18n.t("piso.profile.enterDocumentNumber")
+                    : i18n.t("profile.nameVerify.msgEnterICNum")
+                }
+                disabled={false}
+                maxLength={256}
+              />
+            </FormControl>
+          </ItemContainer>
         )}
 
         {config.features.ICVerificationUpload && (
-          <AnotherWrapper>
-            <CustomLabel>{i18n.t("common.upload")}</CustomLabel>
-            <InputWrapper style={{ padding: 10 }}>
-              <button
-                onClick={() => {
-                  document.getElementById("getFile").click();
-                }}
-                style={{
-                  marginRight: 10,
-                  height: 80,
-                  minWidth: 200,
-                  fontSize: 24,
-                }}
-              >
-                {i18n.t("common.upload")}
-              </button>
-              <input
-                type="file"
-                id="getFile"
-                onChange={this.props.handleFileChange}
-                accept="image/jpg, image/jpeg, image/png, image/tiff"
-                style={{ display: "none" }}
-              />
-              {this.props.icUpload ? this.props.icUpload[0].name : ""}
-            </InputWrapper>
-          </AnotherWrapper>
+          <ItemContainer>
+            <LabelContainer>{i18n.t("common.upload")}</LabelContainer>
+
+            <Button
+              variant={"outlined"}
+              style={{
+                height: "58px",
+                borderRadius: "5px",
+                color: "white",
+                borderColor: "white",
+              }}
+              onClick={() => {
+                document.getElementById("getFile").click();
+              }}
+            >
+              {i18n.t("common.upload")}
+            </Button>
+
+            <input
+              type="file"
+              id="getFile"
+              onChange={this.props.handleFileChange}
+              accept="image/jpg, image/jpeg, image/png, image/tiff"
+              style={{ display: "none" }}
+            />
+            {this.props.icUpload ? this.props.icUpload[0].name : ""}
+          </ItemContainer>
         )}
       </React.Fragment>
     );
