@@ -1,70 +1,46 @@
-import favorite from "@/assets/images/home/mobile/tab/favorite.svg";
-import { useState } from "react";
 import styled from 'styled-components';
-import Tag from "./tag";
 
-const tagList = [
-    {
-        key: "all",
-        iconUrl: "",
-        text: "All"
-    },
-    {
-        key: "favorite",
-        iconUrl: favorite,
-        text: "Favorite",
-    },
-    {
-        key: "PP",
-        iconUrl: "",
-        text: "PP"
-    },
-    {
-        key: "AG",
-        iconUrl: "",
-        text: "AG"
-    },
-    {
-        key: "LO",
-        iconUrl: "",
-        text: "LO"
-    },
-    {
-        key: "GD",
-        iconUrl: "",
-        text: "GD"
-    },
-]
+type Props = {
+  text: string;
+  isActive: boolean;
+  fontSize?: 'small' | 'smaller';
+  onClick: () => void;
+}
 
-const Container = styled.div`
-    display: flex;
+const Wrapper = styled.div<{ text: string, isActive: boolean }>`
+    display: inline-flex;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 8px;
-    overflow-x: auto;
-    white-space: nowrap;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    /* Enable smooth scrolling on iOS */
+    min-width: 60px;
+    padding: 4px 8px;
+    border-radius: 50px;
+    background-color: ${(props) =>
+    props.isActive ? props.theme.primary : props.theme.tertiaryDark};
+    margin-right: 6px;
+    cursor: pointer;
+    user-select: none;
+     & > img {
+        width: 24px;
+        margin: 0 4px;
+     }
 `;
 
-const TagContainer = () => {
-    const [selectedTag, setSelectedTag] = useState("All");
-    const handleClick = (item: string) => {
-        setSelectedTag(item);
-    };
+const Text = styled.div<{ isActive: boolean }>`
+    color: ${(props) =>
+    props.isActive ? props.theme.white : props.theme.tertiary};
+    font-size: 0.875rem;
+    font-weight: 700;   
+    line-height: 0.875rem;
+    padding: 5px 0;
+`;
 
-    return (
-        <Container>
-            {tagList.map(item => (
-                <Tag
-                    key={item.key}
-                    imageUrl={item.iconUrl}
-                    text={item.text}
-                    isActive={item.text === selectedTag}
-                    onClick={() => handleClick(item.text)} fontSize={"small"} />
-            ))}
-        </Container>
-    );
+const Tag = ({ text, isActive, onClick }: Props) => {
+  return (
+    <Wrapper isActive={isActive} text={text} onClick={onClick}>
+      {/* {imageUrl && <img src={imageUrl} alt={text} />} */}
+      <Text isActive={isActive}>{text}</Text>
+    </Wrapper>
+  );
 };
 
-export default TagContainer;
+export default Tag;

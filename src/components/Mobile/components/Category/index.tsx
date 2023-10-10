@@ -1,19 +1,9 @@
-import example from '@/assets/images/home/mobile/example.png';
-import ButtonText from '@/components/Mobile/components/ButtonText';
-import CategoryLabel from '@/components/Mobile/components/CategoryLabel';
 import styled from 'styled-components';
-import CardVendor from "../CardVender";
+import CardVendor from '../CardVender';
 
 const Wrapper = styled.div`
     width: 100%;
     margin: 15px 0;
-`;
-
-const CategoryTitle = styled.div`    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
 `;
 
 const CategoryContent = styled.div`
@@ -25,59 +15,43 @@ const CategoryContent = styled.div`
     margin-bottom: 30px;
 `;
 
-const ButtonContainer = styled.div`    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
+type GameTypeDataItem = {
+  name: string;
+  abbreviation: string;
+  game_platform_id: number;
+  game_platform_name: string;
+  gpcode: string;
+  is_try: number;
+  params: string;
+  status: number;
+};
 
 type Props = {
-  gameType: string;
-  iconUrl: string;
-  text: string;
-  gameData: [
-    {
-      name: string;
-      abbreviation: string;
-    }
-  ];
-}
+  gameTypeData: GameTypeDataItem[];
+  gameTypeName: string;
+};
 
 const Category = ({
-  gameType,
-  iconUrl,
-  text,
-  gameData
+  gameTypeData,
+  gameTypeName
 }: Props) => {
-
   return (
     <Wrapper>
-      <CategoryTitle>
-        <CategoryLabel imageUrl={iconUrl} text={text} />
-        <ButtonText size="small" text={"View all"} />
-      </CategoryTitle>
-
       <CategoryContent>
-        {gameData.map((game) => {
+        {!!gameTypeData.length && gameTypeData.map((game) => {
+          if (game?.gpcode === "BC") return null;
           return (
             <CardVendor
-              key={game.abbreviation}
-              imageUrl={example}
-              gameName={game.name}
-              venderName={game.abbreviation}
+              key={game?.gpcode}
+              imageUrl={`${process.env.PUBLIC_URL}/assets/images/home/${gameTypeName}/${game?.gpcode}.png`}
+              venderLogo={`${process.env.PUBLIC_URL}/assets/images/home/provider_logo/${gameTypeName}/${game?.gpcode}.png`}
+            // gameName={game.name}
+            // venderName={game.gpcode}
             />
           )
         })}
-        {/* <CardVendor
-          imageUrl={example}
-          venderLogo={venderLogo}
-        /> */}
-        {/* to-do : confirm card design */}
+        {!gameTypeData.length && <div>No data</div>}
       </CategoryContent>
-
-      <ButtonContainer>
-        <ButtonText size="large" text={"Load more"} />
-      </ButtonContainer>
     </Wrapper>
   );
 };

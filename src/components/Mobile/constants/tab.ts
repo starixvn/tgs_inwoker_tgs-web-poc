@@ -22,11 +22,11 @@ type TabIcon = {
 
 export const gameTypeList: TabIcon[] = [
   {
-    key: "Lobby",
+    key: "lobby",
     iconUrl: lobby,
     text: "Lobby",
     fontSize: "small",
-    gameType: GameTypeEnum.LOBBYALL
+    gameType: 0
   },
   {
     key: "slots",
@@ -36,7 +36,7 @@ export const gameTypeList: TabIcon[] = [
     gameType: GameTypeEnum.SLOT
   },
   {
-    key: "Live",
+    key: "liveCasino",
     iconUrl: live,
     text: "Live Casino",
     fontSize: "smaller",
@@ -47,7 +47,7 @@ export const gameTypeList: TabIcon[] = [
     iconUrl: lottery,
     text: "Lottery",
     fontSize: "small",
-    gameType: GameTypeEnum.LOTTERYLOBBY //14 目前沒資料
+    gameType: GameTypeEnum.LOTTERYLOBBY
   },
   {
     key: "fishing",
@@ -78,7 +78,7 @@ export const gameTypeList: TabIcon[] = [
     gameType: GameTypeEnum.TABLEGAME
   },
   {
-    key: "cardgame",
+    key: "cardGame",
     iconUrl: cardgame,
     text: "Card Game",
     fontSize: "smaller",
@@ -92,5 +92,7 @@ export const gameTypeList: TabIcon[] = [
     gameType: GameTypeEnum.ESPORTS
   }
 ];
+
+export const isNotEnterLobby: number[] = [GameTypeEnum.SLOT, GameTypeEnum.FISH, GameTypeEnum.TABLEGAME];
 
 export const rankingTabList: string[] = ['Latest Record', 'Winning Ranking'];
