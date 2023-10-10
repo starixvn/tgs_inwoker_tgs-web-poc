@@ -71,6 +71,7 @@ const DefaultMaintenance = () => {
     </>
   );
 };
+
 const Maintenance = () => {
   const history = useHistory();
   const { GetMaintenance } = UiService;

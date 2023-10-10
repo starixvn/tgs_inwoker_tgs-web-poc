@@ -14,9 +14,10 @@ import i18n from "@/utils/i18n";
 
 const FormPromotionCodeContainer = styled.div`
   position: relative;
+  overflow: visible;
 `;
 const DropdownContainer = styled.div`
-  width: 81px;
+  width: 90px;
   position: absolute;
   top: 50%;
   right: 0;
