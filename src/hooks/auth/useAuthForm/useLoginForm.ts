@@ -29,7 +29,7 @@ export function useLoginForm() {
   );
 
   const { formInputConfigList, formik } = useGenerateLoginFormik({
-    handleClickLogin,
+    handleClickSubmit: handleClickLogin,
   });
 
   return {

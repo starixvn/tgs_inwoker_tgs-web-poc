@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import RegisterDialog from "@/components/Mobile/pages/Register/components/RegisterDialog";
+import RegisterForm from "@/components/_Share_Domain/authentication/RegisterForm";
+import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
 
 type Props = {};
-const Inbox = (props: Props) => {
+const Register = (props: Props) => {
   const [isOpen, setIsOpen] = useState(true);
   const history = useHistory();
 
@@ -13,8 +14,10 @@ const Inbox = (props: Props) => {
   }, []);
 
   return (
-    <RegisterDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />
+    <Dialog isOpen={isOpen} handleCloseDialog={handleCloseDialog}>
+      <RegisterForm />
+    </Dialog>
   );
 };
 
-export default Inbox;
+export default Register;

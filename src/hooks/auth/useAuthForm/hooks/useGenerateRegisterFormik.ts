@@ -9,10 +9,10 @@ import config from "@/config/config";
 import { UserTypeEnum } from "@/hooks/auth/useAuthForm/useRegisterForm";
 
 type Props = {
-  handleClickRegister: (values: FormikValues) => Promise<void>;
+  handleClickSubmit: (values: FormikValues) => Promise<void>;
 };
 
-export function useGenerateRegisterFormik({ handleClickRegister }: Props) {
+export function useGenerateRegisterFormik({ handleClickSubmit }: Props) {
   // ===== init form input config =====
   const formInputConfigList = useMemo<FormikFormInput[]>(() => {
     return [
@@ -122,7 +122,7 @@ export function useGenerateRegisterFormik({ handleClickRegister }: Props) {
     initialValues,
     validationSchema: Yup.object(validationSchemaSpec),
     onSubmit: async (values) => {
-      await handleClickRegister(values);
+      await handleClickSubmit(values);
     },
   });
 

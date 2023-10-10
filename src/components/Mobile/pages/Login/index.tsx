@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import LoginDialog from "@/components/Mobile/pages/Login/components/LoginDialog";
+import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
+import LoginForm from "@/components/_Share_Domain/authentication/LoginForm";
 
 type Props = {};
-const Inbox = (props: Props) => {
+const Login = (props: Props) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const history = useHistory();
@@ -13,7 +14,11 @@ const Inbox = (props: Props) => {
     history.push("/");
   }, []);
 
-  return <LoginDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />;
+  return (
+    <Dialog isOpen={isOpen} handleCloseDialog={handleCloseDialog}>
+      <LoginForm />
+    </Dialog>
+  );
 };
 
-export default Inbox;
+export default Login;
