@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import LoginDialog from "@/components/Mobile/pages/Login/components/LoginDialog";
 
 type Props = {};
-const Inbox = (props: Props) => {
+const Login = (props: Props) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const history = useHistory();
@@ -16,4 +16,4 @@ const Inbox = (props: Props) => {
   return <LoginDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />;
 };
 
-export default Inbox;
+export default Login;

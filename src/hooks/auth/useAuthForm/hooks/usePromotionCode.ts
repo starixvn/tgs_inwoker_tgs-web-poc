@@ -39,6 +39,7 @@ export function usePromotionCode() {
       await fetchInvitationCode();
     }
 
+    // TODO: no GeneralService.AffiliateClick found
     if (!isNaN(promotionid) && !isNaN(promotionchannelid)) {
       // GeneralService.AffiliateClick(promotionid, promotionchannelid);
     }
@@ -63,7 +64,7 @@ export function usePromotionCode() {
   };
 
   useEffect(() => {
-    initPromotionInfo();
+    initPromotionInfo().then();
   }, []);
 
   return { promotionData };

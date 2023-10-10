@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import RegisterDialog from "@/components/Mobile/pages/Register/components/RegisterDialog";
 
 type Props = {};
-const Inbox = (props: Props) => {
+const Register = (props: Props) => {
   const [isOpen, setIsOpen] = useState(true);
   const history = useHistory();
 
@@ -17,4 +17,4 @@ const Inbox = (props: Props) => {
   );
 };
 
-export default Inbox;
+export default Register;

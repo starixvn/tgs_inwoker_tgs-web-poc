@@ -118,28 +118,36 @@ const routes: Route[] = [
     layout: DefaultLayout,
     isAnonymousAllowed: true,
   },
-  // {
-  //   path: "/a/:promotionid",
-  //   component: Login,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/t/:promotionid",
-  //   component: Login,
-  //   alert: true,
-  // },
-  //
-  // {
-  //   path: "/f/:promotionid",
-  //   component: Login,
-  //   alert: true,
-  // },
-  // {
-  //   path: "/p/:playername",
-  //   component: Login,
-  //   alert: true,
-  // },
+  // TODO:these 4 params looks like is unused?
+  {
+    path: "/a/:promotionid",
+    component: Register,
+    category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
+  },
+  {
+    path: "/t/:promotionid",
+    component: Register,
+    category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
+  },
 
+  {
+    path: "/f/:promotionid",
+    component: Register,
+    category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
+  },
+  {
+    path: "/p/:playername",
+    component: Register,
+    category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
+  },
   {
     path: "/profile",
     component: Profile,
@@ -290,7 +298,7 @@ const routes: Route[] = [
   //   screenHeight: true,
   // },
   //
-  // it looks like /withdrawal/details is not used?
+  // TODO:it looks like /withdrawal/details is not used?
   {
     path: "/withdrawal/details",
     component: WithdrawalDetails,
