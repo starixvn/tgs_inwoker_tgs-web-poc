@@ -24,12 +24,12 @@ import Loading from "./components/_PrevShare/Loading";
 import ForcedVerification from "./components/ForcedVerification";
 import LiveChat from "../Share/live-chat";
 import { routes } from "./router";
-import MobileLayout from "@/components/Mobile/layouts/mobileLayout";
+import DefaultLayout from "@/components/Mobile/layouts/DefaultLayout";
 import PopupAlertModal from "@/components/Mobile/components/Popup/PopupAlertDialog";
 import PopupAnnouncement from "@/components/Mobile/components/Popup/PopupAnnouncement";
 import PopupPromotion from "@/components/Mobile/components/Popup/PopupPromotion";
 import { AuthContextProvider } from "@/contexts/authContext";
-import { checkInHomePage } from "@/utils/checkUrlParams";
+import LayoutProvider from "@/components/Mobile/layouts/LayoutProvider";
 
 class Mobile extends Component {
   constructor(props) {
@@ -513,28 +513,27 @@ class Mobile extends Component {
         <>
           <AuthContextProvider>
             <Router history={AppHistory}>
-              <MobileLayout>
-                <Switch>
-                  {routes.map((route, index) => {
-                    return (
-                      <Route
-                        exact
-                        key={index}
-                        path={route.path}
-                        render={(props) => {
-                          // add correspond property via path
-                          return (
-                            <Suspense fallback={<Loading opacity={0} />}>
+              <Switch>
+                {routes.map((route, index) => {
+                  return (
+                    <Route
+                      exact
+                      key={index}
+                      path={route.path}
+                      render={(props) => {
+                        return (
+                          <Suspense fallback={<Loading opacity={0} />}>
+                            <LayoutProvider route={route}>
                               <route.component />
-                            </Suspense>
-                          );
-                        }}
-                      />
-                    );
-                  })}{" "}
-                  <Redirect to="/" />
-                </Switch>
-              </MobileLayout>
+                            </LayoutProvider>
+                          </Suspense>
+                        );
+                      }}
+                    />
+                  );
+                })}
+                <Redirect to="/" />
+              </Switch>
             </Router>
 
             {(() => {
