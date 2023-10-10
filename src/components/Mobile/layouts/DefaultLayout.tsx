@@ -3,6 +3,7 @@ import Header from "@/components/Mobile/components/Header";
 import BottomAppBar from "@/components/Mobile/components/BottomAppBar";
 import styled from "styled-components";
 import { themeList } from "@/theme";
+import { Route } from "@/components/Mobile/router";
 const theme = themeList["mobileT18"];
 
 const MobileLayoutContainer = styled.div`
@@ -19,7 +20,7 @@ const ContentWrapper = styled.div`
 type Props = {
   children: ReactElement;
 };
-const MobileLayout = ({ children }: Props) => {
+const DefaultLayout = ({ children }: Props) => {
   return (
     <MobileLayoutContainer>
       <Header />
@@ -29,4 +30,4 @@ const MobileLayout = ({ children }: Props) => {
   );
 };
 
-export default MobileLayout;
+export default DefaultLayout;

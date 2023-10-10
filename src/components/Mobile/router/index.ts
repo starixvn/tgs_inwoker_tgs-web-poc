@@ -39,6 +39,7 @@ import WithdrawalDetails from "@/components/Mobile/pages/Withdrawal/WithdrawalDe
 import config from "@/config/config";
 import React from "react";
 import PromotionDetail from "../components/Promotion/PromotionDetail";
+import DefaultLayout from "@/components/Mobile/layouts/DefaultLayout";
 
 const Mine = React.lazy(() => import("@/components/Mobile/pages/Account/Mine"));
 
@@ -53,6 +54,8 @@ export interface Route {
   path: string;
   component: any;
   category: RouteCategoryEnum;
+  layout?: ({ children }: any) => JSX.Element;
+  isAnonymousAllowed?: boolean;
 }
 
 const routes: Route[] = [
@@ -60,46 +63,60 @@ const routes: Route[] = [
     path: "/",
     component: Main,
     category: RouteCategoryEnum.HOME,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   {
     path: "/main",
     component: Main,
     category: RouteCategoryEnum.HOME,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   {
     path: "/main/:page",
     component: Main,
     category: RouteCategoryEnum.HOME,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   {
     path: "/account",
     component: Mine,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/deposit",
     component: Deposit,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/withdrawal",
     component: Withdrawal,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/betting-bonus",
     component: BettingBonus,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/login",
     component: Login,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   {
     path: "/register",
     component: Register,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   // {
   //   path: "/a/:promotionid",
@@ -127,91 +144,109 @@ const routes: Route[] = [
     path: "/profile",
     component: Profile,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/name",
     component: ProfileName,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/wechat",
     component: ProfileWeChat,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/birthdate",
     component: ProfileBirthDate,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/qq",
     component: ProfileQQ,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/fb",
     component: ProfileFacebookMessenger,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/telegram",
     component: ProfileTelegram,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/line",
     component: ProfileLine,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/viber",
     component: ProfileViber,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/whatsapp",
     component: ProfileWhatsapp,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/email",
     component: ProfileEmail,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/changeemail",
     component: ProfileChangeEmail,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/changephone",
     component: ProfileChangePhone,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/phone",
     component: ProfilePhone,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/changepassword",
     component: ProfileChangePassword,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/withdrawalpassword",
     component: ProfileWithdrawalPassword,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/resetwithdrawalpassword",
     component: ProfileResetWithdrawalPassword,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/profile/changewithdrawalpassword",
     component: ProfileChangeWithdrawalPassword,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
 
   // {
@@ -224,17 +259,22 @@ const routes: Route[] = [
     path: "/promotion-list",
     component: Promotion,
     category: RouteCategoryEnum.PROMOTION,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   {
     path: "/promotion/:id?",
     component: PromotionDetail,
     category: RouteCategoryEnum.PROMOTION,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   //
   {
     path: "/inbox",
     component: Inbox,
     category: RouteCategoryEnum.INBOX,
+    layout: DefaultLayout,
   },
   // {
   //   path: "/memo",
@@ -255,52 +295,63 @@ const routes: Route[] = [
     path: "/withdrawal/details",
     component: WithdrawalDetails,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/deposit/:promotionid?",
     component: Deposit,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/manual/:paymentId?",
     component: Deposit,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/deposit/payment/:id/:bank/:amount/:bonus?",
     component: DepositPayment,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/deposit/details",
     component: DepositDetails,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/deposit/manual",
     component: DepositManual,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/card",
     component: Card,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/card/add",
     component: AddCard,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   {
     path: "/maintenance",
     component: Maintenance,
     category: RouteCategoryEnum.HOME,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
 
   {
     path: "/report/:tab?",
     component: Report,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
 
   // {
@@ -316,6 +367,7 @@ const routes: Route[] = [
     path: "/affiliate",
     component: Affiliate,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   // {
   //   path: "/setting/language",
@@ -331,6 +383,7 @@ const routes: Route[] = [
     path: "/vip",
     component: VIP,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   },
   // {
   //   path: "/sports/:platform",
@@ -342,6 +395,8 @@ const routes: Route[] = [
     path: "/support",
     component: ContactUs,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
 ];
 
@@ -350,8 +405,8 @@ if (!config.features.NewTransferUI) {
     path: "/transfer",
     component: Transfer,
     category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
   });
 }
 
 export { routes };
-
