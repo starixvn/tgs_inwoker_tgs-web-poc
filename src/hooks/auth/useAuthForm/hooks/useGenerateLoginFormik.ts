@@ -7,10 +7,10 @@ import { FormikValues, useFormik } from "formik";
 import { useFormikInitValue } from "@/hooks/auth/useAuthForm/hooks/useFormikInitValue";
 
 type Props = {
-  handleClickLogin: (values: FormikValues) => Promise<void>;
+  handleClickSubmit: (values: FormikValues) => Promise<void>;
 };
 
-export function useGenerateLoginFormik({ handleClickLogin }: Props) {
+export function useGenerateLoginFormik({ handleClickSubmit }: Props) {
   // ===== init form input config =====
   const formInputConfigList = useMemo<FormikFormInput[]>(() => {
     return [
@@ -40,7 +40,7 @@ export function useGenerateLoginFormik({ handleClickLogin }: Props) {
     initialValues,
     validationSchema: Yup.object(validationSchemaSpec),
     onSubmit: async (values) => {
-      await handleClickLogin(values);
+      await handleClickSubmit(values);
     },
   });
 

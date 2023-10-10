@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import RegisterDialog from "@/components/Mobile/pages/Register/components/RegisterDialog";
+import RegisterForm from "@/components/_Share_Domain/authentication/RegisterForm";
+import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
 
 type Props = {};
 const Register = (props: Props) => {
@@ -13,7 +14,9 @@ const Register = (props: Props) => {
   }, []);
 
   return (
-    <RegisterDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />
+    <Dialog isOpen={isOpen} handleCloseDialog={handleCloseDialog}>
+      <RegisterForm />
+    </Dialog>
   );
 };
 

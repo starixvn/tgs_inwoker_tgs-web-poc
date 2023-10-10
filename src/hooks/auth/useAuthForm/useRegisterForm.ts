@@ -48,7 +48,7 @@ export function useRegisterForm() {
   );
 
   const { formInputConfigList, formik } = useGenerateRegisterFormik({
-    handleClickRegister,
+    handleClickSubmit: handleClickRegister,
   });
 
   return {
