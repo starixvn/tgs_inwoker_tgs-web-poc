@@ -88,7 +88,7 @@ function GetTransferReport(
   to: string,
   page: number,
   rows: number,
-  order: string,
+  order: number,
   desc: boolean,
   sort: string,
   all: boolean

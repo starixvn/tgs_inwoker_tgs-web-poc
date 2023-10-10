@@ -1,10 +1,7 @@
-import React from "react";
-import config from "@/config/config";
+import React, { useEffect, useState } from "react";
 import i18n from "@/utils/i18n";
 import NoRecord from "@/components/_Share_Domain/Account/ReportPrev/components/NoRecord";
-import moment from "moment/moment";
 import {
-  CustomWinLose,
   ReportCard,
   ReportCardCol,
   ReportCardRow,
@@ -15,6 +12,9 @@ import {
   ReportSummaryRow,
 } from "@/components/_Share_Domain/Account/ReportPrev/styles";
 import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
+import { ReportService } from "@/services/ReportService";
+import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 
 export interface TabData {
   dateFrom: Date;
@@ -25,9 +25,60 @@ export interface TabData {
 }
 type Props = {
   tabData: TabData;
-  dataList: any[];
 };
-const ReportRebate = ({ tabData, dataList }: Props) => {
+
+const PAGE_SIZE = 20;
+const ReportRebate = ({ tabData }: Props) => {
+  const { alert } = useNotifications();
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+
+  const [dataList, setDataList] = useState<any[]>([]);
+  const [isMaxPage, setIsMaxPage] = useState(false);
+
+  // TODO: no ReportService.GetRebateDetails found
+  const fetchReports = async () => {
+    // this.setState({ ...this.state, loading: true });
+    // ReportService.GetRebateDetails(
+    //   moment(this.state.dateFrom).utc().format(),
+    //   moment(this.state.dateTo).utc().add(1, "days").format(),
+    //   page
+    // ).then((response) => {
+    //   if (response.IsSuccess) {
+    //     const dataList =
+    //       page > 1
+    //         ? this.state.dataList.concat(response.data.list)
+    //         : response.data.list;
+    //     this.setState({
+    //       ...this.state,
+    //       dataList: dataList,
+    //       loading: false,
+    //
+    //       isMaxPage: response.data.count == dataList.length,
+    //     });
+    //   } else {
+    //     this.props.alert("", response.info);
+    //     this.setState({
+    //       ...this.state,
+    //
+    //       loading: false,
+    //     });
+    //   }
+    // });
+  };
+
+  useEffect(() => {
+    setIsMaxPage(false);
+    fetchReports();
+  }, [JSON.stringify(tabData)]);
+
+  const handleLoadMore = async () => {
+    if (isMaxPage) return;
+
+    setPage((prevState) => prevState++);
+    await fetchReports();
+  };
+
   return (
     <ReportContainer>
       <ReportSummary>
@@ -70,6 +121,7 @@ const ReportRebate = ({ tabData, dataList }: Props) => {
           );
         }
       })()}
+      <Loading show={isLoading} />
     </ReportContainer>
   );
 };
