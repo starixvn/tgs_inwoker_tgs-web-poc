@@ -30,6 +30,7 @@ import PopupAnnouncement from "@/components/Mobile/components/Popup/PopupAnnounc
 import PopupPromotion from "@/components/Mobile/components/Popup/PopupPromotion";
 import { AuthContextProvider } from "@/contexts/authContext";
 import LayoutProvider from "@/components/Mobile/layouts/LayoutProvider";
+import { AuthGuard } from "@/components/_Share_Domain/authentication/AuthGuard";
 
 class Mobile extends Component {
   constructor(props) {
@@ -523,9 +524,11 @@ class Mobile extends Component {
                       render={(props) => {
                         return (
                           <Suspense fallback={<Loading opacity={0} />}>
-                            <LayoutProvider route={route}>
-                              <route.component />
-                            </LayoutProvider>
+                            <AuthGuard route={route}>
+                              <LayoutProvider route={route}>
+                                <route.component />
+                              </LayoutProvider>
+                            </AuthGuard>
                           </Suspense>
                         );
                       }}

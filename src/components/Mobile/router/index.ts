@@ -55,7 +55,7 @@ export interface Route {
   component: any;
   category: RouteCategoryEnum;
   layout?: ({ children }: any) => JSX.Element;
-  auth?: boolean;
+  isAnonymousAllowed?: boolean;
 }
 
 const routes: Route[] = [
@@ -64,18 +64,21 @@ const routes: Route[] = [
     component: Main,
     category: RouteCategoryEnum.HOME,
     layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   {
     path: "/main",
     component: Main,
     category: RouteCategoryEnum.HOME,
     layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   {
     path: "/main/:page",
     component: Main,
     category: RouteCategoryEnum.HOME,
     layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   {
     path: "/account",
@@ -106,12 +109,14 @@ const routes: Route[] = [
     component: Login,
     category: RouteCategoryEnum.MINE,
     layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   {
     path: "/register",
     component: Register,
     category: RouteCategoryEnum.MINE,
     layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   // {
   //   path: "/a/:promotionid",
@@ -255,12 +260,14 @@ const routes: Route[] = [
     component: Promotion,
     category: RouteCategoryEnum.PROMOTION,
     layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   {
     path: "/promotion/:id?",
     component: PromotionDetail,
     category: RouteCategoryEnum.PROMOTION,
     layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
   //
   {
@@ -337,6 +344,7 @@ const routes: Route[] = [
     component: Maintenance,
     category: RouteCategoryEnum.HOME,
     layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
 
   {
@@ -388,6 +396,7 @@ const routes: Route[] = [
     component: ContactUs,
     category: RouteCategoryEnum.MINE,
     layout: DefaultLayout,
+    isAnonymousAllowed: true,
   },
 ];
 
