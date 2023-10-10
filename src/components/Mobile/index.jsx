@@ -483,22 +483,23 @@ class Mobile extends Component {
   handleClosePromotion = () => {
     this.setState({ ...this.state, showPromotion: false });
     this.handleCloseAudio();
-  }
+  };
 
   render() {
     const scale = this.props.screenWidth / 750;
     const matchingpath =
-    this.props.location.pathname === "/" ||
-    this.props.location.pathname === "/main/home";
+      this.props.location.pathname === "/" ||
+      this.props.location.pathname === "/main/home";
 
-    const showPopupAnnouncement = 
+    const showPopupAnnouncement =
       config.features.PopupAnnouncement &&
       this.props.ui.mains &&
       this.props.ui.mains.length > 0 &&
-      matchingpath
+      matchingpath;
 
-    const showPopupPromotion = config.features.PopupPromotion &&
-      this.props.general.promotionList.items.length > 0
+    const showPopupPromotion =
+      config.features.PopupPromotion &&
+      this.props.general.promotionList.items.length > 0;
 
     if (
       (this.state.loading === true ||
@@ -578,16 +579,16 @@ class Mobile extends Component {
             {/*  handleClose={this.handleClosePopup}*/}
             {/*  handleClickUrl={this.handleClickUrl}*/}
             {/*/>*/}
-            
+
             {showPopupAnnouncement && (
-              <PopupAnnouncement 
-                open={this.state.openAnnouncement} 
+              <PopupAnnouncement
+                open={this.state.openAnnouncement}
                 onClose={this.handleCloseAnnouncement}
               />
             )}
             {showPopupPromotion && (
-              <PopupPromotion 
-                open={this.state.showPromotion} 
+              <PopupPromotion
+                open={this.state.showPromotion}
                 onClose={this.handleClosePromotion}
               />
             )}

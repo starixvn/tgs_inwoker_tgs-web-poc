@@ -9,32 +9,41 @@ const theme = themeList["mobileT18"];
 export const TextField = withStyles(() => ({
   root: {
     padding: "12px 20px",
+    color: theme.white,
+    overflow: "visible",
 
     "& .MuiInput-input": {
       color: theme.white,
       fontSize: "1.125rem",
       fontWeight: 400,
+      border: "none",
+    },
+    "& input": {
+      color: theme.white,
     },
     "& input::placeholder": {
-      color: `${theme.tertiaryLight}`,
+      color: theme.tertiaryLight,
       fontSize: "1.125rem",
       fontWeight: 400,
     },
+    "& label": {
+      color: theme.white,
+    },
     "& label.Mui-focused": {
-      color: "gold",
+      color: theme.white,
     },
     "& .MuiInput-underline:after": {
       borderBottom: "none",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: "red",
+        border: "none",
       },
       "&:hover fieldset": {
-        borderColor: "yellow",
+        border: "none",
       },
       "&.Mui-focused fieldset": {
-        borderColor: "green",
+        border: "none",
       },
     },
   },

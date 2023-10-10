@@ -10,7 +10,7 @@ import Header from "../../../Mobile/components/_PrevShare/Header";
 import Loading from "@/components/Mobile/components/UI/Loading";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import { useAccountService } from "@/hooks/services/useAccountService";
+import { AccountService } from "@/services/AccountService";
 
 const Container = styled.div`
   width: 100%;
@@ -67,7 +67,6 @@ const CustomInput = styled.input`
 function Phone() {
   const { account, newRegister, getRegisterStatus, getAccountInfo } =
     useAccountStore();
-  const AccountService = useAccountService();
   const history = useHistory();
   const { alert } = useNotifications();
 

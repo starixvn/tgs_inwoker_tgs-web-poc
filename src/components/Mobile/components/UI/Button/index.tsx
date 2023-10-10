@@ -5,15 +5,19 @@ import { themeList } from "@/theme";
 
 const theme = themeList["mobileT18"];
 
-export const Button = withStyles(() => ({
-  root: {
-    borderRadius: "12px",
-    padding: "12px 20px",
-    fontSize: "1.125rem",
-    fontWeight: 500,
-    "&:disabled": {
-      background: theme.tertiaryDark,
+export const Button = withStyles(() => {
+  return {
+    root: {
+      borderRadius: "12px",
+      padding: "12px 20px",
+      fontSize: "1.125rem",
+      background: theme.primary,
       color: theme.white,
+      fontWeight: 500,
+      "&:disabled": {
+        background: theme.tertiaryDark,
+        color: theme.white,
+      },
     },
-  },
-}))(MuiButton);
+  };
+})(MuiButton);
