@@ -4,8 +4,10 @@ import { RouteCategoryEnum } from "@/components/Mobile/router";
 import { BottomNavItem } from "@/components/Mobile/components/BottomAppBar/BottomNav";
 import { useRoute } from "@/components/Mobile/hooks/useRoute";
 import { AppHistory } from "@/history/History";
+import { useLocation } from "react-router";
 
 export function useGetBottomNavItemList() {
+  const location = useLocation();
   const bottomNavItemList = useMemo(() => {
     return [
       {
@@ -82,7 +84,7 @@ export function useGetBottomNavItemList() {
       }) || null;
 
     if (!matchNavItem) {
-      console.log(route);
+      console.log(location.pathname);
       return;
     }
 

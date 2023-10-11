@@ -1,0 +1,82 @@
+import React from "react";
+import i18n from "@/utils/i18n";
+import { Select } from "@/components/Mobile/components/UI/Select";
+import styled from "styled-components";
+import { withStyles } from "@material-ui/core/styles";
+import FormControl from "@material-ui/core/FormControl";
+import { themeList } from "@/theme";
+
+const theme = themeList["mobileT18"];
+
+const StatusSelectContainer = styled.div`
+  padding: 15px 29px;
+  background: ${theme.tertiaryDark};
+  font-size: 0.937rem;
+  color: ${theme.white};
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(35, 31, 27, 0.1);
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const SelectLabel = styled.div`
+  margin-right: 80px;
+`;
+
+const SelectFormControl = withStyles(() => ({
+  root: {
+    flexGrow: 1,
+    padding: 0,
+    "& fieldset": {
+      border: "none",
+    },
+
+    "& select": {
+      padding: 0,
+      color: theme.white,
+      fontSize: "0.937rem",
+    },
+
+    "& .MuiSvgIcon-root": {
+      color: theme.tertiary,
+    },
+  },
+}))(FormControl);
+
+export interface StatusDictionary {
+  [key: string]: string | null;
+}
+
+type Props = {
+  statusDictionary: StatusDictionary;
+  handleStatusChange: (e: any) => void;
+  status: string;
+};
+const StatusSelect = ({
+  statusDictionary,
+  handleStatusChange,
+  status,
+}: Props) => {
+  return (
+    <StatusSelectContainer>
+      <SelectLabel>{i18n.t("report.status")}</SelectLabel>
+
+      <SelectFormControl variant="outlined">
+        <Select native onChange={handleStatusChange} value={status} fullWidth>
+          <option value={""}>{i18n.t("report.all")}</option>
+
+          {Object.keys(statusDictionary).map((key) => {
+            return (
+              <option key={key} value={key}>
+                {i18n.t(`report.withdrawal.status${key}`)}
+              </option>
+            );
+          })}
+        </Select>
+      </SelectFormControl>
+    </StatusSelectContainer>
+  );
+};
+
+export default StatusSelect;

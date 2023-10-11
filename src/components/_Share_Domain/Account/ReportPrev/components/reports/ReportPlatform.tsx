@@ -15,6 +15,9 @@ import {
 import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import { useDepositStatus } from "@/components/_Share_Domain/Account/ReportPrev/hooks/useDepositStatus";
+import { usePlatformStatus } from "@/components/_Share_Domain/Account/ReportPrev/hooks/usePlatformStatus";
+import StatusSelect from "@/components/_Share_Domain/Account/ReportPrev/components/StatusSelect";
 
 export interface TabData {
   dateFrom: Date;
@@ -35,6 +38,8 @@ const ReportPlatform = ({ tabData }: Props) => {
 
   const [dataList, setDataList] = useState<any[]>([]);
   const [isMaxPage, setIsMaxPage] = useState(false);
+
+  const { statusDictionary, status, handleStatusChange } = usePlatformStatus();
 
   // TODO: no ReportService.GetAccountDetails found
   const fetchReports = async () => {
@@ -72,7 +77,7 @@ const ReportPlatform = ({ tabData }: Props) => {
   useEffect(() => {
     setIsMaxPage(false);
     fetchReports();
-  }, [JSON.stringify(tabData)]);
+  }, [JSON.stringify(tabData), status]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;
@@ -82,54 +87,62 @@ const ReportPlatform = ({ tabData }: Props) => {
   };
 
   return (
-    <ReportContainer>
-      <ReportSummary>
-        <ReportSummaryRow>
-          <ReportSummaryCol>{i18n.t("report.submitDate")}</ReportSummaryCol>
-          <ReportSummaryCol>{i18n.t("report.status")}</ReportSummaryCol>
-          <ReportSummaryCol>
-            {i18n.t("report.transferOut")}
-            <br />
-            {i18n.t("report.transferIn")}
-          </ReportSummaryCol>
+    <>
+      <StatusSelect
+        statusDictionary={statusDictionary}
+        status={status}
+        handleStatusChange={handleStatusChange}
+      />
 
-          <ReportSummaryCol>{i18n.t("common.amount")}</ReportSummaryCol>
-        </ReportSummaryRow>
-      </ReportSummary>
+      <ReportContainer>
+        <ReportSummary>
+          <ReportSummaryRow>
+            <ReportSummaryCol>{i18n.t("report.submitDate")}</ReportSummaryCol>
+            <ReportSummaryCol>{i18n.t("report.status")}</ReportSummaryCol>
+            <ReportSummaryCol>
+              {i18n.t("report.transferOut")}
+              <br />
+              {i18n.t("report.transferIn")}
+            </ReportSummaryCol>
 
-      {(() => {
-        if (dataList.length <= 0) {
-          return <NoRecord />;
-        } else {
-          return (
-            <ReportCardsContainer>
-              {dataList.map((row, index) => {
-                return (
-                  <ReportCard key={index}>
-                    <ReportCardRow>
-                      <ReportCardCol>
-                        {moment(row.create_time_text).format(
-                          "YYYY-MM-DD hh:mm a"
-                        )}
-                      </ReportCardCol>
-                      <ReportCardCol>{row.status_text}</ReportCardCol>
-                      <ReportCardCol>
-                        {row.transform_out}
-                        <br />
-                        {row.transform_in}
-                      </ReportCardCol>
+            <ReportSummaryCol>{i18n.t("common.amount")}</ReportSummaryCol>
+          </ReportSummaryRow>
+        </ReportSummary>
 
-                      <ReportCardCol>{row.amount_text}</ReportCardCol>
-                    </ReportCardRow>
-                  </ReportCard>
-                );
-              })}
-            </ReportCardsContainer>
-          );
-        }
-      })()}
-      <Loading show={isLoading} />
-    </ReportContainer>
+        {(() => {
+          if (dataList.length <= 0) {
+            return <NoRecord />;
+          } else {
+            return (
+              <ReportCardsContainer>
+                {dataList.map((row, index) => {
+                  return (
+                    <ReportCard key={index}>
+                      <ReportCardRow>
+                        <ReportCardCol>
+                          {moment(row.create_time_text).format(
+                            "YYYY-MM-DD hh:mm a"
+                          )}
+                        </ReportCardCol>
+                        <ReportCardCol>{row.status_text}</ReportCardCol>
+                        <ReportCardCol>
+                          {row.transform_out}
+                          <br />
+                          {row.transform_in}
+                        </ReportCardCol>
+
+                        <ReportCardCol>{row.amount_text}</ReportCardCol>
+                      </ReportCardRow>
+                    </ReportCard>
+                  );
+                })}
+              </ReportCardsContainer>
+            );
+          }
+        })()}
+        <Loading show={isLoading} />
+      </ReportContainer>
+    </>
   );
 };
 
