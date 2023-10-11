@@ -1,3 +1,6 @@
+import hot from "@/assets/images/home/mobile/hot.svg";
+import newIcon from "@/assets/images/home/mobile/new.svg";
+import recommend from "@/assets/images/home/mobile/recommend.svg";
 import cardgame from "@/assets/images/home/mobile/tab/card_game.svg";
 import egame from "@/assets/images/home/mobile/tab/egame.svg";
 import esports from "@/assets/images/home/mobile/tab/esports.svg";
@@ -9,7 +12,6 @@ import sabong from "@/assets/images/home/mobile/tab/sabong.svg";
 import slot from "@/assets/images/home/mobile/tab/slot.svg";
 import sports from "@/assets/images/home/mobile/tab/sports.svg";
 import { GameTypeEnum } from "../../../api-services/utils/Enum";
-
 // Note : Horse belongs to SPORTS: 1,
 
 type TabIcon = {
@@ -17,6 +19,13 @@ type TabIcon = {
   iconUrl: string;
   text: string;
   fontSize: string;
+  gameType: number;
+}
+
+type LobbyCategoryIcon = {
+  key: string;
+  iconUrl: string;
+  text: string;
   gameType: number;
 }
 
@@ -92,6 +101,75 @@ export const gameTypeList: TabIcon[] = [
     gameType: GameTypeEnum.ESPORTS
   }
 ];
+
+export const lobbyCategoryList: { [key: string]: LobbyCategoryIcon } = {
+  slotsHot: {
+    key: "slotsHot",
+    iconUrl: hot,
+    text: "Hot",
+    gameType: GameTypeEnum.SLOT
+  },
+  slotsNew: {
+    key: "slotsNew",
+    iconUrl: newIcon,
+    text: "New",
+    gameType: GameTypeEnum.SLOT
+  },
+  slotsRecommend: {
+    key: "slotsRecommend",
+    iconUrl: recommend,
+    text: "Recommend",
+    gameType: GameTypeEnum.SLOT
+  },
+  liveCasino: {
+    key: "liveCasino",
+    iconUrl: live,
+    text: "Live Casino",
+    gameType: GameTypeEnum.LIVELOBBY
+  },
+  lottery: {
+    key: "lottery",
+    iconUrl: lottery,
+    text: "Lottery",
+    gameType: GameTypeEnum.LOTTERYLOBBY
+  },
+  fishing: {
+    key: "fishing",
+    iconUrl: fishing,
+    text: "Fishing",
+    gameType: GameTypeEnum.FISH
+  },
+  sports: {
+    key: "sports",
+    iconUrl: sports,
+    text: "Sports",
+    gameType: GameTypeEnum.SPORTS
+  },
+  sabong: {
+    key: "sabong",
+    iconUrl: sabong,
+    text: "Sabong",
+    gameType: GameTypeEnum.COCKFIGHT
+  },
+  egame: {
+    key: "egame",
+    iconUrl: egame,
+    text: "Egame",
+    gameType: GameTypeEnum.TABLEGAME
+  },
+  cardGame: {
+    key: "cardGame",
+    iconUrl: cardgame,
+    text: "Card Game",
+    gameType: GameTypeEnum.QIPAILOBBY
+  },
+  esports: {
+    key: "esports",
+    iconUrl: esports,
+    text: "Esports",
+    gameType: GameTypeEnum.ESPORTS
+  }
+};
 
 export const isNotEnterLobby: number[] = [GameTypeEnum.SLOT, GameTypeEnum.FISH, GameTypeEnum.TABLEGAME];
 

@@ -45,8 +45,6 @@ const Category = ({
               key={game?.gpcode}
               imageUrl={`${process.env.PUBLIC_URL}/assets/images/home/${gameTypeName}/${game?.gpcode}.png`}
               venderLogo={`${process.env.PUBLIC_URL}/assets/images/home/provider_logo/${gameTypeName}/${game?.gpcode}.png`}
-            // gameName={game.name}
-            // venderName={game.gpcode}
             />
           )
         })}
