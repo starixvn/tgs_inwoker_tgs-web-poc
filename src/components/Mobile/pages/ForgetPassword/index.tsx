@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import ForgetPasswordDialog from "@/components/_Share_Domain/authentication/ForgetPasswordForm";
 import i18n from "@/utils/i18n";
 import styled from "styled-components";
 import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
+import ForgotPasswordPrev from "@/components/_Share_Domain/authentication/ForgotPasswordPrev";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
 
 const TitleContainer = styled.div`
   font-size: 3rem !important;
@@ -24,9 +25,9 @@ const TitleContainer = styled.div`
 
 type Props = {};
 const ForgetPassword = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-
+  const { alert } = useNotifications();
   const history = useHistory();
+  const [isOpen, setIsOpen] = useState(true);
 
   const handleCloseDialog = useCallback(() => {
     setIsOpen(false);
@@ -35,14 +36,12 @@ const ForgetPassword = (props: Props) => {
 
   return (
     <Dialog isOpen={isOpen} handleCloseDialog={handleCloseDialog}>
-      <>
-        <TitleContainer>
-          {i18n.t("forgotPassword.title")}
-          <div className="bottom-border" />
-        </TitleContainer>
-
-        <ForgetPasswordDialog />
-      </>
+      <TitleContainer>
+        {i18n.t("forgotPassword.title")}
+        <div className="bottom-border" />
+      </TitleContainer>
+      {/*<ForgetPasswordFrom />*/}
+      <ForgotPasswordPrev alert={alert} history={history} />
     </Dialog>
   );
 };
