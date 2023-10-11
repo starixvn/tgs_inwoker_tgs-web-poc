@@ -74,6 +74,10 @@ const LobbyCategory = ({
 
   }, [game.homePageGameList]);
 
+  if (!groupBy_gameType[gameType]) {
+    return null;
+  }
+
   return (
     <Wrapper>
       <CategoryTitle>

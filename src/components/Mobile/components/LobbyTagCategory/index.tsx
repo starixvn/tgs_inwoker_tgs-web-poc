@@ -93,6 +93,10 @@ const LobbyTagCategory = ({
     }
   }, [gameType, gameTag]);
 
+  if (!filteredGameList.length) {
+    return null;
+  }
+
   return (
     <Wrapper>
       <CategoryTitle>

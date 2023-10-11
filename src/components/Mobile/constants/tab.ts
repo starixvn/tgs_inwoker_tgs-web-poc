@@ -1,4 +1,6 @@
 import hot from "@/assets/images/home/mobile/hot.svg";
+import newIcon from "@/assets/images/home/mobile/new.svg";
+import recommend from "@/assets/images/home/mobile/recommend.svg";
 import cardgame from "@/assets/images/home/mobile/tab/card_game.svg";
 import egame from "@/assets/images/home/mobile/tab/egame.svg";
 import esports from "@/assets/images/home/mobile/tab/esports.svg";
@@ -24,7 +26,6 @@ type LobbyCategoryIcon = {
   key: string;
   iconUrl: string;
   text: string;
-  fontSize: string;
   gameType: number;
 }
 
@@ -101,85 +102,74 @@ export const gameTypeList: TabIcon[] = [
   }
 ];
 
-export const lobbyCategoryList: LobbyCategoryIcon[] = [
-  {
+export const lobbyCategoryList: { [key: string]: LobbyCategoryIcon } = {
+  slotsHot: {
     key: "slotsHot",
     iconUrl: hot,
     text: "Hot",
-    fontSize: "small",
     gameType: GameTypeEnum.SLOT
   },
-  // {
-  //   key: "slotsNew",
-  //   iconUrl: newIcon,
-  //   text: "New",
-  //   fontSize: "small",
-  //   gameType: -1
-  // },
-  // {
-  //   key: "slotsRecommend",
-  //   iconUrl: recommend,
-  //   text: "Recommend",
-  //   fontSize: "small",
-  //   gameType: -2
-  // },
-  {
+  slotsNew: {
+    key: "slotsNew",
+    iconUrl: newIcon,
+    text: "New",
+    gameType: GameTypeEnum.SLOT
+  },
+  slotsRecommend: {
+    key: "slotsRecommend",
+    iconUrl: recommend,
+    text: "Recommend",
+    gameType: GameTypeEnum.SLOT
+  },
+  liveCasino: {
     key: "liveCasino",
     iconUrl: live,
     text: "Live Casino",
-    fontSize: "smaller",
     gameType: GameTypeEnum.LIVELOBBY
   },
-  {
+  lottery: {
     key: "lottery",
     iconUrl: lottery,
     text: "Lottery",
-    fontSize: "small",
     gameType: GameTypeEnum.LOTTERYLOBBY
   },
-  {
+  fishing: {
     key: "fishing",
     iconUrl: fishing,
     text: "Fishing",
-    fontSize: "small",
     gameType: GameTypeEnum.FISH
   },
-  {
+  sports: {
     key: "sports",
     iconUrl: sports,
     text: "Sports",
-    fontSize: "small",
     gameType: GameTypeEnum.SPORTS
   },
-  {
+  sabong: {
     key: "sabong",
     iconUrl: sabong,
     text: "Sabong",
-    fontSize: "small",
     gameType: GameTypeEnum.COCKFIGHT
   },
-  {
+  egame: {
     key: "egame",
     iconUrl: egame,
     text: "Egame",
-    fontSize: "small",
     gameType: GameTypeEnum.TABLEGAME
   },
-  {
+  cardGame: {
     key: "cardGame",
     iconUrl: cardgame,
     text: "Card Game",
-    fontSize: "smaller",
     gameType: GameTypeEnum.QIPAILOBBY
   },
-  {
+  esports: {
     key: "esports",
     iconUrl: esports,
     text: "Esports",
-    fontSize: "smaller",
     gameType: GameTypeEnum.ESPORTS
   }
-];
+};
 
 export const isNotEnterLobby: number[] = [GameTypeEnum.SLOT, GameTypeEnum.FISH, GameTypeEnum.TABLEGAME];
 

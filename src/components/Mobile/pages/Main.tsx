@@ -1,14 +1,9 @@
 import { GameService } from "@/api-services/services/GameService";
-import { GameTypeEnum } from "@/api-services/utils/Enum";
 import banner from "@/assets/images/home/mobile/banner_1.png";
-import hot from "@/assets/images/home/mobile/hot.svg";
-import egame from "@/assets/images/home/mobile/tab/egame.svg";
-import fishing from "@/assets/images/home/mobile/tab/fishing.svg";
-import live from "@/assets/images/home/mobile/tab/live_casino.svg";
 import vendorsIcon from "@/assets/images/home/mobile/vendors.png";
 import CardPrompt from "@/components/Mobile/components/CardPrompt";
 import Category from "@/components/Mobile/components/Category";
-import LobbyTagCategory from "@/components/Mobile/components/LobbyTagCategory";
+import Lobby from "@/components/Mobile/components/Lobby";
 import Slider from "@/components/Mobile/components/Slider";
 import SocialMedia from "@/components/Mobile/components/SocialMedia";
 import Tab from "@/components/Mobile/components/Tab";
@@ -22,7 +17,6 @@ import getDisplayGameType from "@/utils/getDisplayGameType";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import LobbyCategory from "../components/LobbyCategory";
 import { badgeList } from "../constants/games";
 import { gameTypeList, isNotEnterLobby } from "../constants/tab";
 
@@ -291,53 +285,9 @@ const Main = (props: Props) => {
       </TabContainer>
 
       {!activeGameTypeTab &&
-        <LobbyContainer>
-          {/* Hot = Slots */}
-          <LobbyTagCategory
-            iconUrl={hot}
-            text={"Hot"}
-            gameType={GameTypeEnum.SLOT}
-            gameTag={"Hot"}
-            showDataLength={9}
-            handleViewAllClick={() => {
-              handleGameTypeClick(GameTypeEnum.SLOT);
-            }}
-            gameTypeName={gameTypeList.find((item) => item.gameType === GameTypeEnum.SLOT)?.key || ""}
-          />
-
-          <LobbyTagCategory
-            iconUrl={fishing}
-            text={"Fishing"}
-            gameType={GameTypeEnum.FISH}
-            gameTag={"Recommend"}
-            showDataLength={6}
-            handleViewAllClick={() => {
-              handleGameTypeClick(GameTypeEnum.FISH);
-            }}
-            gameTypeName={gameTypeList.find((item) => item.gameType === GameTypeEnum.FISH)?.key || ""}
-          />
-          <LobbyTagCategory
-            iconUrl={egame}
-            text={"Egame"}
-            gameType={GameTypeEnum.TABLEGAME}
-            gameTag={"Recommend"}
-            showDataLength={6}
-            handleViewAllClick={() => {
-              handleGameTypeClick(GameTypeEnum.TABLEGAME);
-            }}
-            gameTypeName={gameTypeList.find((item) => item.gameType === GameTypeEnum.TABLEGAME)?.key || ""}
-          />
-          <LobbyCategory
-            iconUrl={live}
-            text={"Live casino"}
-            gameType={GameTypeEnum.LIVELOBBY}
-            showDataLength={3}
-            handleViewAllClick={() => {
-              handleGameTypeClick(GameTypeEnum.LIVELOBBY);
-            }}
-            gameTypeName={gameTypeList.find((item) => item.gameType === GameTypeEnum.LIVELOBBY)?.key || ""}
-          />
-        </LobbyContainer>
+        <Lobby
+          handleGameTypeClick={handleGameTypeClick}
+        />
       }
 
       {isEnterLobby &&
