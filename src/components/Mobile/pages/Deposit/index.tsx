@@ -3,7 +3,7 @@ import DepositPrev from "@/components/_Share_Domain/Account/DepositPrev";
 import { useHistory } from "react-router-dom";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import styled from "styled-components";
-import { useLocation, useParams } from "react-router";
+import { useLocation } from "react-router";
 
 const DepositContainer = styled.div`
   padding: 20px 24px;

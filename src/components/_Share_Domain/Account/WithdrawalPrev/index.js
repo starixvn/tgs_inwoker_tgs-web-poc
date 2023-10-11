@@ -339,6 +339,8 @@ class WithdrawalPrev extends Component {
   };
 
   render() {
+    const isLoading = this.state.loading || this.props.wallet.loading;
+
     return (
       <>
         <WithdrawInfoCard />
@@ -531,7 +533,7 @@ class WithdrawalPrev extends Component {
             onClick={this.handleConfirmOTP}
           />
         </StyledModalPopup>
-        <Loading show={this.state.loading || this.props.wallet.loading} />
+        <Loading show={isLoading} />
       </>
     );
   }
