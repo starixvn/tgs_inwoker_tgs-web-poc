@@ -302,6 +302,7 @@ const Main = (props: Props) => {
             handleViewAllClick={() => {
               handleGameTypeClick(GameTypeEnum.SLOT);
             }}
+            gameTypeName={gameTypeList.find((item) => item.gameType === GameTypeEnum.SLOT)?.key || ""}
           />
 
           <LobbyTagCategory
@@ -313,6 +314,7 @@ const Main = (props: Props) => {
             handleViewAllClick={() => {
               handleGameTypeClick(GameTypeEnum.FISH);
             }}
+            gameTypeName={gameTypeList.find((item) => item.gameType === GameTypeEnum.FISH)?.key || ""}
           />
           <LobbyTagCategory
             iconUrl={egame}
@@ -323,6 +325,7 @@ const Main = (props: Props) => {
             handleViewAllClick={() => {
               handleGameTypeClick(GameTypeEnum.TABLEGAME);
             }}
+            gameTypeName={gameTypeList.find((item) => item.gameType === GameTypeEnum.TABLEGAME)?.key || ""}
           />
           <LobbyCategory
             iconUrl={live}

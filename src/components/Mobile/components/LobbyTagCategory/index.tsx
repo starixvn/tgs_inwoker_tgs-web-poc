@@ -1,8 +1,6 @@
 import { GameService } from '@/api-services/services/GameService';
 import ButtonText from '@/components/Mobile/components/ButtonText';
 import CategoryLabel from '@/components/Mobile/components/CategoryLabel';
-import config from '@/config/config';
-import Common from '@/utils/Common';
 import { useEffect, useState } from "react";
 import styled from 'styled-components';
 import CardVendor from '../CardVender';
@@ -41,6 +39,7 @@ type Props = {
   gameTag: string;
   showDataLength: number;
   handleViewAllClick: () => void;
+  gameTypeName: string;
 }
 
 type GameItem = {
@@ -65,7 +64,8 @@ const LobbyTagCategory = ({
   gameType,
   gameTag,
   showDataLength,
-  handleViewAllClick
+  handleViewAllClick,
+  gameTypeName
 }: Props) => {
   const [filteredGameList, setFilteredGameList] = useState<any[]>([]);
   const [visibleGameCount, setVisibleGameCount] = useState(showDataLength);
@@ -105,8 +105,7 @@ const LobbyTagCategory = ({
           return (
             <CardVendor
               key={game.id}
-              // to-do : 要放provider的圖片 不是遊戲
-              imageUrl={`${config.sourceUrl}${game.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${game.code}.jpg`}
+              imageUrl={`${process.env.PUBLIC_URL}/assets/images/home/${gameTypeName}/${game?.gpcode}.png`}
               gameName={game.name}
               venderName={game.gpcode}
             />
