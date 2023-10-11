@@ -47,7 +47,7 @@ const MainWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   background-color: ${(props: { theme: { primaryDark: any } }) =>
-    props.theme.primaryDark};
+          props.theme.primaryDark};
   color: ${(props: { theme: { white: any } }) => props.theme.white};
   margin-bottom: 82px;
 `;
@@ -132,19 +132,19 @@ const VendorIcon = styled.div`
 `;
 
 const LobbyContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  width: 100%;
 `;
 
 const TagContainer = styled.div`
-    margin-bottom: 8px;
-    overflow-x: auto;
-    white-space: nowrap;
-    scroll-behavior: smooth;
-    width: 100%;
-    -webkit-overflow-scrolling: touch;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
 `;
 
 const Main = (props: Props) => {
