@@ -16,6 +16,8 @@ import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
 import { ReportService } from "@/services/ReportService";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import { useWithdrawalStatus } from "@/components/_Share_Domain/Account/ReportPrev/hooks/useWithdrawalStatus";
+import StatusSelect from "@/components/_Share_Domain/Account/ReportPrev/components/StatusSelect";
 
 export interface TabData {
   dateFrom: Date;
@@ -29,7 +31,6 @@ type Props = {
 };
 
 const PAGE_SIZE = 20;
-const STATUS = "";
 const ReportWithdraw = ({ tabData }: Props) => {
   const { alert } = useNotifications();
   const [isLoading, setIsLoading] = useState(false);
@@ -37,12 +38,14 @@ const ReportWithdraw = ({ tabData }: Props) => {
 
   const [dataList, setDataList] = useState<any[]>([]);
   const [isMaxPage, setIsMaxPage] = useState(false);
+  const { statusDictionary, status, handleStatusChange } =
+    useWithdrawalStatus();
 
   const fetchReports = async () => {
     setIsLoading(true);
 
     ReportService.GetWithdrawalDetails(
-      STATUS,
+      status,
       moment(tabData.dateFrom).utc().format(),
       moment(tabData.dateTo).utc().add(1, "days").format(),
       page,
@@ -69,7 +72,7 @@ const ReportWithdraw = ({ tabData }: Props) => {
   useEffect(() => {
     setIsMaxPage(false);
     fetchReports();
-  }, [JSON.stringify(tabData)]);
+  }, [JSON.stringify(tabData), status]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;
@@ -79,46 +82,56 @@ const ReportWithdraw = ({ tabData }: Props) => {
   };
 
   return (
-    <ReportContainer>
-      <ReportSummary>
-        <ReportSummaryRow>
-          <ReportSummaryCol>{i18n.t("report.dateTime")}</ReportSummaryCol>
+    <>
+      <StatusSelect
+        statusDictionary={statusDictionary}
+        status={status}
+        handleStatusChange={handleStatusChange}
+      />
 
-          <ReportSummaryCol>{i18n.t("report.status")}</ReportSummaryCol>
-          <ReportSummaryCol>{i18n.t("common.amount")}</ReportSummaryCol>
-        </ReportSummaryRow>
-      </ReportSummary>
+      <ReportContainer>
+        <ReportSummary>
+          <ReportSummaryRow>
+            <ReportSummaryCol>{i18n.t("report.dateTime")}</ReportSummaryCol>
 
-      {(() => {
-        if (dataList.length <= 0) {
-          return <NoRecord />;
-        } else {
-          return (
-            <ReportCardsContainer>
-              {dataList.map((row, index) => {
-                const date = moment(row.createdon).format("YYYY-MM-DD hh:mm a");
-                return (
-                  <ReportCard key={index}>
-                    <ReportCardRow>
-                      {i18n.t("report.NewOrderNumber")} :{" "}
-                      <ReportCardCol>{row.orderno}</ReportCardCol>
-                    </ReportCardRow>
-                    <ReportCardRow>
-                      <ReportCardCol>{date}</ReportCardCol>
-                      <ReportCardCol>
-                        {i18n.t(`report.withdrawal.status${row.status}`)}
-                      </ReportCardCol>
-                      <ReportCardCol>{row.amount}</ReportCardCol>
-                    </ReportCardRow>
-                  </ReportCard>
-                );
-              })}
-            </ReportCardsContainer>
-          );
-        }
-      })()}
-      <Loading show={isLoading} />
-    </ReportContainer>
+            <ReportSummaryCol>{i18n.t("report.status")}</ReportSummaryCol>
+            <ReportSummaryCol>{i18n.t("common.amount")}</ReportSummaryCol>
+          </ReportSummaryRow>
+        </ReportSummary>
+
+        {(() => {
+          if (dataList.length <= 0) {
+            return <NoRecord />;
+          } else {
+            return (
+              <ReportCardsContainer>
+                {dataList.map((row, index) => {
+                  const date = moment(row.createdon).format(
+                    "YYYY-MM-DD hh:mm a"
+                  );
+                  return (
+                    <ReportCard key={index}>
+                      <ReportCardRow>
+                        {i18n.t("report.NewOrderNumber")} :{" "}
+                        <ReportCardCol>{row.orderno}</ReportCardCol>
+                      </ReportCardRow>
+                      <ReportCardRow>
+                        <ReportCardCol>{date}</ReportCardCol>
+                        <ReportCardCol>
+                          {i18n.t(`report.withdrawal.status${row.status}`)}
+                        </ReportCardCol>
+                        <ReportCardCol>{row.amount}</ReportCardCol>
+                      </ReportCardRow>
+                    </ReportCard>
+                  );
+                })}
+              </ReportCardsContainer>
+            );
+          }
+        })()}
+        <Loading show={isLoading} />
+      </ReportContainer>
+    </>
   );
 };
 

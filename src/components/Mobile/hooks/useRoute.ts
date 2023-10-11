@@ -11,16 +11,13 @@ function compareRoutePathAndCurrentPathIsEqual(
   // routePath = "/promotion/:id?"
   // it'll return true
 
-  // 將路徑中的動態部分（:id）替換為正則表達式
-  const regexRoutePath = routePath.replace(/:[^/]+/g, "[^/]+");
+  const routeRegex = routePath
+    .replace(/\//g, "\\/")
+    .replace(/:[^/?]+/g, "([^/]+)")
+    .replace(/\?/g, "\\?"); // 修正這一行
 
-  // 將路徑中的斜杠轉義為正則表達式中的斜杠
-  const escapedRoutePath = regexRoutePath.replace(/\//g, "\\/");
+  const regex = new RegExp(`^${routeRegex}$`);
 
-  // 構建正則表達式
-  const regex = new RegExp(`^${escapedRoutePath}$`);
-
-  // 使用正則表達式測試 currentPath
   return regex.test(currentPath);
 }
 
@@ -32,6 +29,7 @@ function getCurrentRoute(currentPath: string) {
   );
 }
 
+// TODO: make useRoute more accurate
 export function useRoute() {
   const location = useLocation();
 
