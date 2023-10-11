@@ -140,6 +140,7 @@ const muiTheme = createTheme({
     },
     type: "light",
     white: muiThemeMode.white,
+    yellow: "#f4bd29",
   },
   typography: {
     fontFamily: fontFamily,

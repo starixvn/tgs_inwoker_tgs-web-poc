@@ -1,16 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-
 import { withRouter } from "react-router-dom";
-
-import Textbox from "../../../Mobile/components/_PrevShare/Textbox";
-
 import BaseProfile from "./BaseProfile";
-import i18n from "../../../../utils/i18n";
-import { accountAction } from "../../../../api-services/actions/accountAction";
-import { AccountService } from "../../../../api-services/services/AccountService";
-import config from "../../../../config/config";
-import BottomNote from "../../../Mobile/components/_PrevShare/BottomNoteDepecrated";
+import i18n from "@/utils/i18n";
+import { accountAction } from "@/api-services/actions/accountAction";
+import { AccountService } from "@/api-services/services/AccountService";
+import config from "@/config/config";
+import BottomNote from "@/components/Mobile/components/UI/BottomNote";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+} from "@/components/Mobile/styles/forms";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
+
 class FacebookMessenger extends BaseProfile {
   state = {
     fb: "",
@@ -85,21 +88,24 @@ class FacebookMessenger extends BaseProfile {
   render() {
     return this.setupContent(
       i18n.t("common.fb"),
-      <Textbox
-        style={{ margin: "50px auto 20px auto" }}
-        value={this.state.fb}
-        onChange={this.handleChangeNumber}
-        placeholder={i18n.t("profile.fb.plsEnterFB")}
-        label={i18n.t("common.fb")}
-        disabled={
-          this.state.isConfigured &&
-          (config.features.ChangesNotAllowed ||
-            config.features.Profile_ExistingDetails_ViewOnly)
-            ? true
-            : false
-        }
-        maxLength={15}
-      ></Textbox>,
+      <>
+        <ItemContainer>
+          <LabelContainer>{i18n.t("common.fb")}</LabelContainer>
+          <FormControl variant="outlined">
+            <TextField
+              value={this.state.fb}
+              onChange={this.handleChangeNumber}
+              placeholder={i18n.t("profile.fb.plsEnterFB")}
+              disabled={
+                this.state.isConfigured &&
+                (config.features.ChangesNotAllowed ||
+                  config.features.Profile_ExistingDetails_ViewOnly)
+              }
+              maxLength={15}
+            />
+          </FormControl>
+        </ItemContainer>
+      </>,
       this.state.isConfigured && config.features.ChangesNotAllowed
         ? i18n.t("common.configured")
         : this.state.fb !== this.props.account.member_fb &&
@@ -120,7 +126,7 @@ class FacebookMessenger extends BaseProfile {
                   ? "common.customerService"
                   : "profile.fb.here"
               )}
-            ></BottomNote>
+            />
           );
         }
       })()

@@ -1,76 +1,40 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
-import TextboxWithButton from "../../../Mobile/components/_PrevShare/TextboxWithButton";
-import Step from "../../../Mobile/components/_PrevShare/Step";
+import Step from "@/components/Mobile/components/_PrevShare/Step";
 import BaseProfile from "./BaseProfile";
-import { accountAction } from "../../../../api-services/actions/accountAction";
-import { AccountService } from "../../../../api-services/services/AccountService";
-
-import i18n from "../../../../utils/i18n";
+import { accountAction } from "@/api-services/actions/accountAction";
+import { AccountService } from "@/api-services/services/AccountService";
+import i18n from "@/utils/i18n";
 import styled from "styled-components";
-import config from "../../../../config/config";
-const Container = styled.div`
-  margin: 0 auto;
+import config from "@/config/config";
+import TextFieldWithButton from "@/components/Mobile/components/UI/TextFieldWithButton";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+} from "@/components/Mobile/styles/forms";
+import { Select } from "@/components/Mobile/components/UI/Select";
 
-  width: 635px;
-  height: 80px;
-  border-radius: 6px;
-
-  background-color: #ffffff;
-`;
-const SelectContainer = styled.select`
-  width: 100%;
-  height: 100%;
-  border: none;
-  color: #000;
-  font-size: 30px;
-`;
-const CustomText = styled.div`
-  height: 170px;
-  padding: 20px 20px 0 20px;
-  margin: 20px auto;
-`;
-const CustomLabel = styled.div`
-  font-size: 24px;
-  font-weight: 600;
-  margin-left: 3px;
-  color: ${({ theme }) => theme.secondary};
-`;
-const CustomInput = styled.input`
-  height: 50px;
-  width: 405px;
-  font-size: 28px;
-  margin-top: 18px;
-  border-radius: 16px;
-  padding: 16px 32px;
-  font-weight: 500;
-  border: 0;
+const PhoneContainer = styled.div`
   display: flex;
-  flex: 1;
-  ::placeholder,
-  ::-webkit-input-placeholder {
-    color: #c3c3c3;
-    font-size: 28px;
-  }
-  &:disabled {
-    background: #fff;
-
-    opacity: 1;
-  }
+  gap: 8px;
 `;
+
 class ChangePhone extends BaseProfile {
-  componentDidMount() {
-    this.setState({
+  constructor(props) {
+    super(props);
+
+    this.state = {
       ...this.state,
-      phone: this.props.account.info.member_phone,
+      phone: this.props.account.info.member_phone || "",
       areacode: config.features.PhonePrefix,
       code: "",
       currentStep: 1,
       countdownToken: 0,
       securityKey: "",
-    });
+    };
   }
 
   handleChangePhone = (e) => {
@@ -209,67 +173,72 @@ class ChangePhone extends BaseProfile {
       });
   };
   render() {
+    console.log(this.state.phone);
+
     return this.setupContent(
       i18n.t("profile.changePhone.title"),
-      <React.Fragment>
+      <>
         <Step
           steps={[
             { label: i18n.t("profile.changePhone.step1Title") },
             { label: i18n.t("profile.changePhone.step2Title") },
           ]}
           currentStep={this.state.currentStep}
-        ></Step>
-        <CustomText>
-          <CustomLabel>{i18n.t("common.phoneNumber")}</CustomLabel>
-          <Container
-            style={{
-              margin: "18px 5px 0 0",
-              width: "180px",
-              float: "left",
-              padding: "10px",
-            }}
-          >
-            <SelectContainer
-              value={this.state.areacode}
-              onChange={(e) => {
-                this.setState({ ...this.state, areacode: e.target.value });
-              }}
-              disabled={this.state.currentStep === 1}
-            >
-              <option value={config.features.PhonePrefix}>
-                {config.features.PhonePrefix}
-              </option>
-            </SelectContainer>
-          </Container>
-          <CustomInput
-            style={this.props.color ? { color: this.props.color } : {}}
-            type={"text"}
-            value={this.state.phone}
-            placeholder={i18n.t("common.msgEnterPhone")}
-            disabled={this.state.currentStep === 1}
-            onChange={this.handleChangePhone}
-            maxLength={config.features.MAX_PHONE_LENGTH || 10}
-          ></CustomInput>
-        </CustomText>
+        />
 
-        <TextboxWithButton
-          buttonlabel={
-            this.state.countdownToken <= 0
-              ? i18n.t("common.msgSendToken")
-              : i18n.t("common.btnTokenResendLabel") +
-                "(" +
-                this.state.countdownToken +
-                "s)"
-          }
-          style={{ margin: "20px auto 20px auto" }}
-          value={this.state.code}
-          onChange={this.handleChangeCode}
-          placeholder={i18n.t("common.msgEnterPhoneCode")}
-          label={i18n.t("common.token")}
-          onClick={this.handleGetCodeClick}
-          maxLength={6}
-        ></TextboxWithButton>
-      </React.Fragment>,
+        <ItemContainer>
+          <LabelContainer>{i18n.t("common.phoneNumber")}</LabelContainer>
+
+          <PhoneContainer>
+            <FormControl variant="outlined" style={{ width: "30%" }}>
+              <Select
+                native
+                value={this.state.areacode}
+                onChange={(e) => {
+                  this.setState({ ...this.state, areacode: e.target.value });
+                }}
+                disabled={this.state.currentStep === 1}
+              >
+                <option value={config.features.PhonePrefix}>
+                  {config.features.PhonePrefix}
+                </option>
+              </Select>
+            </FormControl>
+
+            <FormControl variant="outlined">
+              <TextField
+                type={"text"}
+                value={this.state.phone}
+                placeholder={i18n.t("common.msgEnterPhone")}
+                disabled={this.state.currentStep === 1}
+                onChange={this.handleChangePhone}
+                maxLength={config.features.MAX_PHONE_LENGTH || 10}
+              />
+            </FormControl>
+          </PhoneContainer>
+        </ItemContainer>
+
+        <ItemContainer>
+          <FormControl>
+            <TextFieldWithButton
+              buttonlabel={
+                this.state.countdownToken <= 0
+                  ? i18n.t("common.msgSendToken")
+                  : i18n.t("common.btnTokenResendLabel") +
+                    "(" +
+                    this.state.countdownToken +
+                    "s)"
+              }
+              value={this.state.code}
+              onChange={this.handleChangeCode}
+              placeholder={i18n.t("common.msgEnterPhoneCode")}
+              label={i18n.t("common.token")}
+              onClick={this.handleGetCodeClick}
+              maxLength={6}
+            />
+          </FormControl>
+        </ItemContainer>
+      </>,
       this.state.currentStep === 1
         ? i18n.t("common.nextStep")
         : i18n.t("common.submit")

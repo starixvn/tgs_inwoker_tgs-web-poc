@@ -1,15 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
 import BaseProfile from "./BaseProfile";
 import ResetWithdrawalPassword from "./ResetWithdrawalPassword";
-
-import { AccountService } from "../../../../api-services/services/AccountService";
-
-import Header from "../../../Mobile/components/_PrevShare/Header";
-
-import i18n from "../../../../utils/i18n";
+import { AccountService } from "@/api-services/services/AccountService";
+import i18n from "@/utils/i18n";
 
 class ChangeWithdrawalPassword extends BaseProfile {
   componentDidMount() {}
@@ -82,13 +77,7 @@ class ChangeWithdrawalPassword extends BaseProfile {
   render() {
     return (
       <React.Fragment>
-        <Header
-          onBackClick={this.handleBackClick}
-          title={i18n.t("profile.changeWithdrawalPassword.title")}
-        ></Header>
-        <ResetWithdrawalPassword
-          alert={this.props.alert}
-        ></ResetWithdrawalPassword>
+        <ResetWithdrawalPassword alert={this.props.alert} />
       </React.Fragment>
     );
   }

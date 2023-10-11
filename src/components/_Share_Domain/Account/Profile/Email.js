@@ -2,14 +2,19 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Textbox from "../../../Mobile/components/_PrevShare/Textbox";
-import TextboxWithButton from "../../../Mobile/components/_PrevShare/TextboxWithButton";
 import BaseProfile from "./BaseProfile";
-import { accountAction } from "../../../../api-services/actions/accountAction";
-import { AccountService } from "../../../../api-services/services/AccountService";
-import BottomNote from "../../../Mobile/components/_PrevShare/BottomNoteDepecrated";
+import { accountAction } from "@/api-services/actions/accountAction";
+import { AccountService } from "@/api-services/services/AccountService";
+import BottomNote from "@/components/Mobile/components/UI/BottomNote";
 
-import i18n from "../../../../utils/i18n";
-import config from "../../../../config/config";
+import i18n from "@/utils/i18n";
+import config from "@/config/config";
+import {
+  FormControl,
+  ItemContainer,
+  LabelContainer,
+} from "@/components/Mobile/styles/forms";
+import TextFieldWithButton from "@/components/Mobile/components/UI/TextFieldWithButton";
 class Email extends BaseProfile {
   state = {
     countdownToken: 0,
@@ -217,15 +222,20 @@ class Email extends BaseProfile {
 
     return this.setupContent(
       i18n.t("common.emailAddress"),
-      <React.Fragment>
-        <Textbox
-          style={{ margin: "50px auto 20px auto" }}
-          value={this.state.email}
-          onChange={this.handleChangeEmail}
-          placeholder={i18n.t("common.msgEnterEmail")}
-          label={i18n.t("common.emailAddress")}
-          disabled={this.state.isConfigured}
-        ></Textbox>
+      <>
+        <ItemContainer>
+          <LabelContainer>{i18n.t("common.emailAddress")}</LabelContainer>
+
+          <FormControl variant="outlined">
+            <Textbox
+              value={this.state.email}
+              onChange={this.handleChangeEmail}
+              placeholder={i18n.t("common.msgEnterEmail")}
+              disabled={this.state.isConfigured}
+            />
+          </FormControl>
+        </ItemContainer>
+
         {(() => {
           if (
             !(
@@ -235,49 +245,55 @@ class Email extends BaseProfile {
             !this.state.isConfigured
           ) {
             return (
-              <TextboxWithButton
-                buttonlabel={
-                  this.state.countdownToken <= 0
-                    ? i18n.t("common.msgSendToken")
-                    : i18n.t("common.btnTokenResendLabel") +
-                      "(" +
-                      this.state.countdownToken +
-                      "s)"
-                }
-                style={{ margin: "20px auto 20px auto" }}
-                value={this.state.code}
-                onChange={this.handleChangeCode}
-                placeholder={i18n.t("common.msgEnterEmailCode")}
-                label={i18n.t("common.token")}
-                onClick={this.handleGetCodeClick}
-                maxLength={6}
-                type={"text"}
-              ></TextboxWithButton>
+              <ItemContainer>
+                <LabelContainer>{i18n.t("common.token")}</LabelContainer>
+                <FormControl variant="outlined">
+                  <TextFieldWithButton
+                    buttonlabel={
+                      this.state.countdownToken <= 0
+                        ? i18n.t("common.msgSendToken")
+                        : i18n.t("common.btnTokenResendLabel") +
+                          "(" +
+                          this.state.countdownToken +
+                          "s)"
+                    }
+                    style={{ margin: "20px auto 20px auto" }}
+                    value={this.state.code}
+                    onChange={this.handleChangeCode}
+                    placeholder={i18n.t("common.msgEnterEmailCode")}
+                    onClick={this.handleGetCodeClick}
+                    maxLength={6}
+                    type={"text"}
+                  />
+                </FormControl>
+              </ItemContainer>
             );
           }
         })()}
-      </React.Fragment>,
+      </>,
       this.state.isConfigured
         ? i18n.t("common.configured")
         : i18n.t("common.complete"),
       (() => {
         if (this.state.isConfigured) {
           return (
-            <BottomNote
-              text1={i18n.t("profile.email.toEdit")}
-              link={
-                config.features.ChangesNotAllowed ||
-                config.features.Profile_ExistingDetails_ViewOnly
-                  ? "../chat"
-                  : "./changeemail"
-              }
-              text2={i18n.t(
-                config.features.ChangesNotAllowed ||
+            <ItemContainer>
+              <BottomNote
+                text1={i18n.t("profile.email.toEdit")}
+                link={
+                  config.features.ChangesNotAllowed ||
                   config.features.Profile_ExistingDetails_ViewOnly
-                  ? "common.customerService"
-                  : "profile.email.here"
-              )}
-            ></BottomNote>
+                    ? "../chat"
+                    : "./changeemail"
+                }
+                text2={i18n.t(
+                  config.features.ChangesNotAllowed ||
+                    config.features.Profile_ExistingDetails_ViewOnly
+                    ? "common.customerService"
+                    : "profile.email.here"
+                )}
+              />
+            </ItemContainer>
           );
         }
       })(),

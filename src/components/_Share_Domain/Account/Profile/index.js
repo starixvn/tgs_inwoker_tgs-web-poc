@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import Header from "../../../Mobile/components/_PrevShare/Header";
+import Header from "@/components/Mobile/components/_PrevShare/Header";
 
-import i18n from "../../../../utils/i18n";
-import config from "../../../../config/config";
+import i18n from "@/utils/i18n";
+import config from "@/config/config";
 const Container = styled.div`
   width: 100%;
   overflow: hidden;

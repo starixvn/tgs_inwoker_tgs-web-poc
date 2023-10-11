@@ -1,16 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-
 import { withRouter } from "react-router-dom";
-
-import Textbox from "../../../Mobile/components/_PrevShare/Textbox";
-
 import BaseProfile from "./BaseProfile";
-import i18n from "../../../../utils/i18n";
-import { accountAction } from "../../../../api-services/actions/accountAction";
-import { AccountService } from "../../../../api-services/services/AccountService";
-import config from "../../../../config/config";
-import BottomNote from "../../../Mobile/components/_PrevShare/BottomNoteDepecrated";
+import i18n from "@/utils/i18n";
+import { accountAction } from "@/api-services/actions/accountAction";
+import { AccountService } from "@/api-services/services/AccountService";
+import config from "@/config/config";
+import BottomNote from "@/components/Mobile/components/UI/BottomNote";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+} from "@/components/Mobile/styles/forms";
+
 class Line extends BaseProfile {
   state = {
     line: "",
@@ -85,21 +88,24 @@ class Line extends BaseProfile {
   render() {
     return this.setupContent(
       i18n.t("common.line"),
-      <Textbox
-        style={{ margin: "50px auto 20px auto" }}
-        value={this.state.line}
-        onChange={this.handleChangeNumber}
-        placeholder={i18n.t("profile.line.plsEnterLine")}
-        label={i18n.t("common.line")}
-        disabled={
-          this.state.isConfigured &&
-          (config.features.ChangesNotAllowed ||
-            config.features.Profile_ExistingDetails_ViewOnly)
-            ? true
-            : false
-        }
-        maxLength={15}
-      ></Textbox>,
+      <>
+        <ItemContainer>
+          <LabelContainer>{i18n.t("common.line")}</LabelContainer>
+          <FormControl variant="outlined">
+            <TextField
+              value={this.state.line}
+              onChange={this.handleChangeNumber}
+              placeholder={i18n.t("profile.line.plsEnterLine")}
+              disabled={
+                this.state.isConfigured &&
+                (config.features.ChangesNotAllowed ||
+                  config.features.Profile_ExistingDetails_ViewOnly)
+              }
+              maxLength={15}
+            />
+          </FormControl>
+        </ItemContainer>
+      </>,
       this.state.isConfigured && config.features.ChangesNotAllowed
         ? i18n.t("common.configured")
         : this.state.line !== this.props.account.member_line &&
@@ -120,7 +126,7 @@ class Line extends BaseProfile {
                   ? "common.customerService"
                   : "profile.line.here"
               )}
-            ></BottomNote>
+            />
           );
         }
       })()

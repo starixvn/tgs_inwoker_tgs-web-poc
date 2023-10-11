@@ -6,13 +6,14 @@ export const DialogTitle = styled.div`
   font-size: 1.5rem;
   font-weight: 700;
   color: #ffffff;
+  margin-bottom: 20px;
 `;
 export const DialogContent = styled.div`
   font-size: 1rem;
   font-weight: 400;
   color: #ffffff;
-  margin-top: 1rem;
   line-height: 1.2rem;
+  margin-bottom: 20px;
 `;
 
 export const ButtonConfirm = styled.div`

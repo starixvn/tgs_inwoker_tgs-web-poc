@@ -3,14 +3,19 @@ import { connect } from "react-redux";
 
 import { withRouter } from "react-router-dom";
 
-import Textbox from "../../../Mobile/components/_PrevShare/Textbox";
-
 import BaseProfile from "./BaseProfile";
-import i18n from "../../../../utils/i18n";
-import { accountAction } from "../../../../api-services/actions/accountAction";
-import { AccountService } from "../../../../api-services/services/AccountService";
-import config from "../../../../config/config";
-import BottomNote from "../../../Mobile/components/_PrevShare/BottomNoteDepecrated";
+import i18n from "@/utils/i18n";
+import { accountAction } from "@/api-services/actions/accountAction";
+import { AccountService } from "@/api-services/services/AccountService";
+import config from "@/config/config";
+import BottomNote from "@/components/Mobile/components/UI/BottomNote";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+} from "@/components/Mobile/styles/forms";
+
 class Whatsapp extends BaseProfile {
   state = {
     whatsapp: "",
@@ -85,21 +90,24 @@ class Whatsapp extends BaseProfile {
   render() {
     return this.setupContent(
       i18n.t("common.whatsapp"),
-      <Textbox
-        style={{ margin: "50px auto 20px auto" }}
-        value={this.state.whatsapp}
-        onChange={this.handleChangeNumber}
-        placeholder={i18n.t("profile.whatsapp.plsEnterWhatsapp")}
-        label={i18n.t("common.whatsapp")}
-        disabled={
-          this.state.isConfigured &&
-          (config.features.ChangesNotAllowed ||
-            config.features.Profile_ExistingDetails_ViewOnly)
-            ? true
-            : false
-        }
-        maxLength={15}
-      ></Textbox>,
+      <>
+        <ItemContainer>
+          <LabelContainer>{i18n.t("common.whatsapp")}</LabelContainer>
+          <FormControl variant="outlined">
+            <TextField
+              value={this.state.whatsapp}
+              onChange={this.handleChangeNumber}
+              placeholder={i18n.t("profile.whatsapp.plsEnterWhatsapp")}
+              disabled={
+                this.state.isConfigured &&
+                (config.features.ChangesNotAllowed ||
+                  config.features.Profile_ExistingDetails_ViewOnly)
+              }
+              maxLength={15}
+            />
+          </FormControl>
+        </ItemContainer>
+      </>,
       this.state.isConfigured && config.features.ChangesNotAllowed
         ? i18n.t("common.configured")
         : this.state.whatsapp !== this.props.account.member_whatsapp &&
@@ -120,7 +128,7 @@ class Whatsapp extends BaseProfile {
                   ? "common.customerService"
                   : "profile.whatsapp.here"
               )}
-            ></BottomNote>
+            />
           );
         }
       })()

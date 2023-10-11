@@ -7,6 +7,16 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/Mobile/components/UI/Dialog/dialogStyles";
+import { Button } from "@/components/Mobile/components/UI/Button";
+import styled from "styled-components";
+
+const AlertContainer = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+`;
 
 type ModalButtonsProps = {
   handleClose: () => void;
@@ -17,16 +27,16 @@ type ModalButtonsProps = {
 const ModalButtons = ({ handleClose, message, action }: ModalButtonsProps) => {
   if (message === "无法连接，请检查您的网络") {
     return (
-      <ButtonConfirm onClick={() => window.location.reload()}>
+      <Button fullWidth onClick={() => window.location.reload()}>
         {i18n.t("common.reload")}
-      </ButtonConfirm>
+      </Button>
     );
   } else {
     return (
       <div>
-        <ButtonConfirm onClick={handleClose}>
+        <Button fullWidth onClick={handleClose}>
           {i18n.t("common.confirm")}
-        </ButtonConfirm>
+        </Button>
 
         {action && <div onClick={handleClose}>{action}</div>}
       </div>
@@ -40,7 +50,7 @@ const PopupAlertDialog = () => {
 
   return (
     <DialogPopup isOpen={isOpen} handleCloseDialog={closeAlertPopup}>
-      <>
+      <AlertContainer>
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>{message}</DialogContent>
 
@@ -49,7 +59,7 @@ const PopupAlertDialog = () => {
           message={message}
           action={action}
         />
-      </>
+      </AlertContainer>
     </DialogPopup>
   );
 };

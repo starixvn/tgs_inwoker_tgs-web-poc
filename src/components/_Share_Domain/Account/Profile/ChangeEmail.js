@@ -1,14 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Textbox from "../../../Mobile/components/_PrevShare/Textbox";
-import TextboxWithButton from "../../../Mobile/components/_PrevShare/TextboxWithButton";
-import Step from "../../../Mobile/components/_PrevShare/Step";
+import Step from "@/components/Mobile/components/_PrevShare/Step";
 import BaseProfile from "./BaseProfile";
-import { accountAction } from "../../../../api-services/actions/accountAction";
-import { AccountService } from "../../../../api-services/services/AccountService";
+import { accountAction } from "@/api-services/actions/accountAction";
+import { AccountService } from "@/api-services/services/AccountService";
+import i18n from "@/utils/i18n";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+} from "@/components/Mobile/styles/forms";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
+import TextFieldWithButton from "@/components/Mobile/components/UI/TextFieldWithButton";
 
-import i18n from "../../../../utils/i18n";
 class ChangeEmail extends BaseProfile {
   componentDidMount() {
     this.setState({
@@ -164,41 +169,49 @@ class ChangeEmail extends BaseProfile {
   render() {
     return this.setupContent(
       i18n.t("profile.email.editEmail"),
-      <React.Fragment>
+      <>
         <Step
           steps={[
             { label: i18n.t("profile.email.verifyEmail") },
             { label: i18n.t("profile.email.addEmail") },
           ]}
           currentStep={this.state.currentStep}
-        ></Step>
-        <Textbox
-          style={{ margin: "50px auto 20px auto" }}
-          value={this.state.email}
-          onChange={this.handleChangeEmail}
-          placeholder={i18n.t("profile.email.plsEnterEmail")}
-          disabled={this.state.currentStep === 1}
-          label={i18n.t("common.emailAddress")}
-        ></Textbox>
-        <TextboxWithButton
-          buttonlabel={
-            this.state.countdownToken <= 0
-              ? i18n.t("common.msgSendToken")
-              : i18n.t("common.btnTokenResendLabel") +
-                "(" +
-                this.state.countdownToken +
-                "s)"
-          }
-          type={"text"}
-          style={{ margin: "20px auto 20px auto" }}
-          value={this.state.code}
-          onChange={this.handleChangeCode}
-          placeholder={i18n.t("common.msgEnterEmailCode")}
-          label={i18n.t("common.token")}
-          onClick={this.handleGetCodeClick}
-          maxLength={6}
-        ></TextboxWithButton>
-      </React.Fragment>,
+        />
+
+        <ItemContainer>
+          <LabelContainer>{i18n.t("common.emailAddress")}</LabelContainer>
+          <FormControl variant="outlined">
+            <TextField
+              value={this.state.email}
+              onChange={this.handleChangeEmail}
+              placeholder={i18n.t("profile.email.plsEnterEmail")}
+              disabled={this.state.currentStep === 1}
+            />
+          </FormControl>
+        </ItemContainer>
+
+        <ItemContainer>
+          <LabelContainer>{i18n.t("common.token")}</LabelContainer>
+          <FormControl variant="outlined">
+            <TextFieldWithButton
+              buttonlabel={
+                this.state.countdownToken <= 0
+                  ? i18n.t("common.msgSendToken")
+                  : i18n.t("common.btnTokenResendLabel") +
+                    "(" +
+                    this.state.countdownToken +
+                    "s)"
+              }
+              type={"text"}
+              value={this.state.code}
+              onChange={this.handleChangeCode}
+              placeholder={i18n.t("common.msgEnterEmailCode")}
+              onClick={this.handleGetCodeClick}
+              maxLength={6}
+            />
+          </FormControl>
+        </ItemContainer>
+      </>,
       this.state.currentStep === 1
         ? i18n.t("common.nextStep")
         : i18n.t("common.submit")

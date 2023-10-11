@@ -3,12 +3,17 @@ import { useHistory } from "react-router-dom";
 import i18n from "@/utils/i18n";
 import { AccountService } from "@/api-services/services/AccountService";
 import config from "@/config/config";
-import Textbox from "../../../Mobile/components/_PrevShare/Textbox";
-import Button from "../../../Mobile/components/_PrevShare/Button";
-import BottomNote from "../../../Mobile/components/_PrevShare/BottomNote";
+import BottomNote from "@/components/Mobile/components/UI/BottomNote";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import Loading from "@/components/Mobile/components/UI/Loading";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+} from "@/components/Mobile/styles/forms";
+import { Button } from "@/components/Mobile/components/UI/Button";
 
 const QQ = () => {
   const { account, getAccountProfile } = useAccountStore();
@@ -90,36 +95,41 @@ const QQ = () => {
 
   return (
     <div>
-      <Textbox
-        style={{ margin: "50px auto 20px auto" }}
-        value={qq}
-        onChange={handleChangeNumber}
-        placeholder={i18n.t("profile.qq.plsEnterQQ")}
-        disabled={
-          isConfigured &&
-          (config.features.ChangesNotAllowed ||
-            config.features.Profile_ExistingDetails_ViewOnly)
-        }
-        type={"text"}
-        label={i18n.t("common.qqNumber")}
-        isCustomProfileStyle={config.brand === "WGHK"}
-      />
+      <ItemContainer>
+        <LabelContainer>{i18n.t("common.qqNumber")}</LabelContainer>
+        <FormControl variant="outlined">
+          <TextField
+            value={qq}
+            onChange={handleChangeNumber}
+            placeholder={i18n.t("profile.qq.plsEnterQQ")}
+            disabled={
+              isConfigured &&
+              (config.features.ChangesNotAllowed ||
+                config.features.Profile_ExistingDetails_ViewOnly)
+            }
+            type={"text"}
+          />
+        </FormControl>
+      </ItemContainer>
 
       {isConfigured && config.features.ChangesNotAllowed ? (
-        <div>
+        <>
           <BottomNote
             text1={i18n.t("profile.qq.toEdit")}
             link={"../chat"}
             text2={i18n.t("common.customerService")}
           />
-        </div>
+        </>
       ) : (
-        <div>
+        <>
           <Button
-            disabled={checkButtonState() || loading}
+            fullWidth
             onClick={handleSubmitClicked}
-            label={i18n.t("common.submit")}
-          />
+            disabled={checkButtonState() || loading}
+            style={{ marginBottom: "20px" }}
+          >
+            {i18n.t("common.submit")}
+          </Button>
 
           <BottomNote
             text1={i18n.t("profile.qq.toEdit")}
@@ -130,7 +140,7 @@ const QQ = () => {
                 : "profile.qq.here"
             }
           />
-        </div>
+        </>
       )}
     </div>
   );

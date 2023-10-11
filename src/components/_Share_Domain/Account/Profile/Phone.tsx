@@ -1,67 +1,25 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
-import TextboxWithButton from "../../../Mobile/components/_PrevShare/TextboxWithButton";
-import BottomNote from "../../../Mobile/components/_PrevShare/BottomNote";
-import Header from "../../../Mobile/components/_PrevShare/Header";
+import BottomNote from "@/components/Mobile/components/UI/BottomNote";
 import Loading from "@/components/Mobile/components/UI/Loading";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { AccountService } from "@/services/AccountService";
+import TextFieldWithButton from "@/components/Mobile/components/UI/TextFieldWithButton";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+} from "@/components/Mobile/styles/forms";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
+import { Select } from "@/components/Mobile/components/UI/Select";
 
-const Container = styled.div`
-  width: 100%;
-  overflow: hidden;
-`;
-
-const SelectContainer = styled.select`
-  width: 100%;
-  height: 100%;
-  border: none;
-  color: #000;
-  font-size: 30px;
-  background-color: #fff;
-`;
-
-const CustomText = styled.div`
-  padding: 20px 20px 0 20px;
-  margin: 20px auto;
-  background: #fff;
-  box-shadow: 0 2px 6px 0 rgb(58 58 58 / 20%);
-  border-radius: 20px;
-`;
-
-const CustomLabel = styled.div`
-  font-size: 24px;
-  font-weight: 600;
-  margin-left: 3px;
-  color: ${({ theme }) => theme.secondary};
-`;
-
-const CustomInput = styled.input`
-  height: 50px;
-  font-size: 28px;
-  margin-top: 18px;
-  border-radius: 16px;
-  padding: 16px 32px;
-  font-weight: 500;
-  border: 0;
+const PhoneContainer = styled.div`
   display: flex;
-  flex: 1;
-
-  ::placeholder,
-  ::-webkit-input-placeholder {
-    color: #c3c3c3;
-    font-size: 28px;
-  }
-
-  &:disabled {
-    background: #fff;
-    opacity: 1;
-  }
+  gap: 8px;
 `;
 
 function Phone() {
@@ -310,51 +268,46 @@ function Phone() {
   if (loading) return <Loading />;
 
   return (
-    <Container>
-      <Header
-        background={true}
-        token={null}
-        balance={0}
-        onBackClick={() => history.goBack()}
-        title={i18n.t("common.phoneNumber")}
-        noBack={cannotAccessOther}
-      ></Header>
-      <CustomText>
-        <CustomLabel>{i18n.t("common.phoneNumber")}</CustomLabel>
-        <Container
-          style={{
-            float: "left",
-            padding: "10px",
-          }}
-        >
-          <SelectContainer
-            value={areacode}
-            onChange={(e) => {
-              setAreacode(e.target.value);
-            }}
-            disabled={
-              (isConfigured ? isConfigured : false) ||
-              (config.features.Profile_DisableVerifyPhone &&
-                !config.features.InitPhone_WithoutVerify)
-            }
-          >
-            <option value={config.features.PhonePrefix}>
-              {config.features.PhonePrefix}
-            </option>
-          </SelectContainer>
-        </Container>
-        <CustomInput
-          type={"text"}
-          value={phone}
-          placeholder={i18n.t("common.msgEnterPhone")}
-          disabled={
-            (isConfigured ? isConfigured : false) ||
-            config.features.Profile_DisableVerifyPhone
-          }
-          onChange={handleChangePhone}
-          maxLength={config.features.MAX_PHONE_LENGTH || 10}
-        ></CustomInput>
-      </CustomText>
+    <>
+      <ItemContainer>
+        <LabelContainer>{i18n.t("common.phoneNumber")}</LabelContainer>
+
+        <PhoneContainer>
+          <FormControl variant="outlined" style={{ width: "30%" }}>
+            <Select
+              native
+              value={areacode}
+              onChange={(e) => {
+                setAreacode(e.target.value);
+              }}
+              disabled={
+                (isConfigured ? isConfigured : false) ||
+                (config.features.Profile_DisableVerifyPhone &&
+                  !config.features.InitPhone_WithoutVerify)
+              }
+            >
+              <option value={config.features.PhonePrefix}>
+                {config.features.PhonePrefix}
+              </option>
+            </Select>
+          </FormControl>
+
+          <FormControl variant="outlined">
+            <TextField
+              type={"text"}
+              value={phone}
+              placeholder={i18n.t("common.msgEnterPhone")}
+              disabled={
+                (isConfigured ? isConfigured : false) ||
+                config.features.Profile_DisableVerifyPhone
+              }
+              onChange={handleChangePhone}
+              maxLength={config.features.MAX_PHONE_LENGTH || 10}
+            />
+          </FormControl>
+        </PhoneContainer>
+      </ItemContainer>
+
       {(() => {
         if (
           !(
@@ -366,32 +319,36 @@ function Phone() {
           return (
             !config.features.Profile_DisableVerifyPhone &&
             !config.features.InitPhone_WithoutVerify && (
-              <TextboxWithButton
-                buttonlabel={
-                  countdownToken <= 0
-                    ? i18n.t("common.msgSendToken")
-                    : `${i18n.t(
-                        "common.btnTokenResendLabel"
-                      )}(${countdownToken}s)`
-                }
-                style={{ margin: "20px auto 20px auto" }}
-                value={code}
-                onChange={handleChangeCode}
-                placeholder={i18n.t("common.msgEnterPhoneCode")}
-                label={i18n.t("common.token")}
-                onClick={handleGetCodeClick}
-              ></TextboxWithButton>
+              <ItemContainer>
+                <LabelContainer>{i18n.t("common.token")}</LabelContainer>
+                <FormControl variant="outlined">
+                  <TextFieldWithButton
+                    buttonlabel={
+                      countdownToken <= 0
+                        ? i18n.t("common.msgSendToken")
+                        : `${i18n.t(
+                            "common.btnTokenResendLabel"
+                          )}(${countdownToken}s)`
+                    }
+                    value={code}
+                    onChange={handleChangeCode}
+                    placeholder={i18n.t("common.msgEnterPhoneCode")}
+                    onClick={handleGetCodeClick}
+                  />
+                </FormControl>
+              </ItemContainer>
             )
           );
         }
       })()}
+
       {isConfigured || config.features.InitPhone_WithoutVerify ? (
         config.features.Profile_DisableEditPhone ? (
           <BottomNote
             text1={i18n.t("profile.phone.toEdit")}
             link={"../chat"}
             text2={i18n.t("common.customerService")}
-          ></BottomNote>
+          />
         ) : (
           <BottomNote
             text1={i18n.t("profile.phone.toEdit")}
@@ -407,10 +364,10 @@ function Phone() {
                 ? "common.customerService"
                 : "profile.phone.here"
             )}
-          ></BottomNote>
+          />
         )
       ) : null}
-    </Container>
+    </>
   );
 }
 

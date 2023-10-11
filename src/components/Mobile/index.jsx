@@ -24,7 +24,6 @@ import Loading from "./components/_PrevShare/Loading";
 import ForcedVerification from "./components/ForcedVerification";
 import LiveChat from "../Share/live-chat";
 import { routes } from "./router";
-import DefaultLayout from "@/components/Mobile/layouts/DefaultLayout";
 import PopupAlertModal from "@/components/Mobile/components/Popup/PopupAlertDialog";
 import PopupAnnouncement from "@/components/Mobile/components/Popup/PopupAnnouncement";
 import PopupPromotion from "@/components/Mobile/components/Popup/PopupPromotion";
@@ -594,6 +593,7 @@ class Mobile extends Component {
                 onClose={this.handleClosePromotion}
               />
             )}
+
             <PopupAlertModal />
           </AuthContextProvider>
         </>

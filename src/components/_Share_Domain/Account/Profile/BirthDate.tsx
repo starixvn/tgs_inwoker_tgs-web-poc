@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
 import { useHistory } from "react-router-dom";
-import Button from "../../../Mobile/components/_PrevShare/Button";
-import BottomNote from "../../../Mobile/components/_PrevShare/BottomNote";
-import Header from "../../../Mobile/components/_PrevShare/Header";
-import Loading from "../../../Mobile/components/_PrevShare/Loading";
+import BottomNote from "@/components/Mobile/components/UI/BottomNote";
+import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
@@ -15,6 +13,12 @@ import { AccountService } from "@/services/AccountService";
 import zhLocale from "date-fns/locale/zh-CN";
 import enLocale from "date-fns/locale/en-US";
 import thLocale from "date-fns/locale/th";
+import {
+  LabelContainer,
+  ItemContainer,
+} from "@/components/Mobile/styles/forms";
+import { Button } from "@/components/Mobile/components/UI/Button";
+import { themeList } from "@/theme";
 
 const moment = require("moment");
 const localeMap: { [key in string]: Locale } = {
@@ -23,13 +27,11 @@ const localeMap: { [key in string]: Locale } = {
   th: thLocale,
 };
 
+const theme = themeList["mobileT18"];
+
 const Container = styled.div`
   width: 100%;
   overflow: hidden;
-`;
-
-const DatepickerWrapper = styled.div`
-  padding: 40px 40px 0 40px;
 `;
 
 type CustomDatepickerProps = {
@@ -40,28 +42,21 @@ const CustomDatepicker = styled.div<CustomDatepickerProps>`
   ${({ disabled }: CustomDatepickerProps) => {
     return disabled && `pointer-events: none;`;
   }}
-  background: white;
-  zoom: ${({ brand }) => (brand === "WGHK" ? "1.0" : "1.5")};
-  padding: ${({ brand }) => (brand === "WGHK" ? "20px 20px" : "10px 20px")};
-  border-radius: 8px;
+  background: none;
+  padding: 10px;
+  border-radius: 5px;
   margin-top: 10px;
+  border: 1px solid ${theme.tertiary};
 
   .MuiInputBase-input {
     background: none;
-    ${({ brand }) =>
-      brand === "WGHK" ? `font-size: 28px; font-weight: 400;` : ``}
+    color: ${theme.white};
   }
 
   .MuiInput-underline:before,
   .MuiInput-underline:after {
     border-bottom: 0px;
   }
-`;
-
-const CustomLabel = styled.div`
-  font-weight: 600;
-  margin-left: 3px;
-  color: ${({ theme }: any) => theme.secondary};
 `;
 
 const Birthdate = () => {
@@ -138,16 +133,8 @@ const Birthdate = () => {
 
   return (
     <Container>
-      <Header
-        background={true}
-        token={null}
-        balance={0}
-        onBackClick={() => history.goBack()}
-        title={i18n.t("profile.birthdate.title")}
-        noBack={false}
-      ></Header>
-      <DatepickerWrapper>
-        <CustomLabel>{i18n.t("profile.birthdate.title")}</CustomLabel>
+      <ItemContainer>
+        <LabelContainer>{i18n.t("profile.birthdate.title")}</LabelContainer>
         <MuiPickersUtilsProvider
           utils={DateFnsUtils}
           locale={localeMap[i18n.language.substring(0, 2)]}
@@ -167,26 +154,34 @@ const Birthdate = () => {
             />
           </CustomDatepicker>
         </MuiPickersUtilsProvider>
-      </DatepickerWrapper>
-      {isConfigured && config.features.Profile_SetUpBirthdateOnce ? (
-        <BottomNote
-          text1={i18n.t("profile.birthdate.toEdit")}
-          link={"../chat"}
-          text2={i18n.t(
-            config.features.Profile_SetUpBirthdateOnce
-              ? "common.customerService"
-              : "profile.birthdate.here"
-          )}
-        ></BottomNote>
-      ) : (
-        birthdate !== account.info.member_birthdate && i18n.t("common.complete")
-      )}
-      {message}
+      </ItemContainer>
+
+      <ItemContainer>
+        {isConfigured && config.features.Profile_SetUpBirthdateOnce ? (
+          <BottomNote
+            text1={i18n.t("profile.birthdate.toEdit")}
+            link={"../chat"}
+            text2={i18n.t(
+              config.features.Profile_SetUpBirthdateOnce
+                ? "common.customerService"
+                : "profile.birthdate.here"
+            )}
+          />
+        ) : (
+          birthdate !== account.info.member_birthdate && (
+            <BottomNote text1={i18n.t("common.complete")} />
+          )
+        )}
+        {message}
+      </ItemContainer>
+
       <Button
+        fullWidth
         disabled={isDisableButton() || loading}
         onClick={handleSubmitClicked}
-        label={i18n.t("common.submit")}
-      ></Button>
+      >
+        {i18n.t("common.submit")}
+      </Button>
     </Container>
   );
 };
