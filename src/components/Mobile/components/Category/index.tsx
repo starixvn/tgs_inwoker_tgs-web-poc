@@ -29,11 +29,13 @@ type GameTypeDataItem = {
 type Props = {
   gameTypeData: GameTypeDataItem[];
   gameTypeName: string;
+  gameType: number;
 };
 
 const Category = ({
   gameTypeData,
-  gameTypeName
+  gameTypeName,
+  gameType
 }: Props) => {
   return (
     <Wrapper>
@@ -44,7 +46,9 @@ const Category = ({
             <CardVendor
               key={game?.gpcode}
               imageUrl={`${process.env.PUBLIC_URL}/assets/images/home/${gameTypeName}/${game?.gpcode}.png`}
-              venderLogo={`${process.env.PUBLIC_URL}/assets/images/home/provider_logo/${gameTypeName}/${game?.gpcode}.png`}
+              venderLogoUrl={`${process.env.PUBLIC_URL}/assets/images/home/provider_logo/${gameTypeName}/${game?.gpcode}.png`}
+              gpCode={game?.gpcode}
+              gameType={gameType}
             />
           )
         })}

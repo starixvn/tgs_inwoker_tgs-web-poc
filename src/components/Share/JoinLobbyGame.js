@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-import Loading from "../App/Loading";
-import { GameService } from "../../api-services/services/GameService";
 import { isMobileOnly } from "react-device-detect";
+import { GameService } from "../../api-services/services/GameService";
+import Loading from "../App/Loading";
 import Maintenance from "./Maintenance";
 import MaintenanceMobile from "./MaintenanceMobile";
 // try {

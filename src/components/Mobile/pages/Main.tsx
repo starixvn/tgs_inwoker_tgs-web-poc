@@ -294,6 +294,7 @@ const Main = (props: Props) => {
         <Category
           gameTypeData={groupBy_gameType[activeGameTypeTab] || []}
           gameTypeName={gameTypeList.find((item) => item.gameType === activeGameTypeTab)?.key || ""}
+          gameType={activeGameTypeTab}
         />
       }
 

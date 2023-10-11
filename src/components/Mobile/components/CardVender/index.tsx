@@ -1,3 +1,4 @@
+import { GameService } from "@/api-services/services/GameService";
 import bg from "@/assets/images/home/mobile/vender_card_bg.png";
 import styled from 'styled-components';
 
@@ -5,7 +6,9 @@ type Props = {
   imageUrl: string;
   gameName?: string;
   venderName?: string;
-  venderLogo?: string;
+  venderLogoUrl?: string;
+  gpCode: string;
+  gameType: number;
 }
 
 const CardVendorBg = styled.div`
@@ -69,20 +72,39 @@ const VenderLogo = styled.div<Props>`
     width: 100%;
     max-width: 77px
     min-height: 38px;
-    background-image: url(${props => props.imageUrl});
+    background-image: url(${props => props.venderLogoUrl});
     background-size: contain;
     background-repeat: no-repeat;
 `;
 
-const CardVendor = ({ imageUrl, gameName, venderName, venderLogo }: Props) => {
+const CardVendor = ({ imageUrl, gameName, venderName, venderLogoUrl, gpCode, gameType }: Props) => {
+
+  const launchGame = () => {
+    GameService.JoinLobbyGame(gameType, gpCode).then((response) => {
+      console.log("JoinLobbyGame", response);
+      if (response?.data?.IsSuccess) {
+        window.location.href = response?.data?.data?.url;
+      } else {
+        alert(response?.data?.info);
+      }
+    })
+  };
+
   return (
-    <CardVendorBg>
+    <CardVendorBg onClick={launchGame}>
       <GameIcon imageUrl={imageUrl}></GameIcon>
       <GradientBg>
         <CardContent>
           {gameName && <GameName>{gameName}</GameName>}
           {venderName && <VenderName>{venderName}</VenderName>}
-          {venderLogo && <VenderLogo imageUrl={venderLogo}></VenderLogo>}
+          {venderLogoUrl && (
+            <VenderLogo
+              imageUrl={imageUrl}
+              venderLogoUrl={venderLogoUrl}
+              gpCode={gpCode}
+              gameType={gameType}
+            ></VenderLogo>
+          )}
         </CardContent>
       </GradientBg>
     </CardVendorBg>
