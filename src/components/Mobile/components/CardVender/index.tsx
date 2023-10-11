@@ -29,7 +29,7 @@ const GameIcon = styled.div<{ imageUrl: string }>`
 const GradientBg = styled.div`
     position: absolute;
     width: 100%;
-    height: 68.4%;
+    height: 60%;
     left: 0;
     bottom: 0;
     background:  ${(props) => props.theme.primaryGradient};
@@ -44,16 +44,17 @@ const CardContent = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
-    padding-bottom: 18px;
+    align-items: center;
 `;
 
 const GameName = styled.div`
    ${(props: { theme: { white: any; }; }) => props.theme.white};
    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-   font-size: 1.8rem;
+   font-size: 1.5rem;
    font-weight: 900;
+   margin-bottom: 4px;
 `;
 
 const VenderName = styled.div`

@@ -40,7 +40,7 @@ type Props = {
   gameType: number;
   gameTag: string;
   showDataLength: number;
-  handleViewAllClick: (gameType: number) => void;
+  handleViewAllClick: () => void;
 }
 
 type GameItem = {
@@ -97,7 +97,7 @@ const LobbyTagCategory = ({
     <Wrapper>
       <CategoryTitle>
         <CategoryLabel imageUrl={iconUrl} text={text} />
-        <ButtonText size="small" text={"View all"} onClick={() => handleViewAllClick(gameType)} />
+        <ButtonText size="small" text={"View all"} onClick={handleViewAllClick} />
       </CategoryTitle>
 
       <CategoryContent>
@@ -105,6 +105,7 @@ const LobbyTagCategory = ({
           return (
             <CardVendor
               key={game.id}
+              // to-do : 要放provider的圖片 不是遊戲
               imageUrl={`${config.sourceUrl}${game.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${game.code}.jpg`}
               gameName={game.name}
               venderName={game.gpcode}
@@ -113,7 +114,7 @@ const LobbyTagCategory = ({
         })}
       </CategoryContent>
 
-      {visibleGameCount < filteredGameList.length && (
+      {visibleGameCount < filteredGameList.length && gameTag === "Hot" && (
         <ButtonContainer>
           <ButtonText size="large" text={"Load more"} onClick={handleLoadMoreClick} />
         </ButtonContainer>

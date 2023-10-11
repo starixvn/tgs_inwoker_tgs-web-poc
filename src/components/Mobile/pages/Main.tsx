@@ -1,7 +1,10 @@
-
 import { GameService } from "@/api-services/services/GameService";
+import { GameTypeEnum } from "@/api-services/utils/Enum";
 import banner from "@/assets/images/home/mobile/banner_1.png";
 import hot from "@/assets/images/home/mobile/hot.svg";
+import egame from "@/assets/images/home/mobile/tab/egame.svg";
+import fishing from "@/assets/images/home/mobile/tab/fishing.svg";
+import live from "@/assets/images/home/mobile/tab/live_casino.svg";
 import vendorsIcon from "@/assets/images/home/mobile/vendors.png";
 import CardPrompt from "@/components/Mobile/components/CardPrompt";
 import Category from "@/components/Mobile/components/Category";
@@ -19,8 +22,9 @@ import getDisplayGameType from "@/utils/getDisplayGameType";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import LobbyCategory from "../components/LobbyCategory";
 import { badgeList } from "../constants/games";
-import { gameTypeList, isNotEnterLobby, lobbyCategoryList } from "../constants/tab";
+import { gameTypeList, isNotEnterLobby } from "../constants/tab";
 
 type Props = {
   imageUrl: string;
@@ -201,24 +205,6 @@ const Main = (props: Props) => {
 
   }, [game.homePageGameList]);
 
-  // lobbyAllGroupByData : Lobby的所有gameType
-  const lobbyAllGroupByData = useMemo(() => {
-    if (Object.keys(groupBy_gameType).length === 0) {
-      return [];
-    }
-
-    return lobbyCategoryList.map((item) => ({
-      gameType: item.gameType,
-      iconUrl: item.iconUrl,
-      text: item.text,
-      key: item.key,
-      gameData: groupBy_gameType[item.gameType] || [],
-    }));
-  }, [lobbyCategoryList, groupBy_gameType]);
-
-  const homeLobbyTabData = [];
-  // Hot要放Slot的hot
-
   const tagList = useMemo(
     () => {
       const tags = Object.keys(groupByProvider);
@@ -306,19 +292,51 @@ const Main = (props: Props) => {
 
       {!activeGameTypeTab &&
         <LobbyContainer>
+          {/* Hot = Slots */}
           <LobbyTagCategory
             iconUrl={hot}
             text={"Hot"}
-            gameType={15}
+            gameType={GameTypeEnum.SLOT}
             gameTag={"Hot"}
             showDataLength={9}
             handleViewAllClick={() => {
-              const gameType = 15;
-              handleGameTypeClick(gameType);
+              handleGameTypeClick(GameTypeEnum.SLOT);
             }}
+          />
+
+          <LobbyTagCategory
+            iconUrl={fishing}
+            text={"Fishing"}
+            gameType={GameTypeEnum.FISH}
+            gameTag={"Recommend"}
+            showDataLength={6}
+            handleViewAllClick={() => {
+              handleGameTypeClick(GameTypeEnum.FISH);
+            }}
+          />
+          <LobbyTagCategory
+            iconUrl={egame}
+            text={"Egame"}
+            gameType={GameTypeEnum.TABLEGAME}
+            gameTag={"Recommend"}
+            showDataLength={6}
+            handleViewAllClick={() => {
+              handleGameTypeClick(GameTypeEnum.TABLEGAME);
+            }}
+          />
+          <LobbyCategory
+            iconUrl={live}
+            text={"Live casino"}
+            gameType={GameTypeEnum.LIVELOBBY}
+            showDataLength={3}
+            handleViewAllClick={() => {
+              handleGameTypeClick(GameTypeEnum.LIVELOBBY);
+            }}
+            gameTypeName={gameTypeList.find((item) => item.gameType === GameTypeEnum.LIVELOBBY)?.key || ""}
           />
         </LobbyContainer>
       }
+
       {isEnterLobby &&
         <Category
           gameTypeData={groupBy_gameType[activeGameTypeTab] || []}
