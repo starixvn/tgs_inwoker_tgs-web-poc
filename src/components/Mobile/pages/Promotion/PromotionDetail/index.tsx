@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { themeList } from "@/theme";
-import JoinPromotionButton from "./JoinPromotionButton";
+import JoinPromotionButton from "../../../components/Promotion/JoinPromotionButton";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { Promotion } from "@/models/dto/general/GetPromotionListResDto";
-import BannerImage from "./BannerImage";
+import BannerImage from "../../../components/Promotion/BannerImage";
 import i18n from "@/utils/i18n";
 const moment = require("moment");
 

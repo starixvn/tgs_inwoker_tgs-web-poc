@@ -38,8 +38,9 @@ import Withdrawal from "@/components/Mobile/pages/Withdrawal";
 import WithdrawalDetails from "@/components/Mobile/pages/Withdrawal/WithdrawalDetails";
 import config from "@/config/config";
 import React from "react";
-import PromotionDetail from "../components/Promotion/PromotionDetail";
+import PromotionDetail from "../pages/Promotion/PromotionDetail";
 import DefaultLayout from "@/components/Mobile/layouts/DefaultLayout";
+import ForgotPassword from "@/components/Mobile/pages/ForgetPassword";
 
 const Mine = React.lazy(() => import("@/components/Mobile/pages/Account/Mine"));
 
@@ -114,6 +115,13 @@ const routes: Route[] = [
   {
     path: "/register",
     component: Register,
+    category: RouteCategoryEnum.MINE,
+    layout: DefaultLayout,
+    isAnonymousAllowed: true,
+  },
+  {
+    path: "/forgot-password",
+    component: ForgotPassword,
     category: RouteCategoryEnum.MINE,
     layout: DefaultLayout,
     isAnonymousAllowed: true,
@@ -366,10 +374,6 @@ const routes: Route[] = [
   //   path: "/chat/:userid?/:name?/:question?",
   //   component: CustomerServiceChat,
   // },
-  // {
-  //   path: "/forgot-password",
-  //   component: ForgotPassword,
-  //   alert: true,
 
   {
     path: "/affiliate",

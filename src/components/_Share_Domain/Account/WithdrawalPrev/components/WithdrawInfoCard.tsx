@@ -13,7 +13,7 @@ const CardContainer = styled.div`
   background: ${theme.primaryLight};
   color: ${theme.white};
   padding: 25px 37px;
-  border-radius: 8px;
+  border-radius: 5px;
   font-size: 0.937rem;
   line-height: 1.098rem;
 `;

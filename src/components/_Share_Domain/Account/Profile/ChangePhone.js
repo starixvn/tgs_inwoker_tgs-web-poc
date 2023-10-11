@@ -173,8 +173,6 @@ class ChangePhone extends BaseProfile {
       });
   };
   render() {
-    console.log(this.state.phone);
-
     return this.setupContent(
       i18n.t("profile.changePhone.title"),
       <>

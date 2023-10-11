@@ -3,69 +3,27 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { AccountService } from "@/api-services/services/AccountService";
-import Textbox from "@/components/Mobile/components/_PrevShare/Textbox";
-import Button from "@/components/Mobile/components/_PrevShare/Button";
 import config from "@/config/config";
 import i18n from "@/utils/i18n";
 import TextFieldWithButton from "@/components/Mobile/components/UI/TextFieldWithButton";
+import { Button } from "@/components/Mobile/components/UI/Button";
+import {
+  GrayInputWrapper,
+  TextField,
+} from "@/components/Mobile/components/UI/TextField";
+import { FormControl } from "@/components/Mobile/styles/forms";
+import { Select } from "@/components/Mobile/components/UI/Select";
 
-const Container = styled.div`
-  margin: 0 auto;
-  width: 635px;
-  height: 80px;
-  border-radius: 6px;
-  background-color: #ffffff;
-`;
-const SelectContainer = styled.select`
-  width: 100%;
-  height: 100%;
-  border: none;
-  color: #000;
-  font-size: 30px;
-  background-color: #fff;
-  border-radius: 16px;
-`;
-const CustomInput = styled.input`
-  height: 50px;
-  width: 405px;
-  font-size: 28px;
-  margin-top: 18px;
-  border-radius: 8px;
-  padding: 16px 32px;
-  font-weight: 500;
-  border: 0;
+const PhoneContainer = styled.div`
   display: flex;
-  flex: 1;
-  ::placeholder,
-  ::-webkit-input-placeholder {
-    color: #c3c3c3;
-    font-size: 28px;
-  }
-  &:disabled {
-    background: #fff;
-    opacity: 1;
-  }
+  gap: 8px;
+  align-items: stretch;
+  margin-bottom: 21px;
 `;
 
-const CustomText = styled.div`
-  width: 700px;
-  height: 170px;
-  padding: 20px 20px 0 20px;
-  margin: 20px auto;
-`;
-const CustomLabel = styled.div`
-  font-size: 24px;
-  font-weight: 600;
-  margin-left: 3px;
-  color: ${({ theme }) =>
-    theme.wapSecondary ? theme.wapSecondary : theme.secondary};
-`;
+const Wrapper = styled.div``;
 
-const Wrapper = styled.div`
-  padding-top: 120px;
-`;
-
-class ForgotPassword extends Component {
+class ForgotPasswordPrev extends Component {
   state = {
     email: "",
     code: "",
@@ -185,9 +143,6 @@ class ForgotPassword extends Component {
       }, 1000);
     }
   };
-  handleCSClick = () => {
-    this.props.GetSupportUrl("", "", "", "");
-  };
 
   handleBackClick = () => {
     if (this.state.step === 2) {
@@ -204,18 +159,12 @@ class ForgotPassword extends Component {
           {(() => {
             if (this.state.step === 1) {
               return config.features.SMSVerification ? (
-                <React.Fragment>
-                  <CustomText>
-                    <CustomLabel>{i18n.t("common.phoneNumber")}</CustomLabel>
-                    <Container
-                      style={{
-                        margin: "18px 5px 0 0",
-                        width: "180px",
-                        float: "left",
-                        padding: "10px",
-                      }}
-                    >
-                      <SelectContainer
+                <>
+                  <PhoneContainer>
+                    <GrayInputWrapper style={{ width: "30%" }}>
+                      <Select
+                        style={{ width: "100%" }}
+                        native
                         value={this.state.areaCode}
                         onChange={(e) => {
                           this.setState({
@@ -223,81 +172,90 @@ class ForgotPassword extends Component {
                             areaCode: e.target.value,
                           });
                         }}
+                        disabled={this.state.currentStep === 1}
                       >
                         <option value={config.features.PhonePrefix}>
                           {config.features.PhonePrefix}
                         </option>
-                      </SelectContainer>
-                    </Container>
-                    <CustomInput
-                      value={this.state.phone}
-                      onChange={this.handlePhoneChange}
-                      placeholder={i18n.t("common.msgEnterPhone")}
-                      type={"text"}
-                      label={i18n.t("common.msgEnterPhone")}
-                    ></CustomInput>
-                  </CustomText>
+                      </Select>
+                    </GrayInputWrapper>
 
-                  <TextFieldWithButton
-                    buttonlabel={i18n.t("common.msgSendToken")}
-                    style={{ margin: "20px auto 20px auto" }}
-                    value={this.state.code}
-                    onChange={this.handleCodeChange}
-                    placeholder={i18n.t("common.msgEnterCode")}
-                    label={i18n.t("common.token")}
-                    onClick={this.handleGetCodeClick}
-                    type={"text"}
-                  ></TextFieldWithButton>
-                </React.Fragment>
+                    <GrayInputWrapper style={{ width: "70%" }}>
+                      <TextField
+                        value={this.state.phone}
+                        onChange={this.handlePhoneChange}
+                        placeholder={i18n.t("common.msgEnterPhone")}
+                        type={"text"}
+                      />
+                    </GrayInputWrapper>
+                  </PhoneContainer>
+                  {/* 發送驗證碼 */}
+                  <GrayInputWrapper style={{ marginBottom: "20px" }}>
+                    <TextFieldWithButton
+                      buttonlabel={i18n.t("common.msgSendToken")}
+                      value={this.state.code}
+                      onChange={this.handleCodeChange}
+                      placeholder={i18n.t("common.msgEnterCode")}
+                      label={i18n.t("common.token")}
+                      onClick={this.handleGetCodeClick}
+                      type={"text"}
+                    />
+                  </GrayInputWrapper>
+                </>
               ) : (
-                <React.Fragment>
-                  <Textbox
-                    style={{ margin: "20px auto 20px auto" }}
-                    value={this.state.email}
-                    onChange={this.handleEmailChange}
-                    placeholder={i18n.t("common.msgEnterEmail")}
-                    type={"text"}
-                    label={i18n.t("common.emailAddress")}
-                  ></Textbox>
-                  <TextFieldWithButton
-                    buttonlabel={i18n.t("common.msgSendToken")}
-                    style={{ margin: "20px auto 20px auto" }}
-                    value={this.state.code}
-                    onChange={this.handleCodeChange}
-                    placeholder={i18n.t("common.msgEnterCodeEmail")}
-                    label={i18n.t("common.token")}
-                    onClick={this.handleGetCodeClick}
-                    type={"text"}
-                  ></TextFieldWithButton>
-                </React.Fragment>
+                <>
+                  <GrayInputWrapper style={{ marginBottom: "20px" }}>
+                    <TextField
+                      value={this.state.email}
+                      onChange={this.handleEmailChange}
+                      placeholder={i18n.t("common.msgEnterEmail")}
+                      type={"text"}
+                      // label={i18n.t("common.emailAddress")}
+                    />
+                  </GrayInputWrapper>
+
+                  <GrayInputWrapper style={{ marginBottom: "20px" }}>
+                    <TextFieldWithButton
+                      buttonlabel={i18n.t("common.msgSendToken")}
+                      style={{ margin: "20px auto 20px auto" }}
+                      value={this.state.code}
+                      onChange={this.handleCodeChange}
+                      placeholder={i18n.t("common.msgEnterCodeEmail")}
+                      label={i18n.t("common.token")}
+                      onClick={this.handleGetCodeClick}
+                      type={"text"}
+                    />
+                  </GrayInputWrapper>
+                </>
               );
             } else if (this.state.step === 2) {
               return (
                 <React.Fragment>
-                  <Textbox
-                    style={{ margin: "20px auto 20px auto" }}
-                    value={this.state.password}
-                    onChange={this.handlePasswordChange}
-                    placeholder={i18n.t("wap.register.password")}
-                    type={"password"}
-                    label={i18n.t("common.NewPass")}
-                  ></Textbox>
+                  <GrayInputWrapper>
+                    <TextField
+                      onChange={this.handlePasswordChange}
+                      placeholder={i18n.t("wap.register.password")}
+                      type={"password"}
+                      label={i18n.t("common.NewPass")}
+                    />
+                  </GrayInputWrapper>
 
-                  <Textbox
-                    style={{ margin: "20px auto 20px auto" }}
-                    value={this.state.password2}
-                    onChange={this.handlePassword2Change}
-                    placeholder={i18n.t("common.msgEnterConfirmPass")}
-                    type={"password"}
-                    label={i18n.t("common.ConfirmPass")}
-                  ></Textbox>
+                  <GrayInputWrapper>
+                    <TextField
+                      value={this.state.password2}
+                      onChange={this.handlePassword2Change}
+                      placeholder={i18n.t("common.msgEnterConfirmPass")}
+                      type={"password"}
+                      label={i18n.t("common.ConfirmPass")}
+                    />
+                  </GrayInputWrapper>
                 </React.Fragment>
               );
             }
           })()}
 
           <Button
-            style={{ margin: "40px auto 0 auto" }}
+            fullWidth
             disabled={
               this.state.step === 1
                 ? (config.features.SMSVerification
@@ -306,13 +264,12 @@ class ForgotPassword extends Component {
                 : this.state.password.length < 6 ||
                   this.state.password2.length < 6
             }
-            label={
-              this.state.step === 1
-                ? i18n.t("common.nextStep")
-                : i18n.t("common.confirm")
-            }
             onClick={this.handleNextClick}
-          ></Button>
+          >
+            {this.state.step === 1
+              ? i18n.t("common.nextStep")
+              : i18n.t("common.confirm")}
+          </Button>
         </Wrapper>
       </React.Fragment>
     );
@@ -327,4 +284,4 @@ const mapStateToProps = (state) => {
     token: state.account.token,
   };
 };
-export default connect(mapStateToProps, null)(withRouter(ForgotPassword));
+export default connect(mapStateToProps, null)(withRouter(ForgotPasswordPrev));

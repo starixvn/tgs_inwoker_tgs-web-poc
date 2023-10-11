@@ -19,7 +19,7 @@ const LabelLink = styled(Link)`
 `;
 
 const LabelNormal = styled.span`
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.yellow};
   text-decoration: none;
 `;
 

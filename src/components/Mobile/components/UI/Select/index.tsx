@@ -7,8 +7,7 @@ const theme = themeList["mobileT18"];
 export const Select = withStyles(() => ({
   root: {
     color: `${theme.tertiary}`,
-    // borderRadius: "12px",
-    fontSize: "1.125rem",
+    fontSize: "0.937rem",
     fontWeight: 400,
     "&:focus": {
       background: "none",
@@ -18,6 +17,7 @@ export const Select = withStyles(() => ({
     },
   },
   select: {
+    padding: "14px",
     "&:focus": {
       background: "none",
     },

@@ -91,8 +91,8 @@ class BaseProfile extends Component {
         >
           {buttonTitle}
         </Button>
-        {bottomNode || <BottomNote></BottomNote>}
-        <Loading show={this.state.loading}></Loading>
+        {bottomNode || <BottomNote />}
+        <Loading show={this.state.loading} />
       </Container>
     );
   }

@@ -5,6 +5,7 @@ import Checkbox from "@/components/Mobile/components/UI/Checkbox";
 import RedirectToRegisterHint from "@/components/_Share_Domain/authentication/LoginForm/RedirectToRegisterHint";
 import { useLoginForm } from "@/hooks/auth/useAuthForm/useLoginForm";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const TitleContainer = styled.div`
   font-size: 3rem !important;
@@ -39,7 +40,7 @@ const RememberMeContainer = styled.div`
   //margin: 8px 0;
 `;
 
-const ForgotPasswordContainer = styled.a`
+const ForgotPasswordContainer = styled(Link)`
   color: #5d50e0;
   font-size: 1.062rem;
   font-weight: 400;
@@ -83,7 +84,7 @@ const LoginForm = (props: Props) => {
             {i18n.t("wap.login.rememberMe")}
           </RememberMeContainer>
 
-          <ForgotPasswordContainer>
+          <ForgotPasswordContainer to={"/forgot-password"}>
             {i18n.t("forgotPassword.title")}?
           </ForgotPasswordContainer>
         </FormSubContainer>

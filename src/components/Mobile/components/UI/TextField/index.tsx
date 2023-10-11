@@ -8,11 +8,11 @@ const theme = themeList["mobileT18"];
 
 export const TextField = withStyles(() => ({
   root: {
-    padding: "12px 20px",
     color: theme.white,
     overflow: "visible",
 
     "& .MuiInput-input": {
+      padding: "12px 20px",
       color: theme.white,
       fontSize: "1.125rem",
       fontWeight: 400,
@@ -50,7 +50,8 @@ export const TextField = withStyles(() => ({
 }))(MuiTextField);
 
 export const GrayInputWrapper = styled.div`
-  border-radius: 8px;
+  border-radius: 5px;
+  border: none;
   background: ${theme.tertiaryDark};
   overflow: visible;
 `;
