@@ -10,12 +10,7 @@ const theme = themeList["mobileT18"];
 const DialogContainer = styled(MuiDialog)`
   & .MuiPaper-root {
     background: ${theme.primaryLight};
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     width: 321px;
-    height: 298px;
     border-radius: 10px;
   }
 `;
@@ -30,7 +25,7 @@ const CloseIconContainer = styled.div`
 
 const ChildContainer = styled.div`
   width: 100%;
-  height: auto;
+  height: 100%;
   overflow: scroll;
 `;
 

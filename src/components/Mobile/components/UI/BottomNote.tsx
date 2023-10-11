@@ -1,21 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import i18n from "../../../../utils/i18n";
+import i18n from "@/utils/i18n";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore"; // Import the RootState type
 
 const Content = styled.div`
-  margin: 0 auto;
-  font-size: 26px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.0025rem;
   text-align: center;
-  margin-top: 20px;
-  padding: 0 30px;
-  color: ${({ theme }) => theme.secondary};
+  color: ${({ theme }) => theme.white};
 `;
 
 const LabelLink = styled(Link)`
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.yellow};
   text-decoration: none;
 `;
 
@@ -25,11 +24,11 @@ const LabelNormal = styled.span`
 `;
 
 type Props = {
-  empty?: boolean;
   text1?: string;
-  toEdit?: () => void;
-  link?: string;
   text2?: string;
+  link?: string;
+  empty?: boolean;
+  toEdit?: () => void;
 };
 
 const BottomNote = ({ empty, text1, toEdit, link, text2 }: Props) => {

@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { AccountService } from "@/api-services/services/AccountService";
 import Textbox from "@/components/Mobile/components/_PrevShare/Textbox";
-import TextboxWithButton from "@/components/Mobile/components/_PrevShare/TextboxWithButton";
 import Button from "@/components/Mobile/components/_PrevShare/Button";
 import config from "@/config/config";
 import i18n from "@/utils/i18n";
+import TextFieldWithButton from "@/components/Mobile/components/UI/TextFieldWithButton";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -238,7 +238,7 @@ class ForgotPassword extends Component {
                     ></CustomInput>
                   </CustomText>
 
-                  <TextboxWithButton
+                  <TextFieldWithButton
                     buttonlabel={i18n.t("common.msgSendToken")}
                     style={{ margin: "20px auto 20px auto" }}
                     value={this.state.code}
@@ -247,7 +247,7 @@ class ForgotPassword extends Component {
                     label={i18n.t("common.token")}
                     onClick={this.handleGetCodeClick}
                     type={"text"}
-                  ></TextboxWithButton>
+                  ></TextFieldWithButton>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
@@ -259,7 +259,7 @@ class ForgotPassword extends Component {
                     type={"text"}
                     label={i18n.t("common.emailAddress")}
                   ></Textbox>
-                  <TextboxWithButton
+                  <TextFieldWithButton
                     buttonlabel={i18n.t("common.msgSendToken")}
                     style={{ margin: "20px auto 20px auto" }}
                     value={this.state.code}
@@ -268,7 +268,7 @@ class ForgotPassword extends Component {
                     label={i18n.t("common.token")}
                     onClick={this.handleGetCodeClick}
                     type={"text"}
-                  ></TextboxWithButton>
+                  ></TextFieldWithButton>
                 </React.Fragment>
               );
             } else if (this.state.step === 2) {

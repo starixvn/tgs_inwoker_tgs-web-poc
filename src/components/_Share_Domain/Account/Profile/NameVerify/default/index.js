@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import i18n from "@/utils/i18n";
 import BaseProfile from "../../BaseProfile";
-import styled from "styled-components";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { RESET_ACCOUNTRESULT } from "@/api-services/constant/actionType";
 import config from "@/config/config";
@@ -12,34 +11,8 @@ import {
   FormControl,
   LabelContainer,
   ItemContainer,
-  Remark,
 } from "@/components/Mobile/styles/forms";
 import { Button } from "@material-ui/core";
-const AnotherWrapper = styled.div`
-  width: 700px;
-  min-height: 170px;
-  padding: 20px 20px 0 20px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-`;
-
-const InputWrapper = styled.div`
-  background: #fff;
-
-  width: 700px;
-  margin-top: 10px;
-  padding-right: 100px;
-  border-radius: 16px;
-  width: 100%;
-`;
-
-const CustomLabel = styled.div`
-  font-size: ${() => (config.brand === "WGHK" ? `30px` : `24px`)};
-  font-weight: 600;
-  margin-left: 3px;
-  color: ${({ theme }) => theme.secondary};
-`;
 
 class Default extends BaseProfile {
   constructor(props) {
@@ -51,7 +24,7 @@ class Default extends BaseProfile {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <ItemContainer>
           <LabelContainer>
             {config.features.Profile_CustomIdentityPageTranslation
@@ -128,7 +101,7 @@ class Default extends BaseProfile {
             {this.props.icUpload ? this.props.icUpload[0].name : ""}
           </ItemContainer>
         )}
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -1,15 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
-
 import { withRouter } from "react-router-dom";
-
-import Textbox from "../../../Mobile/components/_PrevShare/Textbox";
 import BaseProfile from "./BaseProfile";
 
-import { accountAction } from "../../../../api-services/actions/accountAction";
-import { AccountService } from "../../../../api-services/services/AccountService";
+import { accountAction } from "@/api-services/actions/accountAction";
+import { AccountService } from "@/api-services/services/AccountService";
 
-import i18n from "../../../../utils/i18n";
+import i18n from "@/utils/i18n";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+} from "@/components/Mobile/styles/forms";
 
 class WithdrawalPassword extends BaseProfile {
   componentDidMount() {}
@@ -68,22 +71,33 @@ class WithdrawalPassword extends BaseProfile {
     return this.setupContent(
       i18n.t("profile.withdrawalPassword.title"),
       <React.Fragment>
-        <Textbox
-          type={"password"}
-          style={{ margin: "20px auto 20px auto" }}
-          value={this.state.password}
-          onChange={this.handlePassword}
-          placeholder={i18n.t("profile.withdrawalPassword.msgEnterNewPass")}
-          label={i18n.t("profile.withdrawalPassword.newPass")}
-        ></Textbox>
-        <Textbox
-          type={"password"}
-          style={{ margin: "20px auto 20px auto" }}
-          value={this.state.confirmPassword}
-          onChange={this.handleConfirmPassword}
-          placeholder={i18n.t("profile.withdrawalPassword.msgEnterConPass")}
-          label={i18n.t("profile.withdrawalPassword.conPass")}
-        ></Textbox>
+        <ItemContainer>
+          <LabelContainer>
+            {i18n.t("profile.withdrawalPassword.newPass")}
+          </LabelContainer>
+          <FormControl variant="outlined">
+            <TextField
+              type={"password"}
+              value={this.state.password}
+              onChange={this.handlePassword}
+              placeholder={i18n.t("profile.withdrawalPassword.msgEnterNewPass")}
+            />
+          </FormControl>
+        </ItemContainer>
+
+        <ItemContainer>
+          <LabelContainer>
+            {i18n.t("profile.withdrawalPassword.conPass")}
+          </LabelContainer>
+          <FormControl variant="outlined">
+            <TextField
+              type={"password"}
+              value={this.state.confirmPassword}
+              onChange={this.handleConfirmPassword}
+              placeholder={i18n.t("profile.withdrawalPassword.msgEnterConPass")}
+            />
+          </FormControl>
+        </ItemContainer>
       </React.Fragment>
     );
   }

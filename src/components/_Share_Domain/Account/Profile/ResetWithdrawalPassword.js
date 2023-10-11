@@ -1,16 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import { withRouter } from "react-router-dom";
-
-import { accountAction } from "../../../../api-services/actions/accountAction";
-import { AccountService } from "../../../../api-services/services/AccountService";
-
-import Textbox from "../../../Mobile/components/_PrevShare/Textbox";
-import TextboxWithButton from "../../../Mobile/components/_PrevShare/TextboxWithButton";
-import Button from "../../../Mobile/components/_PrevShare/Button";
-import i18n from "../../../../utils/i18n";
-import Step from "../../../Mobile/components/_PrevShare/Step";
+import { accountAction } from "@/api-services/actions/accountAction";
+import { AccountService } from "@/api-services/services/AccountService";
+import i18n from "@/utils/i18n";
+import Step from "@/components/Mobile/components/_PrevShare/Step";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+} from "@/components/Mobile/styles/forms";
+import config from "@/config/config";
+import { Button } from "@/components/Mobile/components/UI/Button";
+import TextFieldWithButton from "@/components/Mobile/components/UI/TextFieldWithButton";
 
 class ResetResetWithdrawalPassword extends Component {
   state = {
@@ -164,74 +167,88 @@ class ResetResetWithdrawalPassword extends Component {
             { label: i18n.t("common.reset") },
           ]}
           currentStep={this.state.step}
-        ></Step>
+        />
         {this.state.step === 1 ? (
-          <React.Fragment>
-            <Textbox
-              style={{ margin: "100px auto 20px auto" }}
-              value={this.props.account.info.member_email}
-              placeholder={i18n.t("common.msgEnterEmail")}
-              type={"text"}
-              disabled={true}
-              label={i18n.t("common.emailAddress")}
-            ></Textbox>
-            <TextboxWithButton
-              buttonlabel={
-                this.state.countdownToken <= 0
-                  ? i18n.t("common.msgSendToken")
-                  : i18n.t("common.btnTokenResendLabel") +
-                    "(" +
-                    this.state.countdownToken +
-                    "s)"
-              }
-              style={{ margin: "20px auto 20px auto" }}
-              value={this.state.code}
-              onChange={this.handleCodeChange}
-              placeholder={i18n.t("common.msgEnterEmailCode")}
-              label={i18n.t("common.token")}
-              onClick={this.handleGetCodeClick}
-              maxLength={6}
-              type={"text"}
-            ></TextboxWithButton>
+          <>
+            <ItemContainer>
+              <LabelContainer>{i18n.t("common.emailAddress")}</LabelContainer>
+              <FormControl variant="outlined">
+                <TextField
+                  style={{ margin: "100px auto 20px auto" }}
+                  value={this.props.account.info.member_email}
+                  placeholder={i18n.t("common.msgEnterEmail")}
+                  type={"text"}
+                  disabled={true}
+                  label={i18n.t("common.emailAddress")}
+                />
+              </FormControl>
+            </ItemContainer>
+
+            <ItemContainer>
+              <LabelContainer>{i18n.t("common.token")}</LabelContainer>
+              <FormControl variant="outlined">
+                <TextFieldWithButton
+                  buttonlabel={
+                    this.state.countdownToken <= 0
+                      ? i18n.t("common.msgSendToken")
+                      : i18n.t("common.btnTokenResendLabel") +
+                        "(" +
+                        this.state.countdownToken +
+                        "s)"
+                  }
+                  value={this.state.code}
+                  onChange={this.handleCodeChange}
+                  placeholder={i18n.t("common.msgEnterEmailCode")}
+                  onClick={this.handleGetCodeClick}
+                  maxLength={6}
+                  type={"text"}
+                />
+              </FormControl>
+            </ItemContainer>
+
             <Button
-              style={{ margin: "40px auto 0 auto" }}
-              label={i18n.t("common.nextStep")}
+              fullWidth
               onClick={this.handleNextClick}
               disabled={
                 !this.state.getCodeClicked || this.state.code.length < 6
               }
-            ></Button>
-          </React.Fragment>
+            >
+              {i18n.t("common.nextStep")}
+            </Button>
+          </>
         ) : (
-          <React.Fragment>
-            <Textbox
-              type={"password"}
-              style={{ margin: "100px auto 20px auto" }}
-              value={this.state.password}
-              onChange={this.handlePassword}
-              placeholder={i18n.t("common.msgEnterNewPass")}
-              label={i18n.t("common.NewPass")}
-            ></Textbox>
-            <Textbox
-              type={"password"}
-              style={{ margin: "20px auto 20px auto" }}
-              value={this.state.confirmPassword}
-              onChange={this.handleConfirmPassword}
-              placeholder={i18n.t("common.msgEnterConfirmPass")}
-              label={i18n.t("common.ConfirmPass")}
-            ></Textbox>
+          <>
+            <ItemContainer>
+              <LabelContainer>{i18n.t("common.NewPass")}</LabelContainer>
+              <FormControl variant="outlined">
+                <TextField
+                  type={"password"}
+                  value={this.state.password}
+                  onChange={this.handlePassword}
+                  placeholder={i18n.t("common.msgEnterNewPass")}
+                />
+              </FormControl>
+            </ItemContainer>
 
-            <Button
-              style={{ margin: "40px auto 0 auto" }}
-              label={i18n.t("common.submit")}
-              onClick={this.handleSubmitClicked}
-            ></Button>
-            <Button
-              style={{ margin: "20px auto 0 auto" }}
-              label={i18n.t("common.back")}
-              onClick={this.handleBackClick}
-            ></Button>
-          </React.Fragment>
+            <ItemContainer>
+              <LabelContainer>{i18n.t("common.ConfirmPass")}</LabelContainer>
+              <FormControl variant="outlined">
+                <TextField
+                  type={"password"}
+                  value={this.state.confirmPassword}
+                  onChange={this.handleConfirmPassword}
+                  placeholder={i18n.t("common.msgEnterConfirmPass")}
+                />
+              </FormControl>
+            </ItemContainer>
+
+            <Button fullWidth onClick={this.handleSubmitClicked}>
+              {i18n.t("common.submit")}
+            </Button>
+            <Button fullWidth onClick={this.handleBackClick}>
+              {i18n.t("common.back")}
+            </Button>
+          </>
         )}
       </React.Fragment>
     );

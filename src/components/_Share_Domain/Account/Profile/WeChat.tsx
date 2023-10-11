@@ -2,13 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
-import Textbox from "../../../Mobile/components/_PrevShare/Textbox";
-import Button from "../../../Mobile/components/_PrevShare/Button";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import Loading from "@/components/Mobile/components/UI/Loading";
-import BottomNote from "@/components/Mobile/components/_PrevShare/BottomNote";
+import BottomNote from "@/components/Mobile/components/UI/BottomNote";
 import { AccountService } from "@/services/AccountService";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+} from "@/components/Mobile/styles/forms";
+import { Button } from "@/components/Mobile/components/UI/Button";
 
 const WeChat = () => {
   const { account, getAccountProfile } = useAccountStore();
@@ -91,19 +96,21 @@ const WeChat = () => {
 
   return (
     <div>
-      <Textbox
-        style={{ margin: "50px auto 20px auto" }}
-        value={wechat}
-        onChange={handleChangeNumber}
-        placeholder={i18n.t("profile.wechat.plsEnterWechat")}
-        label={i18n.t("common.wechatNumber")}
-        disabled={
-          isConfigured &&
-          (config.features.ChangesNotAllowed ||
-            config.features.Profile_ExistingDetails_ViewOnly)
-        }
-        isCustomProfileStyle={config.brand === "WGHK"}
-      />
+      <ItemContainer>
+        <LabelContainer>{i18n.t("common.wechatNumber")}</LabelContainer>
+        <FormControl variant="outlined">
+          <TextField
+            value={wechat}
+            onChange={handleChangeNumber}
+            placeholder={i18n.t("profile.wechat.plsEnterWechat")}
+            disabled={
+              isConfigured &&
+              (config.features.ChangesNotAllowed ||
+                config.features.Profile_ExistingDetails_ViewOnly)
+            }
+          />
+        </FormControl>
+      </ItemContainer>
 
       {isConfigured && config.features.ChangesNotAllowed ? (
         <div>
@@ -116,10 +123,13 @@ const WeChat = () => {
       ) : (
         <div>
           <Button
+            fullWidth
             disabled={isDisableButton() || loading}
             onClick={handleSubmitClicked}
-            label={i18n.t("common.submit")}
-          />
+            style={{ marginBottom: "20px" }}
+          >
+            {i18n.t("common.submit")}
+          </Button>
 
           <BottomNote
             text1={i18n.t("profile.wechat.toEdit")}
