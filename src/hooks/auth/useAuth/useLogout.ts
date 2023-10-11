@@ -23,7 +23,9 @@ export function useLogout() {
       setLogoutState((prevState) => ({ ...prevState, isLoading: true }));
 
       const token = accountStore.account.token;
-      if (!token) return;
+      if (!token) {
+        return;
+      }
 
       const result = await accountStore.accountLogout(token);
       setLogoutState({ isLoading: false, data: result.data, error: null });

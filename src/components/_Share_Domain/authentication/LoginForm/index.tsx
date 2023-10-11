@@ -6,6 +6,7 @@ import RedirectToRegisterHint from "@/components/_Share_Domain/authentication/Lo
 import { useLoginForm } from "@/hooks/auth/useAuthForm/useLoginForm";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 
 const TitleContainer = styled.div`
   font-size: 3rem !important;
@@ -91,6 +92,8 @@ const LoginForm = (props: Props) => {
       </FormikForm>
 
       <RedirectToRegisterHint />
+
+      <Loading show={isLoading} />
     </>
   );
 };

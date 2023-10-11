@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import i18n from "@/utils/i18n";
 import { useHistory } from "react-router";
 import config from "@/config/config";
@@ -13,6 +13,7 @@ export type LoginState = {
   isLoading: boolean;
   error: Error | null;
 };
+
 export function useLogin() {
   const [loginState, setLoginState] = useState<LoginState>({
     isLoading: false,
@@ -22,43 +23,38 @@ export function useLogin() {
 
   const history = useHistory();
   const location = useLocation();
-  const accountStore = useAccountStore();
+  const { accountLogin, getAccountInfo } = useAccountStore();
   const walletStore = useWalletStore();
   const inboxStore = useInboxStore();
   const generalStore = useGeneralStore();
 
-  const handleLogin = useCallback(
-    async (username: string, password: string, needToRemember?: boolean) => {
-      try {
-        setLoginState((prevState) => ({ ...prevState, isLoading: true }));
+  const handleLogin = async (
+    username: string,
+    password: string,
+    needToRemember?: boolean
+  ) => {
+    try {
+      setLoginState({ isLoading: true, data: null, error: null });
 
-        const result = await accountStore.accountLogin(username, password);
+      const result = await accountLogin(username, password);
 
-        if (!result?.IsSuccess) {
-          if (result?.code === 210) throw new Error("banned");
-
-          throw new Error(i18n.t("common.msgInvalidUsername"));
-        }
-
+      if (!result?.IsSuccess) {
+        handleLoginFailure(result?.code);
+      } else {
         await handleLoginSuccess(username, needToRemember);
-        setLoginState({ isLoading: false, data: result.data, error: null });
-        history.push("/");
-      } catch (error: any) {
-        console.log(error);
-
-        setLoginState({
-          isLoading: false,
-          data: null,
-          error: error,
-        });
-
-        if (error.message === "banned") {
-          history.push("/banned");
-        }
       }
-    },
-    []
-  );
+    } catch (error) {
+      handleLoginError(error);
+    }
+  };
+
+  const handleLoginFailure = (code: number | undefined) => {
+    if (code === 210) {
+      handleLoginError(new Error("banned"));
+    } else {
+      handleLoginError(new Error(i18n.t("common.msgInvalidUsername")));
+    }
+  };
 
   const handleLoginSuccess = async (
     username: string,
@@ -73,70 +69,65 @@ export function useLogin() {
       // }
     }
 
-    const response = await accountStore.getAccountInfo();
-    if (!response?.IsSuccess) throw new Error("Fetching account info fail");
-
-    const bankInfoAuthentication = response.data.bankinfoauthentication;
-    if (
-      !response.data.registercompleted &&
-      config.features.Register_ShowPhone &&
-      config.features.ForcedVerification
-    ) {
-      if (
-        config.features.Register_CustomFlow_IDR &&
-        config.features.NavigateToAddCard
-      ) {
-        if (!response.data.phone) {
-          history.push({
-            pathname: "/profile/phone",
-            state: { forced: true },
-          });
-        }
-
-        if (response.data.email === null) {
-          history.push({
-            pathname: "/profile/email",
-            state: { forced: true },
-          });
-        }
-
-        if (!response.data.registercompleted) {
-          history.replace("/card/add");
-        }
-
-        history.push({
-          pathname: "/profile/phone",
-          state: { forced: true },
-        });
-      }
+    if (await shouldRedirectToProfile(username)) {
+      redirectToProfile();
     } else {
-      if (
-        !config.features.Register_CustomFlow_IDR ||
-        (config.features.Register_CustomFlow_IDR && bankInfoAuthentication)
-      ) {
-        // TODO:fetch data
+      await fetchData();
+      handleLocalStorage(needToRemember || false, username);
+      redirectToHome();
+    }
+  };
 
-        const promiseList = [
-          walletStore.getBalanceList,
-          () => inboxStore.getMessages(i18n.language, 1, 99),
-          walletStore.getBankCardList,
-          generalStore.getPromotion,
-          generalStore.getPromotionRouletteCount,
-          walletStore.getWithdrawalChannel,
-        ];
+  const shouldRedirectToProfile = async () => {
+    const response = await getAccountInfo();
+    return (
+      config.features.Register_ShowPhone &&
+      config.features.ForcedVerification &&
+      !response.data.registercompleted
+    );
+  };
 
-        await Promise.all(promiseList);
-      }
+  const redirectToProfile = () => {
+    history.push("/profile/phone", { forced: true });
+  };
 
-      if (needToRemember) {
-        localStorage.setItem("remember", "true");
-        localStorage.setItem("username", `${username}`);
-      } else {
-        localStorage.removeItem("remember");
-        localStorage.removeItem("username");
-      }
+  const fetchData = async () => {
+    const promiseList = [
+      walletStore.getBalanceList(),
+      inboxStore.getMessages(i18n.language, 1, 99),
+      walletStore.getBankCardList(),
+      generalStore.getPromotion(),
+      generalStore.getPromotionRouletteCount(),
+      walletStore.getWithdrawalChannel(),
+    ];
+    await Promise.all(promiseList);
+  };
 
-      history.push("/");
+  const handleLocalStorage = (needToRemember: boolean, username: string) => {
+    if (needToRemember) {
+      localStorage.setItem("remember", "true");
+      localStorage.setItem("username", username);
+    } else {
+      localStorage.removeItem("remember");
+      localStorage.removeItem("username");
+    }
+  };
+
+  const redirectToHome = () => {
+    history.push("/");
+  };
+
+  const handleLoginError = (error: Error) => {
+    console.log(error);
+
+    setLoginState({
+      isLoading: false,
+      data: null,
+      error: error,
+    });
+
+    if (error.message === "banned") {
+      history.push("/banned");
     }
   };
 
