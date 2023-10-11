@@ -790,6 +790,8 @@ class DepositPrev extends Component {
   };
 
   render() {
+    const isLoading =
+      this.props.wallet.loading || this.props.wallet.depositLoading;
     return (
       <Container>
         <DepositNotificationDialog />
@@ -818,7 +820,7 @@ class DepositPrev extends Component {
         })()}
 
         <WalletMessagePopupDialog />
-        <Loading show={this.props.wallet.depositLoading}></Loading>
+        <Loading show={isLoading} />
       </Container>
     );
   }
