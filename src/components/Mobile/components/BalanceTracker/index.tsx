@@ -1,12 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import AddIcon from "@material-ui/icons/Add";
 import { themeList } from "@/theme";
-import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
 import Common from "@/utils/Common";
 import i18n from "@/utils/i18n";
-import { useHistory } from "react-router-dom";
+import RefreshButton from "@/components/Mobile/components/BalanceTracker/components/RefreshButton";
+import DepositButton from "@/components/Mobile/components/BalanceTracker/components/DepositButton";
 
 const theme = themeList["mobileT18"];
 
@@ -37,38 +36,19 @@ const BalanceContainer = styled.div`
   }
 `;
 
-const DepositButtonContainer = styled.div`
-  background: linear-gradient(180deg, #922acf 0%, #2f26ad 100%);
-  border-radius: 5px;
-  width: 39px;
-  height: 39px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`;
-
-const DepositButton = () => {
-  const history = useHistory();
-
-  const handleClick = useCallback(() => {
-    history.push("/deposit");
-  }, []);
-  return (
-    <DepositButtonContainer>
-      <AddIcon onClick={handleClick} />
-    </DepositButtonContainer>
-  );
-};
 type Props = {
   size?: "normal" | "small";
 };
 const BalanceTracker = ({ size, ...others }: Props) => {
-  const { wallet } = useWalletStore();
+  const { wallet, getBalanceList } = useWalletStore();
 
   const currentBalance = `${
     wallet.mainSymbol
   }$ ${Common.formatNumberWithThousand(wallet.mainBalance)}`;
+
+  const handleRefreshBalance = useCallback(async () => {
+    await getBalanceList();
+  }, []);
 
   const isShow = size !== "small";
   return (
@@ -78,10 +58,11 @@ const BalanceTracker = ({ size, ...others }: Props) => {
 
       <BalanceContainer>
         <span>{currentBalance}</span>
+        {isShow && <RefreshButton handleClick={handleRefreshBalance} />}
         <DepositButton />
       </BalanceContainer>
     </BalanceTrackerContainer>
   );
 };
 
-export default BalanceTracker;
+export default React.memo(BalanceTracker);
