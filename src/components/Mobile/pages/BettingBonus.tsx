@@ -1,8 +1,10 @@
 import CurrentLevelBanner from "@/components/Mobile/components/BettingBonus/CurrentLevelBanner";
 import LevelTable from "@/components/Mobile/components/BettingBonus/LevelTable";
 import styled from "styled-components";
-import useVipStore, { VipData as TypeVipData } from "../hooks/useVipStore";
+import useVipStore from "../hooks/useVipStore";
+import { VipData as TypeVipData } from "@/models/dto/general/GetVipResDto";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
+import Loading from "@/components/Mobile/components/UI/Loading";
 
 const Container = styled.div`
   padding: 20px 10px;
@@ -53,7 +55,7 @@ const BettingBonus = () => {
         const columnName = productColumnNameMap[product];
 
         if (vipLevelData && columnName in vipLevelData) {
-          const rebate = (vipLevelData as Record<string, number>)[columnName];
+          const rebate = vipLevelData[columnName as keyof TypeVipData];
           return rebate;
         } else {
           // Handle the case where the columnName is not found in vipLevelData
@@ -66,8 +68,7 @@ const BettingBonus = () => {
       };
     }
   );
-
-  if (isLoading) return "isLoading"; // TODO: handle loading ui
+  if (isLoading) return <Loading />;
   return (
     <Container>
       <CurrentLevelBanner
