@@ -1,26 +1,25 @@
-import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AccountState } from "@/types/account";
 import {
-  GETHOMEPAGEGAMELIST_BEGIN,
-  GETHOMEPAGEGAMELIST_SUCCESS,
-  GETHOMEPAGEGAMELIST_FAIL,
   GETFAVGAME_BEGIN,
-  GETFAVGAME_SUCCESS,
   GETFAVGAME_FAIL,
+  GETFAVGAME_SUCCESS,
+  GETHOMEPAGEGAMELIST_BEGIN,
+  GETHOMEPAGEGAMELIST_FAIL,
+  GETHOMEPAGEGAMELIST_SUCCESS,
   REMOVEFAVGAME_BEGIN,
-  REMOVEFAVGAME_SUCCESS,
   REMOVEFAVGAME_FAIL,
+  REMOVEFAVGAME_SUCCESS,
   SETFAVGAME_BEGIN,
-  SETFAVGAME_SUCCESS,
   SETFAVGAME_FAIL,
+  SETFAVGAME_SUCCESS,
 } from "@/api-services/constant/actionType";
 import { GameService } from "@/api-services/services/GameService";
-import { GetHomePageGameListResDto } from "@/models/dto/game/GetHomePageGameListResDto";
-import { SetFavoriteGameResDto } from "@/models/dto/game/SetFavoriteGameResDto";
-import { RemoveFavoriteGameResDto } from "@/models/dto/game/RemoveFavoriteGameResDto";
 import { GetFavoriteGameResDto } from "@/models/dto/game/GetFavoriteGameResDto";
+import { GetHomePageGameListResDto } from "@/models/dto/game/GetHomePageGameListResDto";
+import { RemoveFavoriteGameResDto } from "@/models/dto/game/RemoveFavoriteGameResDto";
+import { SetFavoriteGameResDto } from "@/models/dto/game/SetFavoriteGameResDto";
 import { GameState } from "@/types/game";
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export function useGameStore() {
   const dispatch = useDispatch();
@@ -63,7 +62,7 @@ export function useGameStore() {
   }, [dispatch]);
 
   const setFavoriteGame = useCallback(
-    async (gameId: string) => {
+    async (gameId: number) => {
       dispatch({
         type: SETFAVGAME_BEGIN,
         loading: true,
@@ -102,7 +101,7 @@ export function useGameStore() {
   );
 
   const removeFavoriteGame = useCallback(
-    async (gameId) => {
+    async (gameId: number) => {
       dispatch({
         type: REMOVEFAVGAME_BEGIN,
         loading: true,

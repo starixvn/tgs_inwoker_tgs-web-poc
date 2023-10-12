@@ -2,6 +2,7 @@ import { GameService } from '@/api-services/services/GameService';
 import dislikeIcon from "@/assets/images/home/mobile/dislike.png";
 import likeIcon from "@/assets/images/home/mobile/like.png";
 import config from '@/config/config';
+import { useGameStore } from '@/hooks/stores/useGameStore';
 import Common from '@/utils/Common';
 import styled from 'styled-components';
 import { badgeList } from '../../constants/games';
@@ -63,16 +64,21 @@ type GameCardProps = {
       recommend: boolean;
     };
     type: number;
-    isFavorite: boolean;
+
   };
   selectedTag: string;
+  favoriteList: number[];
+  fetchFavoriteList: () => void;
+  isFavorite: boolean;
 }
 
 type Props = {
   imageUrl: string;
 }
 
-const GameCard = ({ gameItem, selectedTag }: GameCardProps) => {
+const GameCard = ({ gameItem, selectedTag, favoriteList, fetchFavoriteList, isFavorite }: GameCardProps) => {
+  const { setFavoriteGame, removeFavoriteGame } = useGameStore();
+
 
   const launchGame = () => {
     GameService.JoinGame(gameItem.id, gameItem.gpcode).then((response) => {
@@ -84,15 +90,25 @@ const GameCard = ({ gameItem, selectedTag }: GameCardProps) => {
     })
   };
 
+  const handleToggleFavorite = async (gameId: number) => {
+    if (!!favoriteList.length && favoriteList.includes(gameId)) {
+      await removeFavoriteGame(gameId);
+      fetchFavoriteList();
+    } else {
+      await setFavoriteGame(gameId);
+      fetchFavoriteList();
+    }
+  };
+
   return (
     <GameCardWrapper
       onClick={launchGame}
       imageUrl={`${config.sourceUrl}${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${gameItem.code}.jpg`}
     >
-      {gameItem.isFavorite ? (
-        <LikeIcon imageUrl={likeIcon} />
+      {isFavorite ? (
+        <LikeIcon imageUrl={likeIcon} onClick={() => handleToggleFavorite(gameItem.id)} />
       ) : (
-        <LikeIcon imageUrl={dislikeIcon} />
+        <LikeIcon imageUrl={dislikeIcon} onClick={() => handleToggleFavorite(gameItem.id)} />
       )}
 
       {gameItem.tag.hot && gameItem.tag.new && selectedTag === "All" && (

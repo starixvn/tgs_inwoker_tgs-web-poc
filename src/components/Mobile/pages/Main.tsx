@@ -13,7 +13,7 @@ import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import getDisplayGameType from "@/utils/getDisplayGameType";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { gameTypeList, isNotEnterLobby } from "../constants/tab";
@@ -102,7 +102,7 @@ const TagContainer = styled.div`
 
 const Main = (props: Props) => {
   const history = useHistory();
-  const { game } = useGameStore();
+  const { game, getFavoriteGame } = useGameStore();
   const { general } = useGeneralStore();
   const { account } = useAccountStore();
   const [activeGameTypeTab, setActiveGameTypeTab] = useState(0);
@@ -111,7 +111,8 @@ const Main = (props: Props) => {
   const [selectedTag, setSelectedTag] = useState("All");
   const [filteredGameList, setFilteredGameList] = useState<any[]>([]);
   const [groupByProvider, setGroupByProvider] = useState<any>({});
-  const [favoriteList, setFavoriteList] = useState<any[]>([]);
+  const [favoriteList, setFavoriteList] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleGameTypeClick = (gameType: number) => {
     setActiveGameTypeTab(gameType);
@@ -186,17 +187,18 @@ const Main = (props: Props) => {
     return groupByGpcode;
   };
 
+  const fetchFavoriteList = useCallback(async () => {
+    const getFavoriteResDto = await getFavoriteGame(activeGameTypeTab);
+    const favoriteList = getFavoriteResDto?.data || []
+    setFavoriteList(favoriteList || []);
+  }, [activeGameTypeTab]);
+
+  useEffect(() => {
+    if (account.token && activeGameTypeTab && !isEnterLobby) fetchFavoriteList();
+  }, [account.token, activeGameTypeTab, isEnterLobby]);
+
   useEffect(() => {
     if (activeGameTypeTab && !isEnterLobby) {
-
-      if (account.token) {
-        GameService.GetFavoriteGame(activeGameTypeTab).then((favorite) => {
-          if (favorite && favorite?.IsSuccess) {
-            const favoriteList = favorite.data;
-            setFavoriteList(favoriteList);
-          }
-        });
-      }
 
       GameService.GetGameList("", activeGameTypeTab).then((res) => {
         if (res && res.data) {
@@ -230,9 +232,6 @@ const Main = (props: Props) => {
       });
     }
   }, [activeGameTypeTab, selectedTag]);
-
-  console.log("filteredGameList", filteredGameList.length)
-  console.log("selectedTag", selectedTag)
 
   return (
     <MainWrapper>
@@ -304,6 +303,9 @@ const Main = (props: Props) => {
                   key={item.id}
                   gameItem={item}
                   selectedTag={selectedTag}
+                  favoriteList={favoriteList}
+                  fetchFavoriteList={fetchFavoriteList}
+                  isFavorite={favoriteList.includes(item.id)}
                 />
               )
             )}
@@ -319,4 +321,4 @@ const Main = (props: Props) => {
   );
 };
 
-export default Main;
+export default React.memo(Main);
