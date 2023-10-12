@@ -31,7 +31,7 @@ export function useGetBottomNavItemList() {
         iconActiveUrl:
           process.env.PUBLIC_URL +
           `/assets/images/mobile/bottomAppBar/icon_refer_active.svg`,
-        routePath: "/promotion-list",
+        routePath: "/affiliate",
         routeCategory: RouteCategoryEnum.REFER,
       },
       {
