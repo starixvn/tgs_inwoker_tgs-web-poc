@@ -7,17 +7,18 @@ import ranking_1 from "@/assets/images/home/mobile/ranking_1.svg";
 import ranking_2 from "@/assets/images/home/mobile/ranking_2.svg";
 import ranking_3 from "@/assets/images/home/mobile/ranking_3.svg";
 import styled from "styled-components";
+import MaskPlayerName from "@/components/Mobile/components/Ranking/components/MaskPlayerName";
 
 const GameLabelContainer = styled.div`
   width: 28px;
   text-align: center;
 `;
 
-export interface RankItem {
+export interface BetRecord {
   key: string;
   gameName: string;
   playerName: string;
-  amount: number;
+  betAmount: number;
 }
 
 const GameLabel = ({ gameName }: { gameName: string }) => {
@@ -37,10 +38,10 @@ const GameLabel = ({ gameName }: { gameName: string }) => {
 
 type Props = {
   rank: number;
-  rankItem: RankItem;
+  betRecord: BetRecord;
 };
-const RecordItemRow = forwardRef(({ rank, rankItem }: Props, ref) => {
-  const { gameName, playerName, amount } = rankItem;
+const BetRecordRow = forwardRef(({ rank, betRecord }: Props, ref) => {
+  const { gameName, playerName, betAmount } = betRecord;
 
   return (
     <RankTableRow ref={ref}>
@@ -48,13 +49,15 @@ const RecordItemRow = forwardRef(({ rank, rankItem }: Props, ref) => {
         {/*<GameLabel gameName={gameName} />*/}
         {gameName}
       </RankTableCol>
-      <RankTableCol>{playerName}</RankTableCol>
-      <RankTableCol>{amount}</RankTableCol>
+      <RankTableCol>
+        <MaskPlayerName playerName={playerName} />
+      </RankTableCol>
+      <RankTableCol>{betAmount}</RankTableCol>
     </RankTableRow>
   );
 });
 
-export default RecordItemRow;
+export default BetRecordRow;
 
 function getGameIconUrl(gameName: string) {
   switch (gameName) {

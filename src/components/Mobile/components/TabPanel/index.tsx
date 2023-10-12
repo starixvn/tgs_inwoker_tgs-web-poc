@@ -4,8 +4,11 @@ import rubyIcon from "@/assets/images/home/mobile/ruby.svg";
 import styled from "styled-components";
 import { rankingTabList } from "../../constants/tab";
 import TabButton from "./TabButton";
-import WinningRankingTable from "@/components/Mobile/components/Ranking/components/WinningRankingTable";
-import LatestRecordTable from "@/components/Mobile/components/Ranking/components/LatestRecordTable";
+import WinningRankingTable from "@/components/Mobile/components/Ranking/WinningRankingTable";
+import LatestRecordTable from "@/components/Mobile/components/Ranking/LatestRecordTable";
+import { useBettingHistory } from "@/components/Mobile/components/Ranking/hooks/useBettingHistory";
+import { RankItem } from "@/components/Mobile/components/Ranking/components/RankItemRow";
+import { v4 as uuidv4 } from "uuid";
 
 type Props = {
   text: string;
@@ -26,6 +29,7 @@ const RankingTabs = styled.div`
 `;
 const TabPanel = () => {
   const [activeRankingTab, setActiveRankingTab] = useState(rankingTabList[0]);
+  const { betRecordList, leaderboard } = useBettingHistory();
 
   return (
     <RankingContainer>
@@ -40,9 +44,13 @@ const TabPanel = () => {
         ))}
       </RankingTabs>
 
-      {activeRankingTab === "Latest Record" && <LatestRecordTable />}
+      {activeRankingTab === "Latest Record" && (
+        <LatestRecordTable betRecordList={betRecordList} />
+      )}
 
-      {activeRankingTab === "Winning Ranking" && <WinningRankingTable />}
+      {activeRankingTab === "Winning Ranking" && (
+        <WinningRankingTable leaderboard={leaderboard} />
+      )}
     </RankingContainer>
   );
 };
