@@ -72,10 +72,6 @@ type GameCardProps = {
   isFavorite: boolean;
 }
 
-type Props = {
-  imageUrl: string;
-}
-
 const GameCard = ({ gameItem, selectedTag, favoriteList, fetchFavoriteList, isFavorite }: GameCardProps) => {
   const { setFavoriteGame, removeFavoriteGame } = useGameStore();
 
@@ -90,7 +86,8 @@ const GameCard = ({ gameItem, selectedTag, favoriteList, fetchFavoriteList, isFa
     })
   };
 
-  const handleToggleFavorite = async (gameId: number) => {
+  const handleToggleFavorite = async (event, gameId: number) => {
+    event.stopPropagation();
     if (!!favoriteList.length && favoriteList.includes(gameId)) {
       await removeFavoriteGame(gameId);
       fetchFavoriteList();
@@ -106,9 +103,9 @@ const GameCard = ({ gameItem, selectedTag, favoriteList, fetchFavoriteList, isFa
       imageUrl={`${config.sourceUrl}${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${gameItem.code}.jpg`}
     >
       {isFavorite ? (
-        <LikeIcon imageUrl={likeIcon} onClick={() => handleToggleFavorite(gameItem.id)} />
+        <LikeIcon imageUrl={likeIcon} onClick={(event) => handleToggleFavorite(event, gameItem.id)} />
       ) : (
-        <LikeIcon imageUrl={dislikeIcon} onClick={() => handleToggleFavorite(gameItem.id)} />
+        <LikeIcon imageUrl={dislikeIcon} onClick={(event) => handleToggleFavorite(event, gameItem.id)} />
       )}
 
       {gameItem.tag.hot && gameItem.tag.new && selectedTag === "All" && (
