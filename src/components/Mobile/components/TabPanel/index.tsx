@@ -4,10 +4,10 @@ import rubyIcon from "@/assets/images/home/mobile/ruby.svg";
 import styled from "styled-components";
 import { rankingTabList } from "../../constants/tab";
 import TabButton from "./TabButton";
-import WinningRankingTable from "@/components/Mobile/components/Ranking/components/WinningRankingTable";
-import LatestRecordTable from "@/components/Mobile/components/Ranking/components/LatestRecordTable";
+import WinningRankingTable from "@/components/Mobile/components/Ranking/WinningRankingTable";
+import LatestRecordTable from "@/components/Mobile/components/Ranking/LatestRecordTable";
 import { useBettingHistory } from "@/components/Mobile/components/Ranking/hooks/useBettingHistory";
-import { RankItem } from "@/components/Mobile/components/Ranking/components/WinningRankingTable/RankItemRow";
+import { RankItem } from "@/components/Mobile/components/Ranking/components/RankItemRow";
 import { v4 as uuidv4 } from "uuid";
 
 type Props = {
@@ -30,9 +30,6 @@ const RankingTabs = styled.div`
 const TabPanel = () => {
   const [activeRankingTab, setActiveRankingTab] = useState(rankingTabList[0]);
   const { betRecordList, leaderboard } = useBettingHistory();
-
-  // console.log(betRecordList);
-  // console.log(leaderboard);
 
   return (
     <RankingContainer>

@@ -9,7 +9,7 @@ import {
 import FlipMove from "react-flip-move";
 import RankItemRow, {
   RankItem,
-} from "@/components/Mobile/components/Ranking/components/WinningRankingTable/RankItemRow";
+} from "@/components/Mobile/components/Ranking/components/RankItemRow";
 
 type Props = {
   leaderboard: RankItem[];

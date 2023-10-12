@@ -9,7 +9,7 @@ import {
 import FlipMove from "react-flip-move";
 import BetRecordRow, {
   BetRecord,
-} from "@/components/Mobile/components/Ranking/components/LatestRecordTable/BetRecordRow";
+} from "@/components/Mobile/components/Ranking/components/BetRecordRow";
 
 type Props = {
   betRecordList: BetRecord[];
