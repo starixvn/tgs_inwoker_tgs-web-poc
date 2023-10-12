@@ -60,7 +60,7 @@ const Mine = () => {
 
       <Tabs
         tabItemList={tabList}
-        value={selectedTab}
+        selectedTabItem={selectedTab}
         handleChange={handleTabChange}
       />
 

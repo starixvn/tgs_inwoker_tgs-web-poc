@@ -378,7 +378,7 @@ const routes: Route[] = [
   {
     path: "/affiliate",
     component: Affiliate,
-    category: RouteCategoryEnum.MINE,
+    category: RouteCategoryEnum.REFER,
     layout: DefaultLayout,
   },
   // {
