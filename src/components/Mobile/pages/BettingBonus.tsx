@@ -1,3 +1,4 @@
+import React from "react";
 import CurrentLevelBanner from "@/components/Mobile/components/BettingBonus/CurrentLevelBanner";
 import LevelTable from "@/components/Mobile/components/BettingBonus/LevelTable";
 import styled from "styled-components";
@@ -5,6 +6,7 @@ import useVipStore from "../hooks/useVipStore";
 import { VipData as TypeVipData } from "@/models/dto/general/GetVipResDto";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import Loading from "@/components/Mobile/components/UI/Loading";
+import { useBettingBonus } from "@/hooks/betting-bonus/useBettingBonus";
 
 const Container = styled.div`
   padding: 20px 10px;
@@ -23,51 +25,14 @@ const TitleText = styled.div`
   text-align: start;
 `;
 
-const productColumnNameMap: {
-  [key: string]: string;
-} = {
-  "Live Dealer": "liveDealerRebate",
-  "Sports book": "sportsRebate",
-  "E-Game": "egameRebate",
-  "Card Game": "cardGameRebate",
-  Lottery: "lotteryRebate",
-  "Virtual Sports": "virtualSportsRebate",
-};
 export interface TypeProductRebateByLevel {
   name: string;
   rebate: number[];
 }
 
 const BettingBonus = () => {
-  const { vipData, isLoading } = useVipStore();
-  const accountStore = useAccountStore();
-  const currentLevel = accountStore.account.info.member_level_id;
+  const { isLoading, currentLevel, productRebateByLevel } = useBettingBonus();
 
-  const productList = Object.keys(productColumnNameMap);
-  const productRebateByLevel: TypeProductRebateByLevel[] = productList.map(
-    (product) => {
-      const productRebateList = vipData.map((_, index) => {
-        const targetLevel = index + 1;
-        const vipLevelData = vipData.find(
-          (item) => item.level === targetLevel
-        ) as TypeVipData;
-
-        const columnName = productColumnNameMap[product];
-
-        if (vipLevelData && columnName in vipLevelData) {
-          const rebate = vipLevelData[columnName as keyof TypeVipData];
-          return rebate;
-        } else {
-          // Handle the case where the columnName is not found in vipLevelData
-          return 0;
-        }
-      });
-      return {
-        name: product,
-        rebate: productRebateList,
-      };
-    }
-  );
   if (isLoading) return <Loading />;
   return (
     <Container>
