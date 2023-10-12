@@ -1,38 +1,18 @@
 import { themeList } from "@/theme";
-import { Tab as MuiTab, Tabs as MuiTabs } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
+import { rankingTabList } from "@/components/Mobile/constants/tab";
+import TabButton from "@/components/Mobile/components/TabPanel/TabButton";
+import Tab from "@/components/Mobile/components/UI/Tabs/Tab";
 const theme = themeList["mobileT18"];
 
-const StyledTabs = styled(MuiTabs)`
+const TabsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 4px;
   background: ${theme.primaryLight};
-  border-radius: 12px;
-`;
-
-const StyledTab = styled(MuiTab)`
-  & .MuiTab-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-transform: none;
-    background: ${theme.primaryLight};
-    font-size: 0.875rem;
-
-    & > * {
-      display: inline-block;
-    }
-  }
-
-  & img {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-    margin-bottom: 0 !important;
-  }
-
-  & .Mui-selected {
-    color: white !important;
-  }
 `;
 
 export interface TabItem {
@@ -42,25 +22,40 @@ export interface TabItem {
 }
 type Props = {
   tabItemList: TabItem[];
-  value: TabItem;
-  handleChange: (event: React.ChangeEvent<{}>, newValue: TabItem) => void;
+  selectedTabItem: TabItem;
+  handleChange: (newValue: TabItem) => void;
 };
-const Tabs = ({ tabItemList, value, handleChange }: Props) => {
+const Tabs = ({ tabItemList, selectedTabItem, handleChange }: Props) => {
   return (
-    <StyledTabs value={value} onChange={handleChange}>
+    <TabsContainer>
       {tabItemList.map((tabItem) => {
-        const { label, icon } = tabItem;
         return (
-          <StyledTab
-            key={label}
-            label={label}
-            icon={icon || ""}
-            value={tabItem}
+          <Tab
+            key={tabItem.value}
+            tabItem={tabItem}
+            handleClick={() => handleChange(tabItem)}
+            isActive={tabItem.value === selectedTabItem.value}
           />
         );
       })}
-    </StyledTabs>
+    </TabsContainer>
   );
+
+  // return (
+  //   <StyledTabs value={value} onChange={handleChange}>
+  //     {tabItemList.map((tabItem) => {
+  //       const { label, icon } = tabItem;
+  //       return (
+  //         <StyledTab
+  //           key={label}
+  //           label={label}
+  //           icon={icon || ""}
+  //           value={tabItem}
+  //         />
+  //       );
+  //     })}
+  //   </StyledTabs>
+  // );
 };
 
 export default Tabs;
