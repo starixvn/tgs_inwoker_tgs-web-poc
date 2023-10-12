@@ -9,16 +9,22 @@ import SocialMedia from "@/components/Mobile/components/SocialMedia";
 import Tab from "@/components/Mobile/components/Tab";
 import TabPanel from "@/components/Mobile/components/TabPanel";
 import Tag from "@/components/Mobile/components/Tag";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import getDisplayGameType from "@/utils/getDisplayGameType";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { gameTypeList, isNotEnterLobby } from "../constants/tab";
+import { gameTagList } from "../constants/tag";
 
 type Props = {
   imageUrl: string;
+};
+
+type TagItem = {
+  name: string;
 };
 
 type GameItem = {
@@ -35,6 +41,7 @@ type GameItem = {
     recommend: boolean;
   };
   type: number;
+  isFavorite: boolean;
 }
 
 const MainWrapper = styled.div`
@@ -43,8 +50,7 @@ const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: ${(props: { theme: { primaryDark: any } }) =>
-          props.theme.primaryDark};
+  background-color: ${(props: { theme: { primaryDark: any } }) => props.theme.primaryDark};
   color: ${(props: { theme: { white: any } }) => props.theme.white};
   margin-bottom: 82px;
 `;
@@ -83,6 +89,9 @@ const LobbyContainer = styled.div`
 `;
 
 const TagContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   margin-bottom: 8px;
   overflow-x: auto;
   white-space: nowrap;
@@ -93,14 +102,17 @@ const TagContainer = styled.div`
 
 const Main = (props: Props) => {
   const history = useHistory();
-  const { game } = useGameStore();
+  const { game, getFavoriteGame } = useGameStore();
   const { general } = useGeneralStore();
+  const { account } = useAccountStore();
   const [activeGameTypeTab, setActiveGameTypeTab] = useState(0);
   const [searchString, setSearchString] = useState("");
   const [isEnterLobby, setIsEnterLobby] = useState(false);
   const [selectedTag, setSelectedTag] = useState("All");
   const [filteredGameList, setFilteredGameList] = useState<any[]>([]);
   const [groupByProvider, setGroupByProvider] = useState<any>({});
+  const [favoriteList, setFavoriteList] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleGameTypeClick = (gameType: number) => {
     setActiveGameTypeTab(gameType);
@@ -151,6 +163,7 @@ const Main = (props: Props) => {
         .map((provider) => ({ name: provider }));
       return [
         { name: "All" },
+        account.token && { name: "Favorite" },
         { name: "Hot" },
         { name: "New" },
         { name: "Recommend" },
@@ -174,26 +187,46 @@ const Main = (props: Props) => {
     return groupByGpcode;
   };
 
+  const fetchFavoriteList = useCallback(async () => {
+    const getFavoriteResDto = await getFavoriteGame(activeGameTypeTab);
+    const favoriteList = getFavoriteResDto?.data || []
+    setFavoriteList(favoriteList || []);
+  }, [activeGameTypeTab]);
+
+  useEffect(() => {
+    if (account.token && activeGameTypeTab && !isEnterLobby) fetchFavoriteList();
+  }, [account.token, activeGameTypeTab, isEnterLobby]);
+
   useEffect(() => {
     if (activeGameTypeTab && !isEnterLobby) {
+
       GameService.GetGameList("", activeGameTypeTab).then((res) => {
         if (res && res.data) {
           const groupByProvider = filterAndGroupGames(res.data);
           setGroupByProvider(groupByProvider);
 
+          const filteredGameListWithFavorites = favoriteList.length > 0
+            ? res.data.map((item: GameItem) => ({
+              ...item,
+              isFavorite: favoriteList.includes(item.id),
+            }))
+            : res.data;
+
           switch (selectedTag) {
             case "All":
-              return setFilteredGameList(res.data);
+              return setFilteredGameList(filteredGameListWithFavorites);
+            case "Favorite":
+              return setFilteredGameList(filteredGameListWithFavorites.filter((item: GameItem) => favoriteList.includes(item.id)));
             case "Hot":
-              return setFilteredGameList(res.data.filter((item: GameItem) => item.tag.hot));
+              return setFilteredGameList(filteredGameListWithFavorites.filter((item: GameItem) => item.tag.hot));
             case "New":
-              return setFilteredGameList(res.data.filter((item: GameItem) => item.tag.new));
+              return setFilteredGameList(filteredGameListWithFavorites.filter((item: GameItem) => item.tag.new));
             case "Recommend":
-              return setFilteredGameList(res.data.filter((item: GameItem) => item.tag.recommend));
+              return setFilteredGameList(filteredGameListWithFavorites.filter((item: GameItem) => item.tag.recommend));
             case selectedTag:
               return setFilteredGameList(groupByProvider[selectedTag]);
             default:
-              return setFilteredGameList(res.data);
+              return setFilteredGameList(filteredGameListWithFavorites);
           }
         }
       });
@@ -246,11 +279,12 @@ const Main = (props: Props) => {
       {!isEnterLobby && !!activeGameTypeTab && (
         <>
           <TagContainer>
-            {tagList.map(item => (
+            {tagList.filter((item): item is GameItem => item !== null).map((item: GameItem) => (
               <Tag
-                key={item.name}
-                text={item.name}
-                isActive={item.name === selectedTag}
+                key={item?.name}
+                text={item?.name}
+                isActive={item?.name === selectedTag && !!item.name}
+                isShowIcon={gameTagList.some(tag => tag.text === item.name)}
                 onClick={() => setSelectedTag(item.name)} />
             ))}
           </TagContainer>
@@ -269,10 +303,13 @@ const Main = (props: Props) => {
                   key={item.id}
                   gameItem={item}
                   selectedTag={selectedTag}
+                  favoriteList={favoriteList}
+                  fetchFavoriteList={fetchFavoriteList}
+                  isFavorite={favoriteList.includes(item.id)}
                 />
               )
             )}
-            {!filteredGameList.length && <div>Loading</div>}
+            {!filteredGameList.length && <div>No data</div>}
           </GameCardContainer>
         </>
       )}
@@ -284,4 +321,4 @@ const Main = (props: Props) => {
   );
 };
 
-export default Main;
+export default React.memo(Main);
