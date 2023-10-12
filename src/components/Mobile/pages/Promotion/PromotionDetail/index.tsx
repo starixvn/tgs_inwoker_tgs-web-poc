@@ -76,6 +76,11 @@ const PromotionDetail = () => {
     promotionData.terms ||
     "";
 
+  const isDummy = promotionData.promotionType.toUpperCase() === "DUMMY";
+  const isPromoteDepositChannel =
+    promotionData.promotionType.toUpperCase() === "PROMOTEDEPOSITCHANNEL";
+
+  const showJoinButton = !(isDummy || isPromoteDepositChannel);
   return (
     <>
       <PromotionDetailContainer>
@@ -104,9 +109,14 @@ const PromotionDetail = () => {
           </TextArea>
         </ContentContainer>
       </PromotionDetailContainer>
-      <JoinPromotionButtonWrapper>
-        <JoinPromotionButton id={promotionData.id} />
-      </JoinPromotionButtonWrapper>
+      {showJoinButton && (
+        <JoinPromotionButtonWrapper>
+          <JoinPromotionButton
+            id={promotionData.id}
+            promotionType={promotionData.promotionType}
+          />
+        </JoinPromotionButtonWrapper>
+      )}
     </>
   );
 };

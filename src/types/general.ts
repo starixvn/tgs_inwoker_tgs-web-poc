@@ -26,6 +26,7 @@ export interface GeneralState {
   rouletteCount: any[];
   rouletteHistory: any[];
   token: string;
+  joinPromoResult: JoinPromoResult;
 }
 
 export interface BrandsSupport {
@@ -37,4 +38,11 @@ export interface BrandsSupport {
 
 export interface BrandLanguage {
   culturecode: string;
+}
+
+export interface JoinPromoResult {
+  success: boolean;
+  err: number;
+  errmsg: string;
+  errmsgid: null;
 }
