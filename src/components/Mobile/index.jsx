@@ -30,6 +30,7 @@ import PopupPromotion from "@/components/Mobile/components/Popup/PopupPromotion"
 import { AuthContextProvider } from "@/contexts/authContext";
 import LayoutProvider from "@/components/Mobile/layouts/LayoutProvider";
 import { AuthGuard } from "@/components/_Share_Domain/authentication/AuthGuard";
+import FloatingToolIcons from "@/components/Mobile/components/FloatingToolIcons";
 
 class Mobile extends Component {
   constructor(props) {
@@ -568,19 +569,6 @@ class Mobile extends Component {
                 </>
               )}
 
-            {/*<PopupAlertModal*/}
-            {/*  isOpen={this.state.open}*/}
-            {/*  handleClose={this.handleClosePopupAlert}*/}
-            {/*  title={this.state.title}*/}
-            {/*  message={this.state.message}*/}
-            {/*  action={this.state.action}*/}
-            {/*/>*/}
-            {/*<PopupModal*/}
-            {/*  isOpen={this.state.openPopup}*/}
-            {/*  handleClose={this.handleClosePopup}*/}
-            {/*  handleClickUrl={this.handleClickUrl}*/}
-            {/*/>*/}
-
             {showPopupAnnouncement && (
               <PopupAnnouncement
                 open={this.state.openAnnouncement}
@@ -595,6 +583,7 @@ class Mobile extends Component {
             )}
 
             <PopupAlertModal />
+            <FloatingToolIcons />
           </AuthContextProvider>
         </>
       );

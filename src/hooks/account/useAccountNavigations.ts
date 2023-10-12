@@ -84,7 +84,7 @@ export function useAccountNavigations() {
         key: NavCardKey.CONTACT_US,
         label: i18n.t("common.contact"),
         iconUrl: profileImg,
-        routePath: "/contact",
+        routePath: "/support",
       },
       {
         key: NavCardKey.APP_DOWNLOAD,
