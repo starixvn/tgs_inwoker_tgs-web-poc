@@ -4,6 +4,8 @@ import rubyIcon from "@/assets/images/home/mobile/ruby.svg";
 import styled from "styled-components";
 import { rankingTabList } from "../../constants/tab";
 import TabButton from "./TabButton";
+import WinningRankingTable from "@/components/Mobile/components/Ranking/components/WinningRankingTable";
+import LatestRecordTable from "@/components/Mobile/components/Ranking/components/LatestRecordTable";
 
 type Props = {
   text: string;
@@ -22,43 +24,6 @@ const RankingTabs = styled.div`
   align-items: center;
   margin-bottom: 20px;
 `;
-
-const RankingTabWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-`;
-
-const RankingTabTitle = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: ${(props) => props.theme.tertiary};
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 0.875rem;
-  margin: 20px 0;
-`;
-
-const RankingTabContent = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: ${(props) => props.theme.white};
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 0.875rem;
-`;
-
-const RankItem = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const TabPanel = () => {
   const [activeRankingTab, setActiveRankingTab] = useState(rankingTabList[0]);
 
@@ -75,40 +40,9 @@ const TabPanel = () => {
         ))}
       </RankingTabs>
 
-      {activeRankingTab === "Latest Record" && (
-        <RankingTabWrapper>
-          <RankingTabTitle>
-            <RankItem>Game</RankItem>
-            <RankItem>Player</RankItem>
-            <RankItem>Amount</RankItem>
-          </RankingTabTitle>
-          <RankingTabContent>
-            <RankItem>
-              <img src={rubyIcon} alt={"game"} />
-              Crash
-            </RankItem>
-            <RankItem>ED***1k</RankItem>
-            <RankItem>98.2</RankItem>
-          </RankingTabContent>
-        </RankingTabWrapper>
-      )}
+      {activeRankingTab === "Latest Record" && <LatestRecordTable />}
 
-      {activeRankingTab === "Winning Ranking" && (
-        <RankingTabWrapper>
-          <RankingTabTitle>
-            <RankItem>Rank</RankItem>
-            <RankItem>Player</RankItem>
-            <RankItem>Profit</RankItem>
-          </RankingTabTitle>
-          <RankingTabContent>
-            <RankItem>
-              <img src={ranking_1} alt={"rank"} />
-            </RankItem>
-            <RankItem>ED***1k</RankItem>
-            <RankItem>9999</RankItem>
-          </RankingTabContent>
-        </RankingTabWrapper>
-      )}
+      {activeRankingTab === "Winning Ranking" && <WinningRankingTable />}
     </RankingContainer>
   );
 };
