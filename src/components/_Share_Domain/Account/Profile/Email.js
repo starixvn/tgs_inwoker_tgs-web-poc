@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Textbox from "../../../Mobile/components/_PrevShare/Textbox";
 import BaseProfile from "./BaseProfile";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { AccountService } from "@/api-services/services/AccountService";
@@ -15,6 +14,7 @@ import {
   LabelContainer,
 } from "@/components/Mobile/styles/forms";
 import TextFieldWithButton from "@/components/Mobile/components/UI/TextFieldWithButton";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
 class Email extends BaseProfile {
   state = {
     countdownToken: 0,
@@ -227,7 +227,7 @@ class Email extends BaseProfile {
           <LabelContainer>{i18n.t("common.emailAddress")}</LabelContainer>
 
           <FormControl variant="outlined">
-            <Textbox
+            <TextField
               value={this.state.email}
               onChange={this.handleChangeEmail}
               placeholder={i18n.t("common.msgEnterEmail")}
