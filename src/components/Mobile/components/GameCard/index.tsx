@@ -1,4 +1,6 @@
 import { GameService } from '@/api-services/services/GameService';
+import dislikeIcon from "@/assets/images/home/mobile/dislike.png";
+import likeIcon from "@/assets/images/home/mobile/like.png";
 import config from '@/config/config';
 import Common from '@/utils/Common';
 import styled from 'styled-components';
@@ -61,6 +63,7 @@ type GameCardProps = {
       recommend: boolean;
     };
     type: number;
+    isFavorite: boolean;
   };
   selectedTag: string;
 }
@@ -86,12 +89,11 @@ const GameCard = ({ gameItem, selectedTag }: GameCardProps) => {
       onClick={launchGame}
       imageUrl={`${config.sourceUrl}${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${gameItem.code}.jpg`}
     >
-      {/* to-do: Favorite功能 */}
-      {/* {item.isFavorite ? (
+      {gameItem.isFavorite ? (
         <LikeIcon imageUrl={likeIcon} />
       ) : (
         <LikeIcon imageUrl={dislikeIcon} />
-      )} */}
+      )}
 
       {gameItem.tag.hot && gameItem.tag.new && selectedTag === "All" && (
         <>
