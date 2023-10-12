@@ -108,10 +108,12 @@ const LobbyTagCategory = ({
         {filteredGameList.slice(0, visibleGameCount).map((game) => {
           return (
             <CardVendor
-              key={game.id}
+              key={game?.id}
               imageUrl={`${process.env.PUBLIC_URL}/assets/images/home/${gameTypeName}/${game?.gpcode}.png`}
-              gameName={game.name}
-              venderName={game.gpcode}
+              gameName={game?.name}
+              venderName={game?.gpcode}
+              gpCode={game?.gpcode}
+              gameType={gameType}
             />
           )
         })}

@@ -1,11 +1,16 @@
+import { GameService } from "@/api-services/services/GameService";
+import { GameTypeEnum } from "@/api-services/utils/Enum";
 import bg from "@/assets/images/home/mobile/vender_card_bg.png";
+import Common from "@/utils/Common";
 import styled from 'styled-components';
 
 type Props = {
   imageUrl: string;
   gameName?: string;
   venderName?: string;
-  venderLogo?: string;
+  venderLogoUrl?: string;
+  gpCode: string;
+  gameType: number;
 }
 
 const CardVendorBg = styled.div`
@@ -69,20 +74,61 @@ const VenderLogo = styled.div<Props>`
     width: 100%;
     max-width: 77px
     min-height: 38px;
-    background-image: url(${props => props.imageUrl});
+    background-image: url(${props => props.venderLogoUrl});
     background-size: contain;
     background-repeat: no-repeat;
 `;
 
-const CardVendor = ({ imageUrl, gameName, venderName, venderLogo }: Props) => {
+const CardVendor = ({ imageUrl, gameName, venderName, venderLogoUrl, gpCode, gameType }: Props) => {
+  const launchLobbyGame = () => {
+    if (gameType === GameTypeEnum.COCKFIGHT) {
+      // 以後SM01不會開,多新增AWC_COCKFIGHT(缺對應api)
+      if (gpCode === "SM01") {
+        const gameWindow = window.open("", "Cockfight");
+        if (gameWindow) {
+          GameService.GetCockfight()
+            .then((res) => {
+              gameWindow.document.write(res?.data);
+              gameWindow.document.close();
+              gameWindow.focus();
+            })
+            .catch(() => {
+              gameWindow.close();
+            });
+        }
+      } else {
+        Common.closePreviousPopup();
+        Common.PopupCenter(
+          "/joinlobbygame/" + GameTypeEnum.SPORTS + "/" + gpCode,
+          "gamewindow"
+        );
+      }
+    } else {
+      GameService.JoinLobbyGame(gameType, gpCode).then((response) => {
+        if (response?.IsSuccess) {
+          window.location.href = response?.data?.url;
+        } else {
+          console.log(response?.info);
+        }
+      })
+    }
+  };
+
   return (
-    <CardVendorBg>
+    <CardVendorBg onClick={launchLobbyGame}>
       <GameIcon imageUrl={imageUrl}></GameIcon>
       <GradientBg>
         <CardContent>
           {gameName && <GameName>{gameName}</GameName>}
           {venderName && <VenderName>{venderName}</VenderName>}
-          {venderLogo && <VenderLogo imageUrl={venderLogo}></VenderLogo>}
+          {venderLogoUrl && (
+            <VenderLogo
+              imageUrl={imageUrl}
+              venderLogoUrl={venderLogoUrl}
+              gpCode={gpCode}
+              gameType={gameType}
+            ></VenderLogo>
+          )}
         </CardContent>
       </GradientBg>
     </CardVendorBg>

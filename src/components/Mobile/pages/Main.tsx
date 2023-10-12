@@ -1,23 +1,20 @@
 import { GameService } from "@/api-services/services/GameService";
-import banner from "@/assets/images/home/mobile/banner_1.png";
 import vendorsIcon from "@/assets/images/home/mobile/vendors.png";
 import CardPrompt from "@/components/Mobile/components/CardPrompt";
 import Category from "@/components/Mobile/components/Category";
+import GameCard from "@/components/Mobile/components/GameCard";
 import Lobby from "@/components/Mobile/components/Lobby";
 import Slider from "@/components/Mobile/components/Slider";
 import SocialMedia from "@/components/Mobile/components/SocialMedia";
 import Tab from "@/components/Mobile/components/Tab";
 import TabPanel from "@/components/Mobile/components/TabPanel";
 import Tag from "@/components/Mobile/components/Tag";
-import config from "@/config/config";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
-import Common from "@/utils/Common";
 import getDisplayGameType from "@/utils/getDisplayGameType";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { badgeList } from "../constants/games";
 import { gameTypeList, isNotEnterLobby } from "../constants/tab";
 
 type Props = {
@@ -52,17 +49,6 @@ const MainWrapper = styled.div`
   margin-bottom: 82px;
 `;
 
-const Banner = styled.div`
-  width: 100%;
-  padding-top: 62.5%;
-  margin-bottom: 15px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-image: url(${banner});
-  border-radius: 12px;
-`;
-
 const TabContainer = styled.div`
   margin-bottom: 15px;
   overflow-x: auto;
@@ -80,48 +66,6 @@ const GameCardContainer = styled.div`
   gap: 16px;
   width: 100%;
   margin: 15px 0;
-`;
-
-const GameCard = styled.div`
-  width: calc(50% - 8px);
-  padding-top: calc(50% - 8px);
-  background-image: url(${(props: Props) => props.imageUrl});
-  background-size: cover;
-  box-sizing: border-box;
-  position: relative;
-`;
-
-const LikeIcon = styled.div`
-  width: 30px;
-  height: 30px;
-  background-image: url(${(props: Props) => props.imageUrl});
-  background-size: cover;
-  box-sizing: border-box;
-  position: absolute;
-  top: 6px;
-  right: 8px;
-`;
-
-const BadgeIcon = styled.div`
-  width: 45.5px;
-  height: 21px;
-  background-image: url(${(props: Props) => props.imageUrl});
-  background-size: cover;
-  box-sizing: border-box;
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-
-const NewBadgeIcon = styled.div`
-  width: 45.5px;
-  height: 21px;
-  background-image: url(${(props: Props) => props.imageUrl});
-  background-size: cover;
-  box-sizing: border-box;
-  position: absolute;
-  top: 25px;
-  left: 0;
 `;
 
 const VendorIcon = styled.div`
@@ -231,7 +175,7 @@ const Main = (props: Props) => {
   };
 
   useEffect(() => {
-    if (activeGameTypeTab) {
+    if (activeGameTypeTab && !isEnterLobby) {
       GameService.GetGameList("", activeGameTypeTab).then((res) => {
         if (res && res.data) {
           const groupByProvider = filterAndGroupGames(res.data);
@@ -294,6 +238,7 @@ const Main = (props: Props) => {
         <Category
           gameTypeData={groupBy_gameType[activeGameTypeTab] || []}
           gameTypeName={gameTypeList.find((item) => item.gameType === activeGameTypeTab)?.key || ""}
+          gameType={activeGameTypeTab}
         />
       }
 
@@ -319,48 +264,12 @@ const Main = (props: Props) => {
 
           <GameCardContainer>
             {filteredGameList && filteredGameList.map(
-              (item: {
-                // isFavorite: any;  //to-do: 把 isFavorite 加回來
-                key: string;
-                code: string;
-                description: string;
-                gpcode: string;
-                id: number;
-                isactive: boolean;
-                name: string;
-                tag: {
-                  hot: boolean;
-                  new: boolean;
-                  recommend: boolean;
-                };
-                type: number;
-              }) => (
-                <>
-                  <GameCard
-                    key={item.id}
-                    imageUrl={`${config.sourceUrl}${item.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${item.code}.jpg`}
-                  >
-                    {/* to-do: Favorite功能 */}
-                    {/* {item.isFavorite ? (
-                      <LikeIcon imageUrl={likeIcon} />
-                    ) : (
-                      <LikeIcon imageUrl={dislikeIcon} />
-                    )} */}
-
-                    {item.tag.hot && item.tag.new && selectedTag === "All" && (
-                      <>
-                        <BadgeIcon imageUrl={badgeList.hot} />
-                        <NewBadgeIcon imageUrl={badgeList.new} />
-                      </>
-                    )}
-                    {item.tag.hot && selectedTag === "Hot" && (
-                      <BadgeIcon imageUrl={badgeList.hot} />
-                    )}
-                    {item.tag.new && selectedTag === "New" && (
-                      <BadgeIcon imageUrl={badgeList.new} />
-                    )}
-                  </GameCard>
-                </>
+              (item: GameItem) => (
+                <GameCard
+                  key={item.id}
+                  gameItem={item}
+                  selectedTag={selectedTag}
+                />
               )
             )}
             {!filteredGameList.length && <div>Loading</div>}
