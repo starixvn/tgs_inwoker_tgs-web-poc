@@ -2,7 +2,7 @@ FROM node:16.6.1-stretch-slim AS build
 WORKDIR /src
 COPY . .
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 RUN npm run build
 
 FROM caddy:2.1.1-alpine
