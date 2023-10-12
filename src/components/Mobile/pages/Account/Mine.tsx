@@ -5,25 +5,19 @@ import InfoCard from "@/components/Mobile/components/Account/InfoCard";
 import Tabs, { TabItem } from "@/components/Mobile/components/UI/Tabs";
 import accountImg from "@/assets/images/account/icon_account.png";
 import infoImg from "@/assets/images/account/icon_info.png";
-import AccountLevelInfoCard from "@/components/Mobile/components/Account/AccountLevelInfoCard";
 import { useTab } from "@/hooks/account/useTab";
 import AccountNavigations from "@/components/Mobile/components/Account/AccountNavigations";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useHistory } from "react-router-dom";
+import CurrentLevelBanner from "@/components/Mobile/components/BettingBonus/CurrentLevelBanner";
+import Loading from "@/components/Mobile/components/UI/Loading";
+import MyInfo from "@/components/Mobile/components/Account/MyInfo";
 
 const theme = themeList["mobileT18"];
 
 const AccountContainer = styled.div`
   background: ${theme.primaryDark};
   padding: 40px 15px;
-`;
-
-const AccountLevelInfoContainer = styled.div`
-  padding: 15px 0 0;
-
-  & > * {
-    margin-bottom: 8px;
-  }
 `;
 
 const AccountIcon = () => {
@@ -65,12 +59,7 @@ const Mine = () => {
       />
 
       {selectedTab.value === "account" && <AccountNavigations />}
-
-      {selectedTab.value === "info" && (
-        <AccountLevelInfoContainer>
-          <AccountLevelInfoCard />
-        </AccountLevelInfoContainer>
-      )}
+      {selectedTab.value === "info" && <MyInfo />}
     </AccountContainer>
   );
 };
