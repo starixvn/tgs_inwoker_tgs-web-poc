@@ -1,43 +1,27 @@
-
-import member from "@/assets/images/home/mobile/member.svg";
-import notification from "@/assets/images/home/mobile/notifications.svg";
-import styled from 'styled-components';
-import CardPrompt from "./cardPrompt";
-
-const promptList = [
-    {
-        key: "notification",
-        iconUrl: notification,
-        text: "Notifications~~~Notifications",
-    },
-    {
-        key: "member",
-        iconUrl: member,
-        text: "2891",
-    }
-]
+import styled from "styled-components";
+import Marquee from "../Marquee";
+import OnlineUser from "../OnlineUser";
 
 const Container = styled.div`
-    margin-bottom: 15px;
-    width: 100%;
-    overflow-x: auto;
-    white-space: nowrap;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 100%;
+  height: 32px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  gap: 10px;
 `;
 
 const CardPromptContainer = () => {
-    return (
-        <Container>
-            {promptList.map(item => (
-                <CardPrompt
-                    key={item.key}
-                    imageUrl={item.iconUrl}
-                    text={item.text}
-                />
-            ))}
-        </Container>
-    );
+  return (
+    <Container>
+      <Marquee />
+      <OnlineUser />
+    </Container>
+  );
 };
 
 export default CardPromptContainer;
