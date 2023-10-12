@@ -79,19 +79,18 @@ const VenderLogo = styled.div<Props>`
 
 const CardVendor = ({ imageUrl, gameName, venderName, venderLogoUrl, gpCode, gameType }: Props) => {
 
-  const launchGame = () => {
+  const launchLobbyGame = () => {
     GameService.JoinLobbyGame(gameType, gpCode).then((response) => {
-      console.log("JoinLobbyGame", response);
-      if (response?.data?.IsSuccess) {
-        window.location.href = response?.data?.data?.url;
+      if (response?.IsSuccess) {
+        window.location.href = response?.data?.url;
       } else {
-        alert(response?.data?.info);
+        console.log(response?.info);
       }
     })
   };
 
   return (
-    <CardVendorBg onClick={launchGame}>
+    <CardVendorBg onClick={launchLobbyGame}>
       <GameIcon imageUrl={imageUrl}></GameIcon>
       <GradientBg>
         <CardContent>

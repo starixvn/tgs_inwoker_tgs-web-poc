@@ -89,9 +89,11 @@ const LobbyCategory = ({
         {groupBy_gameType[gameType] && groupBy_gameType[gameType].slice(0, showDataLength).map((game) => {
           return (
             <CardVendor
-              key={game.gpcode}
+              key={game?.gpcode}
               imageUrl={`${process.env.PUBLIC_URL}/assets/images/home/${gameTypeName}/${game?.gpcode}.png`}
-              venderLogo={`${process.env.PUBLIC_URL}/assets/images/home/provider_logo/${gameTypeName}/${game?.gpcode}.png`}
+              venderLogoUrl={`${process.env.PUBLIC_URL}/assets/images/home/provider_logo/${gameTypeName}/${game?.gpcode}.png`}
+              gpCode={game?.gpcode}
+              gameType={gameType}
             />
           )
         })}
