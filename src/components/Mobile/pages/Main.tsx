@@ -16,6 +16,7 @@ import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { gameTypeList, isNotEnterLobby } from "../constants/tab";
+import { gameTagList } from "../constants/tag";
 
 type Props = {
   imageUrl: string;
@@ -83,6 +84,9 @@ const LobbyContainer = styled.div`
 `;
 
 const TagContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   margin-bottom: 8px;
   overflow-x: auto;
   white-space: nowrap;
@@ -251,6 +255,7 @@ const Main = (props: Props) => {
                 key={item.name}
                 text={item.name}
                 isActive={item.name === selectedTag}
+                isShowIcon={gameTagList.some(tag => tag.text === item.name)}
                 onClick={() => setSelectedTag(item.name)} />
             ))}
           </TagContainer>
