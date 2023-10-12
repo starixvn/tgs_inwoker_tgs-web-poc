@@ -16,7 +16,7 @@ const RankLabelContainer = styled.div`
 export interface RankItem {
   key: string;
   playerName: string;
-  amount: number;
+  betAmount: number;
 }
 
 const RankLabel = ({ rank }: { rank: number }) => {
@@ -45,7 +45,7 @@ type Props = {
   rankItem: RankItem;
 };
 const RankItemRow = forwardRef(({ rank, rankItem }: Props, ref) => {
-  const { playerName, amount } = rankItem;
+  const { playerName, betAmount } = rankItem;
 
   return (
     <RankTableRow ref={ref}>
@@ -53,7 +53,7 @@ const RankItemRow = forwardRef(({ rank, rankItem }: Props, ref) => {
         <RankLabel rank={rank} />
       </RankTableCol>
       <RankTableCol>{playerName}</RankTableCol>
-      <RankTableCol>{amount}</RankTableCol>
+      <RankTableCol>{betAmount}</RankTableCol>
     </RankTableRow>
   );
 });

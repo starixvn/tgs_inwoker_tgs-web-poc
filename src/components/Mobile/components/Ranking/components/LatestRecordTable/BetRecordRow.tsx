@@ -13,11 +13,11 @@ const GameLabelContainer = styled.div`
   text-align: center;
 `;
 
-export interface RankItem {
+export interface BetRecord {
   key: string;
   gameName: string;
   playerName: string;
-  amount: number;
+  betAmount: number;
 }
 
 const GameLabel = ({ gameName }: { gameName: string }) => {
@@ -37,10 +37,10 @@ const GameLabel = ({ gameName }: { gameName: string }) => {
 
 type Props = {
   rank: number;
-  rankItem: RankItem;
+  betRecord: BetRecord;
 };
-const RecordItemRow = forwardRef(({ rank, rankItem }: Props, ref) => {
-  const { gameName, playerName, amount } = rankItem;
+const BetRecordRow = forwardRef(({ rank, betRecord }: Props, ref) => {
+  const { gameName, playerName, betAmount } = betRecord;
 
   return (
     <RankTableRow ref={ref}>
@@ -49,12 +49,12 @@ const RecordItemRow = forwardRef(({ rank, rankItem }: Props, ref) => {
         {gameName}
       </RankTableCol>
       <RankTableCol>{playerName}</RankTableCol>
-      <RankTableCol>{amount}</RankTableCol>
+      <RankTableCol>{betAmount}</RankTableCol>
     </RankTableRow>
   );
 });
 
-export default RecordItemRow;
+export default BetRecordRow;
 
 function getGameIconUrl(gameName: string) {
   switch (gameName) {

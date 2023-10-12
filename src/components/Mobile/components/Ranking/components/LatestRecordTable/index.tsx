@@ -7,30 +7,31 @@ import {
   RankTableRow,
 } from "@/components/Mobile/components/Ranking/styles";
 import FlipMove from "react-flip-move";
-import { useLatestRecordList } from "@/components/Mobile/components/Ranking/hooks/useLatestRecordList";
-import RecordItemRow from "@/components/Mobile/components/Ranking/components/RecordItemRow";
+import BetRecordRow, {
+  BetRecord,
+} from "@/components/Mobile/components/Ranking/components/LatestRecordTable/BetRecordRow";
 
-type Props = {};
-const LatestRecordTable = (props: Props) => {
-  const { recordList } = useLatestRecordList();
-
+type Props = {
+  betRecordList: BetRecord[];
+};
+const LatestRecordTable = ({ betRecordList }: Props) => {
   return (
     <RankingTable>
       <RankingTableTitle>
         <RankTableRow>
           <RankTableCol>Game</RankTableCol>
           <RankTableCol>Player</RankTableCol>
-          <RankTableCol>Profit</RankTableCol>
+          <RankTableCol>Amount</RankTableCol>
         </RankTableRow>
       </RankingTableTitle>
       <RankTableBody>
         <FlipMove style={{ width: "100%" }}>
-          {recordList.map((rankItem, index) => {
+          {betRecordList.map((betRecord, index) => {
             return (
-              <RecordItemRow
-                key={rankItem.key}
+              <BetRecordRow
+                key={betRecord.key}
                 rank={index + 1}
-                rankItem={rankItem}
+                betRecord={betRecord}
               />
             );
           })}

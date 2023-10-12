@@ -6,6 +6,9 @@ import { rankingTabList } from "../../constants/tab";
 import TabButton from "./TabButton";
 import WinningRankingTable from "@/components/Mobile/components/Ranking/components/WinningRankingTable";
 import LatestRecordTable from "@/components/Mobile/components/Ranking/components/LatestRecordTable";
+import { useBettingHistory } from "@/components/Mobile/components/Ranking/hooks/useBettingHistory";
+import { RankItem } from "@/components/Mobile/components/Ranking/components/WinningRankingTable/RankItemRow";
+import { v4 as uuidv4 } from "uuid";
 
 type Props = {
   text: string;
@@ -26,6 +29,10 @@ const RankingTabs = styled.div`
 `;
 const TabPanel = () => {
   const [activeRankingTab, setActiveRankingTab] = useState(rankingTabList[0]);
+  const { betRecordList, leaderboard } = useBettingHistory();
+
+  // console.log(betRecordList);
+  // console.log(leaderboard);
 
   return (
     <RankingContainer>
@@ -40,9 +47,13 @@ const TabPanel = () => {
         ))}
       </RankingTabs>
 
-      {activeRankingTab === "Latest Record" && <LatestRecordTable />}
+      {activeRankingTab === "Latest Record" && (
+        <LatestRecordTable betRecordList={betRecordList} />
+      )}
 
-      {activeRankingTab === "Winning Ranking" && <WinningRankingTable />}
+      {activeRankingTab === "Winning Ranking" && (
+        <WinningRankingTable leaderboard={leaderboard} />
+      )}
     </RankingContainer>
   );
 };

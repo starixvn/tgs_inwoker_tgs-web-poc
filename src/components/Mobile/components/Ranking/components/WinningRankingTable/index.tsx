@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
-import ranking_1 from "@/assets/images/home/mobile/ranking_1.svg";
+import React from "react";
 import {
   RankingTable,
   RankingTableTitle,
@@ -8,13 +7,14 @@ import {
   RankTableRow,
 } from "@/components/Mobile/components/Ranking/styles";
 import FlipMove from "react-flip-move";
-import RankItemRow from "@/components/Mobile/components/Ranking/components/RankItemRow";
-import { useWinningRankingList } from "@/components/Mobile/components/Ranking/hooks/useWinningRankingList";
+import RankItemRow, {
+  RankItem,
+} from "@/components/Mobile/components/Ranking/components/WinningRankingTable/RankItemRow";
 
-type Props = {};
-const WinningRankingTable = (props: Props) => {
-  const { rankList } = useWinningRankingList();
-
+type Props = {
+  leaderboard: RankItem[];
+};
+const WinningRankingTable = ({ leaderboard }: Props) => {
   return (
     <RankingTable>
       <RankingTableTitle>
@@ -26,7 +26,7 @@ const WinningRankingTable = (props: Props) => {
       </RankingTableTitle>
       <RankTableBody>
         <FlipMove style={{ width: "100%" }}>
-          {rankList.map((rankItem, index) => {
+          {leaderboard.map((rankItem, index) => {
             return (
               <RankItemRow
                 key={rankItem.key}
