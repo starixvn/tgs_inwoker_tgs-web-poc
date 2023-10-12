@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { themeList } from "@/theme";
-import JoinPromotionButton from "../../../components/Promotion/JoinPromotionButton";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { Promotion } from "@/models/dto/general/GetPromotionListResDto";
+import JoinPromotionButton from "../../../components/Promotion/JoinPromotionButton";
 import BannerImage from "../../../components/Promotion/BannerImage";
 import i18n from "@/utils/i18n";
+import { NOT_SHOW_JOIN_BUTTON_KEY_LIST } from "@/components/Mobile/constants/promotion";
 const moment = require("moment");
 
 const theme = themeList["mobileT18"];
@@ -76,11 +77,10 @@ const PromotionDetail = () => {
     promotionData.terms ||
     "";
 
-  const isDummy = promotionData.promotionType.toUpperCase() === "DUMMY";
-  const isPromoteDepositChannel =
-    promotionData.promotionType.toUpperCase() === "PROMOTEDEPOSITCHANNEL";
+  const showJoinButton = !NOT_SHOW_JOIN_BUTTON_KEY_LIST.includes(
+    promotionData.promotionType.toUpperCase()
+  );
 
-  const showJoinButton = !(isDummy || isPromoteDepositChannel);
   return (
     <>
       <PromotionDetailContainer>
