@@ -1,5 +1,7 @@
 import { GameService } from "@/api-services/services/GameService";
+import { GameTypeEnum } from "@/api-services/utils/Enum";
 import bg from "@/assets/images/home/mobile/vender_card_bg.png";
+import Common from "@/utils/Common";
 import styled from 'styled-components';
 
 type Props = {
@@ -78,15 +80,38 @@ const VenderLogo = styled.div<Props>`
 `;
 
 const CardVendor = ({ imageUrl, gameName, venderName, venderLogoUrl, gpCode, gameType }: Props) => {
-
   const launchLobbyGame = () => {
-    GameService.JoinLobbyGame(gameType, gpCode).then((response) => {
-      if (response?.IsSuccess) {
-        window.location.href = response?.data?.url;
+    if (gameType === GameTypeEnum.COCKFIGHT) {
+      // 以後SM01不會開,多新增AWC_COCKFIGHT(缺對應api)
+      if (gpCode === "SM01") {
+        const gameWindow = window.open("", "Cockfight");
+        if (gameWindow) {
+          GameService.GetCockfight()
+            .then((res) => {
+              gameWindow.document.write(res?.data);
+              gameWindow.document.close();
+              gameWindow.focus();
+            })
+            .catch(() => {
+              gameWindow.close();
+            });
+        }
       } else {
-        console.log(response?.info);
+        Common.closePreviousPopup();
+        Common.PopupCenter(
+          "/joinlobbygame/" + GameTypeEnum.SPORTS + "/" + gpCode,
+          "gamewindow"
+        );
       }
-    })
+    } else {
+      GameService.JoinLobbyGame(gameType, gpCode).then((response) => {
+        if (response?.IsSuccess) {
+          window.location.href = response?.data?.url;
+        } else {
+          console.log(response?.info);
+        }
+      })
+    }
   };
 
   return (

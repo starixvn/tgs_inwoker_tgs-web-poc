@@ -175,7 +175,7 @@ const Main = (props: Props) => {
   };
 
   useEffect(() => {
-    if (activeGameTypeTab) {
+    if (activeGameTypeTab && !isEnterLobby) {
       GameService.GetGameList("", activeGameTypeTab).then((res) => {
         if (res && res.data) {
           const groupByProvider = filterAndGroupGames(res.data);
