@@ -24,7 +24,7 @@ export function useGetBottomNavItemList() {
       },
       {
         navType: "item",
-        label: "Refer",
+        label: i18n.t("affiliate.title"),
         iconUrl:
           process.env.PUBLIC_URL +
           `/assets/images/mobile/bottomAppBar/icon_refer.svg`,

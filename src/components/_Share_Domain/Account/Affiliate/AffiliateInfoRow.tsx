@@ -28,6 +28,8 @@ const AffiliateInfoRowContainer = styled.div`
     font-weight: 400;
     font-size: 0.937rem;
     line-height: 1.098rem;
+    overflow: hidden;
+    //white-space: nowrap;
   }
 
   & .button {
