@@ -7,6 +7,7 @@ import ranking_1 from "@/assets/images/home/mobile/ranking_1.svg";
 import ranking_2 from "@/assets/images/home/mobile/ranking_2.svg";
 import ranking_3 from "@/assets/images/home/mobile/ranking_3.svg";
 import styled from "styled-components";
+import MaskPlayerName from "@/components/Mobile/components/Ranking/components/MaskPlayerName";
 
 const RankLabelContainer = styled.div`
   width: 28px;
@@ -16,7 +17,7 @@ const RankLabelContainer = styled.div`
 export interface RankItem {
   key: string;
   playerName: string;
-  amount: number;
+  betAmount: number;
 }
 
 const RankLabel = ({ rank }: { rank: number }) => {
@@ -45,15 +46,17 @@ type Props = {
   rankItem: RankItem;
 };
 const RankItemRow = forwardRef(({ rank, rankItem }: Props, ref) => {
-  const { playerName, amount } = rankItem;
+  const { playerName, betAmount } = rankItem;
 
   return (
     <RankTableRow ref={ref}>
       <RankTableCol>
         <RankLabel rank={rank} />
       </RankTableCol>
-      <RankTableCol>{playerName}</RankTableCol>
-      <RankTableCol>{amount}</RankTableCol>
+      <RankTableCol>
+        <MaskPlayerName playerName={playerName} />
+      </RankTableCol>
+      <RankTableCol>{betAmount}</RankTableCol>
     </RankTableRow>
   );
 });

@@ -4,15 +4,18 @@ import LevelIcon from "@/components/Mobile/components/UI/LevelIcon";
 import { TypeProductRebateByLevel } from "@/components/Mobile/pages/BettingBonus";
 
 const CurrentLevelBannerContainer = styled.div`
-  width: 408px;
+  width: 100%;
+  max-width: 408px;
   min-width: 355px;
   height: 307px;
   border-radius: 20px;
   background-size: cover;
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  padding: 17px;
   background-image: url(${`${process.env.PUBLIC_URL}/assets/images/mobile/bettingBonus/current_level_bg.png`});
+  background-position: left center;
 `;
 const LevelIconContainer = styled.div`
   position: absolute;
@@ -25,7 +28,6 @@ const LevelIconContainer = styled.div`
 const TableContainer = styled.div`
   width: 251px;
   margin-top: 24px;
-  position: absolute;
   right: 17px;
 `;
 const TableRow = styled.div`

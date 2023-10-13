@@ -13,113 +13,17 @@ import SwipeToDelete from "react-swipe-to-delete-component";
 import i18n from "@/utils/i18n";
 import Common from "@/utils/Common";
 import config from "@/config/config";
+import { themeList } from "@/theme";
+import AddCardsButton from "@/components/_Share_Domain/CardPrev/components/AddCardsButton";
+import Card from "@/components/_Share_Domain/CardPrev/components/Card";
 
 const Container = styled.div`
   width: 100%;
-  padding-top: 170px;
-`;
+  padding: 20px 28px;
 
-const StyledAppBar = withStyles((theme) => ({
-  root: {
-    height: "170px",
-
-    background:
-      `linear-gradient(rgba(` +
-      theme.palette.primary.mainRgb +
-      `, 0.8), rgba(` +
-      theme.palette.primary.mainGradientRgb +
-      `, 0.8)), url(${
-        process.env.PUBLIC_URL + `/assets/images/wapp/bg-profile.png`
-      })`,
-    display: "block",
-  },
-}))(AppBar);
-
-const BalanceLabel = styled.div`
-  font-size: 36px;
-
-  text-align: center;
-  color: #ffffff;
-  margin: 15px auto 20px auto;
-`;
-
-const CardItem = styled.div`
-  background: #fff;
-  width: 632px;
-  height: 170px;
-  box-shadow: 0 2px 6px 0 rgba(58, 58, 58, 0.2);
-  border-radius: 16px;
-  margin-left: 60px;
-  padding: 0 0 0 44px;
-  color: ${({ theme }) => theme.secondary};
-`;
-const InfoLabel = styled.div`
-  font-size: ${() => (config.brand === "WGHK" ? `24px` : `18px`)};
-  font-weight: ${() => (config.brand === "WGHK" ? `400` : `600`)};
-
-  color: ${({ theme }) => theme.secondary};
-  float: right;
-  margin: 15px 80px 0 0;
-  background: url(${process.env.PUBLIC_URL +
-    `/assets/images/wapp/icon-card-info.png`})
-    no-repeat left center;
-  background-size: 32px;
-  padding-left: 44px;
-  height: ${() => (config.brand === "WGHK" ? `42px` : `32px`)};
-  padding-top: 4px;
-`;
-
-const BankName = styled.div`
-  font-size: 24px;
-
-  float: left;
-  width: 480px;
-  margin-top: 40px;
-`;
-const BankNumber = styled.div`
-  font-size: 32px;
-
-  float: left;
-  width: 480px;
-  margin-top: 15px;
-`;
-const EmptyCardItem = styled.div`
-  width: 632px;
-  height: 170px;
-  border: 2px ${({ theme }) => theme.secondary} dashed;
-  border-radius: 16px;
-  margin: 30px auto 0 auto;
-`;
-const EmptyCardTitle = styled.div`
-  font-size: ${() => (config.brand === "WGHK" ? `26px` : `24px`)};
-  font-weight: 600;
-  float: left;
-  color: ${({ theme }) => theme.secondary};
-  width: 450px;
-
-  margin: 50px 0 0 45px;
-`;
-const EmptyCardDesc = styled.div`
-  font-size: ${() => (config.brand === "WGHK" ? `24px` : `18px`)};
-  font-weight: ${() => (config.brand === "WGHK" ? `400` : `normal`)};
-  float: left;
-  color: ${({ theme }) => theme.secondary};
-  width: ${() => (config.brand === "WGHK" ? `455px` : `450px`)};
-  margin: 5px 0 0 45px;
-`;
-const EmptyCardAdd = styled.div`
-  background: url(${process.env.PUBLIC_URL +
-    `/assets/images/wapp/icon-plus-circle.png`})
-    no-repeat center center;
-  width: 100px;
-  height: 170px;
-  float: right;
-`;
-
-const DisableSwipe = styled.div`
-  pointer-events: ${({ disable }) => {
-    return disable ? "none" : "auto";
-  }};
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 `;
 
 class CardPrev extends Component {
@@ -182,29 +86,19 @@ class CardPrev extends Component {
       <Container>
         {this.props.wallet.bankCardList.map((row) => {
           return (
-            <DisableSwipe
+            <Card
+              key={row.id}
+              title={row.banktype}
+              content={
+                row.detail.address || row.detail.bankAccount || row.detail.phone
+              }
+              handleDelete={this.handleDeleteCard}
               disable={
                 config.features.AddCard_NotAllowedEditDelete ||
                 config.features.ChangesNotAllowed ||
                 config.features.AddCard_DisableCreateUpdateDelete
               }
-            >
-              <SwipeToDelete
-                key={row.id}
-                item={row}
-                deleteSwipe={0.1}
-                onDelete={this.handleDeleteCard}
-              >
-                <CardItem>
-                  <BankName>{row.banktype}</BankName>
-                  <BankNumber>
-                    {row.detail.address ||
-                      row.detail.bankAccount ||
-                      row.detail.phone}
-                  </BankNumber>
-                </CardItem>
-              </SwipeToDelete>
-            </DisableSwipe>
+            />
           );
         })}
 
@@ -215,25 +109,17 @@ class CardPrev extends Component {
             config.features.AddCard_MaximumCardAllowed &&
             config.features.AddCard_DisableCreateUpdateDelete)
         ) && (
-          <>
-            <InfoLabel>{i18n.t("card.msgSlideToDelete")}</InfoLabel>
-            <div className="clear"></div>
-            <EmptyCardItem
-              onClick={() => {
-                this.props.wallet.bankCardList.length > 0 &&
-                (config.features.ChangesNotAllowed ||
-                  config.features.AddCard_NotAllowedEditDelete ||
-                  this.props.wallet.bankCardList.length >=
-                    config.features.AddCard_MaximumCardAllowed)
-                  ? this.props.alert("", i18n.t("card.toEdit"))
-                  : this.props.navigate("/card/add");
-              }}
-            >
-              <EmptyCardAdd></EmptyCardAdd>
-              <EmptyCardTitle>{i18n.t("card.msgAddCard")}</EmptyCardTitle>
-              <EmptyCardDesc>{i18n.t("card.msgAddCardDesc")}</EmptyCardDesc>
-            </EmptyCardItem>
-          </>
+          <AddCardsButton
+            handleClick={() => {
+              this.props.wallet.bankCardList.length > 0 &&
+              (config.features.ChangesNotAllowed ||
+                config.features.AddCard_NotAllowedEditDelete ||
+                this.props.wallet.bankCardList.length >=
+                  config.features.AddCard_MaximumCardAllowed)
+                ? this.props.alert("", i18n.t("card.toEdit"))
+                : this.props.navigate("/card/add");
+            }}
+          />
         )}
         <MessageDialog
           onClose={() => this.handleCloseDialog()}

@@ -7,8 +7,6 @@ import { walletAction } from "@/api-services/actions/walletAction";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
 import Header from "@/components/Mobile/components/_PrevShare/Header";
-import Textbox from "@/components/Mobile/components/_PrevShare/Textbox";
-import Button from "@/components/Mobile/components/_PrevShare/Button";
 import MessageDialog from "@/components/Mobile/components/_PrevShare/MessageDialog";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import Modal from "@material-ui/core/Dialog";
@@ -18,10 +16,17 @@ import ListItemText from "@material-ui/core/ListItemText";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
 import Common from "@/utils/Common";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+} from "@/components/Mobile/styles/forms";
+import { Button } from "@/components/Mobile/components/UI/Button";
 
 const Container = styled.div`
   width: 100%;
-  padding-top: 170px;
+  padding: 20px 17px;
 `;
 const StyledAppBar = withStyles((theme) => ({
   root: {
@@ -48,23 +53,20 @@ const BalanceLabel = styled.div`
 `;
 
 const SubTitle = styled.div`
-  font-size: 34px;
-  font-weight: 550;
-  margin: 40px 0 0 50px;
-  color: ${({ theme }) => theme.secondary};
+  font-size: 1.5rem;
+  line-height: 1.758rem;
+  font-weight: 700;
+  color: ${({ theme }) => theme.white};
+  margin-bottom: 12px;
 `;
 
 const BottomInfo = styled.div`
-  font-size: 22px;
-  font-weight: 600;
-  height: 30px;
-  color: #c40511;
-  background: url(${process.env.PUBLIC_URL +
-    `/assets/images/wapp/icon-red-info.png`})
-    no-repeat left center;
-  padding-left: 40px;
-  display: table;
-  margin: 0 auto;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.0025rem;
+  text-align: center;
+  color: ${({ theme }) => theme.white};
+  margin-bottom: 20px;
 `;
 const StyledModalBank = withStyles((theme) => ({
   paper: {
@@ -564,63 +566,41 @@ class AddCardPrev extends Component {
 
     return (
       <Container>
-        <StyledAppBar>
-          <Header
-            onBackClick={this.handleBackClick}
-            title={i18n.t("card.addCard.title")}
-            position={"sticky"}
-            backgroundColor={"transparent"}
-          ></Header>
-          <BalanceLabel>
-            {Common.formatNumberWithThousand(
-              this.props.wallet.mainBalance +
-                this.props.game.providerList
-                  .filter(
-                    (item) => item.status === 0 && item.transferwallet === true
-                  )
-                  .reduce((a, v) => (a = a + v.balance), 0)
-            )}
-          </BalanceLabel>
-        </StyledAppBar>
         <SubTitle>{i18n.t("card.addCard.title")}</SubTitle>
         {!config.features.AddCard_HideCertainField && (
-          <Textbox
-            style={{ margin: "20px auto 20px auto" }}
-            value={
-              !this.state.isDeposit &&
-              this.props.wallet.withdrawalList.length > 0
-                ? this.props.wallet.withdrawalList[
-                    this.state.selectedBankTypeIndex
-                  ].banktype
-                : this.state.isDeposit &&
-                  this.props.wallet.depositList.length > 0
-                ? this.props.wallet.depositList[
-                    this.state.selectedBankTypeIndex
-                  ].banktype
-                : ""
-            }
-            onClick={() => this.setState({ ...this.state, bankTypeOpen: true })}
-            type={"text"}
-            label={i18n.t("common.withdrawalBankType")}
-            disabled={true}
-          ></Textbox>
+          <ItemContainer>
+            <LabelContainer>
+              {i18n.t("common.withdrawalBankType")}
+            </LabelContainer>
+            <FormControl variant="outlined">
+              <TextField
+                value={
+                  !this.state.isDeposit &&
+                  this.props.wallet.withdrawalList.length > 0
+                    ? this.props.wallet.withdrawalList[
+                        this.state.selectedBankTypeIndex
+                      ].banktype
+                    : this.state.isDeposit &&
+                      this.props.wallet.depositList.length > 0
+                    ? this.props.wallet.depositList[
+                        this.state.selectedBankTypeIndex
+                      ].banktype
+                    : ""
+                }
+                onClick={() =>
+                  this.setState({ ...this.state, bankTypeOpen: true })
+                }
+                type={"text"}
+                disabled={true}
+              />
+            </FormControl>
+          </ItemContainer>
         )}
 
         {!config.features.AddCard_HideChannel && (
-          <Textbox
-            style={{ margin: "20px auto 20px auto" }}
-            value={
-              this.state.channelList.length > 0
-                ? i18n.t(
-                    this.state.channelList[this.state.selectedChannelIndex]
-                      .channelname
-                  )
-                : ""
-            }
-            onClick={() => this.setState({ ...this.state, channelOpen: true })}
-            type={"text"}
-            label={
-              config.features.AddCard_Bank_Custom_IDR &&
+          <ItemContainer>
+            <LabelContainer>
+              {config.features.AddCard_Bank_Custom_IDR &&
               ((!this.state.isDeposit &&
                 this.props.wallet.withdrawalList.length > 0 &&
                 this.props.wallet.withdrawalList[
@@ -632,10 +612,26 @@ class AddCardPrev extends Component {
                     this.state.selectedBankTypeIndex
                   ].banktype === "Bank"))
                 ? i18n.t("card.addCard.BankName")
-                : i18n.t("common.withdrawalChannel")
-            }
-            disabled={true}
-          ></Textbox>
+                : i18n.t("common.withdrawalChannel")}
+            </LabelContainer>
+            <FormControl variant="outlined">
+              <TextField
+                value={
+                  this.state.channelList.length > 0
+                    ? i18n.t(
+                        this.state.channelList[this.state.selectedChannelIndex]
+                          .channelname
+                      )
+                    : ""
+                }
+                onClick={() =>
+                  this.setState({ ...this.state, channelOpen: true })
+                }
+                type={"text"}
+                disabled={true}
+              />
+            </FormControl>
+          </ItemContainer>
         )}
 
         {(() => {
@@ -658,76 +654,87 @@ class AddCardPrev extends Component {
                   selectedBankType("Pulsa")
                 ) && (
                   <>
-                    <Textbox
-                      style={{ margin: "20px auto 20px auto" }}
-                      value={this.state.bankName}
-                      onChange={this.handleBankNameChange}
-                      type={"text"}
-                      disabled={
-                        config.features.AddCard_BankDropdown ||
-                        this.state.disabledBankNameInput
-                      }
-                      onClick={() =>
-                        this.setState({ ...this.state, bankNameOpen: true })
-                      }
-                      placeholder={
-                        config.features.AddCard_DisplayFPS
-                          ? i18n.t("hk28.card.addCard.msgEnterBankName")
-                          : i18n.t("card.addCard.msgEnterBankName")
-                      }
-                      label={
-                        config.features.AddCard_DisplayFPS
+                    <ItemContainer>
+                      <LabelContainer>
+                        {config.features.AddCard_DisplayFPS
                           ? i18n.t("hk28.card.addCard.BankName")
-                          : i18n.t("card.addCard.BankName")
-                      }
-                      maxLength={255}
-                    ></Textbox>
+                          : i18n.t("card.addCard.BankName")}
+                      </LabelContainer>
+                      <FormControl variant="outlined">
+                        <TextField
+                          value={this.state.bankName}
+                          onChange={this.handleBankNameChange}
+                          type={"text"}
+                          disabled={
+                            config.features.AddCard_BankDropdown ||
+                            this.state.disabledBankNameInput
+                          }
+                          onClick={() =>
+                            this.setState({ ...this.state, bankNameOpen: true })
+                          }
+                          placeholder={
+                            config.features.AddCard_DisplayFPS
+                              ? i18n.t("hk28.card.addCard.msgEnterBankName")
+                              : i18n.t("card.addCard.msgEnterBankName")
+                          }
+                          maxLength={255}
+                        />
+                      </FormControl>
+                    </ItemContainer>
                     {(() => {
                       if (config.features.AddCard_BankBranch) {
                         return (
-                          <Textbox
-                            style={{ margin: "20px auto 20px auto" }}
-                            value={this.state.bankBranch}
-                            onChange={this.handleBankBranchChange}
-                            type={"text"}
-                            placeholder={i18n.t(
-                              "card.addCard.branchPlaceHolder"
-                            )}
-                            label={i18n.t("card.addCard.branch")}
-                            maxLength={255}
-                          ></Textbox>
+                          <ItemContainer>
+                            <LabelContainer>
+                              {i18n.t("card.addCard.branch")}
+                            </LabelContainer>
+                            <FormControl variant="outlined">
+                              <TextField
+                                value={this.state.bankBranch}
+                                onChange={this.handleBankBranchChange}
+                                type={"text"}
+                                placeholder={i18n.t(
+                                  "card.addCard.branchPlaceHolder"
+                                )}
+                                maxLength={255}
+                              />
+                            </FormControl>
+                          </ItemContainer>
                         );
                       }
                     })()}
                   </>
                 )}
 
-                <Textbox
-                  style={{ margin: "20px auto 20px auto" }}
-                  value={this.state.bankAccountName}
-                  onChange={this.handleBankAccountNameChange}
-                  type={"text"}
-                  placeholder={
-                    eWalletCustom
+                <ItemContainer>
+                  <LabelContainer>
+                    {eWalletCustom
                       ? i18n.t("card.addCard.eWalletAccount")
                       : config.features.AddCard_DisplayFPS
                       ? i18n.t("hk28.card.addCard.BankAccountName")
                       : config.features.AddCard_Sowin_CustomBankAccountName
                       ? i18n.t("sowin.card.addCard.BankAccountName")
-                      : i18n.t("card.addCard.BankAccountName")
-                  }
-                  label={
-                    eWalletCustom
-                      ? i18n.t("card.addCard.eWalletAccount")
-                      : config.features.AddCard_DisplayFPS
-                      ? i18n.t("hk28.card.addCard.BankAccountName")
-                      : config.features.AddCard_Sowin_CustomBankAccountName
-                      ? i18n.t("sowin.card.addCard.BankAccountName")
-                      : i18n.t("card.addCard.BankAccountName")
-                  }
-                  maxLength={255}
-                  disabled={this.state.disableBankAccountNameInput}
-                ></Textbox>
+                      : i18n.t("card.addCard.BankAccountName")}
+                  </LabelContainer>
+                  <FormControl variant="outlined">
+                    <TextField
+                      value={this.state.bankAccountName}
+                      onChange={this.handleBankAccountNameChange}
+                      type={"text"}
+                      placeholder={
+                        eWalletCustom
+                          ? i18n.t("card.addCard.eWalletAccount")
+                          : config.features.AddCard_DisplayFPS
+                          ? i18n.t("hk28.card.addCard.BankAccountName")
+                          : config.features.AddCard_Sowin_CustomBankAccountName
+                          ? i18n.t("sowin.card.addCard.BankAccountName")
+                          : i18n.t("card.addCard.BankAccountName")
+                      }
+                      maxLength={255}
+                      disabled={this.state.disableBankAccountNameInput}
+                    />
+                  </FormControl>
+                </ItemContainer>
               </React.Fragment>
             );
           }
@@ -740,32 +747,35 @@ class AddCardPrev extends Component {
             this.props.wallet.depositList.length > 0 &&
             this.props.wallet.depositList[this.state.selectedBankTypeIndex]
               .banktype === "EWallet")) && (
-          <Textbox
-            style={{ margin: "20px auto 20px auto" }}
-            value={this.state.bankAccountName}
-            onChange={this.handleBankAccountNameChange}
-            type={"text"}
-            placeholder={
-              eWalletCustom
+          <ItemContainer>
+            <LabelContainer>
+              {eWalletCustom
                 ? i18n.t("card.addCard.eWalletAccount")
                 : config.features.AddCard_DisplayFPS
                 ? i18n.t("hk28.card.addCard.BankAccountName")
                 : config.features.AddCard_Sowin_CustomBankAccountName
                 ? i18n.t("sowin.card.addCard.BankAccountName")
-                : i18n.t("card.addCard.BankAccountName")
-            }
-            label={
-              eWalletCustom
-                ? i18n.t("card.addCard.eWalletAccount")
-                : config.features.AddCard_DisplayFPS
-                ? i18n.t("hk28.card.addCard.BankAccountName")
-                : config.features.AddCard_Sowin_CustomBankAccountName
-                ? i18n.t("sowin.card.addCard.BankAccountName")
-                : i18n.t("card.addCard.BankAccountName")
-            }
-            maxLength={255}
-            disabled={this.state.disableBankAccountNameInput}
-          ></Textbox>
+                : i18n.t("card.addCard.BankAccountName")}
+            </LabelContainer>
+            <FormControl variant="outlined">
+              <TextField
+                value={this.state.bankAccountName}
+                onChange={this.handleBankAccountNameChange}
+                type={"text"}
+                placeholder={
+                  eWalletCustom
+                    ? i18n.t("card.addCard.eWalletAccount")
+                    : config.features.AddCard_DisplayFPS
+                    ? i18n.t("hk28.card.addCard.BankAccountName")
+                    : config.features.AddCard_Sowin_CustomBankAccountName
+                    ? i18n.t("sowin.card.addCard.BankAccountName")
+                    : i18n.t("card.addCard.BankAccountName")
+                }
+                maxLength={255}
+                disabled={this.state.disableBankAccountNameInput}
+              />
+            </FormControl>
+          </ItemContainer>
         )}
         {(!this.state.isDeposit &&
           this.props.wallet.withdrawalList.length > 0 &&
@@ -780,100 +790,86 @@ class AddCardPrev extends Component {
             this.props.wallet.depositList[this.state.selectedBankTypeIndex]
               .banktype === "FPS")) ? (
           <div>
-            <Textbox
-              style={{ margin: "20px auto 20px auto" }}
-              value={this.state.name}
-              onChange={(e) => {
-                let value = e.target.value;
-                this.setState({
-                  ...this.state,
-                  name: value,
-                });
-              }}
-              type={"text"}
-              placeholder={
-                config.features.AddCard_InputAddFPS
-                  ? i18n.t("custom.addcard.msgPlsEnterName")
-                  : i18n.t("profile.nameVerify.msgPlsEnterName")
-              }
-              label={
-                config.features.AddCard_InputAddFPS
+            <ItemContainer>
+              <LabelContainer>
+                {config.features.AddCard_InputAddFPS
                   ? i18n.t("custom.addcard.name")
-                  : i18n.t("profile.nameVerify.title")
-              }
-            ></Textbox>
-            <Textbox
-              style={{ margin: "20px auto 20px auto" }}
-              value={this.state.phone}
-              onChange={(e) => {
-                let value = e.target.value;
-                value = value.replace(/[^0-9]/gi, "");
-                this.setState({
-                  ...this.state,
-                  phone: value,
-                });
-              }}
-              maxLength={
-                (selectedBankType("ThirdParty") ||
-                  selectedBankType("Pulsa") ||
-                  selectedBankType("FPS")) &&
-                config.features.MAX_PHONE_LENGTH
-              }
-              type={"text"}
-              placeholder={
-                config.features.AddCard_InputAddFPS
-                  ? i18n.t("custom.addcard.msgEnterPhone")
-                  : config.features.AddCard_DisplayFPS
-                  ? i18n.t("bet28.msgEnterPhone")
-                  : i18n.t("common.msgEnterPhone")
-              }
-              label={
-                config.features.AddCard_InputAddFPS
+                  : i18n.t("profile.nameVerify.title")}
+              </LabelContainer>
+              <FormControl variant="outlined">
+                <TextField
+                  value={this.state.name}
+                  onChange={(e) => {
+                    let value = e.target.value;
+                    this.setState({
+                      ...this.state,
+                      name: value,
+                    });
+                  }}
+                  type={"text"}
+                  placeholder={
+                    config.features.AddCard_InputAddFPS
+                      ? i18n.t("custom.addcard.msgPlsEnterName")
+                      : i18n.t("profile.nameVerify.msgPlsEnterName")
+                  }
+                />
+              </FormControl>
+            </ItemContainer>
+
+            <ItemContainer>
+              <LabelContainer>
+                {config.features.AddCard_InputAddFPS
                   ? i18n.t("custom.addcard.phoneNumber")
                   : config.features.AddCard_DisplayFPS
                   ? i18n.t("bet28.phoneNumber")
-                  : i18n.t("common.phoneNumber")
-              }
-            ></Textbox>
+                  : i18n.t("common.phoneNumber")}
+              </LabelContainer>
+              <FormControl variant="outlined">
+                <TextField
+                  value={this.state.phone}
+                  onChange={(e) => {
+                    let value = e.target.value;
+                    value = value.replace(/[^0-9]/gi, "");
+                    this.setState({
+                      ...this.state,
+                      phone: value,
+                    });
+                  }}
+                  maxLength={
+                    selectedBankType("ThirdParty") ||
+                    selectedBankType("Pulsa") ||
+                    selectedBankType("FPS")
+                      ? config.features.MAX_PHONE_LENGTH
+                      : 255
+                  }
+                  type={"text"}
+                  placeholder={
+                    config.features.AddCard_InputAddFPS
+                      ? i18n.t("custom.addcard.msgEnterPhone")
+                      : config.features.AddCard_DisplayFPS
+                      ? i18n.t("bet28.msgEnterPhone")
+                      : i18n.t("common.msgEnterPhone")
+                  }
+                />
+              </FormControl>
+            </ItemContainer>
             <BottomInfo>{i18n.t("card.addCard.desc")}</BottomInfo>
             <Button
+              fullWidth
               style={{ margin: "40px auto 0 auto" }}
-              label={
-                config.features.Register_CustomFlow_IDR && !this.state.isDeposit
-                  ? i18n.t("common.register")
-                  : i18n.t("common.confirm")
-              }
               onClick={this.handleNextClick}
               disabled={this.state.name === "" || this.state.phone === ""}
-            ></Button>
+            >
+              {config.features.Register_CustomFlow_IDR && !this.state.isDeposit
+                ? i18n.t("common.register")
+                : i18n.t("common.confirm")}
+            </Button>
           </div>
         ) : (
           <div>
-            <Textbox
-              style={{ margin: "20px auto 20px auto" }}
-              value={this.state.number}
-              onChange={(e) => {
-                let value = e.target.value;
-                value = value.replace(/[^A-Za-z0-9]/gi, "");
-                this.setState({
-                  ...this.state,
-                  number: value,
-                });
-              }}
-              type={"text"}
-              placeholder={
-                eWalletCustom || selectedBankType("Pulsa")
-                  ? i18n.t("card.addCard.msgEnterPhone")
-                  : config.features.AddCard_DisplayGCash
-                  ? i18n.t("piso.msgEnterWithdrawalNumber")
-                  : config.features.AddCard_DisplayFPS
-                  ? i18n.t("hk28.msgEnterWithdrawalNumber")
-                  : config.features.AddCard_Bank_Custom_IDR
-                  ? i18n.t("idr.msgEnterWithdrawalNumber")
-                  : i18n.t("common.msgEnterWithdrawalNumber")
-              }
-              label={
-                eWalletCustom || selectedBankType("Pulsa")
+            <ItemContainer>
+              <LabelContainer>
+                {eWalletCustom || selectedBankType("Pulsa")
                   ? i18n.t("card.addCard.phone")
                   : config.features.AddCard_DisplayGCash
                   ? i18n.t("piso.withdrawalNumber")
@@ -881,23 +877,46 @@ class AddCardPrev extends Component {
                   ? i18n.t("hk28.withdrawalNumber")
                   : config.features.AddCard_Bank_Custom_IDR
                   ? i18n.t("idr.withdrawalNumber")
-                  : i18n.t("common.withdrawalNumber")
-              }
-              maxLength={
-                (selectedBankType("ThirdParty") ||
-                  selectedBankType("Pulsa") ||
-                  selectedBankType("FPS")) &&
-                config.features.MAX_PHONE_LENGTH
-              }
-            ></Textbox>
+                  : i18n.t("common.withdrawalNumber")}
+              </LabelContainer>
+              <FormControl variant="outlined">
+                <TextField
+                  value={this.state.number}
+                  onChange={(e) => {
+                    let value = e.target.value;
+                    value = value.replace(/[^A-Za-z0-9]/gi, "");
+                    this.setState({
+                      ...this.state,
+                      number: value,
+                    });
+                  }}
+                  type={"text"}
+                  placeholder={
+                    eWalletCustom || selectedBankType("Pulsa")
+                      ? i18n.t("card.addCard.msgEnterPhone")
+                      : config.features.AddCard_DisplayGCash
+                      ? i18n.t("piso.msgEnterWithdrawalNumber")
+                      : config.features.AddCard_DisplayFPS
+                      ? i18n.t("hk28.msgEnterWithdrawalNumber")
+                      : config.features.AddCard_Bank_Custom_IDR
+                      ? i18n.t("idr.msgEnterWithdrawalNumber")
+                      : i18n.t("common.msgEnterWithdrawalNumber")
+                  }
+                  maxLength={
+                    selectedBankType("ThirdParty") ||
+                    selectedBankType("Pulsa") ||
+                    selectedBankType("FPS")
+                      ? config.features.MAX_PHONE_LENGTH
+                      : 255
+                  }
+                />
+              </FormControl>
+            </ItemContainer>
+
             <BottomInfo>{i18n.t("card.addCard.desc")}</BottomInfo>
+
             <Button
-              style={{ margin: "40px auto 0 auto" }}
-              label={
-                config.features.Register_CustomFlow_IDR && !this.state.isDeposit
-                  ? i18n.t("web.register.btn")
-                  : i18n.t("common.confirm")
-              }
+              fullWidth
               onClick={this.handleNextClick}
               disabled={(() => {
                 if (
@@ -932,7 +951,11 @@ class AddCardPrev extends Component {
                 }
                 return false;
               })()}
-            ></Button>
+            >
+              {config.features.Register_CustomFlow_IDR && !this.state.isDeposit
+                ? i18n.t("web.register.btn")
+                : i18n.t("common.confirm")}
+            </Button>
           </div>
         )}
 
@@ -949,12 +972,7 @@ class AddCardPrev extends Component {
                     key={index}
                     onClick={() => this.handleBankTypeClick(index)}
                   >
-                    {/* <StyledListItemIcon>
-                  <StyledListItemImage src={item.file}></StyledListItemImage>
-                </StyledListItemIcon> */}
-                    <StyledListItemText
-                      primary={item.banktype}
-                    ></StyledListItemText>
+                    <StyledListItemText primary={item.banktype} />
                   </StyledListItem>
                 );
               })
@@ -966,12 +984,7 @@ class AddCardPrev extends Component {
                     key={index}
                     onClick={() => this.handleBankTypeClick(index)}
                   >
-                    {/* <StyledListItemIcon>
-                    <StyledListItemImage src={item.file}></StyledListItemImage>
-                  </StyledListItemIcon> */}
-                    <StyledListItemText
-                      primary={item.banktype}
-                    ></StyledListItemText>
+                    <StyledListItemText primary={item.banktype} />
                   </StyledListItem>
                 );
               })}
@@ -987,9 +1000,7 @@ class AddCardPrev extends Component {
                 key={index}
                 onClick={() => this.handleChannelClick(index)}
               >
-                <StyledListItemText
-                  primary={i18n.t(item.channelname)}
-                ></StyledListItemText>
+                <StyledListItemText primary={i18n.t(item.channelname)} />
               </StyledListItem>
             );
           })}
@@ -1005,7 +1016,7 @@ class AddCardPrev extends Component {
                 key={index}
                 onClick={() => this.handleBankNameClick(item)}
               >
-                <StyledListItemText primary={i18n.t(item)}></StyledListItemText>
+                <StyledListItemText primary={i18n.t(item)} />
               </StyledListItem>
             );
           })}
@@ -1016,10 +1027,8 @@ class AddCardPrev extends Component {
           open={this.state.showDialog}
           message={this.state.dialogMessage}
           onClick={() => this.handleCloseDialog()}
-        ></MessageDialog>
-        <Loading
-          show={this.state.loading || this.props.wallet.loading}
-        ></Loading>
+        />
+        <Loading show={this.state.loading || this.props.wallet.loading} />
       </Container>
     );
   }
