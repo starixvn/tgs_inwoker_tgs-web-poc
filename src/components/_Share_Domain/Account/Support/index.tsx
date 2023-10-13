@@ -2,16 +2,11 @@ import React, { useState } from "react";
 import config from "@/config/config";
 import { BrandsSupport } from "@/types/general";
 import styled from "styled-components";
-import { themeList } from "@/theme";
 import SupportCard from "@/components/_Share_Domain/Account/Support/SupportCard";
 import QrCodeDialog from "@/components/_Share_Domain/Account/Support/QRCodeHolder";
 import contactGirlImg from "@/assets/images/account/girl/contact.png";
 import IMHandler from "@/components/_Share_Domain/Account/Support/IMHandler";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
-import Common from "@/utils/Common";
-import { useAuth } from "@/hooks/auth/useAuth";
-import i18n from "@/utils/i18n";
-import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useContactCS } from "@/hooks/useContactCS";
 
 const SupportContainer = styled.div``;
