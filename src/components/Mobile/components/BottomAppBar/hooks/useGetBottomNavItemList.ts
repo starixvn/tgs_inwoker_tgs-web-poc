@@ -48,7 +48,7 @@ export function useGetBottomNavItemList() {
       },
       {
         navType: "item",
-        label: i18n.t("inbox.title"),
+        label: i18n.t("wap.main.account.inbox"),
         iconUrl:
           process.env.PUBLIC_URL +
           `/assets/images/mobile/bottomAppBar/icon_email.svg`,
