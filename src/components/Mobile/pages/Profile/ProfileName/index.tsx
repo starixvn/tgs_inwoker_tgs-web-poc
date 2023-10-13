@@ -1,18 +1,22 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import NameDialog from "@/components/Mobile/pages/Profile/ProfileName/NameDialog";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
+import NameVerify from "@/components/_Share_Domain/Account/Profile/NameVerify";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
 
 type Props = {};
-const ProfileName = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const ProfileNamePage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("profile.nameVerify.title"));
   }, []);
 
-  return <NameDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />;
+  const { alert } = useNotifications();
+  const history = useHistory();
+
+  return <NameVerify alert={alert} appHistory={history} />;
 };
 
-export default ProfileName;
+export default ProfileNamePage;

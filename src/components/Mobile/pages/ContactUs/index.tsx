@@ -1,20 +1,17 @@
-import React, { useCallback, useState } from "react";
-import { useHistory } from "react-router-dom";
-import ContactUsDialog from "@/components/Mobile/pages/ContactUs/ContactUsDialog";
+import React, { useEffect } from "react";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
+import Support from "@/components/_Share_Domain/Account/Support";
 
 type Props = {};
-const ContactUs = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const ContactUsPage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("support.contact"));
   }, []);
 
-  return (
-    <ContactUsDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />
-  );
+  return <Support />;
 };
 
-export default ContactUs;
+export default ContactUsPage;

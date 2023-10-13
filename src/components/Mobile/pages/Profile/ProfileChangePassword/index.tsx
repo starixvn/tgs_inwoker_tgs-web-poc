@@ -1,23 +1,22 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import ChangePasswordDialog from "@/components/Mobile/pages/Profile/ProfileChangePassword/ChangePasswordDialog";
+import ChangePassword from "@/components/_Share_Domain/Account/Profile/ChangePassword";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
 
 type Props = {};
-const ProfileChangePassword = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const ProfileChangePasswordPage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("profile.changePassword.editPassword"));
   }, []);
 
-  return (
-    <ChangePasswordDialog
-      isOpen={isOpen}
-      handleCloseDialog={handleCloseDialog}
-    />
-  );
+  const { alert } = useNotifications();
+  const history = useHistory();
+
+  return <ChangePassword alert={alert} appHistory={history} />;
 };
 
-export default ProfileChangePassword;
+export default ProfileChangePasswordPage;

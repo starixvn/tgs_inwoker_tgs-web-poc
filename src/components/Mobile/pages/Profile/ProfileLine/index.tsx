@@ -1,18 +1,22 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import LineDialog from "@/components/Mobile/pages/Profile/ProfileLine/LineDialog";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
+import Line from "@/components/_Share_Domain/Account/Profile/Line";
 
 type Props = {};
-const ProfileLine = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const ProfileLinePage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("common.line"));
   }, []);
 
-  return <LineDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />;
+  const { alert } = useNotifications();
+  const history = useHistory();
+
+  return <Line alert={alert} appHistory={history} />;
 };
 
-export default ProfileLine;
+export default ProfileLinePage;

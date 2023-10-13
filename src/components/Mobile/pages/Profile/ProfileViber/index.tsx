@@ -1,18 +1,22 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import ViberDialog from "@/components/Mobile/pages/Profile/ProfileViber/ViberDialog";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
+import Viber from "@/components/_Share_Domain/Account/Profile/Viber";
 
 type Props = {};
-const ProfileViber = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const ProfileViberPage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("common.viber"));
   }, []);
 
-  return <ViberDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />;
+  const { alert } = useNotifications();
+  const history = useHistory();
+
+  return <Viber alert={alert} appHistory={history} />;
 };
 
-export default ProfileViber;
+export default ProfileViberPage;

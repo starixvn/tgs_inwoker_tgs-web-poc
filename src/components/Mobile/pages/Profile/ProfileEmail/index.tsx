@@ -1,18 +1,22 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import EmailDialog from "@/components/Mobile/pages/Profile/ProfileEmail/EmailDialog";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
+import Email from "@/components/_Share_Domain/Account/Profile/Email";
 
 type Props = {};
-const ProfileEmail = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const ProfileEmailPage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("common.emailAddress"));
   }, []);
 
-  return <EmailDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />;
+  const { alert } = useNotifications();
+  const history = useHistory();
+
+  return <Email alert={alert} appHistory={history} />;
 };
 
-export default ProfileEmail;
+export default ProfileEmailPage;

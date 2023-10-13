@@ -1,20 +1,17 @@
-import React, { useCallback, useState } from "react";
-import { useHistory } from "react-router-dom";
-import AffiliateDialog from "@/components/Mobile/pages/Affiliate/AffiliateDialog";
+import React, { useEffect } from "react";
+import i18n from "@/utils/i18n";
+import Affiliate from "@/components/_Share_Domain/Account/Affiliate";
+import { usePageName } from "@/hooks/usePageName";
 
 type Props = {};
-const Affiliate = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const AffiliatePage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("affiliate.title"));
   }, []);
 
-  return (
-    <AffiliateDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />
-  );
+  return <Affiliate />;
 };
 
-export default Affiliate;
+export default AffiliatePage;

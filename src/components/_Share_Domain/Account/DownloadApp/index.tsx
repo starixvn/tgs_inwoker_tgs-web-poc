@@ -63,7 +63,7 @@ const infoCardItemList: InfoCardItem[] = [
 ];
 
 type Props = {};
-const Index = (props: Props) => {
+const DownloadApp = (props: Props) => {
   return (
     <DownloadAppContainer>
       <GirlImage>
@@ -92,4 +92,4 @@ const Index = (props: Props) => {
   );
 };
 
-export default Index;
+export default DownloadApp;

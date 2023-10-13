@@ -31,6 +31,7 @@ import { AuthContextProvider } from "@/contexts/authContext";
 import LayoutProvider from "@/components/Mobile/layouts/LayoutProvider";
 import { AuthGuard } from "@/components/_Share_Domain/authentication/AuthGuard";
 import FloatingToolIcons from "@/components/Mobile/components/FloatingToolIcons";
+import { PageNameContextProvider } from "@/contexts/pageNameContext";
 
 class Mobile extends Component {
   constructor(props) {
@@ -513,77 +514,79 @@ class Mobile extends Component {
       return (
         <>
           <AuthContextProvider>
-            <Router history={AppHistory}>
-              <Switch>
-                {routes.map((route, index) => {
+            <PageNameContextProvider>
+              <Router history={AppHistory}>
+                <Switch>
+                  {routes.map((route, index) => {
+                    return (
+                      <Route
+                        exact
+                        key={index}
+                        path={route.path}
+                        render={(props) => {
+                          return (
+                            <Suspense fallback={<Loading opacity={0} />}>
+                              <AuthGuard route={route}>
+                                <LayoutProvider route={route}>
+                                  <route.component />
+                                </LayoutProvider>
+                              </AuthGuard>
+                            </Suspense>
+                          );
+                        }}
+                      />
+                    );
+                  })}
+                  <Redirect to="/" />
+                </Switch>
+              </Router>
+
+              {(() => {
+                if (
+                  config.features.LiveChatVendor.brand &&
+                  config.features.LiveChatVendor.license
+                ) {
                   return (
-                    <Route
-                      exact
-                      key={index}
-                      path={route.path}
-                      render={(props) => {
-                        return (
-                          <Suspense fallback={<Loading opacity={0} />}>
-                            <AuthGuard route={route}>
-                              <LayoutProvider route={route}>
-                                <route.component />
-                              </LayoutProvider>
-                            </AuthGuard>
-                          </Suspense>
-                        );
-                      }}
+                    <LiveChat
+                      license={config.features.LiveChatVendor.license}
+                      vendor={config.features.LiveChatVendor.brand}
+                      group={
+                        config.features.LiveChatVendor.group
+                          ? config.features.LiveChatVendor.group
+                          : 0
+                      }
                     />
                   );
-                })}
-                <Redirect to="/" />
-              </Switch>
-            </Router>
+                }
+              })()}
 
-            {(() => {
-              if (
-                config.features.LiveChatVendor.brand &&
-                config.features.LiveChatVendor.license
-              ) {
-                return (
-                  <LiveChat
-                    license={config.features.LiveChatVendor.license}
-                    vendor={config.features.LiveChatVendor.brand}
-                    group={
-                      config.features.LiveChatVendor.group
-                        ? config.features.LiveChatVendor.group
-                        : 0
-                    }
-                  />
-                );
-              }
-            })()}
+              {config.features.SMSVerification &&
+                this.props.account.registercompleted === false &&
+                config.features.ForcedVerification && (
+                  <>
+                    <ForcedVerification
+                      forcedverify={true}
+                      alert={this.handleOpenPopupAlert}
+                    />
+                  </>
+                )}
 
-            {config.features.SMSVerification &&
-              this.props.account.registercompleted === false &&
-              config.features.ForcedVerification && (
-                <>
-                  <ForcedVerification
-                    forcedverify={true}
-                    alert={this.handleOpenPopupAlert}
-                  />
-                </>
+              {showPopupAnnouncement && (
+                <PopupAnnouncement
+                  open={this.state.openAnnouncement}
+                  onClose={this.handleCloseAnnouncement}
+                />
+              )}
+              {showPopupPromotion && (
+                <PopupPromotion
+                  open={this.state.showPromotion}
+                  onClose={this.handleClosePromotion}
+                />
               )}
 
-            {showPopupAnnouncement && (
-              <PopupAnnouncement
-                open={this.state.openAnnouncement}
-                onClose={this.handleCloseAnnouncement}
-              />
-            )}
-            {showPopupPromotion && (
-              <PopupPromotion
-                open={this.state.showPromotion}
-                onClose={this.handleClosePromotion}
-              />
-            )}
-
-            <PopupAlertModal />
-            <FloatingToolIcons />
+              <PopupAlertModal />
+              <FloatingToolIcons />
+            </PageNameContextProvider>
           </AuthContextProvider>
         </>
       );

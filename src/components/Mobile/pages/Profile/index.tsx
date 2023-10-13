@@ -1,20 +1,18 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import ProfileMenuDialog from "@/components/Mobile/pages/Profile/ProfileMenuDialog";
+import ProfileMenu from "@/components/Mobile/pages/Profile/ProfileMenu";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
 
 type Props = {};
-const Profile = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const ProfilePage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("profile.basicInfo"));
   }, []);
 
-  return (
-    <ProfileMenuDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />
-  );
+  return <ProfileMenu />;
 };
 
-export default Profile;
+export default ProfilePage;

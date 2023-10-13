@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import styled from "styled-components";
 import { themeList } from "@/theme";
 import { BrandsSupport } from "@/types/general";
+import i18n from "@/utils/i18n";
 
 const theme = themeList["mobileT18"];
 
@@ -94,7 +95,7 @@ const SupportCard = ({ brandsSupport, handleClick }: Props) => {
 
       <span>{type}</span>
 
-      <ContactButton>CONTACT US</ContactButton>
+      <ContactButton>{i18n.t("common.contact")}</ContactButton>
     </SupportCardContainer>
   );
 };

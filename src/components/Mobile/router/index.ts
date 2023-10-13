@@ -2,35 +2,35 @@ import Card from "@/components/Mobile/components/Card";
 import AddCard from "@/components/Mobile/components/Card/AddCard";
 import Affiliate from "@/components/Mobile/pages/Affiliate";
 import BettingBonus from "@/components/Mobile/pages/BettingBonus";
-import ContactUs from "@/components/Mobile/pages/ContactUs";
+import ContactUsPage from "@/components/Mobile/pages/ContactUs";
 import Deposit from "@/components/Mobile/pages/Deposit";
 import DepositDetails from "@/components/Mobile/pages/Deposit/DepositDetails";
 import DepositManual from "@/components/Mobile/pages/Deposit/DepositManual";
 import DepositPayment from "@/components/Mobile/pages/Deposit/DepositPayment";
 import Inbox from "@/components/Mobile/pages/Inbox";
-import Login from "@/components/Mobile/pages/Login";
+import LoginPage from "@/components/Mobile/pages/Login";
 import Main from "@/components/Mobile/pages/Main";
 import Maintenance from "@/components/Mobile/pages/Maintenance";
-import Profile from "@/components/Mobile/pages/Profile";
-import ProfileBirthDate from "@/components/Mobile/pages/Profile/ProfileBirthDate";
+import ProfilePage from "@/components/Mobile/pages/Profile";
+import ProfileBirthDatePage from "@/components/Mobile/pages/Profile/ProfileBirthDate";
 import ProfileChangeEmail from "@/components/Mobile/pages/Profile/ProfileChangeEmail";
-import ProfileChangePassword from "@/components/Mobile/pages/Profile/ProfileChangePassword";
-import ProfileChangePhone from "@/components/Mobile/pages/Profile/ProfileChangePhone";
-import ProfileChangeWithdrawalPassword from "@/components/Mobile/pages/Profile/ProfileChangeWithdrawalPassword";
-import ProfileEmail from "@/components/Mobile/pages/Profile/ProfileEmail";
-import ProfileFacebookMessenger from "@/components/Mobile/pages/Profile/ProfileFacebookMessenger";
-import ProfileLine from "@/components/Mobile/pages/Profile/ProfileLine";
-import ProfileName from "@/components/Mobile/pages/Profile/ProfileName";
-import ProfilePhone from "@/components/Mobile/pages/Profile/ProfilePhone";
-import ProfileQQ from "@/components/Mobile/pages/Profile/ProfileQQ";
-import ProfileResetWithdrawalPassword from "@/components/Mobile/pages/Profile/ProfileResetWithdrawalPassword";
-import ProfileTelegram from "@/components/Mobile/pages/Profile/ProfileTelegram";
-import ProfileViber from "@/components/Mobile/pages/Profile/ProfileViber";
-import ProfileWithdrawalPassword from "@/components/Mobile/pages/Profile/ProfileWIthdrawalPassword";
-import ProfileWeChat from "@/components/Mobile/pages/Profile/ProfileWeChat";
-import ProfileWhatsapp from "@/components/Mobile/pages/Profile/ProfileWhatsapp";
+import ProfileChangePasswordPage from "@/components/Mobile/pages/Profile/ProfileChangePassword";
+import ProfileChangePhonePage from "@/components/Mobile/pages/Profile/ProfileChangePhone";
+import ProfileChangeWithdrawalPasswordPage from "@/components/Mobile/pages/Profile/ProfileChangeWithdrawalPassword";
+import ProfileEmailPage from "@/components/Mobile/pages/Profile/ProfileEmail";
+import ProfileFacebookMessengerPage from "@/components/Mobile/pages/Profile/ProfileFacebookMessenger";
+import ProfileLinePage from "@/components/Mobile/pages/Profile/ProfileLine";
+import ProfileNamePage from "@/components/Mobile/pages/Profile/ProfileName";
+import ProfilePhonePage from "@/components/Mobile/pages/Profile/ProfilePhone";
+import ProfileQQPage from "@/components/Mobile/pages/Profile/ProfileQQ";
+import ProfileResetWithdrawalPasswordPage from "@/components/Mobile/pages/Profile/ProfileResetWithdrawalPassword";
+import ProfileTelegramPage from "@/components/Mobile/pages/Profile/ProfileTelegram";
+import ProfileViberPage from "@/components/Mobile/pages/Profile/ProfileViber";
+import ProfileWithdrawalPasswordPage from "@/components/Mobile/pages/Profile/ProfileWIthdrawalPassword";
+import ProfileWeChatPage from "@/components/Mobile/pages/Profile/ProfileWeChat";
+import ProfileWhatsappPage from "@/components/Mobile/pages/Profile/ProfileWhatsapp";
 import Promotion from "@/components/Mobile/pages/Promotion";
-import Register from "@/components/Mobile/pages/Register";
+import RegisterPage from "@/components/Mobile/pages/Register";
 import Report from "@/components/Mobile/pages/Report";
 import Transfer from "@/components/Mobile/pages/Transfer";
 import VIP from "@/components/Mobile/pages/Vip/index";
@@ -40,7 +40,8 @@ import config from "@/config/config";
 import React from "react";
 import PromotionDetail from "../pages/Promotion/PromotionDetail";
 import DefaultLayout from "@/components/Mobile/layouts/DefaultLayout";
-import ForgotPassword from "@/components/Mobile/pages/ForgetPassword";
+import ForgotPasswordPage from "@/components/Mobile/pages/ForgetPassword";
+import DialogLayout from "@/components/Mobile/layouts/DialogLayout";
 
 const Mine = React.lazy(() => import("@/components/Mobile/pages/Account/Mine"));
 
@@ -107,36 +108,36 @@ const routes: Route[] = [
   },
   {
     path: "/login",
-    component: Login,
+    component: LoginPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
     isAnonymousAllowed: true,
   },
   {
     path: "/register",
-    component: Register,
+    component: RegisterPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
     isAnonymousAllowed: true,
   },
   {
     path: "/forgot-password",
-    component: ForgotPassword,
+    component: ForgotPasswordPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
     isAnonymousAllowed: true,
   },
   // TODO:these 4 params looks like is unused?
   {
     path: "/a/:promotionid",
-    component: Register,
+    component: RegisterPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
     isAnonymousAllowed: true,
   },
   {
     path: "/t/:promotionid",
-    component: Register,
+    component: RegisterPage,
     category: RouteCategoryEnum.MINE,
     layout: DefaultLayout,
     isAnonymousAllowed: true,
@@ -144,125 +145,125 @@ const routes: Route[] = [
 
   {
     path: "/f/:promotionid",
-    component: Register,
+    component: RegisterPage,
     category: RouteCategoryEnum.MINE,
     layout: DefaultLayout,
     isAnonymousAllowed: true,
   },
   {
     path: "/p/:playername",
-    component: Register,
+    component: RegisterPage,
     category: RouteCategoryEnum.MINE,
     layout: DefaultLayout,
     isAnonymousAllowed: true,
   },
   {
     path: "/profile",
-    component: Profile,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/name",
-    component: ProfileName,
+    component: ProfileNamePage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/wechat",
-    component: ProfileWeChat,
+    component: ProfileWeChatPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/birthdate",
-    component: ProfileBirthDate,
+    component: ProfileBirthDatePage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/qq",
-    component: ProfileQQ,
+    component: ProfileQQPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/fb",
-    component: ProfileFacebookMessenger,
+    component: ProfileFacebookMessengerPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/telegram",
-    component: ProfileTelegram,
+    component: ProfileTelegramPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/line",
-    component: ProfileLine,
+    component: ProfileLinePage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/viber",
-    component: ProfileViber,
+    component: ProfileViberPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/whatsapp",
-    component: ProfileWhatsapp,
+    component: ProfileWhatsappPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/email",
-    component: ProfileEmail,
+    component: ProfileEmailPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/changeemail",
     component: ProfileChangeEmail,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/changephone",
-    component: ProfileChangePhone,
+    component: ProfileChangePhonePage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/phone",
-    component: ProfilePhone,
+    component: ProfilePhonePage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/changepassword",
-    component: ProfileChangePassword,
+    component: ProfileChangePasswordPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/withdrawalpassword",
-    component: ProfileWithdrawalPassword,
+    component: ProfileWithdrawalPasswordPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/resetwithdrawalpassword",
-    component: ProfileResetWithdrawalPassword,
+    component: ProfileResetWithdrawalPasswordPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/changewithdrawalpassword",
-    component: ProfileChangeWithdrawalPassword,
+    component: ProfileChangeWithdrawalPasswordPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
 
   // {
@@ -290,7 +291,7 @@ const routes: Route[] = [
     path: "/inbox",
     component: Inbox,
     category: RouteCategoryEnum.INBOX,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   // {
   //   path: "/memo",
@@ -367,7 +368,7 @@ const routes: Route[] = [
     path: "/report/:tab?",
     component: Report,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
 
   // {
@@ -379,7 +380,7 @@ const routes: Route[] = [
     path: "/affiliate",
     component: Affiliate,
     category: RouteCategoryEnum.REFER,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   // {
   //   path: "/setting/language",
@@ -405,9 +406,9 @@ const routes: Route[] = [
   // },
   {
     path: "/support",
-    component: ContactUs,
+    component: ContactUsPage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
     isAnonymousAllowed: true,
   },
 ];
@@ -417,7 +418,7 @@ if (!config.features.NewTransferUI) {
     path: "/transfer",
     component: Transfer,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   });
 }
 

@@ -1,23 +1,19 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import RegisterForm from "@/components/_Share_Domain/authentication/RegisterForm";
 import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
 
 type Props = {};
-const Register = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const RegisterPage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.push("/");
+  useEffect(() => {
+    updatePageName(i18n.t("common.register"));
   }, []);
 
-  return (
-    <Dialog isOpen={isOpen} handleCloseDialog={handleCloseDialog}>
-      <RegisterForm />
-    </Dialog>
-  );
+  return <RegisterForm />;
 };
 
-export default Register;
+export default RegisterPage;
