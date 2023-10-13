@@ -2,7 +2,6 @@ import AffiliateInfoRow from "@/components/_Share_Domain/Account/Affiliate/Affil
 import RebateTable from "@/components/_Share_Domain/Account/Affiliate/RebateTable";
 import { Button } from "@/components/Mobile/components/UI/Button";
 import { useRebateTable } from "@/hooks/account/affiliate/useRebateTable";
-import { themeList } from "@/theme";
 import QRCode from "react-qr-code";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
@@ -12,10 +11,8 @@ import { FormControl } from "@/components/Mobile/styles/forms";
 import { ImageActionEnum, useImageActions } from "@/hooks/useImageActions";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 
-const theme = themeList["mobileT18"];
-
 const AffiliateContainer = styled.div`
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
   display: flex;
   flex-direction: column;
   align-items: center;

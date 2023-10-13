@@ -1,9 +1,7 @@
 import React from "react";
 import { Button as MuiButton, ButtonProps } from "@mui/material";
 import { withStyles } from "@mui/styles";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
+import { theme } from "@/theme";
 
 export const StyledButton = withStyles(() => {
   return {

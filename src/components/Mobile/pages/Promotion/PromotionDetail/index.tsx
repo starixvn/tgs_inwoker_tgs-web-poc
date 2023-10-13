@@ -1,14 +1,12 @@
 import styled from "styled-components";
-import { themeList } from "@/theme";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { Promotion } from "@/models/dto/general/GetPromotionListResDto";
 import JoinPromotionButton from "../../../components/Promotion/JoinPromotionButton";
 import BannerImage from "../../../components/Promotion/BannerImage";
 import i18n from "@/utils/i18n";
 import { NOT_SHOW_JOIN_BUTTON_KEY_LIST } from "@/components/Mobile/constants/promotion";
-const moment = require("moment");
 
-const theme = themeList["mobileT18"];
+const moment = require("moment");
 
 const PromotionDetailContainer = styled.div`
   width: 100%;
@@ -44,7 +42,7 @@ const JoinPromotionButtonWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 20px 0;
-  background: ${theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight};
 `;
 
 const PromotionDetail = () => {

@@ -1,9 +1,7 @@
 import React, { ChangeEvent } from "react";
 import styled from "styled-components";
 import { useReportTypeTabs } from "@/components/_Share_Domain/Account/ReportPrev/hooks/useReportTypeTabs";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
+import { theme } from "@/theme";
 
 const ReportTypeTabsContainer = styled.div`
   display: flex;
@@ -27,7 +25,9 @@ const TabButton = styled.button<TabButtonProps>`
   padding: 13px 23px;
   width: calc((100% - 2 * 9px) / 3);
   border: ${({ isSelected }: TabButtonProps) => {
-    return isSelected ? "none" : `1px solid ${theme.tertiaryLight}`;
+    return isSelected
+      ? "none"
+      : `1px solid ${({ theme }) => theme.tertiaryLight}`;
   }};
   border-radius: 5px;
   font-size: 0.937rem;

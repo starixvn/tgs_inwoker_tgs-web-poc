@@ -18,7 +18,6 @@ import {
   LabelContainer,
 } from "@/components/Mobile/styles/forms";
 import { Button } from "@/components/Mobile/components/UI/Button";
-import { themeList } from "@/theme";
 
 const moment = require("moment");
 const localeMap: { [key in string]: Locale } = {
@@ -26,8 +25,6 @@ const localeMap: { [key in string]: Locale } = {
   en: enLocale,
   th: thLocale,
 };
-
-const theme = themeList["mobileT18"];
 
 const Container = styled.div`
   width: 100%;
@@ -46,11 +43,11 @@ const CustomDatepicker = styled.div<CustomDatepickerProps>`
   padding: 10px;
   border-radius: 5px;
   margin-top: 10px;
-  border: 1px solid ${theme.tertiary};
+  border: 1px solid ${({ theme }) => theme.tertiary};
 
   .MuiInputBase-input {
     background: none;
-    color: ${theme.white};
+    color: ${({ theme }) => theme.white};
   }
 
   .MuiInput-underline:before,

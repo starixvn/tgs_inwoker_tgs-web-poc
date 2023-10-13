@@ -5,15 +5,13 @@ import styled from "styled-components";
 import { FormControl } from "@mui/material";
 import { withStyles } from "@mui/styles";
 
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
+import { theme } from "@/theme";
 
 const StatusSelectContainer = styled.div`
   padding: 15px 29px;
-  background: ${theme.tertiaryDark};
+  background: ${({ theme }) => theme.tertiaryDark};
   font-size: 0.937rem;
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
   border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(35, 31, 27, 0.1);
   display: flex;

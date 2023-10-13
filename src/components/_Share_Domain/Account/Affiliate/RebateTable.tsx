@@ -1,5 +1,4 @@
 import { BrandAllAgent } from "@/models/dto/general/GetBrandAllAgentResDto";
-import { themeList } from "@/theme";
 import i18n from "@/utils/i18n";
 import {
   Table,
@@ -10,23 +9,21 @@ import {
 } from "@mui/material";
 import styled from "styled-components";
 
-const theme = themeList["mobileT18"];
-
 const StyledTable = styled(Table)`
   padding: 20px;
 `;
 
 const StyledTableHead = styled(TableHead)`
-  background: ${theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight};
   & * {
-    color: ${theme.tertiaryLight};
+    color: ${({ theme }) => theme.tertiaryLight};
   }
 `;
 
 const StyledTableBody = styled(TableBody)`
-  background: ${theme.tertiaryDark};
+  background: ${({ theme }) => theme.tertiaryDark};
   & * {
-    color: ${theme.white};
+    color: ${({ theme }) => theme.white};
   }
 `;
 

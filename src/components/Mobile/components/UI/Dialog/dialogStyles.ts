@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { themeList } from "@/theme";
-const theme = themeList["mobileT18"];
 
 export const DialogTitle = styled.div`
   font-size: 1.5rem;

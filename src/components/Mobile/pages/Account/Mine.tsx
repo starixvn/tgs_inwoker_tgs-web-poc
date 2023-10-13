@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo } from "react";
 import styled from "styled-components";
-import { themeList } from "@/theme";
 import InfoCard from "@/components/Mobile/components/Account/InfoCard";
 import Tabs, { TabItem } from "@/components/Mobile/components/UI/Tabs";
 import accountImg from "@/assets/images/account/icon_account.png";
@@ -12,10 +11,8 @@ import { useHistory } from "react-router-dom";
 import MyInfo from "@/components/Mobile/components/Account/MyInfo";
 import i18n from "@/utils/i18n";
 
-const theme = themeList["mobileT18"];
-
 const AccountContainer = styled.div`
-  background: ${theme.primaryDark};
+  background: ${({ theme }) => theme.primaryDark};
   padding: 40px 15px;
 `;
 

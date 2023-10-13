@@ -5,20 +5,17 @@ import styled from "styled-components";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
 import { WalletService } from "@/api-services/services/WalletService";
 import { GetMinWithdrawLimitResDto } from "@/models/dto/withdraw/GetMinWithdrawLimitResDto";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
 
 const CardContainer = styled.div`
-  background: ${theme.primaryLight};
-  color: ${theme.white};
+  background: ${({ theme }) => theme.primaryLight};
+  color: ${({ theme }) => theme.white};
   padding: 25px 37px;
   border-radius: 5px;
   font-size: 0.937rem;
   line-height: 1.098rem;
 `;
 const RowContainer = styled.div`
-  border-left: 6px solid ${theme.tertiary};
+  border-left: 6px solid ${({ theme }) => theme.tertiary};
   padding-left: 10px;
 
   &:first-child {

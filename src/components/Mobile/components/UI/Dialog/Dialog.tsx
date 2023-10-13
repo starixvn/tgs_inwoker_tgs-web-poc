@@ -1,17 +1,14 @@
 import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
-import { themeList } from "@/theme";
 import { Dialog as MuiDialog } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import { Close as CloseIcon } from "@mui/icons-material";
 
-const theme = themeList["mobileT18"];
-
 const DialogContainer = styled(MuiDialog)`
   & .MuiPaper-root {
     position: relative;
     padding: 73px 0 82px; // header/footer
-    background: ${theme.primaryLight};
+    background: ${({ theme }) => theme.primaryLight};
     display: flex;
     flex-direction: column;
     align-items: center;

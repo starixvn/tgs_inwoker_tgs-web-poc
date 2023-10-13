@@ -5,10 +5,8 @@ import {
   Theme,
 } from "@mui/material";
 import React from "react";
-import { themeList } from "@/theme";
-import { withStyles, createStyles } from "@mui/styles";
-
-const theme = themeList["mobileT18"];
+import { theme } from "@/theme";
+import { createStyles, withStyles } from "@mui/styles";
 
 interface Styles extends Partial<Record<SwitchClassKey, string>> {
   focusVisible?: string;

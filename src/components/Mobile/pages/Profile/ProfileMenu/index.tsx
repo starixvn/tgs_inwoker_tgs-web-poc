@@ -1,17 +1,14 @@
 import React, { useCallback, useMemo } from "react";
 import styled from "styled-components";
-import { themeList } from "@/theme";
 import { NavigateNext as NavigateNextIcon } from "@mui/icons-material";
 import i18n from "@/utils/i18n";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import config from "@/config/config";
 import { useHistory } from "react-router-dom";
 
-const theme = themeList["mobileT18"];
-
 const ProfileCard = styled.div`
   width: 100%;
-  background: ${theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight};
   border-radius: 10px;
   padding: 30px 63px;
 
@@ -31,19 +28,19 @@ const ProfileItemContainer = styled.div`
   cursor: pointer;
 
   & .label {
-    color: ${theme.white};
+    color: ${({ theme }) => theme.white};
     font-size: 1.25rem;
     font-weight: 400;
   }
 
   & .status {
-    color: ${theme.tertiary};
+    color: ${({ theme }) => theme.tertiary};
     font-size: 0.93rem;
     font-weight: 400;
   }
 
   & svg {
-    color: ${theme.tertiary} !important;
+    color: ${({ theme }) => theme.tertiary} !important;
   }
 `;
 

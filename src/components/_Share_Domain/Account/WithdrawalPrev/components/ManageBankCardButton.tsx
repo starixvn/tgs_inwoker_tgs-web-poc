@@ -3,15 +3,12 @@ import i18n from "@/utils/i18n";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import iconImg from "@/assets/images/withdraw/manage-card-icon.svg";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
 
 const ButtonContainer = styled.div`
   font-weight: 400;
   font-size: 0.937rem;
   line-height: 1.098rem;
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
   display: flex;
   align-items: center;
 `;

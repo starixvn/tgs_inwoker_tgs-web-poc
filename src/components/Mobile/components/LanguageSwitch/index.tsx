@@ -1,12 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import {
   FormControl as MuiFormControl,
   MenuItem as MuiMenuItem,
   Select as MuiSelect,
 } from "@mui/material";
 import styled from "styled-components";
-import iconImg from "@/assets/images/account/icon_uk.png";
-import { themeList } from "@/theme";
 import i18n from "@/utils/i18n";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { BrandLanguage } from "@/types/general";
@@ -20,8 +18,6 @@ const imageMap = {
   "id-ID": process.env.PUBLIC_URL + `/assets/images/language/id-ID.png`,
 };
 
-const theme = themeList["mobileT18"];
-
 const StyledFormControl = styled(MuiFormControl)`
   border-radius: 10px;
   width: 100%;
@@ -33,7 +29,7 @@ const StyledFormControl = styled(MuiFormControl)`
   }
 
   & input {
-    color: ${theme.white};
+    color: ${({ theme }) => theme.white};
   }
 
   & .MuiSelect-root {
@@ -46,14 +42,14 @@ const StyledFormControl = styled(MuiFormControl)`
 `;
 
 const StyledSelect = styled(MuiSelect)`
-  border: 1px solid ${theme.tertiary};
+  border: 1px solid ${({ theme }) => theme.tertiary};
   border-radius: 10px;
   overflow: visible;
 
   & .MuiSelect-root {
     display: flex;
     align-items: center;
-    color: ${theme.tertiary} !important;
+    color: ${({ theme }) => theme.tertiary} !important;
 
     & > img {
       margin-right: 10px;

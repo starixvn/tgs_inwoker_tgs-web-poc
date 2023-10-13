@@ -3,16 +3,13 @@ import i18n from "@/utils/i18n";
 import styled from "styled-components";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
-import { themeList } from "@/theme";
 import { Button } from "@/components/Mobile/components/UI/Button";
-
-const theme = themeList["mobileT18"];
 
 const CustomLabel = styled.div`
   font-size: 18px;
   font-weight: 400;
   margin-left: 3px;
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
 `;
 
 const ButtonWrapper = styled.div`

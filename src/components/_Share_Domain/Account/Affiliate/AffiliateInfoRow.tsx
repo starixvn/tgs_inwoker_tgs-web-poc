@@ -1,14 +1,11 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import { themeList } from "@/theme";
 import { Button } from "@/components/Mobile/components/UI/Button";
 import i18n from "@/utils/i18n";
 
-const theme = themeList["mobileT18"];
-
 const AffiliateInfoRowContainer = styled.div`
   width: 100%;
-  background: ${theme.tertiaryDark};
+  background: ${({ theme }) => theme.tertiaryDark};
   border-radius: 5px;
   padding: 13px 17px;
   display: flex;
@@ -21,7 +18,7 @@ const AffiliateInfoRowContainer = styled.div`
     font-weight: 400;
     font-size: 1.125rem;
     line-height: 1.318rem;
-    color: ${theme.tertiaryLight};
+    color: ${({ theme }) => theme.tertiaryLight};
   }
 
   & .value {

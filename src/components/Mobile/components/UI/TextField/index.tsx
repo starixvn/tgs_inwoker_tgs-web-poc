@@ -2,9 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { TextField as MuiTextField } from "@mui/material";
 import { withStyles } from "@mui/styles";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
+import { theme } from "@/theme";
 
 export const TextField = withStyles(() => ({
   root: {
@@ -52,6 +50,6 @@ export const TextField = withStyles(() => ({
 export const GrayInputWrapper = styled.div`
   border-radius: 5px;
   border: none;
-  background: ${theme.tertiaryDark};
+  background: ${({ theme }) => theme.tertiaryDark};
   overflow: visible;
 `;

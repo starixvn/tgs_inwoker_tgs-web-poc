@@ -4,9 +4,6 @@ import { Dialog } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom"; // Import useHistory
 import i18n from "../../utils/i18n";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
 
 const StyledDialog = withStyles({
   root: {
@@ -20,7 +17,7 @@ const StyledDialog = withStyles({
 
 const Container = styled.div`
   width: 80vw;
-  background: ${theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight};
   color: white;
   background-attachment: fixed;
   background-position: center;

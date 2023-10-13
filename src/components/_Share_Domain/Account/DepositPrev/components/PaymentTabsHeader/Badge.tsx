@@ -1,8 +1,5 @@
 import React from "react";
-import { themeList } from "@/theme";
 import styled from "styled-components";
-
-const theme = themeList["mobileT18"];
 
 type BadgeContainerProps = {
   $isActive: boolean;
@@ -17,7 +14,7 @@ const BadgeContainer = styled.div<BadgeContainerProps>`
   background: ${({ $isActive, theme }: BadgeContainerProps) =>
     $isActive ? theme.primary : "none"};
   border: ${({ $isActive, theme }: BadgeContainerProps) =>
-    $isActive ? "none" : `1px solid ${theme.tertiary}`};
+    $isActive ? "none" : `1px solid ${({ theme }) => theme.tertiary}`};
 
   border-radius: 50px;
 `;

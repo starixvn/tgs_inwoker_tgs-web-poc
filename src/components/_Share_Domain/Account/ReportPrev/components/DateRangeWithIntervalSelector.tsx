@@ -1,9 +1,7 @@
 import React from "react";
 import i18n from "@/utils/i18n";
 import styled from "styled-components";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
+import { theme } from "@/theme";
 
 const DateRangContainer = styled.div`
   margin-bottom: 20px;
@@ -27,7 +25,9 @@ const DateRangSelection = styled.div<DateRangSelectionTypes>`
   }};
   padding: 13px 23px;
   border: ${({ isSelected }: DateRangSelectionTypes) => {
-    return isSelected ? "none" : `1px solid ${theme.tertiaryLight}`;
+    return isSelected
+      ? "none"
+      : `1px solid ${({ theme }) => theme.tertiaryLight}`;
   }};
   border-radius: 5px;
   font-size: 0.937rem;

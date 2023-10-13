@@ -1,10 +1,7 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
-import { themeList } from "@/theme";
 import { BrandsSupport } from "@/types/general";
 import i18n from "@/utils/i18n";
-
-const theme = themeList["mobileT18"];
 
 const SupportCardContainer = styled.div`
   width: calc((100% - 16px) / 2);
@@ -13,8 +10,8 @@ const SupportCardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 14px 21px;
-  background: ${theme.tertiaryDark};
-  color: ${theme.white};
+  background: ${({ theme }) => theme.tertiaryDark};
+  color: ${({ theme }) => theme.white};
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.098rem;
@@ -57,7 +54,7 @@ type IconProps = { icon: string };
 const Icon = styled.div<IconProps>`
   width: 60px;
   height: 60px;
-  background-color: ${theme.tertiary};
+  background-color: ${({ theme }) => theme.tertiary};
   mask: ${({ icon }: IconProps) => {
     return `url(${
       process.env.PUBLIC_URL + "/assets/images/wapp/" + iconSwitcher(icon)
@@ -68,8 +65,8 @@ const Icon = styled.div<IconProps>`
 
 const ContactButton = styled.div`
   width: 100%;
-  color: ${theme.white};
-  background: ${theme.primary};
+  color: ${({ theme }) => theme.white};
+  background: ${({ theme }) => theme.primary};
   padding: 6px;
   text-align: center;
   font-size: 0.75rem;

@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import i18n from "@/utils/i18n";
 import styled from "styled-components";
-import { themeList } from "@/theme";
 import { Switch } from "@/components/Mobile/components/UI/Switch";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
-
-const theme = themeList["mobileT18"];
 
 const AutoTransferContainer = styled.div`
   display: flex;
@@ -17,7 +14,7 @@ const CustomSwitchContainer = styled.div`
   display: flex;
   align-items: center;
   font-weight: normal;
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
 
   & > :first-child {
     margin-right: 10px;

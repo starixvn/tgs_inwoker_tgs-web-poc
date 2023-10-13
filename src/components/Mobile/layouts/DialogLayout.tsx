@@ -1,17 +1,13 @@
 import React, { ReactElement, useCallback } from "react";
-import Header from "@/components/Mobile/components/Header";
 import BottomAppBar from "@/components/Mobile/components/BottomAppBar";
 import styled from "styled-components";
-import { themeList } from "@/theme";
-import { Route } from "@/components/Mobile/router";
 import DialogHeader from "@/components/Mobile/components/UI/Dialog/DialogHeader";
 import { usePageName } from "@/hooks/usePageName";
 import { useHistory } from "react-router-dom";
-const theme = themeList["mobileT18"];
 
 const DialogLayoutContainer = styled.div`
   position: relative;
-  background: ${theme.primaryDark};
+  background: ${({ theme }) => theme.primaryDark};
 `;
 
 const ContentWrapper = styled.div`

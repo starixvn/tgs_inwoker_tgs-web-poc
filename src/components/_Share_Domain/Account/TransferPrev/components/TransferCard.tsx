@@ -6,15 +6,13 @@ import { useWalletStore } from "@/hooks/stores/useWalletStore";
 import { TextField } from "@/components/Mobile/components/UI/TextField";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import WalletSelect from "@/components/_Share_Domain/Account/TransferPrev/components/WalletSelect";
-import { themeList } from "@/theme";
+import { theme } from "@/theme";
 import { FormControl as MuiFormControl } from "@mui/material";
 import { withStyles } from "@mui/styles";
 
-const theme = themeList["mobileT18"];
-
 const TransferCardContainer = styled.div`
-  background: ${theme.primaryLight};
-  color: ${theme.white};
+  background: ${({ theme }) => theme.primaryLight};
+  color: ${({ theme }) => theme.white};
   padding: 12px;
   & * {
     font-size: 15px !important;

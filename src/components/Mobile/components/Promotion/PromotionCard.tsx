@@ -1,10 +1,7 @@
 import styled from "styled-components";
-import { themeList } from "@/theme";
 import { useHistory } from "react-router-dom";
 import { Promotion } from "@/models/dto/general/GetPromotionListResDto";
 import BannerImage from "./BannerImage";
-
-const theme = themeList["mobileT18"];
 
 const PromotionCardContainer = styled.div`
   width: 100%;
@@ -14,7 +11,7 @@ const PromotionCardContainer = styled.div`
   gap: 8px;
   display: flex;
   flex-direction: row;
-  background: ${theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight};
 `;
 const BannerWrapper = styled.div`
   width: 195px

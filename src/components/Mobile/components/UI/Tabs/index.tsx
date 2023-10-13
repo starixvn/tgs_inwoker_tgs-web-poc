@@ -1,10 +1,6 @@
-import { themeList } from "@/theme";
 import React from "react";
 import styled from "styled-components";
-import { rankingTabList } from "@/components/Mobile/constants/tab";
-import TabButton from "@/components/Mobile/components/TabPanel/TabButton";
 import Tab from "@/components/Mobile/components/UI/Tabs/Tab";
-const theme = themeList["mobileT18"];
 
 const TabsContainer = styled.div`
   display: flex;
@@ -12,7 +8,7 @@ const TabsContainer = styled.div`
   align-items: center;
   margin-bottom: 20px;
   padding: 4px;
-  background: ${theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight};
 `;
 
 export interface TabItem {

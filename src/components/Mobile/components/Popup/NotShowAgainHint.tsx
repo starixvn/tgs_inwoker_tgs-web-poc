@@ -1,11 +1,8 @@
 import IconCheckBox from "@/assets/images/checkbox.svg";
 import styled from "styled-components";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
 
 const NotShowAgainHintContainer = styled.div`
-  background: ${theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight};
   width: 171px;
   height: 38px;
   font-size: 1rem;

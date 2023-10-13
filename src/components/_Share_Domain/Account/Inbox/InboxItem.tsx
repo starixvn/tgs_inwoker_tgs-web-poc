@@ -3,14 +3,11 @@ import styled from "styled-components";
 import { Collapse } from "@mui/material";
 import moment from "moment";
 import { InboxMessage } from "@/types/account";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
 
 const InboxItemContainer = styled.div`
   width: 100%;
   padding: 8px 15px;
-  background: ${theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight};
 `;
 
 type CheckboxContainerProps = {
@@ -39,7 +36,7 @@ type MsgTitleProps = {
 const MsgTitle = styled.div<MsgTitleProps>`
   font-size: 1.25rem;
   font-weight: ${({ $isread }: MsgTitleProps) => ($isread ? "400" : "600")};
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
   white-space: nowrap;
   margin-bottom: 5px;
 `;
@@ -53,7 +50,7 @@ const MsgTitleSpan = styled.span`
 
 const MsgDate = styled.div`
   font-size: 0.937rem;
-  color: ${theme.tertiaryLight};
+  color: ${({ theme }) => theme.tertiaryLight};
 `;
 
 type CheckboxCircleProps = {
@@ -75,7 +72,7 @@ const CheckboxCircle = styled.div<CheckboxCircleProps>`
 
 const LetterContent = styled.div`
   font-size: 1rem;
-  color: ${theme.tertiaryLight};
+  color: ${({ theme }) => theme.tertiaryLight};
   padding: 20px 0px;
 `;
 

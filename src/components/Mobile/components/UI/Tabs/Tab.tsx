@@ -1,9 +1,7 @@
 import React from "react";
 import { TabItem } from "@/components/Mobile/components/UI/Tabs/index";
 import styled from "styled-components";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
+import { theme } from "@/theme";
 
 type TabContainerProps = {
   $isActive: boolean;

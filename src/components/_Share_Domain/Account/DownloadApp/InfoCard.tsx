@@ -1,12 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
 
 const IntroCardContainer = styled.div`
   width: 100%;
-  background: ${theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight};
   border-radius: 10px;
   padding: 22px 38px;
   display: flex;
@@ -34,7 +31,7 @@ const IntroCardContainer = styled.div`
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.153rem;
-    color: ${theme.white};
+    color: ${({ theme }) => theme.white};
   }
 `;
 
