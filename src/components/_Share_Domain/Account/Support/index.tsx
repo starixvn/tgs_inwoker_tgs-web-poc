@@ -7,8 +7,12 @@ import SupportCard from "@/components/_Share_Domain/Account/Support/SupportCard"
 import QrCodeDialog from "@/components/_Share_Domain/Account/Support/QRCodeHolder";
 import contactGirlImg from "@/assets/images/account/girl/contact.png";
 import IMHandler from "@/components/_Share_Domain/Account/Support/IMHandler";
-
-const theme = themeList["mobileT18"];
+import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
+import Common from "@/utils/Common";
+import { useAuth } from "@/hooks/auth/useAuth";
+import i18n from "@/utils/i18n";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
+import { useContactCS } from "@/hooks/useContactCS";
 
 const SupportContainer = styled.div``;
 
@@ -27,24 +31,22 @@ const CardsContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-type Props = {
-  brandsSupportList: BrandsSupport[];
-  csLiveChatUrl: string;
-  handleContactCs: () => void;
-};
-const Support = ({
-  brandsSupportList,
-  csLiveChatUrl,
-  handleContactCs,
-}: Props) => {
+type Props = {};
+const Support = ({}: Props) => {
+  const { general } = useGeneralStore();
+  const { handleContactCs } = useContactCS();
+  const brandsSupportList = general.brandsSupport;
   const [selectedBrandsSupport, setSelectedBrandsSupport] =
     useState<BrandsSupport | null>(null);
+
+  //================
 
   const handleClick = (brandsSupport: BrandsSupport) => {
     if (brandsSupport.type === "Live") {
       handleContactCs();
       return;
     }
+    console.log(brandsSupport);
 
     if (brandsSupport.qrcodeurl) {
       setSelectedBrandsSupport(brandsSupport);
@@ -56,6 +58,8 @@ const Support = ({
   const handleClose = () => {
     setSelectedBrandsSupport(null);
   };
+
+  const csLiveChatUrl = general?.livechat?.setting?.url || "www.google.com";
 
   return (
     <SupportContainer>
