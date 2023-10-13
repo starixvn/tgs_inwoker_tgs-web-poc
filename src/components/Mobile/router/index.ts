@@ -11,7 +11,7 @@ import Inbox from "@/components/Mobile/pages/Inbox";
 import LoginPage from "@/components/Mobile/pages/Login";
 import Main from "@/components/Mobile/pages/Main";
 import Maintenance from "@/components/Mobile/pages/Maintenance";
-import Profile from "@/components/Mobile/pages/Profile";
+import ProfilePage from "@/components/Mobile/pages/Profile";
 import ProfileBirthDatePage from "@/components/Mobile/pages/Profile/ProfileBirthDate";
 import ProfileChangeEmail from "@/components/Mobile/pages/Profile/ProfileChangeEmail";
 import ProfileChangePasswordPage from "@/components/Mobile/pages/Profile/ProfileChangePassword";
@@ -159,9 +159,9 @@ const routes: Route[] = [
   },
   {
     path: "/profile",
-    component: Profile,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
-    layout: DefaultLayout,
+    layout: DialogLayout,
   },
   {
     path: "/profile/name",

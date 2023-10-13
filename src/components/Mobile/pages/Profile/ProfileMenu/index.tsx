@@ -75,10 +75,7 @@ const ProfileRow = ({ profileItem, handleClick }: ProfileItemProps) => {
   );
 };
 
-type Props = {
-  isOpen: boolean;
-  handleCloseDialog: () => void;
-};
+type Props = {};
 
 interface ProfileItem {
   key: string;
@@ -87,7 +84,7 @@ interface ProfileItem {
   routePath: string;
 }
 
-const ProfileMenuDialog = ({ isOpen, handleCloseDialog }: Props) => {
+const ProfileMenuDialog = ({}: Props) => {
   const { account } = useAccountStore();
   const history = useHistory();
 
@@ -201,62 +198,54 @@ const ProfileMenuDialog = ({ isOpen, handleCloseDialog }: Props) => {
 
   return (
     <>
-      <DialogWithHeader
-        isOpen={isOpen}
-        handleCloseDialog={handleCloseDialog}
-        dialogHeaderTitle={i18n.t("profile.basicInfo")}
-      >
-        <>
-          <ProfileCard>
-            <ProfileRow
-              profileItem={profileItemDictionary["name"]}
-              handleClick={handleClickProfileItem}
-            />
-            <ProfileRow
-              profileItem={profileItemDictionary["phone"]}
-              handleClick={handleClickProfileItem}
-            />
-            <ProfileRow
-              profileItem={profileItemDictionary["email"]}
-              handleClick={handleClickProfileItem}
-            />
-            <ProfileRow
-              profileItem={profileItemDictionary["birth"]}
-              handleClick={handleClickProfileItem}
-            />
-          </ProfileCard>
+      <ProfileCard>
+        <ProfileRow
+          profileItem={profileItemDictionary["name"]}
+          handleClick={handleClickProfileItem}
+        />
+        <ProfileRow
+          profileItem={profileItemDictionary["phone"]}
+          handleClick={handleClickProfileItem}
+        />
+        <ProfileRow
+          profileItem={profileItemDictionary["email"]}
+          handleClick={handleClickProfileItem}
+        />
+        <ProfileRow
+          profileItem={profileItemDictionary["birth"]}
+          handleClick={handleClickProfileItem}
+        />
+      </ProfileCard>
 
-          <ProfileCard>
-            <ProfileRow
-              key={profileItemDictionary["qq"].key}
-              profileItem={profileItemDictionary["qq"]}
-              handleClick={handleClickProfileItem}
-            />
-            <ProfileRow
-              key={profileItemDictionary["wechat"].key}
-              profileItem={profileItemDictionary["wechat"]}
-              handleClick={handleClickProfileItem}
-            />
+      <ProfileCard>
+        <ProfileRow
+          key={profileItemDictionary["qq"].key}
+          profileItem={profileItemDictionary["qq"]}
+          handleClick={handleClickProfileItem}
+        />
+        <ProfileRow
+          key={profileItemDictionary["wechat"].key}
+          profileItem={profileItemDictionary["wechat"]}
+          handleClick={handleClickProfileItem}
+        />
 
-            {customMessagingList.map((messagingItem) => {
-              return (
-                <ProfileRow
-                  key={messagingItem.key}
-                  profileItem={messagingItem}
-                  handleClick={handleClickProfileItem}
-                />
-              );
-            })}
-          </ProfileCard>
-
-          <ProfileCard>
+        {customMessagingList.map((messagingItem) => {
+          return (
             <ProfileRow
-              profileItem={profileItemDictionary["password"]}
+              key={messagingItem.key}
+              profileItem={messagingItem}
               handleClick={handleClickProfileItem}
             />
-          </ProfileCard>
-        </>
-      </DialogWithHeader>
+          );
+        })}
+      </ProfileCard>
+
+      <ProfileCard>
+        <ProfileRow
+          profileItem={profileItemDictionary["password"]}
+          handleClick={handleClickProfileItem}
+        />
+      </ProfileCard>
     </>
   );
 };
