@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { withStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Dialog";
-import Slide from "@material-ui/core/Slide";
-import i18n from "../../../../utils/i18n";
+import { Modal, Slide } from "@mui/material";
+import { withStyles } from "@mui/styles";
+
+import i18n from "@/utils/i18n";
+
 function MessageDialog(props) {
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;

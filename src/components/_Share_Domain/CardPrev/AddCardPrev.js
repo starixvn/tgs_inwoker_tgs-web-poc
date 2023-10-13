@@ -1,55 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import AppBar from "@material-ui/core/AppBar";
-import { withStyles } from "@material-ui/core/styles";
+import { ListItem, ListItemText, Modal } from "@mui/material";
+import { withStyles } from "@mui/styles";
 import { walletAction } from "@/api-services/actions/walletAction";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
-import Header from "@/components/Mobile/components/_PrevShare/Header";
 import MessageDialog from "@/components/Mobile/components/_PrevShare/MessageDialog";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
-import Modal from "@material-ui/core/Dialog";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
 import Common from "@/utils/Common";
 import { TextField } from "@/components/Mobile/components/UI/TextField";
 import {
   FormControl,
-  LabelContainer,
   ItemContainer,
+  LabelContainer,
 } from "@/components/Mobile/styles/forms";
 import { Button } from "@/components/Mobile/components/UI/Button";
 
 const Container = styled.div`
   width: 100%;
   padding: 20px 17px;
-`;
-const StyledAppBar = withStyles((theme) => ({
-  root: {
-    height: "170px",
-
-    background:
-      `linear-gradient(rgba(` +
-      theme.palette.primary.mainRgb +
-      `, 0.8), rgba(` +
-      theme.palette.primary.mainGradientRgb +
-      `, 0.8)), url(${
-        process.env.PUBLIC_URL + `/assets/images/wapp/bg-profile.png`
-      })`,
-    display: "block",
-    backgroundSize: "cover",
-  },
-}))(AppBar);
-const BalanceLabel = styled.div`
-  font-size: 36px;
-
-  text-align: center;
-  color: #ffffff;
-  margin: 0 auto 20px auto;
 `;
 
 const SubTitle = styled.div`

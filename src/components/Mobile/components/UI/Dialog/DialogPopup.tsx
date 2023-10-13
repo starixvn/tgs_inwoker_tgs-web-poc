@@ -1,7 +1,7 @@
 import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
 import { themeList } from "@/theme";
-import { Dialog as MuiDialog } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+import { Dialog as MuiDialog } from "@mui/material";
+import { Close as CloseIcon } from "@mui/icons-material";
 import React from "react";
 import styled from "styled-components";
 

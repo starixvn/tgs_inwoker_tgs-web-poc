@@ -1,8 +1,6 @@
 import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
 import { themeList } from "@/theme";
-import { Dialog as MuiDialog } from "@material-ui/core";
-import { TransitionProps } from "@material-ui/core/transitions";
-import CloseIcon from "@material-ui/icons/Close";
+import { Dialog as MuiDialog } from "@mui/material";
 import React, {
   CSSProperties,
   ForwardRefExoticComponent,
@@ -11,6 +9,7 @@ import React, {
 } from "react";
 import styled from "styled-components";
 import DialogHeader from "@/components/Mobile/components/UI/Dialog/DialogHeader";
+import { TransitionProps } from "@mui/material/transitions";
 
 const theme = themeList["mobileT18"];
 

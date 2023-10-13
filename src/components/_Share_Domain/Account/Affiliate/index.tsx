@@ -126,7 +126,7 @@ const Affiliate = (props: Props) => {
       <FormControl style={{ marginBottom: "20px" }}>
         <Select
           fullWidth
-          disableUnderline
+          // disableUnderline
           native
           value={selectedRebateItem.value}
           onChange={handleChangeSelectItem}

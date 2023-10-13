@@ -1,7 +1,7 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import { withStyles } from "@material-ui/core/styles";
+import { InputAdornment, TextField } from "@mui/material";
+import { withStyles } from "@mui/styles";
+
 const CustomText = withStyles({
   root: {
     backgroundColor: "#fff",

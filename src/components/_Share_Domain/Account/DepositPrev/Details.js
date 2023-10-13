@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { WalletService } from "@/api-services/services/WalletService";
 import { withRouter } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Dialog";
+import { Modal } from "@mui/material";
+import { withStyles } from "@mui/styles";
 
 import { Textfit } from "react-textfit";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -13,6 +13,7 @@ import Button from "@/components/Share/Button";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
 import Loading from "@/components/Mobile/components/UI/Loading";
+
 const Container = styled.div``;
 const ContentBg = styled.div`
   background: #fff;

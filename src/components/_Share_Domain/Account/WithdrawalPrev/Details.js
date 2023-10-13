@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { Slide } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Dialog";
+import { Modal, Slide } from "@mui/material";
+import { withStyles } from "@mui/styles";
 import Header from "@/components/Mobile/components/_PrevShare/Header";
 import Button from "@/components/Mobile/components/_PrevShare/Button";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";

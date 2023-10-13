@@ -3,7 +3,7 @@ import styled, { keyframes, css } from "styled-components";
 import refreshImg from "@/assets/images/account/balanceTracker/refresh.svg";
 
 type StyledRefreshButtonProps = {
-  isSpinning: boolean;
+  $isSpinning: boolean;
 };
 
 const spinAnimation = keyframes`
@@ -20,8 +20,8 @@ const StyledRefreshButton = styled.div<StyledRefreshButtonProps>`
   height: 28px;
   margin-right: 8px;
   cursor: pointer;
-  animation: ${(props: StyledRefreshButtonProps) =>
-    props.isSpinning
+  animation: ${({ $isSpinning }: StyledRefreshButtonProps) =>
+    $isSpinning
       ? css`
           ${spinAnimation} 1s linear infinite
         `
@@ -45,7 +45,7 @@ const RefreshButton = ({ handleClick }: Props) => {
   };
 
   return (
-    <StyledRefreshButton isSpinning={isSpinning} onClick={handleRefreshClick}>
+    <StyledRefreshButton $isSpinning={isSpinning} onClick={handleRefreshClick}>
       <RefreshImage src={refreshImg} alt="refresh" />
     </StyledRefreshButton>
   );

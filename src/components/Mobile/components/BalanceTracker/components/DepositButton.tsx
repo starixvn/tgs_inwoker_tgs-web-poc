@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import React, { useCallback } from "react";
-import AddIcon from "@material-ui/icons/Add";
+import { Add as AddIcon } from "@mui/icons-material";
 import styled from "styled-components";
 
 const DepositButtonContainer = styled.div`

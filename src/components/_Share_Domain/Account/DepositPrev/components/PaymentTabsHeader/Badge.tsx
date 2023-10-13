@@ -5,19 +5,19 @@ import styled from "styled-components";
 const theme = themeList["mobileT18"];
 
 type BadgeContainerProps = {
-  isActive: boolean;
+  $isActive: boolean;
 };
 const BadgeContainer = styled.div<BadgeContainerProps>`
   border-radius: 50px;
   padding: 12px 20px;
   //min-width: 86px;
   text-align: center;
-  color: ${(props: BadgeContainerProps) =>
-    props.isActive ? "white" : theme.tertiary};
-  background: ${(props: BadgeContainerProps) =>
-    props.isActive ? theme.primary : "none"};
-  border: ${(props: BadgeContainerProps) =>
-    props.isActive ? "none" : `1px solid ${theme.tertiary}`};
+  color: ${({ $isActive, theme }: BadgeContainerProps) =>
+    $isActive ? "white" : theme.tertiary};
+  background: ${({ $isActive, theme }: BadgeContainerProps) =>
+    $isActive ? theme.primary : "none"};
+  border: ${({ $isActive, theme }: BadgeContainerProps) =>
+    $isActive ? "none" : `1px solid ${theme.tertiary}`};
 
   border-radius: 50px;
 `;
@@ -30,7 +30,7 @@ type Props = {
 
 const Badge = ({ text, handleClick, isActive }: Props) => {
   return (
-    <BadgeContainer onClick={handleClick} isActive={isActive}>
+    <BadgeContainer onClick={handleClick} $isActive={isActive}>
       {text}
     </BadgeContainer>
   );

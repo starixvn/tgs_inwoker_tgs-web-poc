@@ -22,11 +22,14 @@ const NotShowAgainHintContainer = styled.div`
   transform: translateX(-50%);
 `;
 
-const CheckBox = styled.div<{ isCheck: boolean }>`
+type CheckBoxProps = {
+  $isCheck: boolean;
+};
+const CheckBox = styled.div<CheckBoxProps>`
   width: 18px;
   height: 18px;
-  background: ${(props) =>
-    props.isCheck ? `url(${IconCheckBox}) no-repeat center center;` : null};
+  background: ${(props: CheckBoxProps) =>
+    props.$isCheck ? `url(${IconCheckBox}) no-repeat center center;` : null};
   margin-right: 10px;
   border: ${(props) => (props.isCheck ? "0" : "1px")} solid #ffffff;
   border-radius: 5px;
@@ -43,7 +46,7 @@ const NotShowAgainHint = ({
 }) => {
   return (
     <NotShowAgainHintContainer onClick={onClick} {...others}>
-      <CheckBox isCheck={isCheck} />
+      <CheckBox $isCheck={isCheck} />
       Don't show again
     </NotShowAgainHintContainer>
   );

@@ -1,6 +1,7 @@
-import { withStyles } from "@material-ui/core/styles";
-import { Select as MuiSelect, SelectProps } from "@material-ui/core";
+import { Select as MuiSelect, SelectProps } from "@mui/material";
 import { themeList } from "@/theme";
+import { withStyles } from "@mui/styles";
+import React from "react";
 
 const theme = themeList["mobileT18"];
 
@@ -29,8 +30,6 @@ export const StyledSelect = withStyles(() => ({
     },
   },
 }))(MuiSelect);
-
-import React from "react";
 
 export const Select = (props: SelectProps) => {
   return <StyledSelect {...props} />;

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { TextField as MuiTextField, TextFieldProps } from "@material-ui/core";
+import { TextField as MuiTextField } from "@mui/material";
+import { withStyles } from "@mui/styles";
 import { themeList } from "@/theme";
-import { withStyles } from "@material-ui/core/styles";
 
 const theme = themeList["mobileT18"];
 

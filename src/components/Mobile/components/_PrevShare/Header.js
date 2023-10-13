@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-
 import PropTypes from "prop-types";
-import AppBar from "@material-ui/core/AppBar";
+import { AppBar, useScrollTrigger } from "@mui/material";
+import { withStyles } from "@mui/styles";
 
-import { withStyles } from "@material-ui/core/styles";
 function ElevationScroll(props) {
   const { children, window } = props;
   // Note that you normally won't need to set the window ref as useScrollTrigger

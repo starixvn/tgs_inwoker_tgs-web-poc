@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Dialog from "@material-ui/core/Dialog";
 import styled from "styled-components";
-import { withStyles } from "@material-ui/core/styles";
+import { Dialog } from "@mui/material";
+import { withStyles } from "@mui/styles";
+import i18n from ".@/utils/i18n";
+import { AppHistory } from "@/history/History";
 
-import i18n from "../../utils/i18n";
-import { AppHistory } from "../../history/History";
 const StyledDialog = withStyles({
   root: {
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",

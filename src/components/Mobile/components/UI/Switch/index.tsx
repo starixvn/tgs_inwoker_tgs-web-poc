@@ -1,12 +1,12 @@
-import { createStyles, withStyles } from "@material-ui/core/styles";
 import {
   Switch as MuiSwitch,
   SwitchClassKey,
   SwitchProps,
   Theme,
-} from "@material-ui/core";
+} from "@mui/material";
 import React from "react";
 import { themeList } from "@/theme";
+import { withStyles, createStyles } from "@mui/styles";
 
 const theme = themeList["mobileT18"];
 

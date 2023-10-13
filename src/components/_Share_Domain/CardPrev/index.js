@@ -1,19 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import AppBar from "@material-ui/core/AppBar";
-import { withStyles } from "@material-ui/core/styles";
 import { walletAction } from "@/api-services/actions/walletAction";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
 import MessageDialog from "@/components/Mobile/components/_PrevShare/MessageDialog";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
-import Header from "@/components/Mobile/components/_PrevShare/Header";
-import SwipeToDelete from "react-swipe-to-delete-component";
 import i18n from "@/utils/i18n";
-import Common from "@/utils/Common";
 import config from "@/config/config";
-import { themeList } from "@/theme";
 import AddCardsButton from "@/components/_Share_Domain/CardPrev/components/AddCardsButton";
 import Card from "@/components/_Share_Domain/CardPrev/components/Card";
 

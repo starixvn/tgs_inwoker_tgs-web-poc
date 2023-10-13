@@ -1,8 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import styled from "styled-components";
-import DialogWithHeader from "@/components/Mobile/components/UI/Dialog/DialogWithHeader";
 import { themeList } from "@/theme";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import { NavigateNext as NavigateNextIcon } from "@mui/icons-material";
 import i18n from "@/utils/i18n";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import config from "@/config/config";

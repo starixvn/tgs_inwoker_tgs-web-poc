@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
 import Loading from "../App/Loading";
-import { GameService } from "../../api-services/services/GameService";
-import { GameTypeEnum } from "../../api-services/utils/Enum";
-import Maintenance from "./Maintenance";
+import { GameService } from "@/api-services/services/GameService";
+import { GameTypeEnum } from "@/api-services/utils/Enum";
+import Maintenance from "@/components/Mobile/pages/Maintenance";
 // try {
 // const channel = new BroadcastChannel('refreshBalance');
 // }catch {

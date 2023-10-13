@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { withStyles } from "@material-ui/core/styles";
-import { FormControl as MuiFormControl } from "@material-ui/core";
+import { FormControl as MuiFormControl } from "@mui/material";
+import { withStyles } from "@mui/styles";
+
 import { themeList } from "@/theme";
 
 const theme = themeList["mobileT18"];

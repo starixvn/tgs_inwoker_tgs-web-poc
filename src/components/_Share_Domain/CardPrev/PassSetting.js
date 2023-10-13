@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import AppBar from "@material-ui/core/AppBar";
+import { AppBar, Modal } from "@mui/material";
+import { withStyles } from "@mui/styles";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { AccountService } from "@/api-services/services/AccountService";
-import { UPDATE_INFO } from "@api-services/constant/actionType";
-import { withStyles } from "@material-ui/core/styles";
+import { UPDATE_INFO } from "@/api-services/constant/actionType";
 import Header from "@/components/Mobile/components/_PrevShare/Header";
 import Textbox from "@/components/Mobile/components/_PrevShare/Textbox";
 import Button from "@/components/Mobile/components/_PrevShare/Button";
-import Modal from "@material-ui/core/Dialog";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import i18n from "@/utils/i18n";
 

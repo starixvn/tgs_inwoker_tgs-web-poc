@@ -1,6 +1,6 @@
 import React from "react";
-import { Button as MuiButton, ButtonProps } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import { Button as MuiButton, ButtonProps } from "@mui/material";
+import { withStyles } from "@mui/styles";
 import { themeList } from "@/theme";
 
 const theme = themeList["mobileT18"];

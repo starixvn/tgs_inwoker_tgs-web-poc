@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import i18n from "@/utils/i18n";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import styled from "styled-components";
 import zhLocale from "date-fns/locale/zh-CN";
 import enLocale from "date-fns/locale/en-US";
@@ -97,8 +97,8 @@ const DateRangeWithDatePicker = ({
       <FlatStraightLine>
         <DateInner>
           {/*<DateLabel>{i18n.t("report.startDate")}</DateLabel>*/}
-          <MuiPickersUtilsProvider
-            utils={DateFnsUtils}
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
             locale={localeMap[i18n.language.substring(0, 2)]}
           >
             <DatePicker
@@ -111,15 +111,15 @@ const DateRangeWithDatePicker = ({
               value={dateFrom}
               onChange={handleDateFromChange}
             />
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </DateInner>
 
         <DateSpliter>-</DateSpliter>
 
         <DateInner>
           {/*<DateLabel>{i18n.t("report.endDate")}</DateLabel>*/}
-          <MuiPickersUtilsProvider
-            utils={DateFnsUtils}
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
             locale={localeMap[i18n.language.substring(0, 2)]}
           >
             <DatePicker
@@ -132,7 +132,7 @@ const DateRangeWithDatePicker = ({
               value={dateTo}
               onChange={handleDateToChange}
             />
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </DateInner>
       </FlatStraightLine>
       <div className="clear"></div>

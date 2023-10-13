@@ -2,15 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Dialog";
+import { ListItem, ListItemText, Modal, Slide } from "@mui/material";
+import { withStyles } from "@mui/styles";
+
 import Common from "@/utils/Common";
 import { walletAction } from "@/api-services/actions/walletAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import i18n from "@/utils/i18n";
-import Slide from "@material-ui/core/Slide";
 import config from "@/config/config";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import WithdrawInfoCard from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawInfoCard";
@@ -18,8 +16,8 @@ import ManageBankCardButton from "@/components/_Share_Domain/Account/WithdrawalP
 import WithdrawAllToMainWallet from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawAllToMainWallet";
 import {
   FormControl,
-  LabelContainer,
   ItemContainer,
+  LabelContainer,
   Remark,
 } from "@/components/Mobile/styles/forms";
 import { Button } from "@/components/Mobile/components/UI/Button";
@@ -29,14 +27,6 @@ import { TextField } from "@/components/Mobile/components/UI/TextField";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
-const BottomDesc = styled.div`
-  margin: 0 auto;
-  width: 86%;
-  font-size: 26px;
-
-  color: ${({ theme }) => theme.secondary};
-`;
 
 const StyledModalBank = withStyles((theme) => ({
   paper: {

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
 import { useHistory } from "react-router-dom";
 import BottomNote from "@/components/Mobile/components/UI/BottomNote";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import config from "@/config/config";
@@ -14,8 +14,8 @@ import zhLocale from "date-fns/locale/zh-CN";
 import enLocale from "date-fns/locale/en-US";
 import thLocale from "date-fns/locale/th";
 import {
-  LabelContainer,
   ItemContainer,
+  LabelContainer,
 } from "@/components/Mobile/styles/forms";
 import { Button } from "@/components/Mobile/components/UI/Button";
 import { themeList } from "@/theme";
@@ -135,8 +135,8 @@ const Birthdate = () => {
     <Container>
       <ItemContainer>
         <LabelContainer>{i18n.t("profile.birthdate.title")}</LabelContainer>
-        <MuiPickersUtilsProvider
-          utils={DateFnsUtils}
+        <LocalizationProvider
+          dateAdapter={AdapterDateFns}
           locale={localeMap[i18n.language.substring(0, 2)]}
         >
           <CustomDatepicker
@@ -153,7 +153,7 @@ const Birthdate = () => {
               onChange={(e) => handleChangeNumber(e)}
             />
           </CustomDatepicker>
-        </MuiPickersUtilsProvider>
+        </LocalizationProvider>
       </ItemContainer>
 
       <ItemContainer>

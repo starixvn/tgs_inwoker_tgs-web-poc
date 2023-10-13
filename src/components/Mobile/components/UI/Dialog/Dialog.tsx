@@ -1,9 +1,9 @@
 import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
 import { themeList } from "@/theme";
-import { Dialog as MuiDialog } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+import { Dialog as MuiDialog } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
+import { Close as CloseIcon } from "@mui/icons-material";
 
 const theme = themeList["mobileT18"];
 
@@ -35,31 +35,31 @@ const ChildContainer = styled.div`
 `;
 
 type Props = {
-    isOpen: boolean;
-    handleCloseDialog: () => void;
-    children: React.ReactElement;
-    dialogHeaderTitle?: string;
+  isOpen: boolean;
+  handleCloseDialog: () => void;
+  children: React.ReactElement;
+  dialogHeaderTitle?: string;
 };
 const Dialog = ({ isOpen, handleCloseDialog, children }: Props) => {
-    return (
-        <DialogContainer
-            fullScreen
-            open={isOpen}
-            TransitionComponent={UpTransition}
-        >
-            <CloseIconContainer>
-                <CloseIcon
-                    onClick={handleCloseDialog}
-                    style={{
-                        color: "white",
-                        transform: "scale(1.6)",
-                    }}
-                />
-            </CloseIconContainer>
+  return (
+    <DialogContainer
+      fullScreen
+      open={isOpen}
+      TransitionComponent={UpTransition}
+    >
+      <CloseIconContainer>
+        <CloseIcon
+          onClick={handleCloseDialog}
+          style={{
+            color: "white",
+            transform: "scale(1.6)",
+          }}
+        />
+      </CloseIconContainer>
 
-            <ChildContainer>{children}</ChildContainer>
-        </DialogContainer>
-    );
+      <ChildContainer>{children}</ChildContainer>
+    </DialogContainer>
+  );
 };
 
 export default React.memo(Dialog);

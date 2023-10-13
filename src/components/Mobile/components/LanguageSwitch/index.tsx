@@ -3,7 +3,7 @@ import {
   FormControl as MuiFormControl,
   MenuItem as MuiMenuItem,
   Select as MuiSelect,
-} from "@material-ui/core";
+} from "@mui/material";
 import styled from "styled-components";
 import iconImg from "@/assets/images/account/icon_uk.png";
 import { themeList } from "@/theme";

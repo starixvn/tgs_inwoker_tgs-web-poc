@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Dialog } from "@material-ui/core";
+import { Dialog } from "@mui/material";
 import QRCode from "react-qr-code";
 import config from "@/config/config";
 import i18n from "@/utils/i18n";

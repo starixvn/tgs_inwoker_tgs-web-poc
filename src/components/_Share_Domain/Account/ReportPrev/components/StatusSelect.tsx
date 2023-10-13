@@ -2,8 +2,9 @@ import React from "react";
 import i18n from "@/utils/i18n";
 import { Select } from "@/components/Mobile/components/UI/Select";
 import styled from "styled-components";
-import { withStyles } from "@material-ui/core/styles";
-import FormControl from "@material-ui/core/FormControl";
+import { FormControl } from "@mui/material";
+import { withStyles } from "@mui/styles";
+
 import { themeList } from "@/theme";
 
 const theme = themeList["mobileT18"];

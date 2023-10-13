@@ -1,6 +1,6 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { DatePicker as MuiDatePicker } from "@material-ui/pickers";
+import { withStyles } from "@mui/styles";
+import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers";
 
 export const DatePicker = withStyles(() => ({
   root: {

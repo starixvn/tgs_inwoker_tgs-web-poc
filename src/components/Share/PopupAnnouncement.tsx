@@ -1,10 +1,9 @@
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
 import styled from "styled-components";
-import { withStyles } from "@material-ui/core/styles";
+import { Dialog } from "@mui/material";
+import { withStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom"; // Import useHistory
 import i18n from "../../utils/i18n";
-import { Theme } from "@material-ui/core";
 import { themeList } from "@/theme";
 
 const theme = themeList["mobileT18"];

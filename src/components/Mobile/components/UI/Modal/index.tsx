@@ -1,18 +1,20 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-const Overlay = styled.div<{
-  open: boolean;
-  useDarkBg: boolean;
-}>`
+type OverlayProps = {
+  $open: boolean;
+  $useDarkBg: boolean;
+};
+const Overlay = styled.div<OverlayProps>`
   position: fixed;
   top: 0;
   left: 0;
   z-index: 9909;
   width: 100vw;
   height: 100vh;
-  display: ${({ open }) => (open ? "flex" : "none")};
-  background: ${({ useDarkBg }) => (useDarkBg ? "rgba(0, 0, 0, 0.5)": "none")};
+  display: ${({ $open }: OverlayProps) => ($open ? "flex" : "none")};
+  background: ${({ $useDarkBg }: OverlayProps) =>
+    $useDarkBg ? "rgba(0, 0, 0, 0.5)" : "none"};
   justify-content: center;
   align-items: center;
   animation: fadeIn 0.3s ease-in-out;
@@ -69,17 +71,20 @@ const CloseButton = styled.div`
   user-select: none;
 `;
 
-const Modal = ({ open, children, onClose, useDefaultContent, useDarkBg }: {
+const Modal = ({
+  open,
+  children,
+  onClose,
+  useDefaultContent,
+  useDarkBg,
+}: {
   open: boolean;
   children: React.ReactNode;
   onClose: () => void;
   useDefaultContent?: boolean;
   useDarkBg?: boolean;
 }) => {
-  
-  const handleContentClick = (event: {
-    stopPropagation: () => void;
-  }) => {
+  const handleContentClick = (event: { stopPropagation: () => void }) => {
     event.stopPropagation();
   };
 
@@ -92,7 +97,7 @@ const Modal = ({ open, children, onClose, useDefaultContent, useDarkBg }: {
   }, [open]);
 
   return (
-    <Overlay open={open} useDarkBg={!!useDarkBg} onClick={onClose}>
+    <Overlay $open={open} $useDarkBg={!!useDarkBg} onClick={onClose}>
       {useDefaultContent && (
         <ContentContainer>
           <CloseButton onClick={onClose}>✖</CloseButton>

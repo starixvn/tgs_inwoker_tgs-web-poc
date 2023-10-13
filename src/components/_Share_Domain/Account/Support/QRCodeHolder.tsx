@@ -1,5 +1,5 @@
 import React from "react";
-import { Dialog } from "@material-ui/core";
+import { Dialog } from "@mui/material";
 import { BrandsSupport } from "@/types/general";
 import styled from "styled-components";
 

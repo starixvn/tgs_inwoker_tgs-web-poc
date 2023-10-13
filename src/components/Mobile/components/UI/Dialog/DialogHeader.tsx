@@ -1,5 +1,5 @@
 import React from "react";
-import CloseIcon from "@material-ui/icons/Close";
+import { Close as CloseIcon } from "@mui/icons-material";
 import styled from "styled-components";
 
 const DialogHeaderContainer = styled.div`

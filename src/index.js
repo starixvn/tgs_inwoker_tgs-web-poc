@@ -1,54 +1,40 @@
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
-
 import React, { useEffect } from "react";
-import { Redirect, Route, Router, Switch } from "react-router-dom";
 import "./index.css";
-
 import { isMobileOnly } from "react-device-detect";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./utils/serviceWorker";
-//import store from "./store/index";
 import { applyMiddleware, createStore } from "redux";
-
 import thunk from "redux-thunk";
 import InterceptorService from "./api-services/services/InterceptorService";
-import Deposit from "./components/Share/Deposit";
-import JoinGame from "./components/Share/JoinGame";
-import JoinLobbyGame from "./components/Share/JoinLobbyGame";
-import Maintenance from "./components/Share/Maintenance";
-import RedirectPage from "./components/Share/Redirect";
-// import IPRestrict from "./components/App/IPRestrict";
-// import CS from "./components/App/CS";
-// import AboutUs from "./components/AboutUs/index";
-// import GameRules from "./components/GameRules/index";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@mui/styles";
 import {
   createTheme,
-  MuiThemeProvider,
-  StylesProvider,
-} from "@material-ui/core/styles";
+  ThemeProvider as MuiThemeProvider,
+} from "@mui/material/styles";
+import { StylesProvider } from "@mui/styles";
 import { SnackbarProvider } from "notistack";
 import { composeWithDevTools } from "redux-devtools-extension";
-import styled, { ThemeProvider } from "styled-components";
+import styled, {
+  ThemeProvider as StyleComponentThemeProvider,
+} from "styled-components";
 import InfoPNG from "../src/assets/images/info.png";
 import SuccessPNG from "../src/assets/images/success.png";
 import DangerPNG from "../src/assets/images/warning.png";
 import rootReducer from "./api-services/reducers/rootReducer";
 import Config from "./config/config";
 import config from "./config/config";
-import { AppHistory } from "./history/History";
 import i18n from "./utils/i18n";
-
 import Mobile from "@/components/Mobile";
 import { NotificationContextProvider } from "@/contexts/notificationContext";
 import AudioPlayer from "./components/Share/audioplayer";
 import FeatureGetter from "./components/Share/feature-getter";
-import JoinLotteryGame from "./components/Share/JoinLotteryGame";
 import { GlobalStyles } from "./global";
 import { themeList } from "./theme";
 import { createRoot } from "react-dom/client";
-
+import { Redirect, Route, Router, Switch } from "react-router";
+import { AppHistory } from "@/history/History";
 require("es6-promise").polyfill();
 
 // TODO: hide on production
@@ -247,7 +233,7 @@ const AppWrapper = () => {
           {Config.features.BackgroundMusic && <AudioPlayer />}
           <StylesProvider injectFirst>
             <MuiThemeProvider theme={muiTheme}>
-              <ThemeProvider theme={muiThemeMode}>
+              <StyleComponentThemeProvider theme={muiThemeMode}>
                 <GlobalStyles />
                 <SnackbarProvider
                   classes={{
@@ -275,51 +261,12 @@ const AppWrapper = () => {
                 >
                   <Router history={AppHistory}>
                     <Switch>
-                      <Route
-                        exact
-                        path={
-                          "/deposit/:paymentcode/:methodcode/:channelid/:amount/:promotion/:name/:account?"
-                        }
-                        component={Deposit}
-                      />
-                      <Route
-                        exact
-                        path={"/joingame/:type/:params/:params2?"}
-                        component={JoinGame}
-                      />
-                      <Route
-                        exact
-                        path={"/redirect/:url"}
-                        component={RedirectPage}
-                      />
-                      <Route
-                        exact
-                        path={"/joinlottery/:brand"}
-                        component={JoinLotteryGame}
-                      />
-                      <Route
-                        exact
-                        path={"/joinlobbygame/:type/:params"}
-                        component={JoinLobbyGame}
-                      />
-
-                      {(() => {
-                        if (!isMobileOnly) {
-                          return (
-                            <Route
-                              exact
-                              path={"/maintenance"}
-                              render={(props) => <Maintenance />}
-                            />
-                          );
-                        }
-                      })()}
                       <Route path={"/"} render={(props) => <Mobile />} />
                       <Redirect to={`/`} />
                     </Switch>
                   </Router>
                 </SnackbarProvider>
-              </ThemeProvider>
+              </StyleComponentThemeProvider>
             </MuiThemeProvider>
           </StylesProvider>
         </NotificationContextProvider>

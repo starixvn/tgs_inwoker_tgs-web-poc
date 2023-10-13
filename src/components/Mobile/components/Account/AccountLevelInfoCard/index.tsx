@@ -9,8 +9,8 @@ import {
   TableCellProps,
   TableHead,
   TableRow as MuiTableRow,
-} from "@material-ui/core";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+} from "@mui/material";
+import { NavigateNext as NavigateNextIcon } from "@mui/icons-material";
 
 const theme = themeList["mobileT18"];
 
