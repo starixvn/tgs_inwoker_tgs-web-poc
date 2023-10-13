@@ -8,6 +8,7 @@ import { themeList } from "@/theme";
 import { ReactI18NextChild } from "react-i18next";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import Avatar from "@/components/Mobile/components/Avatar";
+import i18n from "@/utils/i18n";
 
 const theme = themeList["mobileT18"];
 
@@ -73,19 +74,19 @@ const InfoCard = (props: any) => {
       {
         infoType: "phone",
         logoImg: phoneImg,
-        value: accountInfo.member_phone || "Not yet verified",
+        value: accountInfo.member_phone || i18n.t("profile.notVerify"),
         isNotValid: !accountInfo.member_phone,
       },
       {
         infoType: "email",
         logoImg: emailImg,
-        value: accountInfo.member_email || "Not yet set",
+        value: accountInfo.member_email || i18n.t("profile.notSet"),
         isNotValid: !accountInfo.member_email,
       },
       {
         infoType: "birth",
         logoImg: birthImg,
-        value: accountInfo.member_birthday || "Not yet set",
+        value: accountInfo.member_birthday || i18n.t("profile.notSet"),
         isNotValid: !accountInfo.member_birthday,
       },
     ];

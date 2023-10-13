@@ -1,9 +1,19 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { SelectItem } from "@/components/Mobile/components/UI/_Trash/Select/DarkSelect";
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import i18n from "@/utils/i18n";
 import { BrandAllAgent } from "@/models/dto/general/GetBrandAllAgentResDto";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
+
+export interface SelectItem {
+  label: string;
+  value: any;
+}
 
 enum RebateTypeEnum {
   ALL = 0,
@@ -38,8 +48,15 @@ export function useRebateTable() {
     rebateItemList[0]
   );
 
-  const handleChangeSelectItem = (newSelectItem: SelectItem) => {
-    setSelectedRebateItem(newSelectItem);
+  const handleChangeSelectItem = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    const selectedRebateTypeEnum = event.target.value;
+    const newSelectedRebateItem = rebateItemList.find((rebateItem) => {
+      return `${rebateItem.value}` === `${selectedRebateTypeEnum}`;
+    });
+
+    setSelectedRebateItem(newSelectedRebateItem);
   };
 
   // Rebate table rows
