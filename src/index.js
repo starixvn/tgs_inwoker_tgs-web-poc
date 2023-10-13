@@ -2,7 +2,6 @@ import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 
 import React, { useEffect } from "react";
-import ReactDOM from "react-dom";
 import { Redirect, Route, Router, Switch } from "react-router-dom";
 import "./index.css";
 
@@ -31,24 +30,24 @@ import {
 } from "@material-ui/core/styles";
 import { SnackbarProvider } from "notistack";
 import { composeWithDevTools } from "redux-devtools-extension";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import InfoPNG from "../src/assets/images/info.png";
 import SuccessPNG from "../src/assets/images/success.png";
 import DangerPNG from "../src/assets/images/warning.png";
 import rootReducer from "./api-services/reducers/rootReducer";
 import Config from "./config/config";
+import config from "./config/config";
 import { AppHistory } from "./history/History";
 import i18n from "./utils/i18n";
 
 import Mobile from "@/components/Mobile";
 import { NotificationContextProvider } from "@/contexts/notificationContext";
-import { ThemeProvider } from "styled-components";
 import AudioPlayer from "./components/Share/audioplayer";
 import FeatureGetter from "./components/Share/feature-getter";
 import JoinLotteryGame from "./components/Share/JoinLotteryGame";
-import config from "./config/config";
 import { GlobalStyles } from "./global";
 import { themeList } from "./theme";
+import { createRoot } from "react-dom/client";
 
 require("es6-promise").polyfill();
 
@@ -331,7 +330,9 @@ const AppWrapper = () => {
   }
 };
 
-ReactDOM.render(<AppWrapper></AppWrapper>, document.getElementById("root"));
+const container = document.getElementById("root");
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(<AppWrapper />);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
