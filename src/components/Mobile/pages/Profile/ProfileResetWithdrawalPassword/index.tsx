@@ -1,23 +1,22 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import ResetWithdrawalPasswordDialog from "@/components/Mobile/pages/Profile/ProfileResetWithdrawalPassword/ResetWithdrawalPasswordDialog";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
+import ResetWithdrawalPassword from "@/components/_Share_Domain/Account/Profile/ResetWithdrawalPassword";
 
 type Props = {};
-const ProfileResetWithdrawalPassword = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const ProfileResetWithdrawalPasswordPage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("profile.resetResetWithdrawalPassword.title"));
   }, []);
 
-  return (
-    <ResetWithdrawalPasswordDialog
-      isOpen={isOpen}
-      handleCloseDialog={handleCloseDialog}
-    />
-  );
+  const { alert } = useNotifications();
+  const history = useHistory();
+
+  return <ResetWithdrawalPassword alert={alert} appHistory={history} />;
 };
 
-export default ProfileResetWithdrawalPassword;
+export default ProfileResetWithdrawalPasswordPage;

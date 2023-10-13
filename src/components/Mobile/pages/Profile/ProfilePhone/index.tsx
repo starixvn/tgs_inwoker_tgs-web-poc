@@ -1,18 +1,22 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import PhoneDialog from "@/components/Mobile/pages/Profile/ProfilePhone/PhoneDialog";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
+import Phone from "@/components/_Share_Domain/Account/Profile/Phone";
 
 type Props = {};
-const ProfilePhone = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const ProfilePhonePage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("common.phoneNumber"));
   }, []);
 
-  return <PhoneDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />;
+  const { alert } = useNotifications();
+  const history = useHistory();
+
+  return <Phone alert={alert} appHistory={history} />;
 };
 
-export default ProfilePhone;
+export default ProfilePhonePage;

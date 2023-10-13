@@ -1,20 +1,22 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import TelegramDialog from "@/components/Mobile/pages/Profile/ProfileTelegram/TelegramDialog";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
+import Telegram from "@/components/_Share_Domain/Account/Profile/Telegram";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
 
 type Props = {};
-const ProfileTelegram = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const ProfileTelegramPage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("common.telegram"));
   }, []);
 
-  return (
-    <TelegramDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />
-  );
+  const { alert } = useNotifications();
+  const history = useHistory();
+
+  return <Telegram alert={alert} appHistory={history} />;
 };
 
-export default ProfileTelegram;
+export default ProfileTelegramPage;

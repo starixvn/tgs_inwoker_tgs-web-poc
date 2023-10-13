@@ -1,24 +1,19 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
 import LoginForm from "@/components/_Share_Domain/authentication/LoginForm";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
 
 type Props = {};
-const Login = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
+const LoginPage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const history = useHistory();
-
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.push("/");
+  useEffect(() => {
+    updatePageName(i18n.t("common.login"));
   }, []);
 
-  return (
-    <Dialog isOpen={isOpen} handleCloseDialog={handleCloseDialog}>
-      <LoginForm />
-    </Dialog>
-  );
+  return <LoginForm />;
 };
 
-export default Login;
+export default LoginPage;

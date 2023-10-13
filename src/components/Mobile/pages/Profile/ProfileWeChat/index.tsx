@@ -1,18 +1,22 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import WeChatDialog from "@/components/Mobile/pages/Profile/ProfileWeChat/WeChatDialog";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
+import WeChat from "@/components/_Share_Domain/Account/Profile/WeChat";
 
 type Props = {};
-const ProfileWeChat = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const ProfileWeChatPage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("common.wechatNumber"));
   }, []);
 
-  return <WeChatDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />;
+  const { alert } = useNotifications();
+  const history = useHistory();
+
+  return <WeChat alert={alert} appHistory={history} />;
 };
 
-export default ProfileWeChat;
+export default ProfileWeChatPage;

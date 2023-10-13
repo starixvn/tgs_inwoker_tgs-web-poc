@@ -1,20 +1,22 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import WhatsappDialog from "@/components/Mobile/pages/Profile/ProfileWhatsapp/WhatsappDialog";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
+import Whatsapp from "@/components/_Share_Domain/Account/Profile/Whatsapp";
 
 type Props = {};
-const ProfileWhatsapp = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+const ProfileWhatsappPage = (props: Props) => {
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("common.whatsapp"));
   }, []);
 
-  return (
-    <WhatsappDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />
-  );
+  const { alert } = useNotifications();
+  const history = useHistory();
+
+  return <Whatsapp alert={alert} appHistory={history} />;
 };
 
-export default ProfileWhatsapp;
+export default ProfileWhatsappPage;
