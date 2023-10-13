@@ -31,10 +31,11 @@ import { NotificationContextProvider } from "@/contexts/notificationContext";
 import AudioPlayer from "./components/Share/audioplayer";
 import FeatureGetter from "./components/Share/feature-getter";
 import { GlobalStyles } from "./global";
-import { themeList } from "./theme";
+import { theme, themeList } from "./theme";
 import { createRoot } from "react-dom/client";
 import { Redirect, Route, Router, Switch } from "react-router";
 import { AppHistory } from "@/history/History";
+import { muiTheme } from "@/theme/mui";
 require("es6-promise").polyfill();
 
 // TODO: hide on production
@@ -97,91 +98,6 @@ document
 //   Config.baseUrl = baseUrl;
 // }
 
-var fontFamily = "Tahoma, Helvetica, Arial, sans-serif";
-if (i18n.language === "zh-CN") {
-  fontFamily =
-    "'Noto Sans SC', Microsoft Yahei, '微软雅黑', STXihei, '华文细黑'";
-} else if (i18n.language === "zh-TW") {
-  fontFamily =
-    "'Noto Sans TC', Tahoma, Helvetica, Arial, sans-serif, '微軟正黑粗'";
-} else if (i18n.language === "th-TH") {
-  fontFamily = "'Sarabun', sans-serif";
-}
-document.getElementById("root").style.fontFamily = fontFamily;
-var muiThemeMode = themeList["mobileT18"];
-
-muiThemeMode.lang = i18n.language;
-const muiTheme = createTheme({
-  palette: {
-    primary: {
-      main: muiThemeMode.primary,
-      mainGradient: muiThemeMode.primaryGradient,
-    },
-    secondary: {
-      main: muiThemeMode.secondary,
-    },
-    tertiary: {
-      main: muiThemeMode.tertiary,
-    },
-    type: "light",
-    white: muiThemeMode.white,
-    yellow: "#f4bd29",
-  },
-  typography: {
-    fontFamily: fontFamily,
-
-    fontWeightLight: 300,
-    fontWeightRegular: 400,
-    fontWeightMedium: 500,
-  },
-  overrides: {
-    MuiSelect: {
-      root: {
-        color: muiThemeMode.secondary,
-      },
-    },
-    MuiTabs: {
-      // Name of the rule
-      root: {
-        backgroundColor: muiThemeMode.secondary,
-        height: "74px",
-        overflow: "visible",
-        "& .MuiTabs-indicator": {
-          backgroundColor: "#FDE740",
-          height: "5px",
-        },
-        "& .MuiTabs-indicator:before": {
-          content: "'\\A'",
-          borderStyle: "solid",
-          borderWidth: "0 10px 10px 10px",
-          borderColor: "transparent transparent #FDE740 transparent",
-          position: "absolute",
-          left: "50%",
-          top: "-6px",
-          transform: "translateX(-50%)",
-        },
-        "& .MuiTabs-flexContainer": {
-          overflow: "visible",
-        },
-        "& .MuiTabs-scrollButtons": {
-          display: "none",
-        },
-      },
-    },
-    MuiTab: {
-      root: {
-        fontSize: "24px",
-        maxWidth: "375px",
-        color: "#ffffff !important",
-        minWidth: "210px",
-        height: "64px",
-        "&.Mui-selected": {
-          color: "#FDE740  !important",
-        },
-      },
-    },
-  },
-});
 const AppWrapper = () => {
   const classes = useStyles();
   const languageDetector =
@@ -233,7 +149,7 @@ const AppWrapper = () => {
           {Config.features.BackgroundMusic && <AudioPlayer />}
           <StylesProvider injectFirst>
             <MuiThemeProvider theme={muiTheme}>
-              <StyleComponentThemeProvider theme={muiThemeMode}>
+              <StyleComponentThemeProvider theme={theme}>
                 <GlobalStyles />
                 <SnackbarProvider
                   classes={{
