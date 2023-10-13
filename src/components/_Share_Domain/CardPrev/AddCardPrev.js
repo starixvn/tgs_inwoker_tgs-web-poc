@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { ListItem, ListItemText, Modal } from "@mui/material";
-import { withStyles } from "@mui/styles";
+import { styled as muiStyled } from "@mui/material/styles";
 import { walletAction } from "@/api-services/actions/walletAction";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
@@ -40,35 +40,29 @@ const BottomInfo = styled.div`
   color: ${({ theme }) => theme.white};
   margin-bottom: 20px;
 `;
-const StyledModalBank = withStyles((theme) => ({
+const StyledModalBank = muiStyled(Modal)(({ theme }) => ({
   paper: {
     color: "#666666",
     padding: "0 30px",
-    width: "750px",
-    maxWidth: "750px",
     margin: 0,
     display: "block",
     position: "absolute",
     bottom: 0,
     height: "calc(100% - 580px)",
   },
-}))(Modal);
+}));
 
-const StyledListItem = withStyles((theme) => ({
-  root: {
-    borderBottom: "1px solid rgba(0,0,0,0.2)",
-    padding: "10px",
+const StyledListItem = muiStyled(ListItem)(({ theme }) => ({
+  borderBottom: "1px solid rgba(0,0,0,0.2)",
+  padding: "10px",
+}));
+const StyledListItemText = muiStyled(ListItemText)(({ theme }) => ({
+  textAlign: "center",
+  paddingRight: "50px",
+  "& .MuiTypography-root": {
+    fontSize: "28px",
   },
-}))(ListItem);
-const StyledListItemText = withStyles((theme) => ({
-  root: {
-    textAlign: "center",
-    paddingRight: "50px",
-    "& .MuiTypography-root": {
-      fontSize: "28px",
-    },
-  },
-}))(ListItemText);
+}));
 
 class AddCardPrev extends Component {
   state = {

@@ -3,9 +3,7 @@ import i18n from "@/utils/i18n";
 import { Select } from "@/components/Mobile/components/UI/Select";
 import styled from "styled-components";
 import { FormControl } from "@mui/material";
-import { withStyles } from "@mui/styles";
-
-import { theme } from "@/theme";
+import { styled as muiStyled } from "@mui/material/styles";
 
 const StatusSelectContainer = styled.div`
   padding: 15px 29px;
@@ -23,25 +21,21 @@ const SelectLabel = styled.div`
   margin-right: 80px;
 `;
 
-const SelectFormControl = withStyles(() => ({
-  root: {
-    flexGrow: 1,
-    padding: 0,
-    "& fieldset": {
-      border: "none",
-    },
-
-    "& select": {
-      padding: 0,
-      color: theme.white,
-      fontSize: "0.937rem",
-    },
-
-    "& .MuiSvgIcon-root": {
-      color: theme.tertiary,
-    },
+const SelectFormControl = muiStyled(FormControl)(({ theme }) => ({
+  flexGrow: 1,
+  padding: 0,
+  "& fieldset": {
+    border: "none",
   },
-}))(FormControl);
+  "& select": {
+    padding: 0,
+    color: theme.palette.common.white,
+    fontSize: "0.937rem",
+  },
+  "& .MuiSvgIcon-root": {
+    color: theme.palette.common.white,
+  },
+}));
 
 export interface StatusDictionary {
   [key: string]: string | null;

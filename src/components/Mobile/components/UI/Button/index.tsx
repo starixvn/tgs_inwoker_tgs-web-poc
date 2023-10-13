@@ -1,23 +1,30 @@
 import React from "react";
 import { Button as MuiButton, ButtonProps } from "@mui/material";
-import { withStyles } from "@mui/styles";
-import { theme } from "@/theme";
+import { styled as muiStyled } from "@mui/material/styles";
 
-export const StyledButton = withStyles(() => {
-  return {
-    root: {
-      whiteSpace: "nowrap",
-      borderRadius: "5px",
-      padding: "12px 20px",
-      fontSize: "1.125rem",
-      fontWeight: 500,
-      "&:disabled": {
-        background: theme.tertiaryDark,
-        color: theme.white,
-      },
-    },
-  };
-})(MuiButton);
+declare module "@mui/material/styles" {
+  interface Theme {
+    tertiaryDark: string;
+    white: string;
+  }
+  // allow configuration using `createTheme`
+  interface ThemeOptions {
+    tertiaryDark: string;
+    white: string;
+  }
+}
+
+export const StyledButton = muiStyled(MuiButton)(({ theme }) => ({
+  whiteSpace: "nowrap",
+  borderRadius: "5px",
+  padding: "12px 20px",
+  fontSize: "1.125rem",
+  fontWeight: 500,
+  "&:disabled": {
+    background: theme.tertiaryDark,
+    color: theme.palette.common.white,
+  },
+}));
 
 export const Button = (props: ButtonProps) => {
   return (

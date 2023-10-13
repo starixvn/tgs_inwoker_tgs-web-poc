@@ -1,29 +1,42 @@
 import { createTheme } from "@mui/material/styles";
-import { themeList } from "@/theme/index";
+import { theme } from "@/theme/index";
 import i18n from "@/utils/i18n";
 import { fontFamily } from "@/theme/fontFamily";
 
-var muiThemeMode = themeList["mobileT18"];
-muiThemeMode.lang = i18n.language;
+theme.lang = i18n.language;
+
+declare module "@mui/material/styles" {
+  interface Theme {
+    tertiaryDark: string;
+    white: string;
+  }
+  // allow configuration using `createTheme`
+  interface ThemeOptions {
+    tertiaryDark: string;
+    white: string;
+  }
+}
 
 const muiTheme = createTheme({
   palette: {
     primary: {
-      main: muiThemeMode.primary,
-      mainGradient: muiThemeMode.primaryGradient,
+      main: theme.primary,
+      mainGradient: theme.primaryGradient,
     },
     secondary: {
-      main: muiThemeMode.secondary,
+      main: theme.secondary,
     },
     tertiary: {
-      main: muiThemeMode.tertiary,
+      main: theme.tertiary,
+      dark: theme.tertiaryDark,
+      light: theme.tertiaryLight,
     },
     type: "light",
-    white: muiThemeMode.white,
+    white: theme.white,
     yellow: "#f4bd29",
     text: {
-      primary: muiThemeMode.white,
-      secondary: muiThemeMode.tertiaryLight,
+      primary: theme.white,
+      secondary: theme.tertiaryLight,
     },
   },
   typography: {
@@ -35,9 +48,7 @@ const muiTheme = createTheme({
   },
   overrides: {
     MuiSelect: {
-      root: {
-        color: muiThemeMode.white,
-      },
+      color: theme.white,
     },
   },
 });

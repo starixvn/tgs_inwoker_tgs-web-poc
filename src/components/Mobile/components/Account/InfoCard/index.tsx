@@ -20,13 +20,6 @@ const Border = styled.div`
   height: 115px;
 `;
 
-const AvatarContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: ${({ theme }) => theme.tertiary};
-`;
-
 const InfoItemListContainer = styled.div`
   & > div {
     margin-bottom: 18px;

@@ -1,11 +1,9 @@
 import React from "react";
-import { withStyles } from "@mui/styles";
+import { styled as muiStyled } from "@mui/material/styles";
 import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers";
 
-export const DatePicker = withStyles(() => ({
-  root: {
-    "& .MuiInput-underline:after": {
-      borderBottom: "none",
-    },
+export const DatePicker = muiStyled(MuiDatePicker)(({ theme }) => ({
+  "& .MuiInput-underline:after": {
+    borderBottom: "none",
   },
-}))(MuiDatePicker);
+}));

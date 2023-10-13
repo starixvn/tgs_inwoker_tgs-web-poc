@@ -1,37 +1,36 @@
 import React from "react";
 import { InputAdornment, TextField } from "@mui/material";
-import { withStyles } from "@mui/styles";
+import { styled as muiStyled } from "@mui/material/styles";
 
-const CustomText = withStyles({
-  root: {
-    backgroundColor: "#fff",
+const CustomText = muiStyled(TextField)(({ theme }) => ({
+  backgroundColor: "#fff",
 
-    "& .MuiOutlinedInput-input": {
-      fontSize: "14px",
+  "& .MuiOutlinedInput-input": {
+    fontSize: "14px",
+  },
+  "& .MuiOutlinedInput-input[readonly]": {
+    backgroundColor: "transparent",
+    color: "#6e6e6e",
+  },
+  "& label.Mui-focused": {
+    color: "#b6b6b6",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#b6b6b6",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#b6b6b6",
     },
-    "& .MuiOutlinedInput-input[readonly]": {
-      backgroundColor: "transparent",
-      color: "#6e6e6e",
+    "&:hover fieldset": {
+      borderColor: "#b6b6b6",
     },
-    "& label.Mui-focused": {
-      color: "#b6b6b6",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#b6b6b6",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "#b6b6b6",
-      },
-      "&:hover fieldset": {
-        borderColor: "#b6b6b6",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#b6b6b6",
-      },
+    "&.Mui-focused fieldset": {
+      borderColor: "#b6b6b6",
     },
   },
-})(TextField);
+}));
+
 function CustomTextField(props) {
   return (
     <CustomText

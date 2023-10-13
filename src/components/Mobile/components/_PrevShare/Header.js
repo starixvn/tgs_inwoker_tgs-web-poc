@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { AppBar, useScrollTrigger } from "@mui/material";
-import { withStyles } from "@mui/styles";
+import { styled as muiStyled } from "@mui/material/styles";
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -29,20 +29,15 @@ ElevationScroll.propTypes = {
   window: PropTypes.func,
 };
 function Header(props) {
-  const CustomAppBar = withStyles((theme) => ({
-    root: {
-      height: "90px",
-      display: "block",
-      backgroundColor: props.backgroundColor ? props.backgroundColor : "",
-      backgroundImage: props.backgroundColor
-        ? ""
-        : "linear-gradient(to top, " +
-          theme.palette.primary.mainGradient +
-          ", " +
-          theme.palette.primary.main +
-          ")",
-    },
-  }))(AppBar);
+  const CustomAppBar = muiStyled(AppBar)(({ theme, props }) => ({
+    height: "90px",
+    display: "block",
+    backgroundColor: props.backgroundColor ? props.backgroundColor : "",
+    backgroundImage: props.backgroundColor
+      ? ""
+      : `linear-gradient(to top, ${theme.palette.primary.mainGradient}, ${theme.palette.primary.main})`,
+  }));
+
   const Header = styled.div`
     height: 90px;
   `;

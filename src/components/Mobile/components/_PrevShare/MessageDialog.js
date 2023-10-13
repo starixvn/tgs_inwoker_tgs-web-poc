@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Modal, Slide } from "@mui/material";
-import { withStyles } from "@mui/styles";
+import { styled as muiStyled } from "@mui/material/styles";
 
 import i18n from "@/utils/i18n";
 
@@ -9,7 +9,7 @@ function MessageDialog(props) {
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
-  const StyledModalPopup = withStyles((theme) => ({
+  const StyledModalPopup = muiStyled(Modal)(({ theme }) => ({
     paper: {
       borderRadius: "50px",
       fontSize: "28px",
@@ -17,10 +17,10 @@ function MessageDialog(props) {
       padding: "30px",
       width: "600px",
       maxWidth: "690px",
-
       display: "block",
     },
-  }))(Modal);
+  }));
+
   const DialoTitle = styled.div`
     font-size: 36px;
     font-weight: 600;

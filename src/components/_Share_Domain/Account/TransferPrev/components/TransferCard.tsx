@@ -8,7 +8,7 @@ import { useGameStore } from "@/hooks/stores/useGameStore";
 import WalletSelect from "@/components/_Share_Domain/Account/TransferPrev/components/WalletSelect";
 import { theme } from "@/theme";
 import { FormControl as MuiFormControl } from "@mui/material";
-import { withStyles } from "@mui/styles";
+import { styled as muiStyled } from "@mui/material/styles";
 
 const TransferCardContainer = styled.div`
   background: ${({ theme }) => theme.primaryLight};
@@ -36,17 +36,15 @@ const ColContainer = styled.div`
   width: 50%;
 `;
 
-const FormControl = withStyles(() => ({
-  root: {
-    borderRadius: "5px",
-    border: `1px solid ${theme.tertiary}`,
-    width: "100%",
-    fontSize: "0.937rem",
-    "& fieldset": {
-      border: "none",
-    },
+const FormControl = muiStyled(MuiFormControl)(({ theme }) => ({
+  borderRadius: "5px",
+  border: `1px solid ${theme.palette.tertiary.main}`,
+  width: "100%",
+  fontSize: "0.937rem",
+  "& fieldset": {
+    border: "none",
   },
-}))(MuiFormControl);
+}));
 
 const Spacing = styled.div`
   margin-bottom: 10px;

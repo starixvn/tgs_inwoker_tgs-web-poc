@@ -1,19 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { Dialog } from "@mui/material";
-import { withStyles } from "@mui/styles";
+import { styled as muiStyled } from "@mui/material/styles";
 import { useHistory } from "react-router-dom"; // Import useHistory
 import i18n from "../../utils/i18n";
 
-const StyledDialog = withStyles({
-  root: {
-    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-
-    "& .MuiPaper-root": {
-      backgroundColor: "transparent",
-    },
+const StyledDialog = muiStyled(Dialog)(({ theme }) => ({
+  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+  "& .MuiPaper-root": {
+    backgroundColor: "transparent",
   },
-})(Dialog);
+}));
 
 const Container = styled.div`
   width: 80vw;
