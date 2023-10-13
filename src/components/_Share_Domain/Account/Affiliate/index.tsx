@@ -8,12 +8,9 @@ import styled from "styled-components";
 import i18n from "@/utils/i18n";
 import React from "react";
 import { Select } from "@/components/Mobile/components/UI/Select";
-import {
-  FormControl,
-  LabelContainer,
-  ItemContainer,
-  Remark,
-} from "@/components/Mobile/styles/forms";
+import { FormControl } from "@/components/Mobile/styles/forms";
+import { ImageActionEnum, useImageActions } from "@/hooks/useImageActions";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
 
 const theme = themeList["mobileT18"];
 
@@ -69,6 +66,7 @@ const AffiliateInfoRowContainer = styled.div`
 
 type Props = {};
 const Affiliate = (props: Props) => {
+  const { account } = useAccountStore();
   const {
     rebateItemList,
     selectedRebateItem,
@@ -77,26 +75,44 @@ const Affiliate = (props: Props) => {
     affiliateLink,
   } = useRebateTable();
 
+  const { imageId, handleQrAction, isCopied, isDownloaded } = useImageActions();
+
   return (
     <AffiliateContainer>
-      <AffiliateTitle>REFERRAL QR Code</AffiliateTitle>
+      <AffiliateTitle>{i18n.t("affiliate.qrCode")}</AffiliateTitle>
 
-      <QRCodeContainer id="qrcode-container">
+      <QRCodeContainer id={imageId}>
         <QRCode value={affiliateLink} />
       </QRCodeContainer>
 
       <ActionButtonContainer>
-        <Button>Copy</Button>
-        <Button>Download</Button>
+        <Button
+          variant={isCopied ? "outlined" : "contained"}
+          onClick={() => handleQrAction(ImageActionEnum.COPY)}
+        >
+          {isCopied ? i18n.t("affiliate.copied") : i18n.t("common.copy")}
+        </Button>
+        <Button
+          variant={isDownloaded ? "outlined" : "contained"}
+          onClick={() => handleQrAction(ImageActionEnum.DOWNLOAD)}
+        >
+          {isDownloaded ? i18n.t("common.download") : i18n.t("common.download")}
+        </Button>
       </ActionButtonContainer>
 
       <AffiliateInfoRowContainer>
-        <AffiliateInfoRow label={"Referral ID"} value={"12"} />
-        <AffiliateInfoRow label={"Affiliate Link"} value={"12"} />
+        <AffiliateInfoRow
+          label={i18n.t("affiliate.promoId")}
+          value={account.info.playercode}
+        />
+        <AffiliateInfoRow
+          label={i18n.t("affiliate.promoLink")}
+          value={affiliateLink}
+        />
       </AffiliateInfoRowContainer>
 
       <AffiliateTitle style={{ alignSelf: "flex-start" }}>
-        Rebate Rates
+        {i18n.t("rebateRate.title")}
       </AffiliateTitle>
 
       <FormControl style={{ marginBottom: "20px" }}>
@@ -111,7 +127,7 @@ const Affiliate = (props: Props) => {
             return (
               <option key={index} value={rebateItem.value}>
                 {/*{i18n.t("deposit.msgPlsSelectPayment")}*/}
-                {rebateItem.label}
+                {i18n.t(`common.${rebateItem.label}`)}
               </option>
             );
           })}

@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { themeList } from "@/theme";
 import { Button } from "@/components/Mobile/components/UI/Button";
+import i18n from "@/utils/i18n";
 
 const theme = themeList["mobileT18"];
 
@@ -27,6 +28,8 @@ const AffiliateInfoRowContainer = styled.div`
     font-weight: 400;
     font-size: 0.937rem;
     line-height: 1.098rem;
+    overflow: hidden;
+    //white-space: nowrap;
   }
 
   & .button {
@@ -66,7 +69,7 @@ const AffiliateInfoRow = ({ label, value }: Props) => {
         onClick={handleCopyText}
         variant={isCopied ? "outlined" : "contained"}
       >
-        {isCopied ? "Copied" : "Copy"}
+        {isCopied ? i18n.t("affiliate.copied") : i18n.t("common.copy")}
       </Button>
     </AffiliateInfoRowContainer>
   );
