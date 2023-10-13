@@ -27,6 +27,8 @@ const AffiliateTitle = styled.h2`
   margin-block: 0;
   margin-inline: 0;
   font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.758rem;
   margin-bottom: 14px;
 `;
 
@@ -46,6 +48,8 @@ const ActionButtonContainer = styled.div`
     width: 110px;
     height: 27px;
     font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.171rem;
     padding: 4px 36px;
     border-radius: 5px;
   }
@@ -53,6 +57,8 @@ const ActionButtonContainer = styled.div`
 
 const AffiliateInfoRowContainer = styled.div`
   width: 100%;
+  margin-bottom: 27px;
+
   & > div {
     margin-bottom: 16px;
 
@@ -60,8 +66,6 @@ const AffiliateInfoRowContainer = styled.div`
       margin-bottom: 0;
     }
   }
-
-  margin-bottom: 27px;
 `;
 
 type Props = {};
@@ -79,12 +83,14 @@ const Affiliate = (props: Props) => {
 
   return (
     <AffiliateContainer>
+      {/* QRCode */}
       <AffiliateTitle>{i18n.t("affiliate.qrCode")}</AffiliateTitle>
 
       <QRCodeContainer id={imageId}>
         <QRCode value={affiliateLink} />
       </QRCodeContainer>
 
+      {/* QRCode action region */}
       <ActionButtonContainer>
         <Button
           variant={isCopied ? "outlined" : "contained"}
@@ -100,6 +106,7 @@ const Affiliate = (props: Props) => {
         </Button>
       </ActionButtonContainer>
 
+      {/* Referral ID/Link */}
       <AffiliateInfoRowContainer>
         <AffiliateInfoRow
           label={i18n.t("affiliate.promoId")}
@@ -111,6 +118,7 @@ const Affiliate = (props: Props) => {
         />
       </AffiliateInfoRowContainer>
 
+      {/* Table */}
       <AffiliateTitle style={{ alignSelf: "flex-start" }}>
         {i18n.t("rebateRate.title")}
       </AffiliateTitle>
@@ -122,6 +130,7 @@ const Affiliate = (props: Props) => {
           native
           value={selectedRebateItem.value}
           onChange={handleChangeSelectItem}
+          color={"primary"}
         >
           {rebateItemList.map((rebateItem, index) => {
             return (

@@ -10,7 +10,7 @@ const AffiliateInfoRowContainer = styled.div`
   width: 100%;
   background: ${theme.tertiaryDark};
   border-radius: 5px;
-  padding: 10px;
+  padding: 13px 17px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -29,7 +29,9 @@ const AffiliateInfoRowContainer = styled.div`
     font-size: 0.937rem;
     line-height: 1.098rem;
     overflow: hidden;
-    //white-space: nowrap;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 6px;
   }
 
   & .button {
@@ -68,6 +70,9 @@ const AffiliateInfoRow = ({ label, value }: Props) => {
         className={"button"}
         onClick={handleCopyText}
         variant={isCopied ? "outlined" : "contained"}
+        style={{
+          width: "66px",
+        }}
       >
         {isCopied ? i18n.t("affiliate.copied") : i18n.t("common.copy")}
       </Button>

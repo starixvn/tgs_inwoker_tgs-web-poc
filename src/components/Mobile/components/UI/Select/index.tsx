@@ -1,10 +1,10 @@
 import { withStyles } from "@material-ui/core/styles";
-import { Select as MuiSelect } from "@material-ui/core";
+import { Select as MuiSelect, SelectProps } from "@material-ui/core";
 import { themeList } from "@/theme";
 
 const theme = themeList["mobileT18"];
 
-export const Select = withStyles(() => ({
+export const StyledSelect = withStyles(() => ({
   root: {
     color: `${theme.tertiary}`,
     fontSize: "0.937rem",
@@ -29,3 +29,9 @@ export const Select = withStyles(() => ({
     },
   },
 }))(MuiSelect);
+
+import React from "react";
+
+export const Select = (props: SelectProps) => {
+  return <StyledSelect {...props} />;
+};
