@@ -1,12 +1,19 @@
 import AffiliateInfoRow from "@/components/_Share_Domain/Account/Affiliate/AffiliateInfoRow";
 import RebateTable from "@/components/_Share_Domain/Account/Affiliate/RebateTable";
 import { Button } from "@/components/Mobile/components/UI/Button";
-import Select from "@/components/Mobile/components/UI/_Trash/Select";
-import DarkSelect from "@/components/Mobile/components/UI/_Trash/Select/DarkSelect";
 import { useRebateTable } from "@/hooks/account/affiliate/useRebateTable";
 import { themeList } from "@/theme";
 import QRCode from "react-qr-code";
 import styled from "styled-components";
+import i18n from "@/utils/i18n";
+import React from "react";
+import { Select } from "@/components/Mobile/components/UI/Select";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+  Remark,
+} from "@/components/Mobile/styles/forms";
 
 const theme = themeList["mobileT18"];
 
@@ -60,10 +67,6 @@ const AffiliateInfoRowContainer = styled.div`
   margin-bottom: 27px;
 `;
 
-const StyledSelect = styled(Select)`
-  width: 100%;
-`;
-
 type Props = {};
 const Affiliate = (props: Props) => {
   const {
@@ -96,17 +99,24 @@ const Affiliate = (props: Props) => {
         Rebate Rates
       </AffiliateTitle>
 
-      <DarkSelect
-        label={""}
-        selectItem={selectedRebateItem}
-        handleChange={(newSelectItem) => handleChangeSelectItem(newSelectItem)}
-        selectItemList={rebateItemList}
-        backgroundColor={theme.primaryDark}
-        style={{
-          width: "100%",
-          marginBottom: "20px",
-        }}
-      />
+      <FormControl style={{ marginBottom: "20px" }}>
+        <Select
+          fullWidth
+          disableUnderline
+          native
+          value={selectedRebateItem.value}
+          onChange={handleChangeSelectItem}
+        >
+          {rebateItemList.map((rebateItem, index) => {
+            return (
+              <option key={index} value={rebateItem.value}>
+                {/*{i18n.t("deposit.msgPlsSelectPayment")}*/}
+                {rebateItem.label}
+              </option>
+            );
+          })}
+        </Select>
+      </FormControl>
 
       <RebateTable rebateTableRow={rebateTableRow} />
     </AffiliateContainer>

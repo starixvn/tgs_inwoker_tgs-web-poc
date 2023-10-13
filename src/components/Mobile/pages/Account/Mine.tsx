@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { themeList } from "@/theme";
 import InfoCard from "@/components/Mobile/components/Account/InfoCard";
@@ -9,9 +9,8 @@ import { useTab } from "@/hooks/account/useTab";
 import AccountNavigations from "@/components/Mobile/components/Account/AccountNavigations";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useHistory } from "react-router-dom";
-import CurrentLevelBanner from "@/components/Mobile/components/BettingBonus/CurrentLevelBanner";
-import Loading from "@/components/Mobile/components/UI/Loading";
 import MyInfo from "@/components/Mobile/components/Account/MyInfo";
+import i18n from "@/utils/i18n";
 
 const theme = themeList["mobileT18"];
 
@@ -28,16 +27,17 @@ const InfoIcon = () => {
   return <img src={infoImg} alt="info" />;
 };
 
-const tabList: TabItem[] = [
-  {
-    label: "My Account",
-    value: "account",
-    icon: <AccountIcon />,
-  },
-  { label: "My Info", value: "info", icon: <InfoIcon /> },
-];
-
 const Mine = () => {
+  const tabList = useMemo<TabItem[]>(() => {
+    return [
+      {
+        label: i18n.t("TIGER.my"),
+        value: "account",
+        icon: <AccountIcon />,
+      },
+      { label: i18n.t("common.info"), value: "info", icon: <InfoIcon /> },
+    ] as TabItem[];
+  }, []);
   const { selectedTab, handleTabChange } = useTab(tabList);
   const { isLogin } = useAuth();
   const history = useHistory();

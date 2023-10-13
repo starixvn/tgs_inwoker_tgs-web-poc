@@ -90,7 +90,11 @@ const PromotionDetail = () => {
         <ContentContainer>
           <TextArea>
             <Title>{promotionData.name}</Title>
-            <Description>{contentToDisplay}</Description>
+            <Description
+              dangerouslySetInnerHTML={{
+                __html: "<div>" + contentToDisplay + "</div>",
+              }}
+            />
           </TextArea>
           <TextArea>
             <Title>Promo Period</Title>

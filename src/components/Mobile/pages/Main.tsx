@@ -1,8 +1,10 @@
 import { GameService } from "@/api-services/services/GameService";
+import searchIcon from "@/assets/images/home/mobile/search.svg";
 import vendorsIcon from "@/assets/images/home/mobile/vendors.png";
 import CardPrompt from "@/components/Mobile/components/CardPrompt";
 import Category from "@/components/Mobile/components/Category";
 import GameCard from "@/components/Mobile/components/GameCard";
+import Input from "@/components/Mobile/components/Input";
 import Lobby from "@/components/Mobile/components/Lobby";
 import Slider from "@/components/Mobile/components/Slider";
 import SocialMedia from "@/components/Mobile/components/SocialMedia";
@@ -13,6 +15,7 @@ import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import getDisplayGameType from "@/utils/getDisplayGameType";
+import i18n from "@/utils/i18n";
 import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -124,6 +127,14 @@ const Main = (props: Props) => {
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setSearchString(value);
+
+    const filteredGames = game.homePageGameList.filter((item: GameItem) => {
+      const gameName = item.name.toLowerCase();
+      const searchTerm = value.toLowerCase();
+      return gameName.includes(searchTerm);
+    });
+
+    setFilteredGameList(filteredGames);
   };
 
   // groupBy_gameType : 除了Lobby之外的所有gameType
@@ -289,12 +300,12 @@ const Main = (props: Props) => {
             ))}
           </TagContainer>
 
-          {/* <Input
-            placeholder={"Search"}
+          <Input
+            placeholder={i18n.t("slot.search")}
             imageUrl={searchIcon}
             handleChange={handleSearch}
             value={searchString}
-          /> */}
+          />
 
           <GameCardContainer>
             {filteredGameList && filteredGameList.map(
