@@ -1,19 +1,22 @@
-import React, { useCallback, useState } from "react";
-import TransferDialog from "@/components/Mobile/pages/Transfer/TransferDialog";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import ReportDialog from "@/components/Mobile/pages/Report/ReportDialog";
+import ReportPrev from "@/components/_Share_Domain/Account/ReportPrev";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
+import { usePageName } from "@/hooks/usePageName";
+import i18n from "@/utils/i18n";
 
 type Props = {};
 const Report = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const history = useHistory();
+  const { updatePageName } = usePageName();
 
-  const handleCloseDialog = useCallback(() => {
-    setIsOpen(false);
-    history.goBack();
+  useEffect(() => {
+    updatePageName(i18n.t("affiliate.report"));
   }, []);
 
-  return <ReportDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />;
+  const { alert } = useNotifications();
+  const history = useHistory();
+
+  return <ReportPrev alert={alert} history={history} />;
 };
 
 export default Report;

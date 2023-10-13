@@ -41,7 +41,7 @@ const ContactUsPage = (props: Props) => {
   const { updatePageName } = usePageName();
 
   useEffect(() => {
-    updatePageName(i18n.t("main.account.appDownload"));
+    updatePageName(i18n.t("support.contact"));
   }, []);
 
   const { general } = useGeneralStore();

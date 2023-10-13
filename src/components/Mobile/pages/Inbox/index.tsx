@@ -1,22 +1,22 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import InboxDialog from "@/components/Mobile/pages/Inbox/InboxDialog";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { usePageName } from "@/hooks/usePageName";
 import i18n from "@/utils/i18n";
+import Inbox from "@/components/_Share_Domain/Account/Inbox";
 
 type Props = {};
-const Inbox = (props: Props) => {
+const InboxPage = (props: Props) => {
   const { updatePageName } = usePageName();
 
   useEffect(() => {
-    updatePageName(i18n.t("affiliate.title"));
+    updatePageName(i18n.t("inbox.title"));
   }, []);
 
   const { alert } = useNotifications();
   const history = useHistory();
 
-  return <InboxDialog isOpen={isOpen} handleCloseDialog={handleCloseDialog} />;
+  return <Inbox alert={alert} history={history} />;
 };
 
-export default Inbox;
+export default InboxPage;
