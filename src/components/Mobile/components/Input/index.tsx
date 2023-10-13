@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 type Props = {
-    placeholder?: string;
-    imageUrl?: string;
-    value?: string;
-    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  imageUrl?: string;
+  value?: string;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InputWrapper = styled.div`
@@ -21,13 +21,13 @@ const InputTextfield = styled.input`
     display: flex;
     align-items: flex-start;
     outline: none;
-    border-radius: 10px;
     border: 0;
     background-color: transparent;
     outline: none;
     width: 100%;
     font-size: 1rem;
-    margin-left: 4px;
+    margin-left: 8px;
+    color: ${(props) => props.theme.white};
     &::placeholder {
             color: ${(props) => props.theme.tertiary};
             font-weight: 700;
@@ -40,17 +40,17 @@ const InputTextfield = styled.input`
 `;
 
 const Input = ({ placeholder, imageUrl, value, handleChange }: Props) => {
-    return (
-        <InputWrapper>
-            {imageUrl && <img src={imageUrl} alt={"Search"} />}
-            <InputTextfield
-                type="text"
-                placeholder={placeholder}
-                value={value}
-                onChange={handleChange}
-            />
-        </InputWrapper>
-    );
+  return (
+    <InputWrapper>
+      {imageUrl && <img src={imageUrl} alt={"Search"} />}
+      <InputTextfield
+        type="text"
+        placeholder={placeholder}
+        value={value}
+        onChange={handleChange}
+      />
+    </InputWrapper>
+  );
 };
 
 export default Input;

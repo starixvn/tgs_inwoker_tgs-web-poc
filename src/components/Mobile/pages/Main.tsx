@@ -26,10 +26,6 @@ type Props = {
   imageUrl: string;
 };
 
-type TagItem = {
-  name: string;
-};
-
 type GameItem = {
   key: string;
   code: string;
@@ -115,6 +111,7 @@ const Main = (props: Props) => {
   const [filteredGameList, setFilteredGameList] = useState<any[]>([]);
   const [groupByProvider, setGroupByProvider] = useState<any>({});
   const [favoriteList, setFavoriteList] = useState<number[]>([]);
+  const [filteredMatchGames, setFilteredMatchGames] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleGameTypeClick = (gameType: number) => {
@@ -127,14 +124,6 @@ const Main = (props: Props) => {
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setSearchString(value);
-
-    const filteredGames = game.homePageGameList.filter((item: GameItem) => {
-      const gameName = item.name.toLowerCase();
-      const searchTerm = value.toLowerCase();
-      return gameName.includes(searchTerm);
-    });
-
-    setFilteredGameList(filteredGames);
   };
 
   // groupBy_gameType : 除了Lobby之外的所有gameType
@@ -244,6 +233,21 @@ const Main = (props: Props) => {
     }
   }, [activeGameTypeTab, selectedTag]);
 
+  useEffect(() => {
+    const searchLowerCase = searchString.toLowerCase();
+
+    if (!searchString) {
+      setFilteredMatchGames(filteredGameList);
+    } else {
+      const filteredGames = filteredGameList.filter((item) => {
+        const gameName = item.name.toLowerCase();
+        return gameName.includes(searchLowerCase);
+      });
+
+      setFilteredMatchGames(filteredGames);
+    }
+  }, [searchString, filteredGameList]);
+
   return (
     <MainWrapper>
       {!!general.banner.length && <Slider />}
@@ -308,7 +312,7 @@ const Main = (props: Props) => {
           />
 
           <GameCardContainer>
-            {filteredGameList && filteredGameList.map(
+            {filteredMatchGames && filteredMatchGames.map(
               (item: GameItem) => (
                 <GameCard
                   key={item.id}
@@ -320,7 +324,7 @@ const Main = (props: Props) => {
                 />
               )
             )}
-            {!filteredGameList.length && <div>No data</div>}
+            {!filteredMatchGames.length && <div>No data</div>}
           </GameCardContainer>
         </>
       )}

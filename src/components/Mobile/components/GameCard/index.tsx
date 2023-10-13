@@ -8,12 +8,14 @@ import styled from 'styled-components';
 import { badgeList } from '../../constants/games';
 
 const GameCardWrapper = styled.div<{ imageUrl: string }>`
+  position: relative;
   width: calc(50% - 8px);
   padding-top: calc(50% - 8px);
   background-image: url(${props => props.imageUrl});
   background-size: cover;
   box-sizing: border-box;
   position: relative;
+  border: 1px solid ${(props) => props.theme.tertiary};
 `;
 
 const LikeIcon = styled.div<{ imageUrl: string }>`
@@ -25,6 +27,8 @@ const LikeIcon = styled.div<{ imageUrl: string }>`
   position: absolute;
   top: 6px;
   right: 8px;
+  border-radius: 50%;
+  background-color: #ffffff1f;
 `;
 
 const BadgeIcon = styled.div<{ imageUrl: string }>`
@@ -47,6 +51,15 @@ const NewBadgeIcon = styled.div<{ imageUrl: string }>`
   position: absolute;
   top: 25px;
   left: 0;
+`;
+
+const GameName = styled.div`
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    color: ${(props) => props.theme.tertiary};
+    font-size: 1.25rem;
 `;
 
 type GameCardProps = {
@@ -120,6 +133,9 @@ const GameCard = ({ gameItem, selectedTag, favoriteList, fetchFavoriteList, isFa
       {gameItem.tag.new && selectedTag === "New" && (
         <BadgeIcon imageUrl={badgeList.new} />
       )}
+
+      {/* to-do: if show game name while imageUrl return 404 */}
+      {/* <GameName>{gameItem.name}</GameName> */}
     </GameCardWrapper>
   );
 };
