@@ -79,24 +79,24 @@ const Affiliate = (props: Props) => {
 
   return (
     <AffiliateContainer>
-      <AffiliateTitle>REFERRAL QR Code</AffiliateTitle>
+      <AffiliateTitle>{i18n.t("affiliate.qrCode")}</AffiliateTitle>
 
       <QRCodeContainer id="qrcode-container">
         <QRCode value={affiliateLink} />
       </QRCodeContainer>
 
       <ActionButtonContainer>
-        <Button>Copy</Button>
-        <Button>Download</Button>
+        <Button>{i18n.t("common.copy")}</Button>
+        <Button>{i18n.t("common.download")}</Button>
       </ActionButtonContainer>
 
       <AffiliateInfoRowContainer>
-        <AffiliateInfoRow label={"Referral ID"} value={"12"} />
-        <AffiliateInfoRow label={"Affiliate Link"} value={"12"} />
+        <AffiliateInfoRow label={i18n.t("affiliate.promoId")} value={"12"} />
+        <AffiliateInfoRow label={i18n.t("affiliate.promoLink")} value={"12"} />
       </AffiliateInfoRowContainer>
 
       <AffiliateTitle style={{ alignSelf: "flex-start" }}>
-        Rebate Rates
+        {i18n.t("rebateRate.title")}
       </AffiliateTitle>
 
       <FormControl style={{ marginBottom: "20px" }}>
@@ -111,7 +111,7 @@ const Affiliate = (props: Props) => {
             return (
               <option key={index} value={rebateItem.value}>
                 {/*{i18n.t("deposit.msgPlsSelectPayment")}*/}
-                {rebateItem.label}
+                {i18n.t(`common.${rebateItem.label}`)}
               </option>
             );
           })}

@@ -18,6 +18,11 @@ export const Button = withStyles(() => {
         background: theme.tertiaryDark,
         color: theme.white,
       },
+      "&:focus": {
+        background: theme.primary,
+        color: theme.white,
+        border: "none",
+      },
     },
   };
 })(MuiButton);
