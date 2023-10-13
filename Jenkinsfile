@@ -8,6 +8,7 @@ pipeline {
         Registry = "pgtgs/"
         dockerhub = credentials('dockerhub')
         Image = "tgs-web-poc"
+        Api_Service_Branch="develop"
     }
     
     stages {                
@@ -23,25 +24,22 @@ pipeline {
                         case ['master', 'origin/master']:
                             env.kube_ns = "prod";
                             env.k8s_config = 'prod-k8s-config';
-                            sh "git config --file=.gitmodules submodule.src/api-services.branch master";
-                            sh "git submodule sync";
-                            sh "git submodule update --remote";
+                            Api_Service_Branch = "master"
                             break;
                         case ['release/current', 'origin/release/current']:
                             env.kube_ns = "staging";
                             env.k8s_config = 'stag-k8s-config';
-                            sh "git config --file=.gitmodules submodule.src/api-services.branch develop";
-                            sh "git submodule sync";
-                            sh "git submodule update --remote";
                             break;
                         default:
-                            sh "git config --file=.gitmodules submodule.src/api-services.branch develop";
-                            sh "git submodule sync";
-                            sh "git submodule update --remote";
                             env.kube_ns = "dev";
                             env.k8s_config = 'k8s-kube-config' 
                             break;
                     }
+                    
+                    sh "git config --file=.gitmodules submodule.src/api-services.branch $Api_Service_Branch";
+                    sh "git submodule sync";
+                    sh "git submodule update --remote";
+                    
                     TAG = env.kube_ns + '-' + TAG
                     MergedTag = 'merged-' + TAG
                     message += "\nBranch: ${env.GIT_BRANCH}" 
