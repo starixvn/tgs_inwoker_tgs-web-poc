@@ -425,19 +425,21 @@ class Details extends Component {
           onClose={this.handleClosePopup}
           open={this.state.openPopup}
         >
-          <DialoMessage>{i18n.t("deposit.msgDialog")}</DialoMessage>
-          <ButtonConfirm
-            onClick={this.handleOpenPopupUrl}
-            style={{ float: "left" }}
-          >
-            {i18n.t("common.confirm")}
-          </ButtonConfirm>
-          <ButtonConfirm
-            onClick={this.handleClosePopup}
-            style={{ float: "right" }}
-          >
-            {i18n.t("common.cancel")}
-          </ButtonConfirm>
+          <>
+            <DialoMessage>{i18n.t("deposit.msgDialog")}</DialoMessage>
+            <ButtonConfirm
+              onClick={this.handleOpenPopupUrl}
+              style={{ float: "left" }}
+            >
+              {i18n.t("common.confirm")}
+            </ButtonConfirm>
+            <ButtonConfirm
+              onClick={this.handleClosePopup}
+              style={{ float: "right" }}
+            >
+              {i18n.t("common.cancel")}
+            </ButtonConfirm>
+          </>
         </StyledModalPopup>
 
         <Loading show={this.state.loading} />

@@ -15,6 +15,7 @@ const TitleContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 41px;
+  margin-top: 15.76%;
 
   & > .bottom-border {
     width: 68px;

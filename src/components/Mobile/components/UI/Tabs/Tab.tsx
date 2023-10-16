@@ -56,7 +56,7 @@ const Tab = ({ tabItem, handleClick, isActive }: Props) => {
   };
 
   return (
-    <TabContainer onClick={handleClick} $isActive={isActive}>
+    <TabContainer className={"tab"} onClick={handleClick} $isActive={isActive}>
       <IconComponent />
       {label}
     </TabContainer>

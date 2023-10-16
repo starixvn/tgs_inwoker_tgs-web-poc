@@ -3,6 +3,7 @@ import WithdrawalPrev from "@/components/_Share_Domain/Account/WithdrawalPrev";
 import { useHistory } from "react-router-dom";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import styled from "styled-components";
+import TransferTabs from "@/components/_Share_Domain/Account/DepositPrev/components/TransferTabs";
 
 const Container = styled.div`
   width: 100%;
@@ -16,6 +17,7 @@ const Withdrawal = (props: Props) => {
 
   return (
     <Container>
+      <TransferTabs />
       <WithdrawalPrev appHistory={history} alert={alert} />;
     </Container>
   );
