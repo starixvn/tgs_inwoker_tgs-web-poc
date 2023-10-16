@@ -26,6 +26,9 @@ export const StyledSelect = muiStyled(MuiSelect)(({ theme }) => ({
       color: theme.palette.tertiary.main,
     },
   },
+  "& .MuiSvgIcon-root": {
+    color: theme.palette.tertiary.main,
+  },
 }));
 
 export const Select = (props: SelectProps) => {

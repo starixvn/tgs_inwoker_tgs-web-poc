@@ -760,7 +760,7 @@ class DepositPrev extends Component {
                 this.state.selectedChannelIndex
               ].extended
             }
-          ></Details>
+          />
         );
       case 5:
         return (
