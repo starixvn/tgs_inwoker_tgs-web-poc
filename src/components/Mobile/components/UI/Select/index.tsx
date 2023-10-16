@@ -1,22 +1,20 @@
-import { withStyles } from "@material-ui/core/styles";
-import { Select as MuiSelect, SelectProps } from "@material-ui/core";
-import { themeList } from "@/theme";
+import { Select as MuiSelect, SelectProps } from "@mui/material";
+import { theme } from "@/theme";
+import { styled as muiStyled } from "@mui/material/styles";
+import React from "react";
 
-const theme = themeList["mobileT18"];
-
-export const StyledSelect = withStyles(() => ({
-  root: {
-    color: `${theme.tertiary}`,
-    fontSize: "0.937rem",
-    fontWeight: 400,
-    "&:focus": {
-      background: "none",
-    },
-    "&:active": {
-      background: "none",
-    },
+export const StyledSelect = muiStyled(MuiSelect)(({ theme }) => ({
+  color: theme.palette.tertiary.main,
+  fontSize: "0.937rem",
+  fontWeight: 400,
+  "&:focus": {
+    background: "none",
+  },
+  "&:active": {
+    background: "none",
   },
   select: {
+    color: theme.palette.tertiary.main,
     padding: "14px",
     "&:focus": {
       background: "none",
@@ -25,12 +23,10 @@ export const StyledSelect = withStyles(() => ({
       background: "none",
     },
     "&:disabled": {
-      color: `${theme.tertiary}`,
+      color: theme.palette.tertiary.main,
     },
   },
-}))(MuiSelect);
-
-import React from "react";
+}));
 
 export const Select = (props: SelectProps) => {
   return <StyledSelect {...props} />;

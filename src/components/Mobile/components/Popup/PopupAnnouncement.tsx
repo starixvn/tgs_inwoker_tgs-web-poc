@@ -1,14 +1,12 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Carousel from "@/components/Mobile/components/UI/Carousel";
-import { themeList } from "@/theme";
 import { useUiStore } from "@/hooks/stores/useUiStore";
 import NotShowAgainHint from "@/components/Mobile/components/Popup/NotShowAgainHint";
-import { Dialog as MuiDialog } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+import { Dialog as MuiDialog } from "@mui/material";
+import { Close as CloseIcon } from "@mui/icons-material";
 import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
 
-const theme = themeList["mobileT18"];
 const dialogBgUrl =
   process.env.PUBLIC_URL + "/assets/images/announcement/announcement_bg.png";
 

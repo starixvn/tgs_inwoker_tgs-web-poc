@@ -1,5 +1,5 @@
 import React from "react";
-import { Checkbox as MuiCheckbox, CheckboxProps } from "@material-ui/core";
+import { Checkbox as MuiCheckbox, CheckboxProps } from "@mui/material";
 import styled from "styled-components";
 
 const StyledCheckbox = styled(MuiCheckbox)`

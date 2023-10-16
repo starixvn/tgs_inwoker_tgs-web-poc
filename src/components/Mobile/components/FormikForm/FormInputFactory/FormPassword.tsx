@@ -4,8 +4,8 @@ import {
   GrayInputWrapper,
 } from "@/components/Mobile/components/UI/TextField";
 import { FormikFormInput } from "@/components/Mobile/components/FormikForm";
-import { IconButton, InputAdornment } from "@material-ui/core";
-import { Visibility, VisibilityOff } from "@material-ui/icons";
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 type Props = {
   formInput: FormikFormInput;

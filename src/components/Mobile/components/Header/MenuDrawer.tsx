@@ -1,12 +1,11 @@
 import React from "react";
-import { Drawer } from "@material-ui/core";
 import styled from "styled-components";
-import { withStyles } from "@material-ui/styles";
 import cardBonus from "@/assets/images/header/card_bonus.png";
 import cardVip from "@/assets/images/header/card_vip.png";
 import cardPromotions from "@/assets/images/header/card_promotions.png";
 import { AppHistory } from "@/history/History";
 import LanguageSwitch from "@/components/Mobile/components/LanguageSwitch";
+import { Drawer } from "@mui/material";
 
 const CustomDrawer = styled(Drawer)`
   height: calc(100% - 70px);

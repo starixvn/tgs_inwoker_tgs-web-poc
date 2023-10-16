@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Collapse } from "@material-ui/core";
+import { Collapse } from "@mui/material";
 import moment from "moment";
 import { InboxMessage } from "@/types/account";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
 
 const InboxItemContainer = styled.div`
   width: 100%;
   padding: 8px 15px;
-  background: ${theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight};
 `;
 
 type CheckboxContainerProps = {
-  edit: boolean;
+  $edit: boolean;
 };
 const CheckboxContainer = styled.div<CheckboxContainerProps>`
   float: left;
@@ -22,8 +19,8 @@ const CheckboxContainer = styled.div<CheckboxContainerProps>`
   height: 46px;
   margin: 56px 0 0 20px;
 
-  ${(props: CheckboxContainerProps) =>
-    props.edit ? `display:block` : `display:none`};
+  ${({ $edit }: CheckboxContainerProps) =>
+    $edit ? `display:block` : `display:none`};
 `;
 
 const ContentContainer = styled.div`
@@ -34,12 +31,12 @@ const ContentContainer = styled.div`
 const ItemContainer = styled.div``;
 
 type MsgTitleProps = {
-  isread: boolean;
+  $isread: boolean;
 };
 const MsgTitle = styled.div<MsgTitleProps>`
   font-size: 1.25rem;
-  font-weight: ${(props: MsgTitleProps) => (props.isread ? "400" : "600")};
-  color: ${theme.white};
+  font-weight: ${({ $isread }: MsgTitleProps) => ($isread ? "400" : "600")};
+  color: ${({ theme }) => theme.white};
   white-space: nowrap;
   margin-bottom: 5px;
 `;
@@ -53,7 +50,7 @@ const MsgTitleSpan = styled.span`
 
 const MsgDate = styled.div`
   font-size: 0.937rem;
-  color: ${theme.tertiaryLight};
+  color: ${({ theme }) => theme.tertiaryLight};
 `;
 
 type CheckboxCircleProps = {
@@ -75,25 +72,25 @@ const CheckboxCircle = styled.div<CheckboxCircleProps>`
 
 const LetterContent = styled.div`
   font-size: 1rem;
-  color: ${theme.tertiaryLight};
+  color: ${({ theme }) => theme.tertiaryLight};
   padding: 20px 0px;
 `;
 
-interface InboxListProps {
+type Props = {
   row: InboxMessage;
   edit: boolean;
   handleCheckboxClick: (id: string, GUID: string) => void;
   selected: string[];
   handleItemClick: (id: string) => void;
-}
+};
 
-const InboxItem: React.FC<InboxListProps> = ({
+const InboxItem = ({
   row,
   edit,
   handleCheckboxClick,
   selected,
   handleItemClick,
-}) => {
+}: Props) => {
   const [opened, setOpened] = useState(false);
 
   const handleShowDetail = (isread: boolean) => {
@@ -103,7 +100,7 @@ const InboxItem: React.FC<InboxListProps> = ({
 
   return (
     <InboxItemContainer>
-      <CheckboxContainer edit={edit}>
+      <CheckboxContainer $edit={edit}>
         <CheckboxCircle
           onClick={() => handleCheckboxClick(row.id, row.id.toString())}
           checked={selected.includes(row.id)}
@@ -112,7 +109,7 @@ const InboxItem: React.FC<InboxListProps> = ({
 
       <ItemContainer>
         <ContentContainer onClick={() => handleShowDetail(row.isread)}>
-          <MsgTitle isread={row.isread}>
+          <MsgTitle $isread={row.isread}>
             <MsgTitleSpan>
               {row.localization !== null && row.localization.subject
                 ? row.localization.subject

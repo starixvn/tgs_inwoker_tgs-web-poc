@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
-import Maintenance from "./Maintenance";
-import Loading from "../App/Loading";
-import { GameService } from "../../api-services/services/GameService";
-import { GameTypeEnum } from "../../api-services/utils/Enum";
-import { SHOW_LOGIN } from "../../api-services/constant/actionType";
+import { GameService } from "@/api-services/services/GameService";
+import { GameTypeEnum } from "@/api-services/utils/Enum";
+import { SHOW_LOGIN } from "@/api-services/constant/actionType";
+import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import Maintenance from "@/components/Mobile/pages/Maintenance";
 // try {
 //   const channel = new BroadcastChannel('refreshBalance');
 // }catch {

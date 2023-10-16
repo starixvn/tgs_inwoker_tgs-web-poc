@@ -1,13 +1,10 @@
 import styled from "styled-components";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
 
 export const ReportContainer = styled.div``;
 
 export const ReportSummary = styled.div`
   font-size: 0.8rem;
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
   border-radius: 5px;
   margin-bottom: 5px;
 `;
@@ -22,7 +19,7 @@ export const ReportSummaryCol = styled.div``;
 
 export const ReportCardsContainer = styled.div`
   font-size: 0.8rem;
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
   border-radius: 5px;
   margin-bottom: 5px;
 `;
@@ -30,8 +27,8 @@ export const ReportCardsContainer = styled.div`
 export const ReportCard = styled.div`
   padding: 8px;
   font-size: 0.8rem;
-  color: ${theme.white};
-  background: ${theme.tertiaryDark};
+  color: ${({ theme }) => theme.white};
+  background: ${({ theme }) => theme.tertiaryDark};
   border-radius: 5px;
   margin-bottom: 10px;
 `;

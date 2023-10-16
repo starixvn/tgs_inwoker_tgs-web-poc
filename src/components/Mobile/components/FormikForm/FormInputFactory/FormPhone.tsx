@@ -7,7 +7,7 @@ import { FormikFormInput } from "@/components/Mobile/components/FormikForm";
 import styled from "styled-components";
 import { Select } from "@/components/Mobile/components/UI/Select";
 import config from "@/config/config";
-import { MenuItem } from "@material-ui/core";
+import { MenuItem } from "@mui/material";
 
 const PhoneContainer = styled.div`
   display: flex;

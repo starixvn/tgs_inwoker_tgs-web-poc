@@ -1,25 +1,30 @@
 import React from "react";
-import { Button as MuiButton, ButtonProps } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
-import { themeList } from "@/theme";
+import { Button as MuiButton, ButtonProps } from "@mui/material";
+import { styled as muiStyled } from "@mui/material/styles";
 
-const theme = themeList["mobileT18"];
+declare module "@mui/material/styles" {
+  interface Theme {
+    tertiaryDark: string;
+    white: string;
+  }
+  // allow configuration using `createTheme`
+  interface ThemeOptions {
+    tertiaryDark: string;
+    white: string;
+  }
+}
 
-export const StyledButton = withStyles(() => {
-  return {
-    root: {
-      whiteSpace: "nowrap",
-      borderRadius: "5px",
-      padding: "12px 20px",
-      fontSize: "1.125rem",
-      fontWeight: 500,
-      "&:disabled": {
-        background: theme.tertiaryDark,
-        color: theme.white,
-      },
-    },
-  };
-})(MuiButton);
+export const StyledButton = muiStyled(MuiButton)(({ theme }) => ({
+  whiteSpace: "nowrap",
+  borderRadius: "5px",
+  padding: "12px 20px",
+  fontSize: "1.125rem",
+  fontWeight: 500,
+  "&:disabled": {
+    background: theme.tertiaryDark,
+    color: theme.palette.common.white,
+  },
+}));
 
 export const Button = (props: ButtonProps) => {
   return (

@@ -1,9 +1,5 @@
-import downloadImg from "@/assets/images/account/icon_download.png";
-import { themeList } from "@/theme";
 import styled from "styled-components";
 import { NavCardItem } from "@/hooks/account/useAccountNavigations";
-
-const theme = themeList["mobileT18"];
 
 const AppDownloadButtonContainer = styled.button`
   width: 100%;
@@ -12,8 +8,8 @@ const AppDownloadButtonContainer = styled.button`
   justify-content: center;
   border-radius: 12px;
   padding: 20px;
-  background: ${theme.primaryLight};
-  color: ${theme.tertiary};
+  background: ${({ theme }) => theme.primaryLight};
+  color: ${({ theme }) => theme.tertiary};
   border: none;
   cursor: pointer;
 `;

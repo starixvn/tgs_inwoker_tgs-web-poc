@@ -2,9 +2,6 @@ import React from "react";
 import i18n from "@/utils/i18n";
 import styled from "styled-components";
 import noResultImg from "@/assets/images/report/no_result.svg";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
 
 const NoRecordWrapper = styled.div`
   display: flex;
@@ -30,7 +27,7 @@ const NoRecordContainer = styled.div`
 
 const NoDataText = styled.div`
   font-size: 1.062rem;
-  color: ${theme.tertiary};
+  color: ${({ theme }) => theme.tertiary};
 `;
 
 type Props = {};

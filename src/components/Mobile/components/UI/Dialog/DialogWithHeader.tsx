@@ -1,8 +1,5 @@
 import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
-import { themeList } from "@/theme";
-import { Dialog as MuiDialog } from "@material-ui/core";
-import { TransitionProps } from "@material-ui/core/transitions";
-import CloseIcon from "@material-ui/icons/Close";
+import { Dialog as MuiDialog } from "@mui/material";
 import React, {
   CSSProperties,
   ForwardRefExoticComponent,
@@ -11,15 +8,14 @@ import React, {
 } from "react";
 import styled from "styled-components";
 import DialogHeader from "@/components/Mobile/components/UI/Dialog/DialogHeader";
-
-const theme = themeList["mobileT18"];
+import { TransitionProps } from "@mui/material/transitions";
 
 const DialogContainer = styled(MuiDialog)`
   z-index: 999 !important; // can't overlap footer(which z-index is 1000)
   & .MuiPaper-root {
     position: relative;
     padding: 73px 0 82px; // header/footer
-    background: ${theme.primaryDark};
+    background: ${({ theme }) => theme.primaryDark};
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,11 +28,11 @@ const DialogHeaderContainer = styled.div`
   height: 73px;
   top: 0;
   left: 0;
-  background: ${theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
   font-size: 1.25rem;
   font-weight: 400;
   margin: 0;

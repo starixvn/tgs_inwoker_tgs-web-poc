@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import bgImg from "@/assets/images/account/account_level_bg.svg";
 import styled from "styled-components";
-import { themeList } from "@/theme";
 import {
   Table as MuiTable,
   TableBody,
@@ -9,15 +8,14 @@ import {
   TableCellProps,
   TableHead,
   TableRow as MuiTableRow,
-} from "@material-ui/core";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-
-const theme = themeList["mobileT18"];
+} from "@mui/material";
+import { NavigateNext as NavigateNextIcon } from "@mui/icons-material";
+import { theme } from "@/theme";
 
 const InfoCardContainer = styled.div`
   background-image: url(${bgImg});
   padding: 24px 16px;
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
   display: flex;
   justify-content: end;
 `;
@@ -25,7 +23,7 @@ const InfoCardContainer = styled.div`
 const LevelCard = styled.div`
   padding: 2px 3px;
   border-radius: 5px;
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
   font-size: 0.75rem;
   font-weight: 500;
   text-align: center;
@@ -34,7 +32,7 @@ const LevelCard = styled.div`
 
 const StyledTable = styled(MuiTable)`
   width: 60%;
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
   font-size: 0.75rem;
   font-weight: 500;
   text-align: center;

@@ -5,20 +5,18 @@ import NotShowAgainHint from "@/components/Mobile/components/Popup/NotShowAgainH
 import TagBg from "@/assets/images/promotion/tag_bg.svg";
 import Carousel from "@/components/Mobile/components/UI/Carousel";
 import { Promotion } from "@/models/dto/general/GetPromotionListResDto";
-import { Dialog as MuiDialog } from "@material-ui/core";
+import { Dialog as MuiDialog } from "@mui/material";
 import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
-import { themeList } from "@/theme";
 import IconCloseButton from "@/assets/images/promotion/close_icon.svg";
 import { useHistory } from "react-router-dom";
 
 const doNotShowPromotionDialogKey = "doNotShowPromotionDialog";
-const theme = themeList["mobileT18"];
 
 const DialogPopup = styled(MuiDialog)`
   & .MuiPaper-root {
     width: 370px;
     height: 177px;
-    background: ${theme.primaryLight};
+    background: ${({ theme }) => theme.primaryLight};
     display: flex;
     flex-direction: column;
     align-items: center;

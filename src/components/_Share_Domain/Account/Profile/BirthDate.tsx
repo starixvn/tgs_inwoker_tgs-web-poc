@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
 import { useHistory } from "react-router-dom";
 import BottomNote from "@/components/Mobile/components/UI/BottomNote";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import config from "@/config/config";
@@ -14,11 +14,10 @@ import zhLocale from "date-fns/locale/zh-CN";
 import enLocale from "date-fns/locale/en-US";
 import thLocale from "date-fns/locale/th";
 import {
-  LabelContainer,
   ItemContainer,
+  LabelContainer,
 } from "@/components/Mobile/styles/forms";
 import { Button } from "@/components/Mobile/components/UI/Button";
-import { themeList } from "@/theme";
 
 const moment = require("moment");
 const localeMap: { [key in string]: Locale } = {
@@ -26,8 +25,6 @@ const localeMap: { [key in string]: Locale } = {
   en: enLocale,
   th: thLocale,
 };
-
-const theme = themeList["mobileT18"];
 
 const Container = styled.div`
   width: 100%;
@@ -46,11 +43,11 @@ const CustomDatepicker = styled.div<CustomDatepickerProps>`
   padding: 10px;
   border-radius: 5px;
   margin-top: 10px;
-  border: 1px solid ${theme.tertiary};
+  border: 1px solid ${({ theme }) => theme.tertiary};
 
   .MuiInputBase-input {
     background: none;
-    color: ${theme.white};
+    color: ${({ theme }) => theme.white};
   }
 
   .MuiInput-underline:before,
@@ -135,8 +132,8 @@ const Birthdate = () => {
     <Container>
       <ItemContainer>
         <LabelContainer>{i18n.t("profile.birthdate.title")}</LabelContainer>
-        <MuiPickersUtilsProvider
-          utils={DateFnsUtils}
+        <LocalizationProvider
+          dateAdapter={AdapterDateFns}
           locale={localeMap[i18n.language.substring(0, 2)]}
         >
           <CustomDatepicker
@@ -146,14 +143,13 @@ const Birthdate = () => {
             }
           >
             <DatePicker
-              maxDate={new Date()}
               invalidDateMessage={false}
               format="yyyy/MM/dd"
-              value={birthdate}
+              selectedDate={birthdate}
               onChange={(e) => handleChangeNumber(e)}
             />
           </CustomDatepicker>
-        </MuiPickersUtilsProvider>
+        </LocalizationProvider>
       </ItemContainer>
 
       <ItemContainer>

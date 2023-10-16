@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { Slide } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Dialog";
-import Header from "@/components/Mobile/components/_PrevShare/Header";
+import { Modal, Slide } from "@mui/material";
+import { styled as muiStyled } from "@mui/material/styles";
 import Button from "@/components/Mobile/components/_PrevShare/Button";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import i18n from "@/utils/i18n";
@@ -58,7 +56,7 @@ const SplitBoth = styled.div`
   margin: 30px 0;
 `;
 
-const StyledModalPopup = withStyles((theme) => ({
+const StyledModalPopup = muiStyled(Modal)(({ theme }) => ({
   paper: {
     borderRadius: "50px",
     fontSize: "28px",
@@ -66,10 +64,9 @@ const StyledModalPopup = withStyles((theme) => ({
     padding: "30px",
     width: "600px",
     maxWidth: "690px",
-
     display: "block",
   },
-}))(Modal);
+}));
 const DialoTitle = styled.div`
   font-size: 36px;
   font-weight: 600;
@@ -174,10 +171,6 @@ class Details extends Component {
   render() {
     return (
       <Container>
-        <Header
-          onBackClick={this.handleWithdrawalCancelClick}
-          title={i18n.t("withdrawal.title")}
-        ></Header>
         {(() => {
           if (this.props.wallet.addBillingResult !== null) {
             return (

@@ -1,16 +1,11 @@
-import React, { CSSProperties, HTMLProps, useMemo } from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
-import avatarImg from "@/assets/images/account/avatar.png";
 import phoneImg from "@/assets/images/account/icon_phone.png";
 import emailImg from "@/assets/images/account/icon_email.png";
 import birthImg from "@/assets/images/account/icon_birth.png";
-import { themeList } from "@/theme";
-import { ReactI18NextChild } from "react-i18next";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import Avatar from "@/components/Mobile/components/Avatar";
 import i18n from "@/utils/i18n";
-
-const theme = themeList["mobileT18"];
 
 const InfoCardContainer = styled.div`
   display: flex;
@@ -20,16 +15,9 @@ const InfoCardContainer = styled.div`
 `;
 
 const Border = styled.div`
-  border: 1px solid ${theme.tertiary};
+  border: 1px solid ${({ theme }) => theme.tertiary};
   margin: 0 30px;
   height: 115px;
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: ${theme.tertiary};
 `;
 
 const InfoItemListContainer = styled.div`

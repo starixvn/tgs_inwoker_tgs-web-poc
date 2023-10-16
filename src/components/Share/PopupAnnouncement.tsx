@@ -1,27 +1,20 @@
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
 import styled from "styled-components";
-import { withStyles } from "@material-ui/core/styles";
+import { Dialog } from "@mui/material";
+import { styled as muiStyled } from "@mui/material/styles";
 import { useHistory } from "react-router-dom"; // Import useHistory
 import i18n from "../../utils/i18n";
-import { Theme } from "@material-ui/core";
-import { themeList } from "@/theme";
 
-const theme = themeList["mobileT18"];
-
-const StyledDialog = withStyles({
-  root: {
-    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-
-    "& .MuiPaper-root": {
-      backgroundColor: "transparent",
-    },
+const StyledDialog = muiStyled(Dialog)(({ theme }) => ({
+  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+  "& .MuiPaper-root": {
+    backgroundColor: "transparent",
   },
-})(Dialog);
+}));
 
 const Container = styled.div`
   width: 80vw;
-  background: ${theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight};
   color: white;
   background-attachment: fixed;
   background-position: center;

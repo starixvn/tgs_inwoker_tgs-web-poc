@@ -1,26 +1,23 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
-import { themeList } from "@/theme";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
 import Common from "@/utils/Common";
 import i18n from "@/utils/i18n";
 import RefreshButton from "@/components/Mobile/components/BalanceTracker/components/RefreshButton";
 import DepositButton from "@/components/Mobile/components/BalanceTracker/components/DepositButton";
 
-const theme = themeList["mobileT18"];
-
 type BalanceTrackerContainerProps = {
-  size?: "normal" | "small" | undefined;
+  $size?: "normal" | "small" | undefined;
 };
 const BalanceTrackerContainer = styled.div<BalanceTrackerContainerProps>`
-  background: ${(props: BalanceTrackerContainerProps) =>
-    props.size !== "small" ? theme.primaryDark : theme.tertiaryDark};
-  border: ${(props: BalanceTrackerContainerProps) =>
-    props.size !== "small" ? `1px solid ${theme.tertiary}` : "none"};
+  background: ${({ $size, theme }: BalanceTrackerContainerProps) =>
+    $size !== "small" ? theme.primaryDark : theme.tertiaryDark};
+  border: ${({ $size, theme }: BalanceTrackerContainerProps) =>
+    $size !== "small" ? `1px solid ${theme.tertiary}` : "none"};
   color: white;
   border-radius: 10px;
-  padding: ${(props: BalanceTrackerContainerProps) =>
-    props.size !== "small" ? "10px" : "4px 10px"};
+  padding: ${({ $size }: BalanceTrackerContainerProps) =>
+    $size !== "small" ? "10px" : "4px 10px"};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -53,7 +50,7 @@ const BalanceTracker = ({ size, ...others }: Props) => {
   const isShow = size !== "small";
   return (
     //@ts-ignore
-    <BalanceTrackerContainer size={size} {...others}>
+    <BalanceTrackerContainer $size={size} {...others}>
       {isShow && <span>{i18n.t("wap.main.account.totalFund")}</span>}
 
       <BalanceContainer>

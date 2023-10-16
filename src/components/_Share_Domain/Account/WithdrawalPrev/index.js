@@ -1,16 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Dialog";
+import { ListItem, ListItemText, Slide } from "@mui/material";
 import Common from "@/utils/Common";
 import { walletAction } from "@/api-services/actions/walletAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import i18n from "@/utils/i18n";
-import Slide from "@material-ui/core/Slide";
 import config from "@/config/config";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import WithdrawInfoCard from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawInfoCard";
@@ -18,28 +13,23 @@ import ManageBankCardButton from "@/components/_Share_Domain/Account/WithdrawalP
 import WithdrawAllToMainWallet from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawAllToMainWallet";
 import {
   FormControl,
-  LabelContainer,
   ItemContainer,
+  LabelContainer,
   Remark,
 } from "@/components/Mobile/styles/forms";
 import { Button } from "@/components/Mobile/components/UI/Button";
 import { Select } from "@/components/Mobile/components/UI/Select";
 import { TextField } from "@/components/Mobile/components/UI/TextField";
+import Modal from "@mui/material/Modal";
+import { styled as muiStyled } from "@mui/material/styles";
+import styled from "styled-components";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const BottomDesc = styled.div`
-  margin: 0 auto;
-  width: 86%;
-  font-size: 26px;
-
-  color: ${({ theme }) => theme.secondary};
-`;
-
-const StyledModalBank = withStyles((theme) => ({
-  paper: {
+const StyledModalBank = muiStyled(Modal)(({ theme }) => ({
+  "& .MuiModal-paper": {
     color: "#666666",
     padding: "0 30px",
     width: "750px",
@@ -50,23 +40,20 @@ const StyledModalBank = withStyles((theme) => ({
     bottom: 0,
     height: "calc(100% - 580px)",
   },
-}))(Modal);
+}));
 
-const StyledListItem = withStyles((theme) => ({
-  root: {
-    borderBottom: "1px solid rgba(0,0,0,0.2)",
-    padding: "10px",
+const StyledListItem = muiStyled(ListItem)(({ theme }) => ({
+  borderBottom: "1px solid rgba(0, 0, 0, 0.2)",
+  padding: "10px",
+}));
+
+const StyledListItemText = muiStyled(ListItemText)(({ theme }) => ({
+  textAlign: "center",
+  paddingRight: "50px",
+  "& .MuiTypography-root": {
+    fontSize: "28px",
   },
-}))(ListItem);
-const StyledListItemText = withStyles((theme) => ({
-  root: {
-    textAlign: "center",
-    paddingRight: "50px",
-    "& .MuiTypography-root": {
-      fontSize: "28px",
-    },
-  },
-}))(ListItemText);
+}));
 
 const LeftText = styled(StyledListItemText)`
   text-align: left;
@@ -75,18 +62,17 @@ const RightText = styled(StyledListItemText)`
   text-align: right;
 `;
 
-const StyledModalPopup = withStyles((theme) => ({
-  paper: {
+const StyledModalPopup = muiStyled(Modal)(({ theme }) => ({
+  "& .MuiModal-paper": {
     borderRadius: "50px",
     fontSize: "28px",
     color: "#666666",
     padding: "30px",
     width: "600px",
     maxWidth: "690px",
-
     display: "block",
   },
-}))(Modal);
+}));
 
 const ManageBankCardButtonContainer = styled.div`
   display: flex;

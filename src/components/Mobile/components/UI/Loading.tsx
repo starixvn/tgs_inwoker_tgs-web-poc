@@ -1,10 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
+import { theme } from "@/theme";
+import { CircularProgress } from "@mui/material";
 
 const LoadingContainer = styled.div`
   width: 100%;

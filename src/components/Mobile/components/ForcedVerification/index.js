@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Dialog } from "@material-ui/core";
+import { Dialog } from "@mui/material";
 import styled from "styled-components";
-import i18n from "../../../../utils/i18n";
-import config from "../../../../config/config";
-import { AccountService } from "../../../../api-services/services/AccountService";
+import i18n from "@/utils/i18n";
+import config from "@/config/config";
+import { AccountService } from "@/api-services/services/AccountService";
 import { Textfit } from "react-textfit";
 
 const Wrapper = styled.div`

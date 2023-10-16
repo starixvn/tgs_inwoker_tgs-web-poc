@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { themeList } from "@/theme";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { useSnackbar } from "notistack";
 import { AppHistory } from "@/history/History";
@@ -10,15 +9,13 @@ import { useState } from "react";
 import Loading from "@/components/Mobile/components/UI/Loading";
 import i18n from "@/utils/i18n";
 
-const theme = themeList["mobileT18"];
-
 const Button = styled.button`
   width: 384px;
   height: 53px;
   padding: 12px 20px 12px 20px;
   border-radius: 12px;
   gap: 10px;
-  background: ${theme.secondary};
+  background: ${({ theme }) => theme.secondary};
   color: #ffffff;
   font-size: 1.25rem;
   curson: pointer;

@@ -2,16 +2,13 @@ import React from "react";
 import { Button } from "@/components/Mobile/components/UI/Button";
 import * as Yup from "yup";
 import styled from "styled-components";
-import { themeList } from "@/theme";
 import {
   FormInputFactory,
   FormInputTypeEnum,
 } from "@/components/Mobile/components/FormikForm/FormInputFactory";
 
-const theme = themeList["mobileT18"];
-
 const ErrorMessageContainer = styled.div`
-  color: ${theme.secondary};
+  color: ${({ theme }) => theme.secondary};
   font-size: 0.875rem;
   font-weight: 400;
   text-align: center;

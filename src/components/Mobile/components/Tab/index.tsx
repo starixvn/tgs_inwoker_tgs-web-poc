@@ -1,42 +1,52 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 type Props = {
   imageUrl: string;
   text: string;
   isActive: boolean;
-  fontSize: 'small' | 'smaller' | string;
+  fontSize: "small" | "smaller" | string;
   type: number;
   onClick: () => void;
-}
+};
 
-const Wrapper = styled.div<{ imageUrl: string, text: string, isActive: boolean }>`
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 64px;
-    height: 77px;
-    border-radius: 12px;
-    background-color: ${(props) =>
-    props.isActive ? props.theme.primary : props.theme.primaryLight};
-    margin-right: 12px;
-    cursor: pointer;
-    user-select: none;
+const Wrapper = styled.div<{
+  $imageUrl: string;
+  $text: string;
+  $isActive: boolean;
+}>`
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 77px;
+  border-radius: 12px;
+  background-color: ${({ theme, $isActive }: Props) =>
+    $isActive ? theme.primary : theme.primaryLight};
+  margin-right: 12px;
+  cursor: pointer;
+  user-select: none;
 `;
 
-const Text = styled.div<{ fontSize: string, isActive: boolean }>`
-      color: ${(props) =>
-    props.isActive ? props.theme.white : props.theme.tertiary};
-    font-size: ${(props) =>
-    props.fontSize === 'small' ? '0.875rem' : '0.6875rem'
-  };
+const Text = styled.div<{ $fontSize: string; $isActive: boolean }>`
+  color: ${({ $isActive, theme }) =>
+    $isActive ? theme.white : theme.tertiary};
+  font-size: ${({ $fontSize }) =>
+    $fontSize === "small" ? "0.875rem" : "0.6875rem"};
 `;
 
 const Tab = ({ imageUrl, text, isActive, fontSize, type, onClick }: Props) => {
   return (
-    <Wrapper isActive={isActive} imageUrl={imageUrl} text={text} onClick={onClick}>
+    <Wrapper
+      $isActive={isActive}
+      $imageUrl={imageUrl}
+      $text={text}
+      onClick={onClick}
+    >
       <img src={imageUrl} alt={text} />
-      <Text isActive={isActive} fontSize={fontSize}>{text}</Text>
+      <Text $isActive={isActive} $fontSize={fontSize}>
+        {text}
+      </Text>
     </Wrapper>
   );
 };

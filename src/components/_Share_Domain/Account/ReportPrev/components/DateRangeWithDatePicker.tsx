@@ -1,15 +1,14 @@
 import React, { useMemo } from "react";
 import i18n from "@/utils/i18n";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker } from "@/components/Mobile/components/UI/DatePicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+
 import styled from "styled-components";
 import zhLocale from "date-fns/locale/zh-CN";
 import enLocale from "date-fns/locale/en-US";
 import thLocale from "date-fns/locale/th";
 import addDays from "date-fns/addDays";
-import { themeList } from "@/theme";
-import { DatePicker } from "@/components/Mobile/components/UI/DatePicker";
-const theme = themeList["mobileT18"];
 
 const localeMap = {
   zh: zhLocale,
@@ -23,7 +22,7 @@ const DateTitle = styled.div`
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.465rem;
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
   margin-bottom: 20px;
 `;
 
@@ -45,11 +44,11 @@ const DateSpliter = styled.div`
 const DateInner = styled.div`
   padding: 10px;
 
-  border: 1px solid ${theme.tertiaryLight};
+  border: 1px solid ${({ theme }) => theme.tertiaryLight};
   border-radius: 5px;
 
   & input {
-    color: ${theme.tertiaryLight};
+    color: ${({ theme }) => theme.tertiaryLight};
     padding: 0;
   }
 `;
@@ -97,8 +96,8 @@ const DateRangeWithDatePicker = ({
       <FlatStraightLine>
         <DateInner>
           {/*<DateLabel>{i18n.t("report.startDate")}</DateLabel>*/}
-          <MuiPickersUtilsProvider
-            utils={DateFnsUtils}
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
             locale={localeMap[i18n.language.substring(0, 2)]}
           >
             <DatePicker
@@ -111,15 +110,15 @@ const DateRangeWithDatePicker = ({
               value={dateFrom}
               onChange={handleDateFromChange}
             />
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </DateInner>
 
         <DateSpliter>-</DateSpliter>
 
         <DateInner>
           {/*<DateLabel>{i18n.t("report.endDate")}</DateLabel>*/}
-          <MuiPickersUtilsProvider
-            utils={DateFnsUtils}
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
             locale={localeMap[i18n.language.substring(0, 2)]}
           >
             <DatePicker
@@ -132,7 +131,7 @@ const DateRangeWithDatePicker = ({
               value={dateTo}
               onChange={handleDateToChange}
             />
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </DateInner>
       </FlatStraightLine>
       <div className="clear"></div>

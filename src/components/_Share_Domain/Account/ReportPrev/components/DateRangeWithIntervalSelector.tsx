@@ -1,9 +1,7 @@
 import React from "react";
 import i18n from "@/utils/i18n";
 import styled from "styled-components";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
+import { theme } from "@/theme";
 
 const DateRangContainer = styled.div`
   margin-bottom: 20px;
@@ -14,20 +12,22 @@ const DateRangContainer = styled.div`
 `;
 
 type DateRangSelectionTypes = {
-  isSelected: boolean;
+  $isSelected: boolean;
 };
 const DateRangSelection = styled.div<DateRangSelectionTypes>`
-  background: ${({ isSelected }: DateRangSelectionTypes) => {
-    return isSelected
+  background: ${({ $isSelected }: DateRangSelectionTypes) => {
+    return $isSelected
       ? `linear-gradient(180deg, #922ACF 0%, #2F26AD 100%)`
       : "none";
   }};
-  color: ${({ isSelected }: DateRangSelectionTypes) => {
-    return isSelected ? theme.white : theme.tertiaryLight;
+  color: ${({ $isSelected }: DateRangSelectionTypes) => {
+    return $isSelected ? theme.white : theme.tertiaryLight;
   }};
   padding: 13px 23px;
-  border: ${({ isSelected }: DateRangSelectionTypes) => {
-    return isSelected ? "none" : `1px solid ${theme.tertiaryLight}`;
+  border: ${({ $isSelected }: DateRangSelectionTypes) => {
+    return $isSelected
+      ? "none"
+      : `1px solid ${({ theme }) => theme.tertiaryLight}`;
   }};
   border-radius: 5px;
   font-size: 0.937rem;
@@ -51,19 +51,19 @@ const DateRangeWithIntervalSelector = ({
     <DateRangContainer>
       <DateRangSelection
         onClick={() => handleDateRangeChange(DateRangeEnum.TODAY)}
-        isSelected={dateRange === DateRangeEnum.TODAY}
+        $isSelected={dateRange === DateRangeEnum.TODAY}
       >
         {i18n.t("report.today")}
       </DateRangSelection>
       <DateRangSelection
         onClick={() => handleDateRangeChange(DateRangeEnum.WEEKLY)}
-        isSelected={dateRange === DateRangeEnum.WEEKLY}
+        $isSelected={dateRange === DateRangeEnum.WEEKLY}
       >
         {i18n.t("report.oneWeek")}
       </DateRangSelection>
       <DateRangSelection
         onClick={() => handleDateRangeChange(DateRangeEnum.MONTHLY)}
-        isSelected={dateRange === DateRangeEnum.MONTHLY}
+        $isSelected={dateRange === DateRangeEnum.MONTHLY}
       >
         {i18n.t("report.oneMonth")}
       </DateRangSelection>

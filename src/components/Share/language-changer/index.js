@@ -1,11 +1,8 @@
 import React from "react";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import i18n from "../../../utils/i18n";
-import ArrowDown from "../../../assets/images/arrowdown.svg";
+import { Menu, MenuItem } from "@mui/material";
+import i18n from "@/utils/i18n";
+import ArrowDown from "@/assets/images/arrowdown.svg";
 import styled from "styled-components";
-import { AppHistory } from "../../../history/History";
-import { utility } from "../../../utils/utility";
 
 const ArrowDownImg = styled.img`
   height: 8px;

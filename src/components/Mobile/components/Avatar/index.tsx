@@ -2,15 +2,12 @@ import React from "react";
 import avatarImg from "@/assets/images/account/avatar.png";
 import styled from "styled-components";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
 
 const AvatarContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: ${theme.tertiary};
+  color: ${({ theme }) => theme.tertiary};
 `;
 
 type Props = {

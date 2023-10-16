@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import AppBar from "@material-ui/core/AppBar";
+import { AppBar, Modal } from "@mui/material";
+import { styled as muiStyled } from "@mui/material/styles";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { AccountService } from "@/api-services/services/AccountService";
-import { UPDATE_INFO } from "@api-services/constant/actionType";
-import { withStyles } from "@material-ui/core/styles";
+import { UPDATE_INFO } from "@/api-services/constant/actionType";
 import Header from "@/components/Mobile/components/_PrevShare/Header";
 import Textbox from "@/components/Mobile/components/_PrevShare/Textbox";
 import Button from "@/components/Mobile/components/_PrevShare/Button";
-import Modal from "@material-ui/core/Dialog";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import i18n from "@/utils/i18n";
 
@@ -18,21 +17,15 @@ const Container = styled.div`
   padding-top: 170px;
 `;
 
-const StyledAppBar = withStyles((theme) => ({
-  root: {
-    height: "170px",
-
-    background:
-      `linear-gradient(rgba(` +
-      theme.palette.primary.mainRgb +
-      `, 0.8), rgba(` +
-      theme.palette.primary.mainGradientRgb +
-      `, 0.8)), url(${
-        process.env.PUBLIC_URL + `/assets/images/wapp/bg-profile.png`
-      })`,
-    display: "block",
-  },
-}))(AppBar);
+const StyledAppBar = muiStyled(AppBar)(({ theme }) => ({
+  height: "170px",
+  background: `linear-gradient(rgba(${
+    theme.palette.primary.mainRgb
+  }, 0.8), rgba(${theme.palette.primary.mainGradientRgb}, 0.8)), url(${
+    process.env.PUBLIC_URL + "/assets/images/wapp/bg-profile.png"
+  })`,
+  display: "block",
+}));
 
 const BalanceLabel = styled.div`
   font-size: 36px;
@@ -62,7 +55,7 @@ const BottomInfo = styled.div`
   margin: 0 auto;
 `;
 
-const StyledModal = withStyles((theme) => ({
+const StyledModal = muiStyled(Modal)(({ theme }) => ({
   paper: {
     borderRadius: "50px",
     fontSize: "28px",
@@ -73,7 +66,7 @@ const StyledModal = withStyles((theme) => ({
     height: "370px",
     display: "block",
   },
-}))(Modal);
+}));
 
 const DialoTitle = styled.div`
   font-size: 36px;

@@ -12,7 +12,7 @@ import {
   LabelContainer,
   ItemContainer,
 } from "@/components/Mobile/styles/forms";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 
 class Default extends BaseProfile {
   constructor(props) {

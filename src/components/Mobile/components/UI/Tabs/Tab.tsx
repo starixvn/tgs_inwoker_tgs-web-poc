@@ -1,12 +1,10 @@
 import React from "react";
 import { TabItem } from "@/components/Mobile/components/UI/Tabs/index";
 import styled from "styled-components";
-import { themeList } from "@/theme";
-
-const theme = themeList["mobileT18"];
+import { theme } from "@/theme";
 
 type TabContainerProps = {
-  isActive: boolean;
+  $isActive: boolean;
 };
 const TabContainer = styled.div<TabContainerProps>`
   flex: 1;
@@ -19,10 +17,10 @@ const TabContainer = styled.div<TabContainerProps>`
   font-size: 0.875rem;
   line-height: 0.875rem;
   font-weight: 700;
-  color: ${({ isActive }: TabContainerProps) =>
-    isActive ? theme.white : theme.tertiaryMiddle};
-  background: ${({ isActive }: TabContainerProps) =>
-    isActive ? "linear-gradient(180deg, #922ACF 0%, #2F26AD 100%)" : "none"};
+  color: ${({ $isActive }: TabContainerProps) =>
+    $isActive ? theme.white : theme.tertiaryMiddle};
+  background: ${({ $isActive }: TabContainerProps) =>
+    $isActive ? "linear-gradient(180deg, #922ACF 0%, #2F26AD 100%)" : "none"};
 `;
 
 const IconContainer = styled.div`
@@ -48,7 +46,7 @@ const Tab = ({ tabItem, handleClick, isActive }: Props) => {
 
     if (typeof icon === "string") {
       return (
-        <IconContainer isActive={isActive}>
+        <IconContainer $isActive={isActive}>
           <img src={icon} alt={value} />
         </IconContainer>
       );
@@ -58,7 +56,7 @@ const Tab = ({ tabItem, handleClick, isActive }: Props) => {
   };
 
   return (
-    <TabContainer onClick={handleClick} isActive={isActive}>
+    <TabContainer onClick={handleClick} $isActive={isActive}>
       <IconComponent />
       {label}
     </TabContainer>

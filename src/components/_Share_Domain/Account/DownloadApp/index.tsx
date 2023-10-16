@@ -7,10 +7,7 @@ import DownloadButtonGroup from "@/components/_Share_Domain/Account/DownloadApp/
 import InfoCard, {
   InfoCardItem,
 } from "@/components/_Share_Domain/Account/DownloadApp/InfoCard";
-import { themeList } from "@/theme";
 import styled from "styled-components";
-
-const theme = themeList["mobileT18"];
 
 const DownloadAppContainer = styled.div``;
 
@@ -24,7 +21,7 @@ const GirlImage = styled.div`
 `;
 
 const IntroductionContainer = styled.div`
-  color: ${theme.white};
+  color: ${({ theme }) => theme.white};
   font-weight: 400;
   font-size: 1.125rem;
   line-height: 1.318rem;

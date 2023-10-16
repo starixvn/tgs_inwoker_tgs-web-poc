@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { WalletService } from "@/api-services/services/WalletService";
 import { withRouter } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Dialog";
+import { Modal } from "@mui/material";
+import { styled as muiStyled } from "@mui/material/styles";
 
 import { Textfit } from "react-textfit";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -13,6 +13,7 @@ import Button from "@/components/Share/Button";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
 import Loading from "@/components/Mobile/components/UI/Loading";
+
 const Container = styled.div``;
 const ContentBg = styled.div`
   background: #fff;
@@ -68,7 +69,7 @@ const TheQRCode = styled.img`
   width: 250px;
 `;
 
-const StyledModalPopup = withStyles((theme) => ({
+const StyledModalPopup = muiStyled(Modal)(({ theme }) => ({
   paper: {
     borderRadius: "50px",
     fontSize: "28px",
@@ -76,10 +77,10 @@ const StyledModalPopup = withStyles((theme) => ({
     padding: "30px",
     width: "600px",
     maxWidth: "690px",
-
     display: "block",
   },
-}))(Modal);
+}));
+
 const DialoMessage = styled.div`
   font-size: 26px;
   margin: 20px 45px;
