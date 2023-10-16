@@ -194,13 +194,11 @@ code {
   }
 
   input {
-    font-family: Tahoma, Helvetica, Arial, "Microsoft Yahei", "微软雅黑",
-      STXihei, "华文细黑", sans-serif;
+    font-family: Roboto, sans-serif;
   }
 
   body {
-    font-family: Tahoma, Helvetica, Arial, "Microsoft Yahei", "微软雅黑",
-      STXihei, "华文细黑", sans-serif;
+    font-family: Roboto, sans-serif;
     background-color: #ececec;
     background-repeat: no-repeat;
     -webkit-text-size-adjust: 100%;
@@ -210,9 +208,7 @@ code {
     min-height: 100%;
   }
 
-  #root {
-    min-width: 750px;
-  }
+
 
   /* Required styles */
   .swipe-to-delete {
@@ -360,8 +356,7 @@ code {
   /* tablet, landscape iPad, lo-res laptops ands desktops */
 
   body {
-    font-family: Tahoma, Helvetica, Arial, "Microsoft Yahei", "微软雅黑",
-      STXihei, "华文细黑", sans-serif;
+    font-family: Roboto, sans-serif;
   }
 
   html {

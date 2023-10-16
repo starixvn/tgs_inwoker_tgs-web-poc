@@ -3,7 +3,7 @@ WORKDIR /src
 COPY . .
 
 RUN npm install
-RUN npm run build
+RUN npm run build:standard
 
 FROM caddy:2.1.1-alpine
 COPY --from=build /src/caddy/Caddyfile /etc/caddy/Caddyfile

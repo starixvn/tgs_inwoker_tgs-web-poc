@@ -6,7 +6,7 @@ const featureList = {
     ICVerification: true,
     QQWeChat: true,
     SportsHideLogo: false,
-    PopupAnnouncement: false,
+    PopupAnnouncement: true,
     Withdrawal_HundredDigit: false,
     Deposit_ManualApplePayHideBankAcc: false,
     Deposit_DualPage: false,
@@ -48,7 +48,7 @@ const featureList = {
     AddCard_MaximumCardAllowed: 99,
     AddCard_DisableCreateUpdateDelete: false, //different than AddCard_NotAllowedEditDelete, as it disable addcard if they forgot to add card initially.
     Register_HideInvitation: false,
-    PopupPromotion: false,
+    PopupPromotion: true,
     AddCard_AllowedAdd: true,
     MenuItem_Sorting_WLGHK: false,
 
@@ -56,6 +56,7 @@ const featureList = {
 
     Home_CustomFPPosition: false,
     CustomMessaging: [],
+    // CustomMessaging: ["fb", "telegram", "line", "viber", "whatsapp"],
     Deposit_FPSWithName: false,
     Register_ShowPhone: false,
     Withdrawal_Ignore_Verification: false,
@@ -63,6 +64,7 @@ const featureList = {
     MenuItem_Sorting_PB: false,
     MenuItem_Sorting_GMO: false,
     MenuItem_Sorting_BUNNY: false,
+    MenuItem_Sorting_PISO: false,
     VIP_CustomLevel_BUNNY: false,
 
     LiveGame_Sorting_SKY: false,
@@ -113,10 +115,10 @@ const featureList = {
     InitPhone_WithoutVerify: false,
     RouletteNewFlow: false,
     HaveVIPFeature: true,
-    DepositCustomPaymentNames: [
-    ], 
-    Withdrawal_WalletTransfer: false, 
+    DepositCustomPaymentNames: [],
+    Withdrawal_WalletTransfer: false,
     Deposit_ManualDepositPassPhone: false,
+    ShowVerificationStatus: false,
   },
 };
 export default featureList;

@@ -1,0 +1,124 @@
+import React from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import BaseProfile from "./BaseProfile";
+import { AccountService } from "@/api-services/services/AccountService";
+import i18n from "@/utils/i18n";
+import { TextField } from "@/components/Mobile/components/UI/TextField";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+} from "@/components/Mobile/styles/forms";
+
+class ChangePassword extends BaseProfile {
+  componentDidMount() {}
+  handleChangeOldPassword = (e) => {
+    this.setState({ ...this.state, oldpassword: e.target.value });
+    this.onTextChanged();
+  };
+  handleChangeNewPassword = (e) => {
+    this.setState({ ...this.state, newpassword: e.target.value });
+    this.onTextChanged();
+  };
+  handleChangeNewPassword2 = (e) => {
+    this.setState({ ...this.state, newpassword2: e.target.value });
+    this.onTextChanged();
+  };
+
+  handleSubmitClicked = (e) => {
+    const oldpassword = this.state.oldpassword;
+    const newpassword = this.state.newpassword;
+    const newpassword2 = this.state.newpassword2;
+    var expr = /^.{6,20}$/;
+    if (!expr.test(newpassword)) {
+      this.props.alert("", i18n.t("common.msgRegisterPassInvalid"));
+      return;
+    }
+    if (newpassword !== newpassword2) {
+      this.props.alert("", i18n.t("common.msgInvalidConfirmPass"));
+      return;
+    }
+
+    this.showLoading(true);
+    AccountService.UpdatePassword(oldpassword, newpassword)
+      .then((response) => {
+        if (response.IsSuccess) {
+          this.updateInfo({});
+          this.props.alert("", i18n.t("common.msgSuccessUpdateProfile"));
+
+          this.props.appHistory.replace("/profile");
+        } else {
+          this.props.alert("", i18n.t("common.msgInvalidOldPass"));
+        }
+        this.showLoading(false);
+      })
+      .catch((err) => {
+        this.props.alert("", err);
+
+        this.showLoading(false);
+      });
+  };
+
+  isDisableButton = () => {
+    const oldpassword = this.state.oldpassword;
+    const newpassword = this.state.newpassword;
+    const newpassword2 = this.state.newpassword2;
+
+    const isDisableButton = !(oldpassword && newpassword && newpassword2);
+
+    return isDisableButton;
+  };
+  render() {
+    return this.setupContent(
+      i18n.t("profile.changePassword.editPassword"),
+      <>
+        <ItemContainer>
+          <LabelContainer>
+            {i18n.t("profile.changePassword.OriPass")}
+          </LabelContainer>
+          <FormControl variant="outlined">
+            <TextField
+              type={"password"}
+              value={this.state.oldpassword}
+              onChange={this.handleChangeOldPassword}
+              placeholder={i18n.t("profile.changePassword.msgEnterOriPass")}
+            />
+          </FormControl>
+        </ItemContainer>
+
+        <ItemContainer>
+          <LabelContainer>{i18n.t("common.NewPass")}</LabelContainer>
+          <FormControl variant="outlined">
+            <TextField
+              type={"password"}
+              value={this.state.newpassword}
+              onChange={this.handleChangeNewPassword}
+              placeholder={i18n.t("common.msgEnterNewPass")}
+            />
+          </FormControl>
+        </ItemContainer>
+
+        <ItemContainer>
+          <LabelContainer>{i18n.t("common.ConfirmPass")}</LabelContainer>
+          <FormControl variant="outlined">
+            <TextField
+              type={"password"}
+              value={this.state.newpassword2}
+              onChange={this.handleChangeNewPassword2}
+              placeholder={i18n.t("common.msgEnterConfirmPass")}
+            />
+          </FormControl>
+        </ItemContainer>
+      </>,
+      i18n.t("common.complete")
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    account: state.account,
+  };
+};
+export default connect(mapStateToProps, null)(withRouter(ChangePassword));

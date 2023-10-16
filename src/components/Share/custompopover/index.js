@@ -1,5 +1,5 @@
 import React from "react";
-import { Popover } from "@material-ui/core";
+import { Popover } from "@mui/material";
 import styled from "styled-components";
 
 const CustomPopoverThing = styled(Popover)`
@@ -52,7 +52,7 @@ const CustomPopover = ({ children, open, anchorEl, handleClose, height }) => {
   return (
     <div>
       <CustomPopoverThing
-        elevation="0"
+        elevation={0}
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}

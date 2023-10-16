@@ -1,4 +1,17 @@
 import { GameTypeEnum, SlotGameParentId } from "../api-services/utils/Enum";
+import PromoImage1 from "../assets/images/promotion/promo-1.jpg";
+import PromoImage2 from "../assets/images/promotion/promo-2.jpg";
+import PromoImage3 from "../assets/images/promotion/promo-3.jpg";
+import Provider1PNG from "../assets/images/provider1.png";
+import Provider10PNG from "../assets/images/provider10.png";
+import Provider2PNG from "../assets/images/provider2.png";
+import Provider3PNG from "../assets/images/provider3.png";
+import Provider4PNG from "../assets/images/provider4.png";
+import Provider5PNG from "../assets/images/provider5.png";
+import Provider6PNG from "../assets/images/provider6.png";
+import Provider7PNG from "../assets/images/provider7.png";
+import Provider8PNG from "../assets/images/provider8.png";
+import Provider9PNG from "../assets/images/provider9.png";
 import ABCPNG from "../assets/images/wap/bank/abc.png";
 import BCMPNG from "../assets/images/wap/bank/bcm.png";
 import BOBPNG from "../assets/images/wap/bank/bob.png";
@@ -10,6 +23,7 @@ import CGDPNG from "../assets/images/wap/bank/cgd.png";
 import CIBPNG from "../assets/images/wap/bank/cib.png";
 import CMBPNG from "../assets/images/wap/bank/cmb.png";
 import CMBCPNG from "../assets/images/wap/bank/cmbc.png";
+import DefaultPNG from "../assets/images/wap/bank/default.png";
 import ECITICPNG from "../assets/images/wap/bank/ecitic.png";
 import GFPNG from "../assets/images/wap/bank/gf.png";
 import HXBPNG from "../assets/images/wap/bank/hxb.png";
@@ -17,20 +31,6 @@ import ICBCPNG from "../assets/images/wap/bank/icbc.png";
 import PABPNG from "../assets/images/wap/bank/pab.png";
 import PSBCPNG from "../assets/images/wap/bank/psbc.png";
 import SPDBPNG from "../assets/images/wap/bank/spdb.png";
-import DefaultPNG from "../assets/images/wap/bank/default.png";
-import Provider1PNG from "../assets/images/provider1.png";
-import Provider2PNG from "../assets/images/provider2.png";
-import Provider3PNG from "../assets/images/provider3.png";
-import Provider4PNG from "../assets/images/provider4.png";
-import Provider5PNG from "../assets/images/provider5.png";
-import Provider6PNG from "../assets/images/provider6.png";
-import Provider7PNG from "../assets/images/provider7.png";
-import Provider8PNG from "../assets/images/provider8.png";
-import Provider9PNG from "../assets/images/provider9.png";
-import Provider10PNG from "../assets/images/provider10.png";
-import PromoImage1 from "../assets/images/promotion/promo-1.jpg";
-import PromoImage2 from "../assets/images/promotion/promo-2.jpg";
-import PromoImage3 from "../assets/images/promotion/promo-3.jpg";
 import i18n from "./i18n";
 
 var newWindow;
@@ -134,6 +134,10 @@ function GetBankImageByCode(code) {
     };
   }
 }
+/**
+ * @deprecated don't use this function
+ * use utils/getDisplayGameType.ts instead
+ */
 function GetDisplayGameType() {
   return [
     GameTypeEnum.SPORTS,
@@ -148,6 +152,8 @@ function GetDisplayGameType() {
     GameTypeEnum.COCKFIGHT,
   ];
 }
+GetDisplayGameType();
+
 const gameImageMapping = [
   { gcode: "AG", img: Provider1PNG },
   { gcode: "BG", img: Provider2PNG },
@@ -301,13 +307,13 @@ function PopupCenter(url, title, w, h) {
   var width = window.innerWidth
     ? window.innerWidth
     : document.documentElement.clientWidth
-    ? document.documentElement.clientWidth
-    : window.screen.width;
+      ? document.documentElement.clientWidth
+      : window.screen.width;
   var height = window.innerHeight
     ? window.innerHeight
     : document.documentElement.clientHeight
-    ? document.documentElement.clientHeight
-    : window.screen.height;
+      ? document.documentElement.clientHeight
+      : window.screen.height;
 
   var systemZoom = 1;
   var left = (width - w) / 2 / systemZoom + dualScreenLeft;
@@ -319,13 +325,13 @@ function PopupCenter(url, title, w, h) {
     url,
     "gamewindow",
     "scrollbars=yes, width=" +
-      w / systemZoom +
-      ", height=" +
-      h / systemZoom +
-      ", top=" +
-      top +
-      ", left=" +
-      left
+    w / systemZoom +
+    ", height=" +
+    h / systemZoom +
+    ", top=" +
+    top +
+    ", left=" +
+    left
   );
 
   if (
@@ -430,7 +436,7 @@ function arrayValidator(array) {
   return array && Array.isArray(array) && array.length > 0;
 }
 
-function truncateString(str, n){
+function truncateString(str, n) {
   return (str.length > n) ? str.slice(0, n) + '…' : str;
 };
 
