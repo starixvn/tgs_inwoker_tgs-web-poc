@@ -21,7 +21,7 @@ const QQ = () => {
 
   const [qq, setQQ] = useState("");
   const [isConfigured, setIsConfigured] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory();
 
@@ -75,7 +75,7 @@ const QQ = () => {
   };
 
   const showLoading = (loading: boolean) => {
-    setLoading(loading);
+    setIsLoading(loading);
   };
 
   const onTextChanged = () => {
@@ -90,8 +90,6 @@ const QQ = () => {
   const handleBackClick = () => {
     history.goBack();
   };
-
-  if (loading) return <Loading />;
 
   return (
     <div>
@@ -125,7 +123,7 @@ const QQ = () => {
           <Button
             fullWidth
             onClick={handleSubmitClicked}
-            disabled={checkButtonState() || loading}
+            disabled={checkButtonState() || isLoading}
             style={{ marginBottom: "20px" }}
           >
             {i18n.t("common.submit")}
@@ -142,6 +140,8 @@ const QQ = () => {
           />
         </>
       )}
+
+      <Loading show={isLoading} />
     </div>
   );
 };

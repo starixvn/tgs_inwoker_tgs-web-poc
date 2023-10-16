@@ -4,15 +4,24 @@ import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { theme } from "@/theme";
 import { CircularProgress } from "@mui/material";
 
-const LoadingContainer = styled.div`
+type LoadingContainer = {
+  $opacity: number;
+  $open: boolean;
+};
+const LoadingContainer = styled.div<LoadingContainer>`
   width: 100%;
   top: 0;
   left: 0;
   position: fixed;
   transition: opacity 0.2s linear, height 0.02s linear 0.2s;
-  background-color: rgba(0, 0, 0, ${(props: Props) => props.opacity});
-  opacity: 1;
-  height: 100%;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    ${({ $opacity }: LoadingContainer) => $opacity}
+  );
+  ${({ $open }) =>
+    $open ? "opacity:1;height: 100%;" : "opacity:0;height:0px;"};
   z-index: 3;
 `;
 const Inner = styled.div`
@@ -28,23 +37,25 @@ const LogoImg = styled.img`
   width: 250px;
 `;
 type Props = {
+  show: boolean;
   opacity?: number;
 };
 
-const Loading = ({ opacity }: Props) => {
+const Loading = ({ show, opacity }: Props) => {
   const { general } = useGeneralStore();
 
   const backgroundOpacity = typeof opacity === "number" ? opacity : 0.5;
 
   return (
-    <LoadingContainer opacity={backgroundOpacity}>
+    <LoadingContainer $open={show} $opacity={backgroundOpacity}>
       <Inner>
         <LogoImg src={general.brand && general.brand.loadingUrl} />
-        <div className="clear"></div>
+        <div className="clear" />
         <CircularProgress
           size={80}
-          style={{ margin: "30px 0 0 80px", color: theme.primary }}
-        ></CircularProgress>
+          color={"primary"}
+          style={{ margin: "30px 0 0 80px" }}
+        />
       </Inner>
     </LoadingContainer>
   );

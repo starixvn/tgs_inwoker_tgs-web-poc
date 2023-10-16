@@ -35,7 +35,7 @@ function Phone() {
   const [isNew, setIsNew] = useState(false);
   const [isConfigured, setIsConfigured] = useState(false);
   const [securityKey, setSecurityKey] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -91,7 +91,7 @@ function Phone() {
       return;
     }
 
-    setLoading(true);
+    setIsLoading(true);
 
     try {
       const response = await newRegister("InitPhone", {
@@ -118,7 +118,7 @@ function Phone() {
     } catch (error: any) {
       showErrorMessage(error.message);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -146,7 +146,7 @@ function Phone() {
   };
 
   const handleSubmitClicked = async () => {
-    setLoading(true);
+    setIsLoading(true);
 
     try {
       if (
@@ -257,15 +257,13 @@ function Phone() {
     } catch (error: any) {
       showErrorMessage(error?.message);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   const cannotAccessOther =
     //@ts-ignore
     history.location.state && history.location.state.forced ? true : "";
-
-  if (loading) return <Loading />;
 
   return (
     <>
@@ -367,6 +365,8 @@ function Phone() {
           />
         )
       ) : null}
+
+      <Loading show={isLoading} />
     </>
   );
 }

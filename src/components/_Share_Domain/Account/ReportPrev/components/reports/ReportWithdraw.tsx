@@ -15,7 +15,7 @@ import {
 import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
 import { ReportService } from "@/services/ReportService";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
-import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 import { useWithdrawalStatus } from "@/components/_Share_Domain/Account/ReportPrev/hooks/useWithdrawalStatus";
 import StatusSelect from "@/components/_Share_Domain/Account/ReportPrev/components/StatusSelect";
 

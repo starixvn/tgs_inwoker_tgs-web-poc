@@ -3,7 +3,7 @@ import i18n from "@/utils/i18n";
 import styled from "styled-components";
 import { Switch } from "@/components/Mobile/components/UI/Switch";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
-import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 
 const AutoTransferContainer = styled.div`
   display: flex;
@@ -53,7 +53,7 @@ const AutoTransferSwitch = (props: Props) => {
         </CustomSwitchContainer>
       </AutoTransferContainer>
 
-      <Loading show={isLoading}></Loading>
+      <Loading show={isLoading} />
     </>
   );
 };

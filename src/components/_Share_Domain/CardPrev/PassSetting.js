@@ -9,7 +9,7 @@ import { UPDATE_INFO } from "@/api-services/constant/actionType";
 import Header from "@/components/Mobile/components/_PrevShare/Header";
 import Textbox from "@/components/Mobile/components/_PrevShare/Textbox";
 import Button from "@/components/Mobile/components/_PrevShare/Button";
-import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 import i18n from "@/utils/i18n";
 
 const Container = styled.div`
@@ -200,7 +200,7 @@ class NameVerification extends Component {
             {i18n.t("common.confirm")}
           </ButtonConfirm>
         </StyledModal>
-        <Loading show={this.state.loading}></Loading>
+        <Loading show={this.state.loading} />
       </Container>
     );
   }

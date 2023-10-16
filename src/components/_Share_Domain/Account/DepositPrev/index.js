@@ -17,7 +17,7 @@ import DetailsManual from "./DetailsManual";
 import config from "@/config/config";
 import Main from "./Main";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 import DepositNotificationDialog from "@/components/_Share_Domain/Account/DepositPrev/components/DepositNotificationDialog";
 import WalletMessagePopupDialog from "@/components/_Share_Domain/Account/DepositPrev/components/WalletMessagePopupDialog";
 import PaymentTabsHeader from "@/components/_Share_Domain/Account/DepositPrev/components/PaymentTabsHeader";

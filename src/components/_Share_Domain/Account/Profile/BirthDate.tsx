@@ -3,7 +3,7 @@ import styled from "styled-components";
 import i18n from "@/utils/i18n";
 import { useHistory } from "react-router-dom";
 import BottomNote from "@/components/Mobile/components/UI/BottomNote";
-import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
@@ -69,7 +69,7 @@ const Birthdate = () => {
   );
 
   const [isConfigured, setIsConfigured] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
@@ -123,10 +123,8 @@ const Birthdate = () => {
   };
 
   const showLoading = (loading: boolean) => {
-    setLoading(loading);
+    setIsLoading(loading);
   };
-
-  if (loading) return <Loading />;
 
   return (
     <Container>
@@ -173,11 +171,13 @@ const Birthdate = () => {
 
       <Button
         fullWidth
-        disabled={isDisableButton() || loading}
+        disabled={isDisableButton() || isLoading}
         onClick={handleSubmitClicked}
       >
         {i18n.t("common.submit")}
       </Button>
+
+      <Loading show={isLoading} />
     </Container>
   );
 };

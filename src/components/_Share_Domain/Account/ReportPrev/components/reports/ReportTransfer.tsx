@@ -13,7 +13,7 @@ import {
 import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { ReportService } from "@/services/ReportService";
-import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 
 export interface TabData {
   dateFrom: Date;

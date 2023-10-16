@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { walletAction } from "@/api-services/actions/walletAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
-import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 import i18n from "@/utils/i18n";
 import { Button } from "@/components/Mobile/components/UI/Button";
 import TransferCard from "@/components/_Share_Domain/Account/TransferPrev/components/TransferCard";
@@ -202,7 +202,7 @@ class Transfer extends Component {
             this.props.wallet.loading ||
             this.props.wallet.transferLoading
           }
-        ></Loading>
+        />
       </Container>
     );
   }

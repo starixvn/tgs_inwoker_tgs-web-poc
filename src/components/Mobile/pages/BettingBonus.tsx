@@ -33,7 +33,7 @@ export interface TypeProductRebateByLevel {
 const BettingBonus = () => {
   const { isLoading, currentLevel, productRebateByLevel } = useBettingBonus();
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading show={true} />;
   return (
     <Container>
       <CurrentLevelBanner

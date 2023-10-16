@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Loading from "../App/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 
 class Redirect extends Component {
   componentDidMount() {

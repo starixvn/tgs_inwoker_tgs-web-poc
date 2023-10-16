@@ -5,7 +5,7 @@ import { walletAction } from "@/api-services/actions/walletAction";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
 import MessageDialog from "@/components/Mobile/components/_PrevShare/MessageDialog";
-import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
 import AddCardsButton from "@/components/_Share_Domain/CardPrev/components/AddCardsButton";
