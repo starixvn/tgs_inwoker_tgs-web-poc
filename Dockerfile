@@ -1,9 +1,9 @@
-FROM node:16.6.1-stretch-slim AS build
+FROM node:16.14.2-stretch-slim AS build
 WORKDIR /src
 COPY . .
 
-RUN npm install
-RUN npm run build:standard
+RUN yarn install
+RUN yarn build:standard
 
 FROM caddy:2.1.1-alpine
 COPY --from=build /src/caddy/Caddyfile /etc/caddy/Caddyfile
