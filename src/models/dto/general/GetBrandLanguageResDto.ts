@@ -1,0 +1,10 @@
+class BrandLanguage {
+  "culturecode": string;
+}
+
+export class GetBrandLanguageResDto {
+  IsSuccess: boolean = true;
+  code: number = 0;
+  info: string | null = null;
+  data: BrandLanguage[] = [];
+}

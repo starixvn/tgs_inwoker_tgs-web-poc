@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 
-import Loading from "../App/Loading";
-import { GameService } from "../../api-services/services/GameService";
 import { isMobileOnly } from "react-device-detect";
-import Maintenance from "./Maintenance";
-import MaintenanceMobile from "./MaintenanceMobile";
+import { GameService } from "@/api-services/services/GameService";
+import Loading from "@/components/Mobile/components/UI/Loading";
+import Maintenance from "@/components/Mobile/pages/Maintenance";
 // try {
 // const channel = new BroadcastChannel('refreshBalance');
 // }catch {
-  
+
 // }
 
 class JoinLobbyGame extends Component {
@@ -41,14 +40,14 @@ class JoinLobbyGame extends Component {
     } else {
       GameService.JoinLobbyGame(gameType, gameCode).then((response) => {
         if (response.IsSuccess) {
-                                  // try {
-                                  //   channel.postMessage({
-                                  //     action: "refresh",
-                                  //     target: "*",
-                                  //   });
-                                  // } catch {}
-                                  window.location.href = response.data.url;
-                                } else {
+          // try {
+          //   channel.postMessage({
+          //     action: "refresh",
+          //     target: "*",
+          //   });
+          // } catch {}
+          window.location.href = response.data.url;
+        } else {
           this.handleJoinGameMaintenance(response);
         }
       });
@@ -119,11 +118,7 @@ class JoinLobbyGame extends Component {
   };
   render() {
     if (this.state.maintenance) {
-      if (isMobileOnly) {
-        return <MaintenanceMobile isGameMaintenance={true}></MaintenanceMobile>;
-      } else {
-        return <Maintenance isGameMaintenance={true}></Maintenance>;
-      }
+      return <Maintenance isGameMaintenance={true}></Maintenance>;
     } else {
       return (
         <React.Fragment>

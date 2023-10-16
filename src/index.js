@@ -1,63 +1,48 @@
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
-
 import React, { useEffect } from "react";
-import ReactDOM from "react-dom";
 import "./index.css";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
-
-import Web from "./components/App/index";
-import Wap from "./components/Wap/index";
-import * as serviceWorker from "./utils/serviceWorker";
 import { isMobileOnly } from "react-device-detect";
 import { Provider } from "react-redux";
-//import store from "./store/index";
-import { createStore, applyMiddleware, compose } from "redux";
-
+import * as serviceWorker from "./utils/serviceWorker";
+import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import InterceptorService from "./api-services/services/InterceptorService";
-import JoinGame from "./components/Share/JoinGame";
-import Deposit from "./components/Share/Deposit";
-import RedirectPage from "./components/Share/Redirect";
-import JoinLobbyGame from "./components/Share/JoinLobbyGame";
-import Maintenance from "./components/Share/Maintenance";
-// import IPRestrict from "./components/App/IPRestrict";
-// import CS from "./components/App/CS";
-// import AboutUs from "./components/AboutUs/index";
-// import GameRules from "./components/GameRules/index";
-import { AppHistory } from "./history/History";
-import { SnackbarProvider } from "notistack";
-import styled from "styled-components";
-import Config from "./config/config";
+import { makeStyles } from "@mui/styles";
 import {
   createTheme,
-  MuiThemeProvider,
-  StylesProvider,
-} from "@material-ui/core/styles";
-import DangerPNG from "../src/assets/images/warning.png";
+  ThemeProvider as MuiThemeProvider,
+} from "@mui/material/styles";
+import { StylesProvider } from "@mui/styles";
+import { SnackbarProvider } from "notistack";
+import { composeWithDevTools } from "redux-devtools-extension";
+import styled, {
+  ThemeProvider as StyleComponentThemeProvider,
+} from "styled-components";
 import InfoPNG from "../src/assets/images/info.png";
 import SuccessPNG from "../src/assets/images/success.png";
-import { makeStyles } from "@material-ui/core";
-import i18n from "./utils/i18n";
+import DangerPNG from "../src/assets/images/warning.png";
 import rootReducer from "./api-services/reducers/rootReducer";
-import { composeWithDevTools } from 'redux-devtools-extension';
-
-import Common from "./utils/Common";
-import { ThemeProvider } from "styled-components";
-import { themeList } from "./theme";
-import { GlobalStyles } from "./global";
-import JoinLotteryGame from "./components/Share/JoinLotteryGame";
-import featureList from "./config/features";
-import FeatureGetter from "./components/Share/feature-getter";
-import AudioPlayer from "./components/Share/audioplayer";
+import Config from "./config/config";
 import config from "./config/config";
-
+import i18n from "./utils/i18n";
+import Mobile from "@/components/Mobile";
+import { NotificationContextProvider } from "@/contexts/notificationContext";
+import AudioPlayer from "./components/Share/audioplayer";
+import FeatureGetter from "./components/Share/feature-getter";
+import { GlobalStyles } from "./global";
+import { theme, themeList } from "./theme";
+import { createRoot } from "react-dom/client";
+import { Redirect, Route, Router, Switch } from "react-router";
+import { AppHistory } from "@/history/History";
+import { muiTheme } from "@/theme/mui";
 require("es6-promise").polyfill();
 
 // TODO: hide on production
-const store = createStore(rootReducer, composeWithDevTools(
-  applyMiddleware(thunk)
-));
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 InterceptorService.setupInterceptors(store);
 const notistackRef = React.createRef();
 const onClickDismiss = (key) => () => {
@@ -113,95 +98,6 @@ document
 //   Config.baseUrl = baseUrl;
 // }
 
-var fontFamily = "Tahoma, Helvetica, Arial, sans-serif";
-if (i18n.language === "zh-CN") {
-  fontFamily =
-    "'Noto Sans SC', Microsoft Yahei, '微软雅黑', STXihei, '华文细黑'";
-} else if (i18n.language === "zh-TW") {
-  fontFamily =
-    "'Noto Sans TC', Tahoma, Helvetica, Arial, sans-serif, '微軟正黑粗'";
-} else if (i18n.language === "th-TH") {
-  fontFamily = "'Sarabun', sans-serif";
-}
-document.getElementById("root").style.fontFamily = fontFamily;
-var muiThemeMode = isMobileOnly
-  ? themeList[Config.brand] || themeList[Config.theme]
-  : themeList[Config.theme];
-muiThemeMode.lang = i18n.language;
-const muiTheme = createTheme({
-  palette: {
-    primary: {
-      main: muiThemeMode.primary,
-      mainRgb: muiThemeMode.primaryRgb,
-      contrastText: muiThemeMode.primaryText,
-      mainGradient: muiThemeMode.primaryGradient,
-      mainGradientRgb: muiThemeMode.primaryGradientRgb,
-    },
-    secondary: {
-      main: muiThemeMode.secondary,
-      contrastText: muiThemeMode.secondaryText,
-    },
-    tertiary: {
-      main: muiThemeMode.tertiary,
-      contrastText: muiThemeMode.tertiaryText,
-    },
-    type: "light",
-  },
-  typography: {
-    fontFamily: fontFamily,
-
-    fontWeightLight: 300,
-    fontWeightRegular: 400,
-    fontWeightMedium: 500,
-  },
-  overrides: {
-    MuiSelect: {
-      root: {
-        color: muiThemeMode.secondary,
-      },
-    },
-    MuiTabs: {
-      // Name of the rule
-      root: {
-        backgroundColor: muiThemeMode.secondary,
-        height: "74px",
-        overflow: "visible",
-        "& .MuiTabs-indicator": {
-          backgroundColor: "#FDE740",
-          height: "5px",
-        },
-        "& .MuiTabs-indicator:before": {
-          content: "'\\A'",
-          borderStyle: "solid",
-          borderWidth: "0 10px 10px 10px",
-          borderColor: "transparent transparent #FDE740 transparent",
-          position: "absolute",
-          left: "50%",
-          top: "-6px",
-          transform: "translateX(-50%)",
-        },
-        "& .MuiTabs-flexContainer": {
-          overflow: "visible",
-        },
-        "& .MuiTabs-scrollButtons": {
-          display: "none",
-        },
-      },
-    },
-    MuiTab: {
-      root: {
-        fontSize: "24px",
-        maxWidth: "375px",
-        color: "#ffffff !important",
-        minWidth: "210px",
-        height: "64px",
-        "&.Mui-selected": {
-          color: "#FDE740  !important",
-        },
-      },
-    },
-  },
-});
 const AppWrapper = () => {
   const classes = useStyles();
   const languageDetector =
@@ -248,88 +144,48 @@ const AppWrapper = () => {
   if (isReady) {
     return (
       <Provider store={store}>
-        <FeatureGetter />
-        {Config.features.BackgroundMusic && <AudioPlayer />}
-        <StylesProvider injectFirst>
-          <MuiThemeProvider theme={muiTheme}>
-            <ThemeProvider theme={muiThemeMode}>
-              <GlobalStyles />
-              <SnackbarProvider
-                classes={{
-                  variantSuccess: classes.success,
-                  variantError: classes.error,
-                  variantWarning: classes.warning,
-                  variantInfo: classes.info,
-                }}
-                iconVariant={{
-                  success: <Icon src={SuccessPNG}></Icon>,
-                  error: <Icon src={DangerPNG}></Icon>,
-                  warning: <Icon src={DangerPNG}></Icon>,
-                  info: <Icon src={InfoPNG}></Icon>,
-                }}
-                action={(key) => (
-                  <Dismiss onClick={onClickDismiss(key)}>x</Dismiss>
-                )}
-                maxSnack={3}
-                autoHideDuration={3000}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "center",
-                }}
-                ref={notistackRef}
-              >
-                <Router history={AppHistory}>
-                  <Switch>
-                    <Route
-                      exact
-                      path={
-                        "/deposit/:paymentcode/:methodcode/:channelid/:amount/:promotion/:name/:account?"
-                      }
-                      component={Deposit}
-                    />
-                    <Route
-                      exact
-                      path={"/joingame/:type/:params/:params2?"}
-                      component={JoinGame}
-                    />
-                    <Route
-                      exact
-                      path={"/redirect/:url"}
-                      component={RedirectPage}
-                    />
-                    <Route
-                      exact
-                      path={"/joinlottery/:brand"}
-                      component={JoinLotteryGame}
-                    />
-                    <Route
-                      exact
-                      path={"/joinlobbygame/:type/:params"}
-                      component={JoinLobbyGame}
-                    />
-
-                    {(() => {
-                      if (!isMobileOnly) {
-                        return (
-                          <Route
-                            exact
-                            path={"/maintenance"}
-                            render={(props) => <Maintenance />}
-                          />
-                        );
-                      }
-                    })()}
-                    <Route
-                      path={"/"}
-                      render={(props) => (isMobileOnly ? <Wap /> : <Web />)}
-                    />
-                    <Redirect to={`/`} />
-                  </Switch>
-                </Router>
-              </SnackbarProvider>
-            </ThemeProvider>
-          </MuiThemeProvider>
-        </StylesProvider>
+        <NotificationContextProvider>
+          <FeatureGetter />
+          {Config.features.BackgroundMusic && <AudioPlayer />}
+          <StylesProvider injectFirst>
+            <MuiThemeProvider theme={muiTheme}>
+              <StyleComponentThemeProvider theme={theme}>
+                <GlobalStyles />
+                <SnackbarProvider
+                  classes={{
+                    variantSuccess: classes.success,
+                    variantError: classes.error,
+                    variantWarning: classes.warning,
+                    variantInfo: classes.info,
+                  }}
+                  iconVariant={{
+                    success: <Icon src={SuccessPNG}></Icon>,
+                    error: <Icon src={DangerPNG}></Icon>,
+                    warning: <Icon src={DangerPNG}></Icon>,
+                    info: <Icon src={InfoPNG}></Icon>,
+                  }}
+                  action={(key) => (
+                    <Dismiss onClick={onClickDismiss(key)}>x</Dismiss>
+                  )}
+                  maxSnack={3}
+                  autoHideDuration={3000}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                  }}
+                  ref={notistackRef}
+                >
+                  <Router history={AppHistory}>
+                    <Switch>
+                      <Route path={"/"} render={(props) => <Mobile />} />
+                      <Redirect to={`/`} />
+                    </Switch>
+                  </Router>
+                </SnackbarProvider>
+              </StyleComponentThemeProvider>
+            </MuiThemeProvider>
+          </StylesProvider>
+        </NotificationContextProvider>
       </Provider>
     );
   } else {
@@ -337,7 +193,9 @@ const AppWrapper = () => {
   }
 };
 
-ReactDOM.render(<AppWrapper></AppWrapper>, document.getElementById("root"));
+const container = document.getElementById("root");
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(<AppWrapper />);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

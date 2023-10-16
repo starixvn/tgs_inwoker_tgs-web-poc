@@ -1,5 +1,5 @@
 import config from "../../../../config/config";
-import { themeList } from "./../../../../theme";
+import { themeList } from "../../../../theme";
 import { isMobileOnly } from "react-device-detect";
 var muiThemeMode = isMobileOnly
   ? themeList[config.brand] || themeList[config.theme]
