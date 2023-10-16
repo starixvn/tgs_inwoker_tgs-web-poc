@@ -56,6 +56,7 @@ const LoginForm = (props: Props) => {
     formInputConfigList,
     formik,
     isLoading,
+    loginError,
     needToRemember,
     handleClickNeedToRemember,
   } = useLoginForm();
@@ -71,6 +72,7 @@ const LoginForm = (props: Props) => {
         formInputList={formInputConfigList}
         formik={formik}
         isLoading={isLoading}
+        error={loginError}
         buttonText={i18n.t("common.login")}
       >
         <FormSubContainer>

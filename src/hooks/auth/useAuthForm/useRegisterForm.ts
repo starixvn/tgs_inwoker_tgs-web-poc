@@ -55,6 +55,7 @@ export function useRegisterForm() {
     formInputConfigList,
     formik,
     isLoading: registerState.isLoading,
+    registerError: registerState.error,
     isConfirmedAdult,
     handleClickConfirmAdult,
   };

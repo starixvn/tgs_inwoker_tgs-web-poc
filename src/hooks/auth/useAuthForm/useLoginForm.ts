@@ -4,8 +4,7 @@ import { useAuth } from "@/hooks/auth/useAuth";
 import { useGenerateLoginFormik } from "@/hooks/auth/useAuthForm/hooks/useGenerateLoginFormik";
 
 export function useLoginForm() {
-  const { handleLogin } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
+  const { loginState, handleLogin } = useAuth();
   const [needToRemember, setNeedToRemember] = useState(false);
 
   const handleClickNeedToRemember = () => {
@@ -17,12 +16,10 @@ export function useLoginForm() {
     async (values: FormikValues) => {
       try {
         const { username, password } = values;
-        setIsLoading(true);
         await handleLogin(username, password, needToRemember);
       } catch (error: any) {
         console.error(error);
       } finally {
-        setIsLoading(false);
       }
     },
     [needToRemember]
@@ -35,7 +32,8 @@ export function useLoginForm() {
   return {
     formInputConfigList,
     formik,
-    isLoading,
+    isLoading: loginState.isLoading,
+    loginError: loginState.error,
     needToRemember,
     handleClickNeedToRemember,
   };

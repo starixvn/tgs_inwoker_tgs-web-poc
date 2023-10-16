@@ -6,7 +6,7 @@ import { FormControl } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 
 const StatusSelectContainer = styled.div`
-  padding: 15px 29px;
+  padding: 1px 29px;
   background: ${({ theme }) => theme.tertiaryDark};
   font-size: 0.937rem;
   color: ${({ theme }) => theme.white};

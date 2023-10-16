@@ -24,10 +24,8 @@ const TabButton = styled.button<TabButtonProps>`
   }};
   padding: 13px 23px;
   width: calc((100% - 2 * 9px) / 3);
-  border: ${({ $isSelected }: TabButtonProps) => {
-    return $isSelected
-      ? "none"
-      : `1px solid ${({ theme }) => theme.tertiaryLight}`;
+  border: ${({ $isSelected, theme }: TabButtonProps) => {
+    return $isSelected ? "none" : `1px solid ${theme.tertiaryLight}`;
   }};
   border-radius: 5px;
   font-size: 0.937rem;

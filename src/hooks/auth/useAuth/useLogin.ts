@@ -41,6 +41,11 @@ export function useLogin() {
       if (!result?.IsSuccess) {
         handleLoginFailure(result?.code);
       } else {
+        setLoginState({
+          isLoading: false,
+          data: result,
+          error: null,
+        });
         await handleLoginSuccess(username, needToRemember);
       }
     } catch (error) {
@@ -78,7 +83,7 @@ export function useLogin() {
     }
   };
 
-  const shouldRedirectToProfile = async () => {
+  const shouldRedirectToProfile = async (username: string) => {
     const response = await getAccountInfo();
     return (
       config.features.Register_ShowPhone &&
@@ -118,8 +123,6 @@ export function useLogin() {
   };
 
   const handleLoginError = (error: Error) => {
-    console.log(error);
-
     setLoginState({
       isLoading: false,
       data: null,
