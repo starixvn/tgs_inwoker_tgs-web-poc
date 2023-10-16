@@ -56,6 +56,7 @@ const Icon = styled.div<IconProps>`
   height: 60px;
   background-color: ${({ theme }) => theme.tertiary};
   mask: ${({ icon }: IconProps) => {
+    console.log(process.env);
     return `url(${
       process.env.PUBLIC_URL + "/assets/images/wapp/" + iconSwitcher(icon)
     }) no-repeat center /
@@ -86,6 +87,7 @@ const SupportCard = ({ brandsSupport, handleClick }: Props) => {
     handleClick(brandsSupport);
   }, []);
 
+  console.log(brandsSupport);
   return (
     <SupportCardContainer onClick={handleClickCard}>
       <Icon icon={brandsSupport.type} />

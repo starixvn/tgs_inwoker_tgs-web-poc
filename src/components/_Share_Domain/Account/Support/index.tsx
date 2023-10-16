@@ -41,7 +41,6 @@ const Support = ({}: Props) => {
       handleContactCs();
       return;
     }
-    console.log(brandsSupport);
 
     if (brandsSupport.qrcodeurl) {
       setSelectedBrandsSupport(brandsSupport);
