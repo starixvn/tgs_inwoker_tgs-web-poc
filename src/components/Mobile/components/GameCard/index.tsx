@@ -2,8 +2,10 @@ import { GameService } from "@/api-services/services/GameService";
 import dislikeIcon from "@/assets/images/home/mobile/dislike.png";
 import likeIcon from "@/assets/images/home/mobile/like.png";
 import config from "@/config/config";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import Common from "@/utils/Common";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import { badgeList } from "../../constants/games";
 
@@ -91,15 +93,27 @@ const GameCard = ({
   isFavorite,
 }: GameCardProps) => {
   const { setFavoriteGame, removeFavoriteGame } = useGameStore();
+  const { account } = useAccountStore();
+  const history = useHistory();
 
   const launchGame = () => {
-    GameService.JoinGame(gameItem.id, gameItem.gpcode).then((response) => {
-      if (response?.IsSuccess) {
-        window.location.href = response?.data?.url;
-      } else {
-        console.log(response?.info);
+    if (!account.token) {
+      history.push("/login");
+    } else {
+      Common.closePreviousPopup();
+      const gameWindow = window.open("", "gamewindow");
+      const gameUrl = `/joingame/${gameItem.id}/${gameItem.gpcode}`;
+      if (gameWindow) {
+        gameWindow.location.href = gameUrl;
+        GameService.JoinGame(gameItem.id, gameItem.gpcode).then((response) => {
+          if (response?.IsSuccess) {
+            window.location.href = response?.data?.url;
+          } else {
+            console.log(response?.info);
+          }
+        });
       }
-    });
+    }
   };
 
   const handleToggleFavorite = async (event, gameId: number) => {
@@ -116,11 +130,9 @@ const GameCard = ({
   return (
     <GameCardWrapper
       onClick={launchGame}
-      $imageUrl={`${
-        config.sourceUrl
-      }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
-        gameItem.code
-      }.jpg`}
+      $imageUrl={`${config.sourceUrl
+        }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${gameItem.code
+        }.jpg`}
     >
       {isFavorite ? (
         <LikeIcon
