@@ -14,7 +14,7 @@ const BadgeContainer = styled.div<BadgeContainerProps>`
   background: ${({ $isActive, theme }: BadgeContainerProps) =>
     $isActive ? theme.primary : "none"};
   border: ${({ $isActive, theme }: BadgeContainerProps) =>
-    $isActive ? "none" : `1px solid ${({ theme }) => theme.tertiary}`};
+    $isActive ? "none" : `1px solid ${theme.tertiary}`};
 
   border-radius: 50px;
 `;

@@ -3,7 +3,7 @@ import AddCard from "@/components/Mobile/components/Card/AddCard";
 import Affiliate from "@/components/Mobile/pages/Affiliate";
 import BettingBonus from "@/components/Mobile/pages/BettingBonus";
 import ContactUsPage from "@/components/Mobile/pages/ContactUs";
-import Deposit from "@/components/Mobile/pages/Deposit";
+import DepositPage from "@/components/Mobile/pages/Deposit";
 import DepositDetails from "@/components/Mobile/pages/Deposit/DepositDetails";
 import DepositManual from "@/components/Mobile/pages/Deposit/DepositManual";
 import DepositPayment from "@/components/Mobile/pages/Deposit/DepositPayment";
@@ -90,7 +90,7 @@ const routes: Route[] = [
   },
   {
     path: "/deposit",
-    component: Deposit,
+    component: DepositPage,
     category: RouteCategoryEnum.MINE,
     layout: DefaultLayout,
   },
@@ -316,13 +316,13 @@ const routes: Route[] = [
   },
   {
     path: "/deposit/:promotionid?",
-    component: Deposit,
+    component: DepositPage,
     category: RouteCategoryEnum.MINE,
     layout: DefaultLayout,
   },
   {
     path: "/manual/:paymentId?",
-    component: Deposit,
+    component: DepositPage,
     category: RouteCategoryEnum.MINE,
     layout: DefaultLayout,
   },

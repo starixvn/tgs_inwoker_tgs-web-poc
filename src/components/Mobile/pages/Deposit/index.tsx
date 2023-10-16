@@ -11,7 +11,7 @@ const DepositContainer = styled.div`
 `;
 
 type Props = {};
-const Deposit = (props: Props) => {
+const DepositPage = (props: Props) => {
   const history = useHistory();
   const { alert } = useNotifications();
   const location = useLocation();
@@ -25,4 +25,4 @@ const Deposit = (props: Props) => {
   );
 };
 
-export default Deposit;
+export default DepositPage;
