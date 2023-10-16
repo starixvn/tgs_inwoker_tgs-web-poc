@@ -1,4 +1,4 @@
-FROM node:16.6.1-stretch-slim AS build
+FROM node:16.14.2-stretch-slim AS build
 WORKDIR /src
 COPY . .
 
