@@ -46,7 +46,7 @@ const StyledSelect = styled(MuiSelect)`
   border-radius: 10px;
   overflow: visible;
 
-  & .MuiSelect-root {
+  & .MuiSelect-select {
     display: flex;
     align-items: center;
     color: ${({ theme }) => theme.tertiary} !important;
@@ -62,9 +62,8 @@ const StyledSelect = styled(MuiSelect)`
 `;
 
 const StyledMenuItem = styled(MuiMenuItem)`
-  //background: #212937;
   //border-radius: 8px;
-  //background-color: red;
+  background: red;
 
   & > img {
     margin-right: 10px;
@@ -107,13 +106,23 @@ const LanguageSwitch = () => {
   if (languageList.length < 2) return null;
   return (
     <StyledFormControl variant="outlined">
-      {/*<InputLabel id="demo-simple-select-outlined-label">Language</InputLabel>*/}
       <StyledSelect
-        labelId="demo-simple-select-outlined-label"
-        id="demo-simple-select-outlined"
+        type={"string"}
         value={culturecode}
         onChange={handleChange}
-        label="Age"
+        MenuProps={{
+          PaperProps: {
+            sx: {
+              bgcolor: (theme) => {
+                return theme.palette.tertiary.dark;
+              },
+
+              "& .MuiMenuItem-root": {
+                padding: 2,
+              },
+            },
+          },
+        }}
       >
         {languageList.length > 1 &&
           languageList.map((languageItem) => {

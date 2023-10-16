@@ -465,59 +465,63 @@ class WithdrawalPrev extends Component {
         <StyledModalBank
           onClose={() => this.setState({ ...this.state, bankOpen: false })}
           open={this.state.bankOpen}
-          TransitionComponent={Transition}
+          // TransitionComponent={Transition}
           keepMounted
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
         >
-          {this.handleFilterCardList(this.props.wallet.bankCardList).map(
-            (item, index) => {
-              return (
-                <StyledListItem
-                  button
-                  key={index}
-                  onClick={() => this.handleBankClick(index)}
-                >
-                  <LeftText primary={item.banktype}></LeftText>
-                  <RightText
-                    primary={
-                      item.detail.address ||
-                      item.detail.bankAccount ||
-                      item.detail.phone
-                    }
-                  ></RightText>
-                </StyledListItem>
-              );
-            }
-          )}
+          <>
+            {this.handleFilterCardList(this.props.wallet.bankCardList).map(
+              (item, index) => {
+                return (
+                  <StyledListItem
+                    button
+                    key={index}
+                    onClick={() => this.handleBankClick(index)}
+                  >
+                    <LeftText primary={item.banktype}></LeftText>
+                    <RightText
+                      primary={
+                        item.detail.address ||
+                        item.detail.bankAccount ||
+                        item.detail.phone
+                      }
+                    ></RightText>
+                  </StyledListItem>
+                );
+              }
+            )}
+          </>
         </StyledModalBank>
         <StyledModalPopup
           onClose={() => this.setState({ ...this.state, otp: false })}
           open={this.state.otp}
-          TransitionComponent={Transition}
+          // TransitionComponent={Transition}
           keepMounted
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
         >
-          <Button
-            style={{
-              width: "250px",
-              float: "left",
+          <>
+            <Button
+              style={{
+                width: "250px",
+                float: "left",
 
-              backgroundImage: "none",
-              backgroundColor: "#b7b7b7",
-            }}
-            label={i18n.t("common.cancel")}
-            onClick={() => this.setState({ ...this.state, otp: false })}
-          />
-          <Button
-            style={{
-              width: "250px",
-              float: "right",
-            }}
-            label={i18n.t("common.confirm")}
-            onClick={this.handleConfirmOTP}
-          />
+                backgroundImage: "none",
+                backgroundColor: "#b7b7b7",
+              }}
+              label={i18n.t("common.cancel")}
+              onClick={() => this.setState({ ...this.state, otp: false })}
+            />
+            <Button
+              style={{
+                width: "250px",
+                float: "right",
+              }}
+              label={i18n.t("common.confirm")}
+              onClick={this.handleConfirmOTP}
+            />
+          </>
         </StyledModalPopup>
         <Loading show={isLoading} />
       </>

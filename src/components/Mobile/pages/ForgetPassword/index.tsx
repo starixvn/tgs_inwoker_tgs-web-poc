@@ -8,7 +8,7 @@ import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { usePageName } from "@/hooks/usePageName";
 
 const TitleContainer = styled.div`
-  font-size: 3rem !important;
+  font-size: 2.5rem !important;
   line-height: 3.5rem !important;
   font-weight: 700 !important;
   color: white;
@@ -16,6 +16,8 @@ const TitleContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 41px;
+  margin-top: 15.76%;
+  white-space: nowrap;
 
   & > .bottom-border {
     width: 68px;

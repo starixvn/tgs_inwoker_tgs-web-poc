@@ -26,6 +26,7 @@ const ButtonContainer = styled.div`
 const TextFieldWithButton = (
   props: TextFieldProps & {
     label: string;
+    onClick: () => void;
     maxLength?: number;
     buttonlabel?: string;
   }

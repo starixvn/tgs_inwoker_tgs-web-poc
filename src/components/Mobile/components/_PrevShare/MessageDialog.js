@@ -60,11 +60,13 @@ function MessageDialog(props) {
       open={props.open}
       TransitionComponent={Transition}
     >
-      <DialoTitle>{i18n.t("share.messageDialog.info")}</DialoTitle>
-      <DialoMessage>{props.message}</DialoMessage>
-      <ButtonConfirm onClick={props.onClick}>
-        {i18n.t("common.confirm")}
-      </ButtonConfirm>
+      <>
+        <DialoTitle>{i18n.t("share.messageDialog.info")}</DialoTitle>
+        <DialoMessage>{props.message}</DialoMessage>
+        <ButtonConfirm onClick={props.onClick}>
+          {i18n.t("common.confirm")}
+        </ButtonConfirm>
+      </>
     </StyledModalPopup>
   );
 }
