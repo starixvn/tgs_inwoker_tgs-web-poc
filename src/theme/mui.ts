@@ -41,10 +41,12 @@ const muiTheme = createTheme({
   },
   typography: {
     fontFamily: fontFamily,
-
     fontWeightLight: 300,
     fontWeightRegular: 400,
     fontWeightMedium: 500,
+    button: {
+      textTransform: "none",
+    },
   },
   overrides: {
     MuiSelect: {

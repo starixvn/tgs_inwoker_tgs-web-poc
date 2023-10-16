@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import Loading from "@/components/Mobile/components/UI/Loading";
 
 const TitleContainer = styled.div`
-  font-size: 3rem !important;
+  font-size: 2.5rem !important;
   line-height: 3.5rem !important;
   font-weight: 700 !important;
   color: white;
@@ -17,6 +17,9 @@ const TitleContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 41px;
+  white-space: nowrap;
+
+  margin-top: 15.76%;
 
   & > .bottom-border {
     width: 68px;
@@ -43,7 +46,7 @@ const RememberMeContainer = styled.div`
 
 const ForgotPasswordContainer = styled(Link)`
   color: #5d50e0;
-  font-size: 1.062rem;
+  font-size: 0.937rem;
   font-weight: 400;
   line-height: 1.245;
   white-space: nowrap;

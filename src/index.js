@@ -9,10 +9,7 @@ import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import InterceptorService from "./api-services/services/InterceptorService";
 import { makeStyles } from "@mui/styles";
-import {
-  createTheme,
-  ThemeProvider as MuiThemeProvider,
-} from "@mui/material/styles";
+import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import { StylesProvider } from "@mui/styles";
 import { SnackbarProvider } from "notistack";
 import { composeWithDevTools } from "redux-devtools-extension";
