@@ -13,7 +13,7 @@ const TabsContainer = styled.div`
 
 export interface TabItem {
   label: string;
-  value: "account" | "info";
+  value: any;
   icon?: string | React.ReactElement;
 }
 type Props = {

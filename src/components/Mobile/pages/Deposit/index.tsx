@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import styled from "styled-components";
 import { useLocation } from "react-router";
+import TransferTabs from "@/components/_Share_Domain/Account/DepositPrev/components/TransferTabs";
 
 const DepositContainer = styled.div`
   padding: 20px 24px;
@@ -18,6 +19,7 @@ const Deposit = (props: Props) => {
 
   return (
     <DepositContainer>
+      <TransferTabs />
       <DepositPrev appHistory={history} alert={alert} order={order} />;
     </DepositContainer>
   );

@@ -334,32 +334,34 @@ const Download = () => {
                   setPointlessDialog(false);
                 }}
               >
-                <DialogTitle2>
-                  <div>{i18n.t("pointless.download")}</div>
-                  <CloseButton
-                    onClick={() => {
-                      setPointlessDialog(false);
-                    }}
-                  >
-                    ✖
-                  </CloseButton>
-                </DialogTitle2>
-                <DialogContent>
-                  {download.map((data, index) => {
-                    return (
-                      <PointlessShit>
-                        <DeviceName>{data.platform}</DeviceName>
-                        <Links
-                          onClick={() => {
-                            copyStupidLink(data.link);
-                          }}
-                        >
-                          {data.link}
-                        </Links>
-                      </PointlessShit>
-                    );
-                  })}
-                </DialogContent>
+                <>
+                  <DialogTitle2>
+                    <div>{i18n.t("pointless.download")}</div>
+                    <CloseButton
+                      onClick={() => {
+                        setPointlessDialog(false);
+                      }}
+                    >
+                      ✖
+                    </CloseButton>
+                  </DialogTitle2>
+                  <DialogContent>
+                    {download.map((data, index) => {
+                      return (
+                        <PointlessShit>
+                          <DeviceName>{data.platform}</DeviceName>
+                          <Links
+                            onClick={() => {
+                              copyStupidLink(data.link);
+                            }}
+                          >
+                            {data.link}
+                          </Links>
+                        </PointlessShit>
+                      );
+                    })}
+                  </DialogContent>
+                </>
               </CustomModal>
             </>
           )}
@@ -380,28 +382,30 @@ const Download = () => {
         }}
         maxWidth="md"
       >
-        <DialogTitle2>
-          <div>{i18n.t("download.openGuide")}</div>
-          <CloseButton
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            ✖
-          </CloseButton>
-        </DialogTitle2>
-        <DialogContent>
-          <DeviceGuide>
-            {i18n.t("download.iphone.title")} <br />
-            {i18n.t("download.iphone.point1")} <br />
-            {i18n.t("download.iphone.point2")} <br />
-          </DeviceGuide>
-          <DeviceGuide>
-            {i18n.t("download.android.title")} <br />
-            {i18n.t("download.android.point1")} <br />
-            {i18n.t("download.android.point2")} <br />
-          </DeviceGuide>
-        </DialogContent>
+        <>
+          <DialogTitle2>
+            <div>{i18n.t("download.openGuide")}</div>
+            <CloseButton
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              ✖
+            </CloseButton>
+          </DialogTitle2>
+          <DialogContent>
+            <DeviceGuide>
+              {i18n.t("download.iphone.title")} <br />
+              {i18n.t("download.iphone.point1")} <br />
+              {i18n.t("download.iphone.point2")} <br />
+            </DeviceGuide>
+            <DeviceGuide>
+              {i18n.t("download.android.title")} <br />
+              {i18n.t("download.android.point1")} <br />
+              {i18n.t("download.android.point2")} <br />
+            </DeviceGuide>
+          </DialogContent>
+        </>
       </CustomModal>
     </Container>
   );

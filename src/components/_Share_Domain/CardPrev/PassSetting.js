@@ -192,13 +192,15 @@ class NameVerification extends Component {
         ></Button>
 
         <StyledModal onClose={this.handleClose} open={this.state.open}>
-          <DialoTitle>{i18n.t("card.passSetting.dialogTitle")}</DialoTitle>
-          <DialoMessage>{i18n.t("card.passSetting.dialogMsg")}</DialoMessage>
-          <ButtonConfirm
-            onClick={() => this.setState({ ...this.state, open: false })}
-          >
-            {i18n.t("common.confirm")}
-          </ButtonConfirm>
+          <>
+            <DialoTitle>{i18n.t("card.passSetting.dialogTitle")}</DialoTitle>
+            <DialoMessage>{i18n.t("card.passSetting.dialogMsg")}</DialoMessage>
+            <ButtonConfirm
+              onClick={() => this.setState({ ...this.state, open: false })}
+            >
+              {i18n.t("common.confirm")}
+            </ButtonConfirm>
+          </>
         </StyledModal>
         <Loading show={this.state.loading} />
       </Container>

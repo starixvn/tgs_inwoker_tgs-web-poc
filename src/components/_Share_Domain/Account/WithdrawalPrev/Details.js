@@ -237,39 +237,41 @@ class Details extends Component {
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialoTitle>{i18n.t("common.withdrawalPassword")}</DialoTitle>
-          <OTPContainer>
-            <OTPTextBox
-              type={"password"}
-              inputmode="numeric"
-              minLength={6}
-              maxLength={6}
-              size={6}
-              onChange={this.handlePasswordChange}
-              value={this.state.password}
-            ></OTPTextBox>
-          </OTPContainer>
-          <Button
-            style={{
-              width: "250px",
-              float: "left",
+          <>
+            <DialoTitle>{i18n.t("common.withdrawalPassword")}</DialoTitle>
+            <OTPContainer>
+              <OTPTextBox
+                type={"password"}
+                inputmode="numeric"
+                minLength={6}
+                maxLength={6}
+                size={6}
+                onChange={this.handlePasswordChange}
+                value={this.state.password}
+              />
+            </OTPContainer>
+            <Button
+              style={{
+                width: "250px",
+                float: "left",
 
-              backgroundImage: "none",
-              backgroundColor: "#b7b7b7",
-            }}
-            labelStyle={{ color: "#fff" }}
-            label={i18n.t("common.cancel")}
-            onClick={() => this.setState({ ...this.state, otp: false })}
-          ></Button>
-          <Button
-            style={{
-              width: "250px",
-              float: "right",
-            }}
-            disabled={this.state.password.length < 6}
-            label={i18n.t("common.confirm")}
-            onClick={this.handleConfirmOTP}
-          ></Button>
+                backgroundImage: "none",
+                backgroundColor: "#b7b7b7",
+              }}
+              labelStyle={{ color: "#fff" }}
+              label={i18n.t("common.cancel")}
+              onClick={() => this.setState({ ...this.state, otp: false })}
+            />
+            <Button
+              style={{
+                width: "250px",
+                float: "right",
+              }}
+              disabled={this.state.password.length < 6}
+              label={i18n.t("common.confirm")}
+              onClick={this.handleConfirmOTP}
+            />
+          </>
         </StyledModalPopup>
         <Loading show={this.state.loading || this.props.wallet.loading} />
       </Container>

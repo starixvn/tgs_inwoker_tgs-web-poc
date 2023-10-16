@@ -929,63 +929,69 @@ class AddCardPrev extends Component {
           onClose={() => this.setState({ ...this.state, bankTypeOpen: false })}
           open={this.state.bankTypeOpen}
         >
-          {!this.state.isDeposit
-            ? this.props.wallet.withdrawalList.length > 0 &&
-              this.props.wallet.withdrawalList.map((item, index) => {
-                return (
-                  <StyledListItem
-                    button
-                    key={index}
-                    onClick={() => this.handleBankTypeClick(index)}
-                  >
-                    <StyledListItemText primary={item.banktype} />
-                  </StyledListItem>
-                );
-              })
-            : this.props.wallet.depositList.length > 0 &&
-              this.props.wallet.depositList.map((item, index) => {
-                return (
-                  <StyledListItem
-                    button
-                    key={index}
-                    onClick={() => this.handleBankTypeClick(index)}
-                  >
-                    <StyledListItemText primary={item.banktype} />
-                  </StyledListItem>
-                );
-              })}
+          <>
+            {!this.state.isDeposit
+              ? this.props.wallet.withdrawalList.length > 0 &&
+                this.props.wallet.withdrawalList.map((item, index) => {
+                  return (
+                    <StyledListItem
+                      button
+                      key={index}
+                      onClick={() => this.handleBankTypeClick(index)}
+                    >
+                      <StyledListItemText primary={item.banktype} />
+                    </StyledListItem>
+                  );
+                })
+              : this.props.wallet.depositList.length > 0 &&
+                this.props.wallet.depositList.map((item, index) => {
+                  return (
+                    <StyledListItem
+                      button
+                      key={index}
+                      onClick={() => this.handleBankTypeClick(index)}
+                    >
+                      <StyledListItemText primary={item.banktype} />
+                    </StyledListItem>
+                  );
+                })}
+          </>
         </StyledModalBank>
         <StyledModalBank
           onClose={() => this.setState({ ...this.state, channelOpen: false })}
           open={this.state.channelOpen}
         >
-          {this.state.channelList.map((item, index) => {
-            return (
-              <StyledListItem
-                button
-                key={index}
-                onClick={() => this.handleChannelClick(index)}
-              >
-                <StyledListItemText primary={i18n.t(item.channelname)} />
-              </StyledListItem>
-            );
-          })}
+          <>
+            {this.state.channelList.map((item, index) => {
+              return (
+                <StyledListItem
+                  button
+                  key={index}
+                  onClick={() => this.handleChannelClick(index)}
+                >
+                  <StyledListItemText primary={i18n.t(item.channelname)} />
+                </StyledListItem>
+              );
+            })}
+          </>
         </StyledModalBank>
         <StyledModalBank
           onClose={() => this.setState({ ...this.state, bankNameOpen: false })}
           open={config.features.AddCard_BankDropdown && this.state.bankNameOpen}
         >
-          {bankList.map((item, index) => {
-            return (
-              <StyledListItem
-                button
-                key={index}
-                onClick={() => this.handleBankNameClick(item)}
-              >
-                <StyledListItemText primary={i18n.t(item)} />
-              </StyledListItem>
-            );
-          })}
+          <>
+            {bankList.map((item, index) => {
+              return (
+                <StyledListItem
+                  button
+                  key={index}
+                  onClick={() => this.handleBankNameClick(item)}
+                >
+                  <StyledListItemText primary={i18n.t(item)} />
+                </StyledListItem>
+              );
+            })}
+          </>
         </StyledModalBank>
 
         <MessageDialog
