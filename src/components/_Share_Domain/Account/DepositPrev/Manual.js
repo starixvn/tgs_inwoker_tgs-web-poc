@@ -139,7 +139,7 @@ class Manual extends Component {
     }
 
     if (this.state.loading) {
-      return <Loading />;
+      return <Loading show={true} />;
     }
 
     return (

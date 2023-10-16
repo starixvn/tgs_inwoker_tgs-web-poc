@@ -20,14 +20,12 @@ const MyInfo = (props: Props) => {
 
   return (
     <AccountLevelInfoContainer>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <CurrentLevelBanner
-          level={currentLevel}
-          productRebateByLevel={productRebateByLevel}
-        />
-      )}
+      <CurrentLevelBanner
+        level={currentLevel}
+        productRebateByLevel={productRebateByLevel}
+      />
+
+      <Loading show={isLoading} />
     </AccountLevelInfoContainer>
   );
 };

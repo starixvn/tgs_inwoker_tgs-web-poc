@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Loading from "../App/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 import { GameService } from "@/api-services/services/GameService";
 import { GameTypeEnum } from "@/api-services/utils/Enum";
 import Maintenance from "@/components/Mobile/pages/Maintenance";

@@ -74,7 +74,7 @@ const JoinPromotionButton = ({
     }
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading show={true} />;
 
   return (
     <Button onClick={handleJoinPromotion} disabled={hasJoined}>

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Route } from "@/components/Mobile/router";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useHistory } from "react-router-dom";
-import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 
 interface AuthGuard {
   children: React.ReactNode;

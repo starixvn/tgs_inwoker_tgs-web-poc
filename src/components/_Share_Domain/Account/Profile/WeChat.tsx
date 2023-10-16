@@ -21,7 +21,7 @@ const WeChat = () => {
 
   const [wechat, setWechat] = useState("");
   const [isConfigured, setIsConfigured] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory();
 
@@ -81,7 +81,7 @@ const WeChat = () => {
   };
 
   const showLoading = (loading: boolean) => {
-    setLoading(loading);
+    setIsLoading(loading);
   };
 
   const onTextChanged = () => {
@@ -91,8 +91,6 @@ const WeChat = () => {
   const handleBackClick = () => {
     history.goBack();
   };
-
-  if (loading) return <Loading />;
 
   return (
     <div>
@@ -124,7 +122,7 @@ const WeChat = () => {
         <div>
           <Button
             fullWidth
-            disabled={isDisableButton() || loading}
+            disabled={isDisableButton() || isLoading}
             onClick={handleSubmitClicked}
             style={{ marginBottom: "20px" }}
           >
@@ -142,6 +140,8 @@ const WeChat = () => {
           />
         </div>
       )}
+
+      <Loading show={isLoading} />
     </div>
   );
 };

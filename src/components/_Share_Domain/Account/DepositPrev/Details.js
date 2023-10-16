@@ -270,10 +270,6 @@ class Details extends Component {
     this.props.appHistory.goBack();
   };
   render() {
-    if (this.state.loading) {
-      return <Loading />;
-    }
-
     return (
       <Container>
         <ContentBg>
@@ -443,6 +439,8 @@ class Details extends Component {
             {i18n.t("common.cancel")}
           </ButtonConfirm>
         </StyledModalPopup>
+
+        <Loading show={this.state.loading} />
       </Container>
     );
   }

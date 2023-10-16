@@ -7,7 +7,7 @@ import { walletAction } from "@/api-services/actions/walletAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
-import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 import WithdrawInfoCard from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawInfoCard";
 import ManageBankCardButton from "@/components/_Share_Domain/Account/WithdrawalPrev/components/ManageBankCardButton";
 import WithdrawAllToMainWallet from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawAllToMainWallet";

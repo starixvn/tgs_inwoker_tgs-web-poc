@@ -90,7 +90,7 @@ class DetailsManual extends Component {
   };
   render() {
     if (this.state.loading) {
-      return <Loading />;
+      return <Loading show={true} />;
     }
 
     return (

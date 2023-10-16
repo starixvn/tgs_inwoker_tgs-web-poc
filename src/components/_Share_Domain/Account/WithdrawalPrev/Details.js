@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { Modal, Slide } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 import Button from "@/components/Mobile/components/_PrevShare/Button";
-import Loading from "@/components/Mobile/components/_PrevShare/Loading";
+import Loading from "@/components/Mobile/components/UI/Loading";
 import i18n from "@/utils/i18n";
 import { walletAction } from "@/api-services/actions/walletAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
@@ -271,9 +271,7 @@ class Details extends Component {
             onClick={this.handleConfirmOTP}
           ></Button>
         </StyledModalPopup>
-        <Loading
-          show={this.state.loading || this.props.wallet.loading}
-        ></Loading>
+        <Loading show={this.state.loading || this.props.wallet.loading} />
       </Container>
     );
   }

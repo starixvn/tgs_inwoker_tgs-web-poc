@@ -20,7 +20,6 @@ import i18n from "@/utils/i18n";
 import BlowFishEncryption from "@/utils/BlowFishEncryption";
 import Common from "@/utils/Common";
 
-import Loading from "./components/_PrevShare/Loading";
 import ForcedVerification from "./components/ForcedVerification";
 import LiveChat from "../Share/live-chat";
 import { routes } from "./router";
@@ -32,6 +31,7 @@ import LayoutProvider from "@/components/Mobile/layouts/LayoutProvider";
 import { AuthGuard } from "@/components/_Share_Domain/authentication/AuthGuard";
 import FloatingToolIcons from "@/components/Mobile/components/FloatingToolIcons";
 import { PageNameContextProvider } from "@/contexts/pageNameContext";
+import Loading from "@/components/Mobile/components/UI/Loading";
 
 class Mobile extends Component {
   constructor(props) {
@@ -509,7 +509,7 @@ class Mobile extends Component {
         this.props.general.token === null) &&
       this.props.general.isMaintenance === false
     ) {
-      return <Loading show={this.state.loading}></Loading>;
+      return <Loading show={this.state.loading} />;
     } else {
       return (
         <>
@@ -525,7 +525,7 @@ class Mobile extends Component {
                         path={route.path}
                         render={(props) => {
                           return (
-                            <Suspense fallback={<Loading opacity={0} />}>
+                            <Suspense fallback={<Loading show={true} />}>
                               <AuthGuard route={route}>
                                 <LayoutProvider route={route}>
                                   <route.component />
