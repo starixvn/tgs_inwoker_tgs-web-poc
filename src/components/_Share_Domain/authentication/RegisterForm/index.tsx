@@ -39,6 +39,7 @@ const RegisterForm = () => {
     formInputConfigList,
     formik,
     isLoading,
+    registerError,
     isConfirmedAdult,
     handleClickConfirmAdult,
   } = useRegisterForm();
@@ -54,6 +55,7 @@ const RegisterForm = () => {
         formInputList={formInputConfigList}
         formik={formik}
         isLoading={isLoading}
+        error={registerError}
         buttonText={i18n.t("common.register")}
       >
         <VerifyAgeContainer>
