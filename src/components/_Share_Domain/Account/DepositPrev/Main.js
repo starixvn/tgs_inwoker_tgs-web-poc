@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/Mobile/components/UI/Button";
 import { Select } from "@/components/Mobile/components/UI/Select";
 import { TextField } from "@/components/Mobile/components/UI/TextField";
+import Avatar from "@/components/Mobile/components/Avatar";
 
 const GMOstyle = config.brand === "GMO";
 
@@ -30,19 +31,10 @@ const TransferContainer = styled.div`
   margin-top: 10px;
   display: flex;
   align-items: center;
+  color: white;
 `;
-const TransferLabel = styled.div`
-  color ${GMOstyle ? "#e9a60b" : "#747474"};
-  font-size: ${() => (config.brand === "WGHK" ? `24px` : `28px`)};
-  float: left;
-  font-weight: ${() => (config.brand === "WGHK" ? `400` : `bold`)};
-`;
-const TransferValue = styled.div`
-  color ${GMOstyle ? "#e9a60b" : "#747474"};
-  font-size: ${() => (config.brand === "WGHK" ? `24px` : `28px`)};
-  float: left;
-  margin-left: 10px;
-`;
+const TransferLabel = styled.div``;
+const TransferValue = styled.div``;
 
 const ExchangeRateContainer = styled.div`
   margin: 20px auto;
@@ -63,7 +55,7 @@ const CopyIcon = styled.div`
   height: 30px;
   margin-left: 20px;
   background-color: ${({ theme }) => theme.primary};
-  mask: url(${process.env.PUBLIC_URL + `/assets/images/wapp/copy.png`})
+  mask: url(${process.env.PUBLIC_URL + `/assets/images/deposit/copy.png`})
     no-repeat center / contain;
   cursor: pointer;
 `;
@@ -82,10 +74,16 @@ const InputWrapper = styled.div`
   width: 100%;
 `;
 
-const FeeSpot = styled.div`
-  color: ${({ theme }) => theme.primary};
-  font-size: 24px;
+const AmountHint = styled.div`
+  color: ${({ theme }) => theme.white};
+  font-size: 0.937rem;
+  font-weight: 400;
+  margin-top: 9px;
+  text-align: center;
+`;
 
+const FeeSpot = styled.div`
+  margin-bottom: 17px;
   span {
     font-weight: bold;
   }
@@ -174,7 +172,7 @@ class Main extends Component {
               </ItemContainer>
             )}
 
-            {/*请选择支付方式*/}
+            {/*1. 请选择支付方式 */}
             <ItemContainer>
               <LabelContainer>
                 {i18n.t("deposit.msgPlsSelectPayment")}
@@ -323,6 +321,7 @@ class Main extends Component {
                     )}
                   </TransferContainer>
                 )}
+
                 {methodCode("BANKTRANSFER") && (
                   <TransferContainer>
                     <TransferLabel>{i18n.t("deposit.cardNum")}:</TransferLabel>
@@ -387,11 +386,13 @@ class Main extends Component {
                     return <></>;
                   } else if (content[key].includes("http")) {
                     return (
-                      <QRCodeImg
-                        src={content[key]}
-                        alt={content[key]}
-                        key={index}
-                      />
+                      <>
+                        <QRCodeImg
+                          src={content[key]}
+                          alt={content[key]}
+                          key={index}
+                        />
+                      </>
                     );
                   } else {
                     return (
@@ -400,6 +401,7 @@ class Main extends Component {
                           {i18n.t("extended." + [key])}:
                         </TransferLabel>
                         <TransferValue>{content[key]}</TransferValue>
+
                         <CopyFeature copyContent={content[key]} />
                       </TransferContainer>
                     );
@@ -592,6 +594,43 @@ class Main extends Component {
               }
             />
           </FormControl>
+
+          <AmountHint>
+            <FeeSpot>
+              {i18n.t("fees.deposit")}:{" "}
+              <span>
+                {
+                  this.props.wallet.depositTypeList[
+                    this.props.selectedPaymentIndex
+                  ].method[this.props.selectedMethodIndex].channel[
+                    this.props.selectedChannelIndex
+                  ].fees
+                }
+                %
+              </span>
+            </FeeSpot>
+
+            <span>
+              {i18n.t("deposit.limitDeposit") +
+                ": " +
+                Common.formatNumberWithThousand(
+                  this.props.wallet.depositTypeList[
+                    this.props.selectedPaymentIndex
+                  ].method[this.props.selectedMethodIndex].channel[
+                    this.props.selectedChannelIndex
+                  ].transferlimit.from
+                ) +
+                "-" +
+                Common.formatNumberWithThousand(
+                  this.props.wallet.depositTypeList[
+                    this.props.selectedPaymentIndex
+                  ].method[this.props.selectedMethodIndex].channel[
+                    this.props.selectedChannelIndex
+                  ].transferlimit.to
+                ) +
+                i18n.t("deposit.dollor")}
+            </span>
+          </AmountHint>
         </ItemContainer>
 
         {paymentCode("umpay") && <Remark>{i18n.t("deposit.ppRemark")}</Remark>}
@@ -739,35 +778,36 @@ class Main extends Component {
                   <LabelContainer>
                     {i18n.t("deposit.uploadReceipt")}
                   </LabelContainer>
-                  <InputWrapper style={{ padding: 10 }}>
-                    <button
-                      onClick={() => {
-                        document.getElementById("getFile").click();
-                      }}
-                      style={{
-                        marginRight: 10,
-                        height: 75,
-                        minWidth: 200,
-                        fontSize: 24,
-                      }}
-                    >
-                      {i18n.t("common.upload")}
-                    </button>
-                    <input
-                      type="file"
-                      id="getFile"
-                      onChange={this.props.handleFileChange}
-                      accept="image/jpg, image/jpeg, image/png, image/tiff"
-                      style={{ display: "none" }}
-                    />
-                    {this.props.files ? (
-                      <div style={{ fontSize: 24 }}>
-                        {this.props.files[0].name}
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </InputWrapper>
+
+                  <Button
+                    onClick={() => {
+                      document.getElementById("getFile").click();
+                    }}
+                    variant={"outlined"}
+                    style={{
+                      height: "58px",
+                      borderRadius: "5px",
+                      color: "white",
+                      borderColor: "white",
+                    }}
+                  >
+                    {i18n.t("common.upload")}
+                  </Button>
+
+                  <input
+                    type="file"
+                    id="getFile"
+                    onChange={this.props.handleFileChange}
+                    accept="image/jpg, image/jpeg, image/png, image/tiff"
+                    style={{ display: "none" }}
+                  />
+                  {this.props.files ? (
+                    <div style={{ fontSize: 24 }}>
+                      {this.props.files[0].name}
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </ItemContainer>
                 <Remark>
                   {i18n.t(
