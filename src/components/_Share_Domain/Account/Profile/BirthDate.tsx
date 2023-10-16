@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import BottomNote from "@/components/Mobile/components/UI/BottomNote";
 import Loading from "@/components/Mobile/components/_PrevShare/Loading";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import config from "@/config/config";
@@ -143,10 +143,9 @@ const Birthdate = () => {
             }
           >
             <DatePicker
-              maxDate={new Date()}
               invalidDateMessage={false}
               format="yyyy/MM/dd"
-              value={birthdate}
+              selectedDate={birthdate}
               onChange={(e) => handleChangeNumber(e)}
             />
           </CustomDatepicker>

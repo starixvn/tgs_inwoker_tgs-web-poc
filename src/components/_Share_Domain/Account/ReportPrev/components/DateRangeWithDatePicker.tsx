@@ -1,13 +1,14 @@
 import React, { useMemo } from "react";
 import i18n from "@/utils/i18n";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { DatePicker } from "@/components/Mobile/components/UI/DatePicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+
 import styled from "styled-components";
 import zhLocale from "date-fns/locale/zh-CN";
 import enLocale from "date-fns/locale/en-US";
 import thLocale from "date-fns/locale/th";
 import addDays from "date-fns/addDays";
-import { DatePicker } from "@/components/Mobile/components/UI/DatePicker";
 
 const localeMap = {
   zh: zhLocale,
