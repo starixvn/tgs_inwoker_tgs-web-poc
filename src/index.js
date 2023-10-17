@@ -33,6 +33,7 @@ import { createRoot } from "react-dom/client";
 import { Redirect, Route, Router, Switch } from "react-router";
 import { AppHistory } from "@/history/History";
 import { muiTheme } from "@/theme/mui";
+import { HeaderContextProvider } from "@/contexts/headerContext";
 require("es6-promise").polyfill();
 
 // TODO: hide on production
@@ -172,12 +173,14 @@ const AppWrapper = () => {
                   }}
                   ref={notistackRef}
                 >
-                  <Router history={AppHistory}>
-                    <Switch>
-                      <Route path={"/"} render={(props) => <Mobile />} />
-                      <Redirect to={`/`} />
-                    </Switch>
-                  </Router>
+                  <HeaderContextProvider>
+                    <Router history={AppHistory}>
+                      <Switch>
+                        <Route path={"/"} render={(props) => <Mobile />} />
+                        <Redirect to={`/`} />
+                      </Switch>
+                    </Router>
+                  </HeaderContextProvider>
                 </SnackbarProvider>
               </StyleComponentThemeProvider>
             </MuiThemeProvider>

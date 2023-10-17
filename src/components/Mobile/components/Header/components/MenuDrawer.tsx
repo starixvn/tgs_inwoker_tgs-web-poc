@@ -6,22 +6,28 @@ import cardPromotions from "@/assets/images/header/card_promotions.png";
 import { AppHistory } from "@/history/History";
 import LanguageSwitch from "@/components/Mobile/components/LanguageSwitch";
 import { Drawer } from "@mui/material";
+import { DRAWER_WIDTH } from "@/contexts/headerContext";
+import { media } from "@/theme/breakpoints";
+import { useRwd } from "@/hooks/useRwd";
 
 const CustomDrawer = styled(Drawer)`
-  height: calc(100% - 70px);
-  top: 80px !important;
+  //height: calc(100% - 70px);
+  //top: 80px !important;
 
   & .MuiPaper-root {
     background: linear-gradient(90deg, #181f2b 100%, #131922 100%) !important;
     padding: 12px 22px;
     width: 234px;
-    height: calc(100% - 70px);
+    //height: calc(100% - 70px);
     top: 80px !important;
+    ${media.sm} {
+      top: 60px !important;
+    }
   }
 
   & .MuiBackdrop-root {
-    height: calc(100% - 70px);
-    top: 80px !important;
+    //height: calc(100% - 70px);
+    //top: 80px !important;
   }
 `;
 const DrawerCard = styled.div`
@@ -38,6 +44,8 @@ type Props = {
   handleClose: () => void;
 };
 const MenuDrawer = ({ isOpen, handleClose }: Props) => {
+  const { isSmSize } = useRwd();
+
   const handleEnterVip = () => {
     AppHistory.push("/vip");
     handleClose();
@@ -49,7 +57,19 @@ const MenuDrawer = ({ isOpen, handleClose }: Props) => {
   };
 
   return (
-    <CustomDrawer anchor={"left"} open={isOpen} onClose={handleClose}>
+    <CustomDrawer
+      // variant={"persistent"}
+      variant={isSmSize ? "persistent" : "temporary"}
+      anchor={"left"}
+      open={isOpen}
+      onClose={handleClose}
+      sx={{
+        flexShrink: 0,
+        "& .MuiDrawer-paper": {
+          width: DRAWER_WIDTH,
+        },
+      }}
+    >
       <DrawerCard onClick={handleEnterVip}>
         <img src={cardVip} alt={"vip"} />
       </DrawerCard>

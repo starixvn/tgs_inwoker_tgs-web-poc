@@ -8,7 +8,6 @@ import AccountHeaderContent from "@/components/Mobile/components/Header/componen
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { media } from "@/theme/breakpoints";
 import HeaderBg from "@/assets/images/header/background.png";
-import FloatingToolIcons from "@/components/Mobile/components/FloatingToolIcons";
 import ContactButton from "@/components/Mobile/components/Header/components/ContactButton";
 
 const HeaderContainer = styled.div`
