@@ -5,6 +5,7 @@ import config from "@/config/config";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import Common from "@/utils/Common";
+import { MouseEvent } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { badgeList } from "../../constants/games";
@@ -118,14 +119,18 @@ const GameCard = ({
     }
   };
 
-  const handleToggleFavorite = async (event, gameId: number) => {
+  const handleToggleFavorite = async (event: MouseEvent<HTMLDivElement, MouseEvent>, gameId: number) => {
     event.stopPropagation();
-    if (!!favoriteList.length && favoriteList.includes(gameId)) {
-      await removeFavoriteGame(gameId);
-      fetchFavoriteList();
+    if (!account.token) {
+      history.push("/login");
     } else {
-      await setFavoriteGame(gameId);
-      fetchFavoriteList();
+      if (!!favoriteList.length && favoriteList.includes(gameId)) {
+        await removeFavoriteGame(gameId);
+        fetchFavoriteList();
+      } else {
+        await setFavoriteGame(gameId);
+        fetchFavoriteList();
+      }
     }
   };
 
