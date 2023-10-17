@@ -1,31 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import menuIcon from "@/assets/images/header/icon_menu.png";
 import styled from "styled-components";
-import MenuDrawer from "@/components/Mobile/components/Header/components/MenuDrawer";
+import { useHeader } from "@/hooks/useHeader";
+import Icon from "@/components/Mobile/components/Icon";
 
 const MenuIcon = styled.div`
   cursor: pointer;
 `;
 
 type Props = {};
-const MenuButton = (props: Props) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const handleToggleMenu = () => {
-    setIsMenuOpen((prevState) => !prevState);
-  };
+const MenuButton = ({}: Props) => {
+  const { handleToggleMenu } = useHeader();
 
   return (
-    <>
-      <MenuIcon onClick={handleToggleMenu}>
-        <img src={menuIcon} alt={"menu"} />
-      </MenuIcon>
-
-      <MenuDrawer
-        isOpen={isMenuOpen}
-        handleClose={() => setIsMenuOpen(false)}
-      />
-    </>
+    <Icon
+      iconUrl={menuIcon}
+      width={"33px"}
+      height={"33px"}
+      onClick={() => handleToggleMenu()}
+    />
   );
 };
 

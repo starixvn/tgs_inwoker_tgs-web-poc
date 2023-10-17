@@ -1,3 +1,5 @@
+import { Primary } from "@storybook/blocks";
+
 export const mobileT18 = {
   primary: "#6152DD",
   primaryDark: "#0E131B", //BG
