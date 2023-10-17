@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { Dialog } from "@mui/material";
-import QRCode from "react-qr-code";
 import config from "@/config/config";
 import i18n from "@/utils/i18n";
 import { utility } from "@/utils/utility";
+import { Dialog } from "@mui/material";
+import { useEffect, useState } from "react";
+import QRCode from "react-qr-code";
+import styled from "styled-components";
 
 type ContainerProps = {
   language: string;
@@ -14,8 +14,8 @@ const Container = styled.div`
   height: 100vh;
   position: relative;
   background: url(${({ language }: ContainerProps) => {
-      return process.env.PUBLIC_URL + `/assets/images/download/bg.jpg`;
-    }})
+    return process.env.PUBLIC_URL + `/assets/images/download/bg.jpg`;
+  }})
     no-repeat;
   background-size: cover;
   position: relative;
@@ -74,10 +74,10 @@ const Icons = styled.div`
 
   background: #000;
   mask: url(${({ icon }: IconsProp) => {
-      return (
-        process.env.PUBLIC_URL + `/assets/images/download/icons/${icon}.png`
-      );
-    }})
+    return (
+      process.env.PUBLIC_URL + `/assets/images/download/icons/${icon}.png`
+    );
+  }})
     no-repeat center / contain;
   background-size: 100%;
 `;
@@ -217,9 +217,9 @@ const Download = () => {
 
   function getJsonData() {
     return fetch(
-      "https://app12.s3.ap-east-1.amazonaws.com/version_" +
-        config.brand +
-        ".json"
+      "https://app12.srvptt.com/version_" +
+      config.brand +
+      ".json"
     )
       .then((response) => response.json())
       .then((responseJson) => {
