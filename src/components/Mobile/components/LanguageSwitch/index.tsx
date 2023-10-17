@@ -59,6 +59,10 @@ const StyledSelect = styled(MuiSelect)`
   & .MuiOutlinedInput-notchedOutline {
     border: none;
   }
+
+  & .MuiSvgIcon-root {
+    color: ${({ theme }) => theme.tertiary};
+  }
 `;
 
 const StyledMenuItem = styled(MuiMenuItem)`

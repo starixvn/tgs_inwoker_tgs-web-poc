@@ -13,60 +13,40 @@ export function useGetBottomNavItemList() {
       {
         navType: "item",
         label: i18n.t("common.home"),
-        iconUrl:
-          process.env.PUBLIC_URL +
-          `/assets/images/mobile/bottomAppBar/icon_home.svg`,
-        iconActiveUrl:
-          process.env.PUBLIC_URL +
-          `/assets/images/mobile/bottomAppBar/icon_home_active.svg`,
+        iconUrl: `${process.env.PUBLIC_URL}/assets/images/mobile/bottomAppBar/icon_home.svg`,
+        iconActiveUrl: `${process.env.PUBLIC_URL}/assets/images/mobile/bottomAppBar/icon_home_active.svg`,
         routePath: "/",
         routeCategory: RouteCategoryEnum.HOME,
       },
       {
         navType: "item",
         label: i18n.t("affiliate.title"),
-        iconUrl:
-          process.env.PUBLIC_URL +
-          `/assets/images/mobile/bottomAppBar/icon_refer.svg`,
-        iconActiveUrl:
-          process.env.PUBLIC_URL +
-          `/assets/images/mobile/bottomAppBar/icon_refer_active.svg`,
+        iconUrl: `${process.env.PUBLIC_URL}/assets/images/mobile/bottomAppBar/icon_refer.svg`,
+        iconActiveUrl: `${process.env.PUBLIC_URL}/assets/images/mobile/bottomAppBar/icon_refer_active.svg`,
         routePath: "/affiliate",
         routeCategory: RouteCategoryEnum.REFER,
       },
       {
         navType: "item",
         label: i18n.t("common.promotion"),
-        iconUrl:
-          process.env.PUBLIC_URL +
-          `/assets/images/mobile/bottomAppBar/icon_promotion.svg`,
-        iconActiveUrl:
-          process.env.PUBLIC_URL +
-          `/assets/images/mobile/bottomAppBar/icon_promotion_active.svg`,
+        iconUrl: `${process.env.PUBLIC_URL}/assets/images/mobile/bottomAppBar/icon_promotion.svg`,
+        iconActiveUrl: `${process.env.PUBLIC_URL}/assets/images/mobile/bottomAppBar/icon_promotion_active.svg`,
         routePath: "/promotion-list",
         routeCategory: RouteCategoryEnum.PROMOTION,
       },
       {
         navType: "item",
         label: i18n.t("wap.main.account.inbox"),
-        iconUrl:
-          process.env.PUBLIC_URL +
-          `/assets/images/mobile/bottomAppBar/icon_email.svg`,
-        iconActiveUrl:
-          process.env.PUBLIC_URL +
-          `/assets/images/mobile/bottomAppBar/icon_email_active.svg`,
+        iconUrl: `${process.env.PUBLIC_URL}/assets/images/mobile/bottomAppBar/icon_email.svg`,
+        iconActiveUrl: `${process.env.PUBLIC_URL}/assets/images/mobile/bottomAppBar/icon_email_active.svg`,
         routePath: "/inbox",
         routeCategory: RouteCategoryEnum.INBOX,
       },
       {
         navType: "item",
         label: i18n.t("web.account.profile"),
-        iconUrl:
-          process.env.PUBLIC_URL +
-          `/assets/images/mobile/bottomAppBar/icon_mine.svg`,
-        iconActiveUrl:
-          process.env.PUBLIC_URL +
-          `/assets/images/mobile/bottomAppBar/icon_mine_active.svg`,
+        iconUrl: `${process.env.PUBLIC_URL}/assets/images/mobile/bottomAppBar/icon_mine.svg`,
+        iconActiveUrl: `${process.env.PUBLIC_URL}/assets/images/mobile/bottomAppBar/icon_mine_active.svg`,
         routePath: "/account",
         routeCategory: RouteCategoryEnum.MINE,
       },
