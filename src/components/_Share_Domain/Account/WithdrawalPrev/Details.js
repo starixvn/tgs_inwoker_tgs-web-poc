@@ -204,27 +204,17 @@ class Details extends Component {
                   <SplitBoth></SplitBoth>
                 </ContentBg>
                 <Button
-                  style={{
-                    width: "300px",
-                    float: "left",
-                    marginLeft: "50px",
-                    backgroundImage: "none",
-                    backgroundColor: "#b7b7b7",
-                  }}
                   labelStyle={{ color: "#fff" }}
-                  label={i18n.t("common.cancel")}
                   onClick={this.handleWithdrawalCancelClick}
-                ></Button>
+                >
+                  {i18n.t("common.cancel")}
+                </Button>
                 <Button
-                  style={{
-                    width: "300px",
-                    float: "right",
-                    marginRight: "50px",
-                  }}
                   labelStyle={{ color: "#fff" }}
-                  label={i18n.t("common.confirm")}
                   onClick={this.handleWithdrawalConfirmClick}
-                ></Button>
+                >
+                  {i18n.t("common.confirm")}
+                </Button>
               </React.Fragment>
             );
           }
@@ -251,17 +241,10 @@ class Details extends Component {
               />
             </OTPContainer>
             <Button
-              style={{
-                width: "250px",
-                float: "left",
-
-                backgroundImage: "none",
-                backgroundColor: "#b7b7b7",
-              }}
               labelStyle={{ color: "#fff" }}
-              label={i18n.t("common.cancel")}
               onClick={() => this.setState({ ...this.state, otp: false })}
             />
+            {i18n.t("common.cancel")}
             <Button
               style={{
                 width: "250px",
