@@ -117,7 +117,7 @@ const PopupPromotion = ({
   const [isCheck, setIsCheck] = useState(false);
 
   const { displayPromotionList } = usePromotion();
-  const { isSmSize } = useRwd();
+  const { isMobileSize } = useRwd();
 
   const handleClickCheckbox = () => {
     setIsCheck((prevIsCheck) => !prevIsCheck);
@@ -151,7 +151,7 @@ const PopupPromotion = ({
             onClick={handleClickCheckbox}
             isCheck={isCheck}
             style={{
-              top: isSmSize ? "calc(50% + 100px)" : "calc(50% + 230px)",
+              top: isMobileSize ? "calc(50% + 100px)" : "calc(50% + 230px)",
             }}
           />
           <CloseBtn onClick={handleCloseDialog}>
