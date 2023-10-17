@@ -19,7 +19,6 @@ import ErrorSwitcher from "@/utils/ErrorSwitcher";
 import i18n from "@/utils/i18n";
 import BlowFishEncryption from "@/utils/BlowFishEncryption";
 import Common from "@/utils/Common";
-
 import ForcedVerification from "./components/ForcedVerification";
 import LiveChat from "../Share/live-chat";
 import { routes } from "./router";
