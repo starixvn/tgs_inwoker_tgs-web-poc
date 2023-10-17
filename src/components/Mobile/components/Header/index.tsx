@@ -6,6 +6,7 @@ import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import AnonymousHeaderContent from "@/components/Mobile/components/Header/AnonymousHeaderContent";
 import AccountHeaderContent from "@/components/Mobile/components/Header/AccountHeaderContent";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
+import { media } from "@/theme/breakpoints";
 
 const HeaderContainer = styled.div`
   position: fixed;
@@ -15,6 +16,10 @@ const HeaderContainer = styled.div`
   height: 80px;
   width: 100%;
   z-index: 10;
+
+  ${media.sm} {
+    height: 60px;
+  }
 `;
 
 const HeaderWrapper = styled.div`

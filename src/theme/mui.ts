@@ -2,6 +2,7 @@ import { createTheme } from "@mui/material/styles";
 import { theme } from "@/theme/index";
 import i18n from "@/utils/i18n";
 import { fontFamily } from "@/theme/fontFamily";
+import { breakpoints } from "@/theme/breakpoints";
 
 theme.lang = i18n.language;
 
@@ -18,6 +19,15 @@ declare module "@mui/material/styles" {
 }
 
 const muiTheme = createTheme({
+  breakpoints: {
+    values: {
+      xs: breakpoints.xs,
+      sm: breakpoints.sm,
+      md: breakpoints.md,
+      lg: breakpoints.lg,
+      xl: breakpoints.xl,
+    },
+  },
   palette: {
     primary: {
       main: theme.primary,

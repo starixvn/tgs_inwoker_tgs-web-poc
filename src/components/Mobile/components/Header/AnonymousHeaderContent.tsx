@@ -21,7 +21,12 @@ const AnonymousHeaderContent = (props: Props) => {
     <ButtonContainer>
       <Button
         onClick={toggleLoginDialog}
-        style={{ marginRight: "20px", background: "#5D50E0", color: "white" }}
+        style={{
+          marginRight: "20px",
+          background: "#5D50E0",
+          color: "white",
+          fontSize: "1rem",
+        }}
       >
         Login
       </Button>
@@ -29,7 +34,7 @@ const AnonymousHeaderContent = (props: Props) => {
       <Button
         color={"primary"}
         onClick={toggleRegisterDialog}
-        style={{ background: "#E7415A", color: "white" }}
+        style={{ background: "#E7415A", color: "white", fontSize: "1rem" }}
       >
         Register
       </Button>
