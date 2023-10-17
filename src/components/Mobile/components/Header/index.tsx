@@ -1,15 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import MenuButton from "@/components/Mobile/components/Header/MenuButton";
+import MenuButton from "@/components/Mobile/components/Header/components/MenuButton";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import AnonymousHeaderContent from "@/components/Mobile/components/Header/AnonymousHeaderContent";
-import AccountHeaderContent from "@/components/Mobile/components/Header/AccountHeaderContent";
+import AnonymousHeaderContent from "@/components/Mobile/components/Header/components/AnonymousHeaderContent";
+import AccountHeaderContent from "@/components/Mobile/components/Header/components/AccountHeaderContent";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { media } from "@/theme/breakpoints";
 import HeaderBg from "@/assets/images/header/background.png";
 import FloatingToolIcons from "@/components/Mobile/components/FloatingToolIcons";
-import ContactButton from "@/components/Mobile/components/Header/ContactButton";
+import ContactButton from "@/components/Mobile/components/Header/components/ContactButton";
 
 const HeaderContainer = styled.div`
   position: fixed;
@@ -65,6 +65,7 @@ const LogoImgContainer = styled.div`
 const HeaderContentContainer = styled.div`
   flex-grow: 1;
   display: flex;
+  align-items: center;
   justify-content: end;
 `;
 

@@ -22,9 +22,14 @@ type Props = {
   height: string;
   onClick?: () => void;
 };
-const Icon = ({ iconUrl, onClick, width, height }: Props) => {
+const Icon = ({ iconUrl, onClick, width, height, ...others }: Props) => {
   return (
-    <IconContainer onClick={onClick} $width={width} $height={height}>
+    <IconContainer
+      {...others}
+      onClick={onClick}
+      $width={width}
+      $height={height}
+    >
       <img src={iconUrl} alt={"icon"} />
     </IconContainer>
   );

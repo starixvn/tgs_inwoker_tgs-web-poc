@@ -9,6 +9,8 @@ const ContactButtonContainer = styled.div`
   display: none;
 
   ${media.sm} {
+    width: 33px;
+    height: 33px;
     background: ${({ theme }) => theme.tertiaryDark};
     cursor: pointer;
     display: flex;
