@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { Promotion } from "@/models/dto/general/GetPromotionListResDto";
 import BannerImage from "./BannerImage";
+import { media } from "@/theme/breakpoints";
 
 const PromotionCardContainer = styled.div`
   width: 100%;

@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import { media } from "@/theme/breakpoints";
+
+const desktopActiveTabBgUrl =
+  process.env.PUBLIC_URL + "assets/images/home/desktop_active_tab_bg.png";
 
 type Props = {
   imageUrl: string;
@@ -21,11 +25,30 @@ const Wrapper = styled.div<{
   width: 64px;
   height: 77px;
   border-radius: 12px;
-  background-color: ${({ theme, $isActive }: Props) =>
+  background-color: ${({ theme, $isActive }) =>
     $isActive ? theme.primary : theme.primaryLight};
   margin-right: 12px;
   cursor: pointer;
   user-select: none;
+
+  ${media.sm} {
+    width: 112px;
+    height: 32px;
+    flex-direction: row;
+    background-image: ${({ $isActive }) =>
+      $isActive ? `url(${desktopActiveTabBgUrl})` : null};
+  }
+`;
+
+const GameIcon = styled.img`
+  width: 34px;
+  height: 34px;
+
+  ${media.sm} {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
 `;
 
 const Text = styled.div<{ $fontSize: string; $isActive: boolean }>`
@@ -33,6 +56,7 @@ const Text = styled.div<{ $fontSize: string; $isActive: boolean }>`
     $isActive ? theme.white : theme.tertiary};
   font-size: ${({ $fontSize }) =>
     $fontSize === "small" ? "0.875rem" : "0.6875rem"};
+  font-weight: 700;
 `;
 
 const Tab = ({ imageUrl, text, isActive, fontSize, type, onClick }: Props) => {
@@ -43,7 +67,7 @@ const Tab = ({ imageUrl, text, isActive, fontSize, type, onClick }: Props) => {
       $text={text}
       onClick={onClick}
     >
-      <img src={imageUrl} alt={text} />
+      <GameIcon src={imageUrl} alt={text} />
       <Text $isActive={isActive} $fontSize={fontSize}>
         {text}
       </Text>

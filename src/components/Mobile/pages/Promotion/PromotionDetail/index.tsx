@@ -15,7 +15,7 @@ const PromotionDetailContainer = styled.div`
 `;
 const BannerWrapper = styled.div`
   width: 100%;
-  height: 219px;
+  height: calc((100vw - 44px) * 0.4);
 `;
 const ContentContainer = styled.div`
   margin: 20px 0;

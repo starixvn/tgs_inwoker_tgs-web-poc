@@ -10,6 +10,8 @@ import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transitio
 import IconCloseButton from "@/assets/images/promotion/close_icon.svg";
 import { useHistory } from "react-router-dom";
 import BannerImage from "@/components/Mobile/components/Promotion/BannerImage";
+import { media } from "@/theme/breakpoints";
+import { useRwd } from "@/hooks/useRwd";
 
 const doNotShowPromotionDialogKey = "doNotShowPromotionDialog";
 
@@ -23,13 +25,17 @@ const DialogPopup = styled(MuiDialog)`
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+
+    ${media.sm} {
+      width: 688px;
+      height: 429px;
+    }
   }
 `;
 
 const ChildContainer = styled.div`
   width: 100%;
   height: auto;
-  overflow: scroll;
 `;
 
 const PromotionTag = styled.div`
@@ -57,6 +63,10 @@ const CloseBtn = styled.div`
   width: 36px;
   height: 36px;
   cursor: pointer;
+
+  ${media.sm} {
+    top: calc(50% + 280px);
+  }
 `;
 
 const PromotionBannerWrapper = styled.div`
@@ -66,6 +76,11 @@ const PromotionBannerWrapper = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  ${media.sm} {
+    width: 688px;
+    height: 429px;
   }
 `;
 const PromotionBanner = ({
@@ -102,6 +117,7 @@ const PopupPromotion = ({
   const [isCheck, setIsCheck] = useState(false);
 
   const { displayPromotionList } = usePromotion();
+  const { isMobileSize } = useRwd();
 
   const handleClickCheckbox = () => {
     setIsCheck((prevIsCheck) => !prevIsCheck);
@@ -134,7 +150,9 @@ const PopupPromotion = ({
           <NotShowAgainHint
             onClick={handleClickCheckbox}
             isCheck={isCheck}
-            style={{ top: "calc(50% + 100px)" }}
+            style={{
+              top: isMobileSize ? "calc(50% + 100px)" : "calc(50% + 230px)",
+            }}
           />
           <CloseBtn onClick={handleCloseDialog}>
             <img src={IconCloseButton} />
