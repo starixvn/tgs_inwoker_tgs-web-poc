@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import Header from "@/components/Mobile/components/Header";
 import BottomAppBar from "@/components/Mobile/components/BottomAppBar";
 import styled from "styled-components";
+import { useRwd } from "@/hooks/useRwd";
 
 const DefaultLayoutContainer = styled.div`
   position: relative;
@@ -18,11 +19,14 @@ type Props = {
   children: ReactElement;
 };
 const DefaultLayout = ({ children }: Props) => {
+  const { isSmSize } = useRwd();
+
   return (
     <DefaultLayoutContainer>
       <Header />
       <ContentWrapper>{children}</ContentWrapper>
-      <BottomAppBar />
+
+      {isSmSize && <BottomAppBar />}
     </DefaultLayoutContainer>
   );
 };
