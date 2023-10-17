@@ -44,7 +44,7 @@ type Props = {
   handleClose: () => void;
 };
 const MenuDrawer = ({ isOpen, handleClose }: Props) => {
-  const { isSmSize } = useRwd();
+  const { isDesktopSize } = useRwd();
 
   const handleEnterVip = () => {
     AppHistory.push("/vip");
@@ -59,7 +59,7 @@ const MenuDrawer = ({ isOpen, handleClose }: Props) => {
   return (
     <CustomDrawer
       // variant={"persistent"}
-      variant={isSmSize ? "persistent" : "temporary"}
+      variant={isDesktopSize ? "persistent" : "temporary"}
       anchor={"left"}
       open={isOpen}
       onClose={handleClose}

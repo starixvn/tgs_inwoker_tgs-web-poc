@@ -16,11 +16,18 @@ import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import getDisplayGameType from "@/utils/getDisplayGameType";
 import i18n from "@/utils/i18n";
-import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { gameTypeList, isNotEnterLobby } from "../constants/tab";
 import { gameTagList } from "../constants/tag";
+import { media } from "@/theme/breakpoints";
 
 type Props = {
   imageUrl: string;
@@ -41,17 +48,27 @@ type GameItem = {
   };
   type: number;
   isFavorite: boolean;
+};
+
+interface Theme {
+  primaryDark: string;
+  white: string;
 }
 
-const MainWrapper = styled.div`
+const MainWrapper = styled.div<{ theme: Theme }>`
   width: 100%;
   padding: 22px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: ${(props: { theme: { primaryDark: any } }) => props.theme.primaryDark};
-  color: ${(props: { theme: { white: any } }) => props.theme.white};
+  background-color: ${({ theme }: { theme: Theme }) => theme.primaryDark};
+  color: ${({ theme }: { theme: Theme }) => theme.white};
   margin-bottom: 82px;
+
+  ${media.sm} {
+    max-width: 870px;
+    margin: 0 auto;
+  }
 `;
 
 const TabContainer = styled.div`
@@ -152,25 +169,22 @@ const Main = (props: Props) => {
       }
     });
     return filteredGroups;
-
   }, [game.homePageGameList]);
 
-  const tagList = useMemo(
-    () => {
-      const tags = Object.keys(groupByProvider);
-      const filteredTags = tags
-        .filter((key) => typeof key === 'string')
-        .map((provider) => ({ name: provider }));
-      return [
-        { name: "All" },
-        account.token && { name: "Favorite" },
-        { name: "Hot" },
-        { name: "New" },
-        { name: "Recommend" },
-        ...filteredTags];
-    },
-    [groupByProvider]
-  );
+  const tagList = useMemo(() => {
+    const tags = Object.keys(groupByProvider);
+    const filteredTags = tags
+      .filter((key) => typeof key === "string")
+      .map((provider) => ({ name: provider }));
+    return [
+      { name: "All" },
+      account.token && { name: "Favorite" },
+      { name: "Hot" },
+      { name: "New" },
+      { name: "Recommend" },
+      ...filteredTags,
+    ];
+  }, [groupByProvider]);
 
   const filterAndGroupGames = (gameList: any[]) => {
     const groupByGpcode = gameList.reduce((accumulator, game) => {
@@ -189,40 +203,57 @@ const Main = (props: Props) => {
 
   const fetchFavoriteList = useCallback(async () => {
     const getFavoriteResDto = await getFavoriteGame(activeGameTypeTab);
-    const favoriteList = getFavoriteResDto?.data || []
+    const favoriteList = getFavoriteResDto?.data || [];
     setFavoriteList(favoriteList || []);
   }, [activeGameTypeTab]);
 
   useEffect(() => {
-    if (account.token && activeGameTypeTab && !isEnterLobby) fetchFavoriteList();
+    if (account.token && activeGameTypeTab && !isEnterLobby)
+      fetchFavoriteList();
   }, [account.token, activeGameTypeTab, isEnterLobby]);
 
   useEffect(() => {
     if (activeGameTypeTab && !isEnterLobby) {
-
       GameService.GetGameList("", activeGameTypeTab).then((res) => {
         if (res && res.data) {
           const groupByProvider = filterAndGroupGames(res.data);
           setGroupByProvider(groupByProvider);
 
-          const filteredGameListWithFavorites = favoriteList.length > 0
-            ? res.data.map((item: GameItem) => ({
-              ...item,
-              isFavorite: favoriteList.includes(item.id),
-            }))
-            : res.data;
+          const filteredGameListWithFavorites =
+            favoriteList.length > 0
+              ? res.data.map((item: GameItem) => ({
+                  ...item,
+                  isFavorite: favoriteList.includes(item.id),
+                }))
+              : res.data;
 
           switch (selectedTag) {
             case "All":
               return setFilteredGameList(filteredGameListWithFavorites);
             case "Favorite":
-              return setFilteredGameList(filteredGameListWithFavorites.filter((item: GameItem) => favoriteList.includes(item.id)));
+              return setFilteredGameList(
+                filteredGameListWithFavorites.filter((item: GameItem) =>
+                  favoriteList.includes(item.id)
+                )
+              );
             case "Hot":
-              return setFilteredGameList(filteredGameListWithFavorites.filter((item: GameItem) => item.tag.hot));
+              return setFilteredGameList(
+                filteredGameListWithFavorites.filter(
+                  (item: GameItem) => item.tag.hot
+                )
+              );
             case "New":
-              return setFilteredGameList(filteredGameListWithFavorites.filter((item: GameItem) => item.tag.new));
+              return setFilteredGameList(
+                filteredGameListWithFavorites.filter(
+                  (item: GameItem) => item.tag.new
+                )
+              );
             case "Recommend":
-              return setFilteredGameList(filteredGameListWithFavorites.filter((item: GameItem) => item.tag.recommend));
+              return setFilteredGameList(
+                filteredGameListWithFavorites.filter(
+                  (item: GameItem) => item.tag.recommend
+                )
+              );
             case selectedTag:
               return setFilteredGameList(groupByProvider[selectedTag]);
             default:
@@ -276,32 +307,36 @@ const Main = (props: Props) => {
         )}
       </TabContainer>
 
-      {!activeGameTypeTab &&
-        <Lobby
-          handleGameTypeClick={handleGameTypeClick}
-        />
-      }
+      {!activeGameTypeTab && (
+        <Lobby handleGameTypeClick={handleGameTypeClick} />
+      )}
 
-      {isEnterLobby &&
+      {isEnterLobby && (
         <Category
           gameTypeData={groupBy_gameType[activeGameTypeTab] || []}
-          gameTypeName={gameTypeList.find((item) => item.gameType === activeGameTypeTab)?.key || ""}
+          gameTypeName={
+            gameTypeList.find((item) => item.gameType === activeGameTypeTab)
+              ?.key || ""
+          }
           gameType={activeGameTypeTab}
         />
-      }
+      )}
 
       {/* Slot / Fishing / Egame */}
       {!isEnterLobby && !!activeGameTypeTab && (
         <>
           <TagContainer>
-            {tagList.filter((item): item is GameItem => item !== null).map((item: GameItem) => (
-              <Tag
-                key={item?.name}
-                text={item?.name}
-                isActive={item?.name === selectedTag && !!item.name}
-                isShowIcon={gameTagList.some(tag => tag.text === item.name)}
-                onClick={() => setSelectedTag(item.name)} />
-            ))}
+            {tagList
+              .filter((item): item is GameItem => item !== null)
+              .map((item: GameItem) => (
+                <Tag
+                  key={item?.name}
+                  text={item?.name}
+                  isActive={item?.name === selectedTag && !!item.name}
+                  isShowIcon={gameTagList.some((tag) => tag.text === item.name)}
+                  onClick={() => setSelectedTag(item.name)}
+                />
+              ))}
           </TagContainer>
 
           <Input
@@ -312,8 +347,8 @@ const Main = (props: Props) => {
           />
 
           <GameCardContainer>
-            {filteredMatchGames && filteredMatchGames.map(
-              (item: GameItem) => (
+            {filteredMatchGames &&
+              filteredMatchGames.map((item: GameItem) => (
                 <GameCard
                   key={item.id}
                   gameItem={item}
@@ -322,8 +357,7 @@ const Main = (props: Props) => {
                   fetchFavoriteList={fetchFavoriteList}
                   isFavorite={favoriteList.includes(item.id)}
                 />
-              )
-            )}
+              ))}
             {!filteredMatchGames.length && <div>No data</div>}
           </GameCardContainer>
         </>
