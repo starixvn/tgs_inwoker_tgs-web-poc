@@ -10,14 +10,18 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 import { badgeList } from "../../constants/games";
 
-const GameCardWrapper = styled.div<{ $imageUrl: string }>`
+const GameCardWrapper = styled.div`
   width: calc(50% - 8px);
-  padding-top: calc(50% - 8px);
-  background-image: url(${({ $imageUrl }) => $imageUrl});
-  background-size: cover;
-  box-sizing: border-box;
+  height: 184px;
   position: relative;
   border: 1px solid ${(props) => props.theme.tertiary};
+`;
+
+const GameImage = styled.img`
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit:cover;
 `;
 
 const LikeIcon = styled.div<{ $imageUrl: string }>`
@@ -64,6 +68,36 @@ const GameName = styled.div`
     font-size: 1.25rem;
 `;
 
+const MaintenanceBg = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgb(0 0 0 / 80%);
+  border-radius: 0 0 10px 10px;
+  padding: 7px;
+`;
+
+const MaintenanceContent = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid ${(props) => props.theme.primary};
+  opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+`;
+
+const MaintenanceText = styled.div`
+  color: ${(props) => props.theme.white};
+  font-size: 1.2rem;
+  font-weight: 900;
+  text-align: center;
+`;
+
 type GameCardProps = {
   gameItem: {
     key: string;
@@ -84,6 +118,7 @@ type GameCardProps = {
   favoriteList: number[];
   fetchFavoriteList: () => void;
   isFavorite: boolean;
+  isActive: boolean;
 };
 
 const GameCard = ({
@@ -92,6 +127,7 @@ const GameCard = ({
   favoriteList,
   fetchFavoriteList,
   isFavorite,
+  isActive
 }: GameCardProps) => {
   const { setFavoriteGame, removeFavoriteGame } = useGameStore();
   const { account } = useAccountStore();
@@ -135,40 +171,50 @@ const GameCard = ({
   };
 
   return (
-    <GameCardWrapper
-      onClick={launchGame}
-      $imageUrl={`${config.sourceUrl
-        }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${gameItem.code
-        }.jpg`}
-    >
-      {isFavorite ? (
-        <LikeIcon
-          $imageUrl={likeIcon}
-          onClick={(event) => handleToggleFavorite(event, gameItem.id)}
-        />
-      ) : (
-        <LikeIcon
-          $imageUrl={dislikeIcon}
-          onClick={(event) => handleToggleFavorite(event, gameItem.id)}
-        />
-      )}
+    <>
+      <GameCardWrapper
+        onClick={launchGame}
+      >
+        <GameImage src={`${config.sourceUrl
+          }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${gameItem.code
+          }.jpg`} alt={gameItem.name} />
 
-      {gameItem.tag.hot && gameItem.tag.new && selectedTag === "All" && (
-        <>
+        {isFavorite ? (
+          <LikeIcon
+            $imageUrl={likeIcon}
+            onClick={(event) => handleToggleFavorite(event, gameItem.id)}
+          />
+        ) : (
+          <LikeIcon
+            $imageUrl={dislikeIcon}
+            onClick={(event) => handleToggleFavorite(event, gameItem.id)}
+          />
+        )}
+
+        {gameItem.tag.hot && gameItem.tag.new && selectedTag === "All" && (
+          <>
+            <BadgeIcon $imageUrl={badgeList.hot} />
+            <NewBadgeIcon $imageUrl={badgeList.new} />
+          </>
+        )}
+        {gameItem.tag.hot && selectedTag === "Hot" && (
           <BadgeIcon $imageUrl={badgeList.hot} />
-          <NewBadgeIcon $imageUrl={badgeList.new} />
-        </>
-      )}
-      {gameItem.tag.hot && selectedTag === "Hot" && (
-        <BadgeIcon $imageUrl={badgeList.hot} />
-      )}
-      {gameItem.tag.new && selectedTag === "New" && (
-        <BadgeIcon $imageUrl={badgeList.new} />
-      )}
+        )}
+        {gameItem.tag.new && selectedTag === "New" && (
+          <BadgeIcon $imageUrl={badgeList.new} />
+        )}
 
-      {/* to-do: if show game name while imageUrl return 404 */}
-      {/* <GameName>{gameItem.name}</GameName> */}
-    </GameCardWrapper>
+        {/* to-do: if show game name while imageUrl return 404 */}
+        {/* <GameName>{gameItem.name}</GameName> */}
+        {!isActive &&
+          <MaintenanceBg>
+            <MaintenanceContent>
+              <MaintenanceText> BE BACK SOON</MaintenanceText>
+            </MaintenanceContent>
+          </MaintenanceBg>
+        }
+      </GameCardWrapper>
+    </>
   );
 };
 

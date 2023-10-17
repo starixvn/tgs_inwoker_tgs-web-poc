@@ -332,6 +332,7 @@ const Main = (props: Props) => {
                   favoriteList={favoriteList}
                   fetchFavoriteList={fetchFavoriteList}
                   isFavorite={favoriteList.includes(item.id)}
+                  isActive={item.isactive}
                 />
               )
             )}
