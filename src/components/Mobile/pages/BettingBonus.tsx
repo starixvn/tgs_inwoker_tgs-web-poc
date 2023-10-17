@@ -1,12 +1,9 @@
-import React from "react";
 import CurrentLevelBanner from "@/components/Mobile/components/BettingBonus/CurrentLevelBanner";
 import LevelTable from "@/components/Mobile/components/BettingBonus/LevelTable";
 import styled from "styled-components";
-import useVipStore from "../hooks/useVipStore";
-import { VipData as TypeVipData } from "@/models/dto/general/GetVipResDto";
-import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import Loading from "@/components/Mobile/components/UI/Loading";
 import { useBettingBonus } from "@/hooks/betting-bonus/useBettingBonus";
+import { media } from "@/theme/breakpoints";
 
 const Container = styled.div`
   padding: 20px 10px;
@@ -14,6 +11,11 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  ${media.sm} {
+    max-width: 870px;
+    margin: 0 auto;
+  }
 `;
 
 const TitleText = styled.div`

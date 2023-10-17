@@ -40,6 +40,17 @@ const Row = styled.tr`
     border-bottom-right-radius: 10px;
   }
 `;
+const LevelIconWrapper = styled.div`
+  margin: 0 10px;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const IconCell = styled.td`
+  width: 90px;
+`;
+const Cell = styled.td``;
 
 export const LevelTableRow = ({
   level,
@@ -52,15 +63,17 @@ export const LevelTableRow = ({
 }) => {
   return (
     <Row>
-      <td>
-        <LevelIcon
-          isCurrentLevel={isCurrentLevel}
-          level={level}
-          width={"57px"}
-        />
-      </td>
+      <IconCell>
+        <LevelIconWrapper>
+          <LevelIcon
+            isCurrentLevel={isCurrentLevel}
+            level={level}
+            width={"57px"}
+          />
+        </LevelIconWrapper>
+      </IconCell>
       {bonusList.map((bonus, index) => {
-        return <td key={index}>{bonus}%</td>;
+        return <Cell key={index}>{bonus}%</Cell>;
       })}
     </Row>
   );

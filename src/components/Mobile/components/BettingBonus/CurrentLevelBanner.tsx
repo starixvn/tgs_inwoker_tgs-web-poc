@@ -5,7 +5,6 @@ import { TypeProductRebateByLevel } from "@/components/Mobile/pages/BettingBonus
 
 const CurrentLevelBannerContainer = styled.div`
   width: 100%;
-  max-width: 408px;
   min-width: 355px;
   height: 307px;
   border-radius: 20px;
@@ -13,6 +12,7 @@ const CurrentLevelBannerContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   padding: 17px;
   background-image: url(${`${process.env.PUBLIC_URL}/assets/images/mobile/bettingBonus/current_level_bg.png`});
   background-position: left center;
@@ -20,14 +20,13 @@ const CurrentLevelBannerContainer = styled.div`
 const LevelIconContainer = styled.div`
   position: absolute;
   top: 120px;
-  left: 15px;
+  left: 10%; // TODO: 調整位置
   transform: translateY(-50%);
   width: 100px;
   height: 100px;
 `;
 const TableContainer = styled.div`
-  width: 251px;
-  margin-top: 24px;
+  width: 68%;
   right: 17px;
 `;
 const TableRow = styled.div`
