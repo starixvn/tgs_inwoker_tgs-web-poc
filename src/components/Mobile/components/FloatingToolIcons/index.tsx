@@ -12,9 +12,7 @@ const FloatingToolIconsContainer = styled.div`
   bottom: 102px;
   overflow: visible;
   ${media.sm} {
-    position: relative;
-    bottom: initial;
-    right: initial;
+    display: none;
   }
 `;
 

@@ -29,13 +29,13 @@ const ContentWrapper = muiStyled("div", {
   return {
     position: "relative",
     flexGrow: 1,
-    transition: theme.transitions.create("margin", {
+    transition: theme.transitions.create("all", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: 0,
     ...($isOpen && {
-      transition: theme.transitions.create("margin", {
+      transition: theme.transitions.create("all", {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),

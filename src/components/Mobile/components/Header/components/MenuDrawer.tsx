@@ -3,12 +3,19 @@ import styled from "styled-components";
 import cardBonus from "@/assets/images/header/card_bonus.png";
 import cardVip from "@/assets/images/header/card_vip.png";
 import cardPromotions from "@/assets/images/header/card_promotions.png";
+import cardHome from "@/assets/images/header/card_home.png";
 import { AppHistory } from "@/history/History";
 import LanguageSwitch from "@/components/Mobile/components/LanguageSwitch";
 import { Drawer } from "@mui/material";
 import { DRAWER_WIDTH } from "@/contexts/headerContext";
 import { media } from "@/theme/breakpoints";
 import { useRwd } from "@/hooks/useRwd";
+
+import iconHome from "@/assets/images/header/home.svg";
+import iconPromotion from "@/assets/images/header/promotion.svg";
+import iconDownload from "@/assets/images/header/app_download.svg";
+import Icon from "@/components/Mobile/components/Icon";
+import i18n from "@/utils/i18n";
 
 const CustomDrawer = styled(Drawer)`
   //height: calc(100% - 70px);
@@ -30,10 +37,28 @@ const CustomDrawer = styled(Drawer)`
     //top: 80px !important;
   }
 `;
+
 const DrawerCard = styled.div`
+  cursor: pointer;
   width: 100%;
   margin-bottom: 8px;
+  background: ${({ theme }) => theme.tertiaryDark};
+  border-radius: 12px;
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  font-size: 1.375rem;
+  line-height: 1.611rem;
+  font-weight: 700;
 
+  & > .icon {
+    margin-right: 10px;
+  }
+`;
+
+const DrawerImageCard = styled(DrawerCard)`
+  padding: 0;
   img {
     width: 100%;
   }
@@ -46,19 +71,29 @@ type Props = {
 const MenuDrawer = ({ isOpen, handleClose }: Props) => {
   const { isDesktopSize, isMobileSize } = useRwd();
 
+  const handleDrawerClose = () => {
+    if (isDesktopSize) return;
+    handleClose();
+  };
+
+  const handleClickHome = () => {
+    AppHistory.push("/");
+    handleDrawerClose();
+  };
+
   const handleEnterVip = () => {
     AppHistory.push("/vip");
-    if (isMobileSize) handleClose();
+    handleDrawerClose();
   };
 
   const handleEnterBettingBonus = () => {
     AppHistory.push("/betting-bonus");
-    if (isMobileSize) handleClose();
+    handleDrawerClose();
   };
 
-  const handleEnterPromotions = () => {
+  const handleClickPromotion = () => {
     AppHistory.push("/promotion-list");
-    if (isMobileSize) handleClose();
+    handleDrawerClose();
   };
 
   return (
@@ -75,16 +110,34 @@ const MenuDrawer = ({ isOpen, handleClose }: Props) => {
         },
       }}
     >
-      <DrawerCard onClick={handleEnterVip}>
+      {isDesktopSize && (
+        <DrawerCard onClick={handleClickHome}>
+          <Icon
+            className={"icon"}
+            iconUrl={iconHome}
+            width={"31px"}
+            height={"31px"}
+          />
+          {i18n.t("common.home")}
+        </DrawerCard>
+      )}
+
+      <DrawerImageCard onClick={handleEnterVip}>
         <img src={cardVip} alt={"vip"} />
-      </DrawerCard>
+      </DrawerImageCard>
 
-      <DrawerCard onClick={handleEnterBettingBonus}>
+      <DrawerImageCard onClick={handleEnterBettingBonus}>
         <img src={cardBonus} alt={"bonus"} />
-      </DrawerCard>
+      </DrawerImageCard>
 
-      <DrawerCard onClick={handleEnterPromotions}>
-        <img src={cardPromotions} alt={"promotions"} />
+      <DrawerCard onClick={handleClickPromotion}>
+        <Icon
+          className={"icon"}
+          iconUrl={iconPromotion}
+          width={"31px"}
+          height={"31px"}
+        />
+        {i18n.t("common.promotion")}
       </DrawerCard>
 
       <LanguageSwitch />
