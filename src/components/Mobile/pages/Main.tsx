@@ -43,14 +43,26 @@ type GameItem = {
   isFavorite: boolean;
 }
 
+type groupByGameType = {
+  abbreviation: string;
+  game_platform_id: number;
+  game_platform_name: string;
+  is_try: number;
+  name: string;
+  params: null | string;
+  gpcode: string;
+  type: number;
+  status: number;
+}
+
 const MainWrapper = styled.div`
   width: 100%;
   padding: 22px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: ${(props: { theme: { primaryDark: any } }) => props.theme.primaryDark};
-  color: ${(props: { theme: { white: any } }) => props.theme.white};
+  background-color: ${props => props.theme.primaryDark};
+  color: ${props => props.theme.white};
   margin-bottom: 82px;
 `;
 
@@ -279,6 +291,7 @@ const Main = (props: Props) => {
       {!activeGameTypeTab &&
         <Lobby
           handleGameTypeClick={handleGameTypeClick}
+          groupBy_gameType={groupBy_gameType}
         />
       }
 

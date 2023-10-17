@@ -43,6 +43,17 @@ type Props = {
   showDataLength: number;
   handleViewAllClick: () => void;
   gameTypeName: string;
+  groupBy_gameType: {
+    abbreviation: string;
+    game_platform_id: number;
+    game_platform_name: string;
+    is_try: number;
+    name: string;
+    params: null | string;
+    gpcode: string;
+    type: number;
+    status: number;
+  }[];
 }
 
 type GameItem = {
@@ -68,12 +79,21 @@ const LobbyTagCategory = ({
   gameTag,
   showDataLength,
   handleViewAllClick,
-  gameTypeName
+  gameTypeName,
+  groupBy_gameType
 }: Props) => {
   const { account } = useAccountStore();
   const history = useHistory();
   const [filteredGameList, setFilteredGameList] = useState<any[]>([]);
   const [visibleGameCount, setVisibleGameCount] = useState(showDataLength);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const statusMap = groupBy_gameType.reduce((accumulator, group) => {
+    group.forEach((item) => {
+      accumulator[item.gpcode] = item.status;
+    });
+    return accumulator;
+  }, {});
 
   const handleLoadMoreClick = () => {
     setVisibleGameCount(visibleGameCount + showDataLength);

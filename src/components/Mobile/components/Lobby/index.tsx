@@ -13,10 +13,22 @@ const LobbyContainer = styled.div`
 
 type Props = {
   handleGameTypeClick: (gameType: number) => void;
+  groupBy_gameType: {
+    abbreviation: string;
+    game_platform_id: number;
+    game_platform_name: string;
+    is_try: number;
+    name: string;
+    params: null | string;
+    gpcode: string;
+    type: number;
+    status: number;
+  }[];
 }
 
 const Lobby = ({
   handleGameTypeClick,
+  groupBy_gameType
 }: Props) => {
   return (
     <LobbyContainer>
@@ -42,6 +54,7 @@ const Lobby = ({
                 gameTypeList.find((item) => item.gameType === category.gameType)
                   ?.key || ""
               }
+              groupBy_gameType={Object.values(groupBy_gameType)}
             />
           );
         } else {
