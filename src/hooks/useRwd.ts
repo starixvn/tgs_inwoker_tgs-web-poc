@@ -8,8 +8,8 @@ export function useRwd() {
   const isLgSize = useMediaQuery(theme.breakpoints.only("lg"));
   const isXlSize = useMediaQuery(theme.breakpoints.only("xl"));
 
-  const isMobileSize = isXsSize || isSmSize;
-  const isDesktopSize = isMdSize || isLgSize || isXlSize;
+  const isMobileSize = isXsSize;
+  const isDesktopSize = isSmSize || isMdSize || isLgSize || isXlSize;
 
   return {
     isXsSize,
