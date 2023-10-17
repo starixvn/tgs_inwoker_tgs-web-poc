@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { TabItem } from "@/components/Mobile/components/UI/Tabs";
+import { TabItem } from "@/components/UI/Tabs";
 
 export function useTab<T>(tabList: T[]) {
   const [selectedTab, setSelectedTab] = useState<T>(tabList[0]);

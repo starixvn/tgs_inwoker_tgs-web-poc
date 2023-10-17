@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { GameService } from "@/api-services/services/GameService";
 import { GameTypeEnum } from "@/api-services/utils/Enum";
 import { SHOW_LOGIN } from "@/api-services/constant/actionType";
-import Loading from "@/components/Mobile/components/UI/Loading";
-import Maintenance from "@/components/Mobile/pages/Maintenance";
+import Loading from "@/components/UI/Loading";
+import Maintenance from "@/pages/Maintenance";
 // try {
 //   const channel = new BroadcastChannel('refreshBalance');
 // }catch {
