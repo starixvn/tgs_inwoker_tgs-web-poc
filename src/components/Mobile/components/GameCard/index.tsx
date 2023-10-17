@@ -12,7 +12,7 @@ import { badgeList } from "../../constants/games";
 const GameCardWrapper = styled.div<{ $imageUrl: string }>`
   width: calc(50% - 8px);
   padding-top: calc(50% - 8px);
-  background-image: url(${($imageUrl) => $imageUrl});
+  background-image: url(${({ $imageUrl }) => $imageUrl});
   background-size: cover;
   box-sizing: border-box;
   position: relative;
@@ -35,7 +35,7 @@ const LikeIcon = styled.div<{ $imageUrl: string }>`
 const BadgeIcon = styled.div<{ $imageUrl: string }>`
   width: 45.5px;
   height: 21px;
-  background-image: url(${($imageUrl) => $imageUrl});
+  background-image: url(${({ $imageUrl }) => $imageUrl});
   background-size: cover;
   box-sizing: border-box;
   position: absolute;
@@ -46,7 +46,7 @@ const BadgeIcon = styled.div<{ $imageUrl: string }>`
 const NewBadgeIcon = styled.div<{ $imageUrl: string }>`
   width: 45.5px;
   height: 21px;
-  background-image: url(${($imageUrl) => $imageUrl});
+  background-image: url(${({ $imageUrl }) => $imageUrl});
   background-size: cover;
   box-sizing: border-box;
   position: absolute;
@@ -101,15 +101,17 @@ const GameCard = ({
       history.push("/login");
     } else {
       Common.closePreviousPopup();
+      Common.PopupCenter(`/joingame/${gameItem.id}/${gameItem.gpcode}`, "gamewindow");
+
       const gameWindow = window.open("", "gamewindow");
-      const gameUrl = `/joingame/${gameItem.id}/${gameItem.gpcode}`;
+
       if (gameWindow) {
-        gameWindow.location.href = gameUrl;
         GameService.JoinGame(gameItem.id, gameItem.gpcode).then((response) => {
           if (response?.IsSuccess) {
-            window.location.href = response?.data?.url;
+            gameWindow.location.href = response?.data?.url;
           } else {
             console.log(response?.info);
+            gameWindow.close();
           }
         });
       }

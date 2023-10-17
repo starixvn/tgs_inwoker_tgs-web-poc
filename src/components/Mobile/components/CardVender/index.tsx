@@ -1,9 +1,4 @@
-import { GameService } from "@/api-services/services/GameService";
-import { GameTypeEnum } from "@/api-services/utils/Enum";
 import bg from "@/assets/images/home/mobile/vender_card_bg.png";
-import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import Common from "@/utils/Common";
-import { useHistory } from "react-router";
 import styled from "styled-components";
 
 type Props = {
@@ -11,8 +6,7 @@ type Props = {
   gameName?: string;
   venderName?: string;
   venderLogoUrl?: string;
-  gpCode: string;
-  gameType: number;
+  launchGame: () => void;
 };
 
 const CardVendorBg = styled.div`
@@ -86,62 +80,11 @@ const CardVendor = ({
   gameName,
   venderName,
   venderLogoUrl,
-  gpCode,
-  gameType,
+  launchGame
 }: Props) => {
-  const { account } = useAccountStore();
-  const history = useHistory();
-
-  const launchLobbyGame = () => {
-    if (!account.token) {
-      history.push("/login");
-    } else {
-      if (gameType === GameTypeEnum.COCKFIGHT) {
-        // 以後SM01不會開,多新增AWC_COCKFIGHT(缺對應api)
-        if (gpCode === "SM01") {
-          const gameWindow = window.open("", "Cockfight");
-          if (gameWindow) {
-            GameService.GetCockfight()
-              .then((res) => {
-                gameWindow.document.write(res?.data);
-                gameWindow.document.close();
-                gameWindow.focus();
-              })
-              .catch(() => {
-                gameWindow.close();
-              });
-          }
-        }
-        else {
-          Common.closePreviousPopup();
-          Common.PopupCenter(
-            "/joinlobbygame/" + GameTypeEnum.SPORTS + "/" + gpCode,
-            "gamewindow"
-          );
-        }
-      } else {
-        Common.closePreviousPopup();
-        Common.PopupCenter("/joinlobbygame/" + gameType, "gamewindow");
-
-        const gameWindow = window.open("", "gamewindow");
-
-        if (gameWindow) {
-          GameService.JoinLobbyGame(gameType, gpCode).then((response) => {
-            if (response?.IsSuccess) {
-
-              gameWindow.location.href = response?.data?.url;
-            } else {
-              console.log(response?.info);
-              gameWindow.close();
-            }
-          });
-        }
-      }
-    }
-  };
 
   return (
-    <CardVendorBg onClick={launchLobbyGame}>
+    <CardVendorBg onClick={launchGame}>
       <GameIcon $imageUrl={imageUrl}></GameIcon>
       <GradientBg>
         <CardContent>

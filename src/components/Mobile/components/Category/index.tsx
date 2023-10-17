@@ -1,3 +1,8 @@
+import { GameService } from '@/api-services/services/GameService';
+import { GameTypeEnum } from '@/api-services/utils/Enum';
+import { useAccountStore } from '@/hooks/stores/useAccountStore';
+import Common from '@/utils/Common';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import CardVendor from '../CardVender';
 
@@ -37,6 +42,56 @@ const Category = ({
   gameTypeName,
   gameType
 }: Props) => {
+  const { account } = useAccountStore();
+  const history = useHistory();
+
+  const launchLobbyGame = (gpcode: string) => {
+    if (!account.token) {
+      history.push("/login");
+    } else {
+      if (gameType === GameTypeEnum.COCKFIGHT) {
+        // 以後SM01不會開,多新增AWC_COCKFIGHT(缺對應api)
+        if (gpcode === "SM01") {
+          const gameWindow = window.open("", "Cockfight");
+          if (gameWindow) {
+            GameService.GetCockfight()
+              .then((res) => {
+                gameWindow.document.write(res?.data);
+                gameWindow.document.close();
+                gameWindow.focus();
+              })
+              .catch(() => {
+                gameWindow.close();
+              });
+          }
+        }
+        else {
+          Common.closePreviousPopup();
+          Common.PopupCenter(
+            "/joinlobbygame/" + GameTypeEnum.SPORTS + "/" + gpcode,
+            "gamewindow"
+          );
+        }
+      } else {
+        Common.closePreviousPopup();
+        Common.PopupCenter("/joinlobbygame/" + gameType, "gamewindow");
+
+        const gameWindow = window.open("", "gamewindow");
+
+        if (gameWindow) {
+          GameService.JoinLobbyGame(gameType, gpcode).then((response) => {
+            if (response?.IsSuccess) {
+              gameWindow.location.href = response?.data?.url;
+            } else {
+              console.log(response?.info);
+              gameWindow.close();
+            }
+          });
+        }
+      }
+    }
+  };
+
   return (
     <Wrapper>
       <CategoryContent>
@@ -47,8 +102,7 @@ const Category = ({
               key={game?.gpcode}
               imageUrl={`${process.env.PUBLIC_URL}/assets/images/home/${gameTypeName}/${game?.gpcode}.png`}
               venderLogoUrl={`${process.env.PUBLIC_URL}/assets/images/home/provider_logo/${gameTypeName}/${game?.gpcode}.png`}
-              gpCode={game?.gpcode}
-              gameType={gameType}
+              launchGame={() => launchLobbyGame(game?.gpcode)}
             />
           )
         })}
