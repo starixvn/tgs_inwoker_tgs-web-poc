@@ -2,15 +2,17 @@ import { GameService } from "@/api-services/services/GameService";
 import dislikeIcon from "@/assets/images/home/mobile/dislike.png";
 import likeIcon from "@/assets/images/home/mobile/like.png";
 import config from "@/config/config";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import Common from "@/utils/Common";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import { badgeList } from "../../constants/games";
 
 const GameCardWrapper = styled.div<{ $imageUrl: string }>`
   width: calc(50% - 8px);
   padding-top: calc(50% - 8px);
-  background-image: url(${($imageUrl) => $imageUrl});
+  background-image: url(${({ $imageUrl }) => $imageUrl});
   background-size: cover;
   box-sizing: border-box;
   position: relative;
@@ -33,7 +35,7 @@ const LikeIcon = styled.div<{ $imageUrl: string }>`
 const BadgeIcon = styled.div<{ $imageUrl: string }>`
   width: 45.5px;
   height: 21px;
-  background-image: url(${($imageUrl) => $imageUrl});
+  background-image: url(${({ $imageUrl }) => $imageUrl});
   background-size: cover;
   box-sizing: border-box;
   position: absolute;
@@ -44,7 +46,7 @@ const BadgeIcon = styled.div<{ $imageUrl: string }>`
 const NewBadgeIcon = styled.div<{ $imageUrl: string }>`
   width: 45.5px;
   height: 21px;
-  background-image: url(${($imageUrl) => $imageUrl});
+  background-image: url(${({ $imageUrl }) => $imageUrl});
   background-size: cover;
   box-sizing: border-box;
   position: absolute;
@@ -91,15 +93,29 @@ const GameCard = ({
   isFavorite,
 }: GameCardProps) => {
   const { setFavoriteGame, removeFavoriteGame } = useGameStore();
+  const { account } = useAccountStore();
+  const history = useHistory();
 
   const launchGame = () => {
-    GameService.JoinGame(gameItem.id, gameItem.gpcode).then((response) => {
-      if (response?.IsSuccess) {
-        window.location.href = response?.data?.url;
-      } else {
-        console.log(response?.info);
+    if (!account.token) {
+      history.push("/login");
+    } else {
+      Common.closePreviousPopup();
+      Common.PopupCenter(`/joingame/${gameItem.id}/${gameItem.gpcode}`, "gamewindow");
+
+      const gameWindow = window.open("", "gamewindow");
+
+      if (gameWindow) {
+        GameService.JoinGame(gameItem.id, gameItem.gpcode).then((response) => {
+          if (response?.IsSuccess) {
+            gameWindow.location.href = response?.data?.url;
+          } else {
+            console.log(response?.info);
+            gameWindow.close();
+          }
+        });
       }
-    });
+    }
   };
 
   const handleToggleFavorite = async (event, gameId: number) => {
@@ -116,11 +132,9 @@ const GameCard = ({
   return (
     <GameCardWrapper
       onClick={launchGame}
-      $imageUrl={`${
-        config.sourceUrl
-      }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
-        gameItem.code
-      }.jpg`}
+      $imageUrl={`${config.sourceUrl
+        }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${gameItem.code
+        }.jpg`}
     >
       {isFavorite ? (
         <LikeIcon

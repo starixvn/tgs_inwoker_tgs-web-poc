@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import config from "../../../config/config";
 import featureList from "../../../config/features";
 
@@ -7,9 +7,9 @@ const FeatureGetter = () => {
 
   function getJsonData() {
     return fetch(
-      "https://app12.s3.ap-east-1.amazonaws.com/features_" +
-        config.brand +
-        ".json"
+      "https://app12.srvptt.com/features_" +
+      config.brand +
+      ".json"
     )
       .then((response) => response.json())
       .then((responseJson) => {

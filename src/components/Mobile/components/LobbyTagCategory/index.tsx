@@ -1,7 +1,10 @@
 import { GameService } from '@/api-services/services/GameService';
 import ButtonText from '@/components/Mobile/components/ButtonText';
 import CategoryLabel from '@/components/Mobile/components/CategoryLabel';
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
+import Common from '@/utils/Common';
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import styled from 'styled-components';
 import CardVendor from '../CardVender';
 
@@ -67,11 +70,35 @@ const LobbyTagCategory = ({
   handleViewAllClick,
   gameTypeName
 }: Props) => {
+  const { account } = useAccountStore();
+  const history = useHistory();
   const [filteredGameList, setFilteredGameList] = useState<any[]>([]);
   const [visibleGameCount, setVisibleGameCount] = useState(showDataLength);
 
   const handleLoadMoreClick = () => {
     setVisibleGameCount(visibleGameCount + showDataLength);
+  };
+
+  const launchGame = (id: number, gpcode: string) => {
+    if (!account.token) {
+      history.push("/login");
+    } else {
+      Common.closePreviousPopup();
+      Common.PopupCenter(`/joingame/${id}/${gpcode}`, "gamewindow");
+
+      const gameWindow = window.open("", "gamewindow");
+
+      if (gameWindow) {
+        GameService.JoinGame(id, gpcode).then((response) => {
+          if (response?.IsSuccess) {
+            gameWindow.location.href = response?.data?.url;
+          } else {
+            console.log(response?.info);
+            gameWindow.close();
+          }
+        });
+      }
+    }
   };
 
   useEffect(() => {
@@ -112,8 +139,7 @@ const LobbyTagCategory = ({
               imageUrl={`${process.env.PUBLIC_URL}/assets/images/home/${gameTypeName}/${game?.gpcode}.png`}
               gameName={game?.name}
               venderName={game?.gpcode}
-              gpCode={game?.gpcode}
-              gameType={gameType}
+              launchGame={() => launchGame(game?.id, game?.gpcode)}
             />
           )
         })}

@@ -1,7 +1,4 @@
-import { GameService } from "@/api-services/services/GameService";
-import { GameTypeEnum } from "@/api-services/utils/Enum";
 import bg from "@/assets/images/home/mobile/vender_card_bg.png";
-import Common from "@/utils/Common";
 import styled from "styled-components";
 
 type Props = {
@@ -9,8 +6,7 @@ type Props = {
   gameName?: string;
   venderName?: string;
   venderLogoUrl?: string;
-  gpCode: string;
-  gameType: number;
+  launchGame: () => void;
 };
 
 const CardVendorBg = styled.div`
@@ -55,7 +51,7 @@ const CardContent = styled.div`
 `;
 
 const GameName = styled.div`
-  ${(props: { theme: { white: any } }) => props.theme.white};
+  color: ${(props) => props.theme.white};
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   font-size: 1.5rem;
   font-weight: 900;
@@ -63,13 +59,13 @@ const GameName = styled.div`
 `;
 
 const VenderName = styled.div`
-  ${(props: { theme: { white: any } }) => props.theme.white};
+   color: ${(props) => props.theme.white};
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   font-size: 0.625rem;
   font-weight: 400;
 `;
 
-const VenderLogo = styled.div<Props>`
+const VenderLogo = styled.div<{ $venderLogoUrl: string }>`
   display: inline-flex;
   width: 100%;
   max-width: 77px;
@@ -84,45 +80,11 @@ const CardVendor = ({
   gameName,
   venderName,
   venderLogoUrl,
-  gpCode,
-  gameType,
+  launchGame
 }: Props) => {
-  const launchLobbyGame = () => {
-    if (gameType === GameTypeEnum.COCKFIGHT) {
-      // 以後SM01不會開,多新增AWC_COCKFIGHT(缺對應api)
-      if (gpCode === "SM01") {
-        const gameWindow = window.open("", "Cockfight");
-        if (gameWindow) {
-          GameService.GetCockfight()
-            .then((res) => {
-              gameWindow.document.write(res?.data);
-              gameWindow.document.close();
-              gameWindow.focus();
-            })
-            .catch(() => {
-              gameWindow.close();
-            });
-        }
-      } else {
-        Common.closePreviousPopup();
-        Common.PopupCenter(
-          "/joinlobbygame/" + GameTypeEnum.SPORTS + "/" + gpCode,
-          "gamewindow"
-        );
-      }
-    } else {
-      GameService.JoinLobbyGame(gameType, gpCode).then((response) => {
-        if (response?.IsSuccess) {
-          window.location.href = response?.data?.url;
-        } else {
-          console.log(response?.info);
-        }
-      });
-    }
-  };
 
   return (
-    <CardVendorBg onClick={launchLobbyGame}>
+    <CardVendorBg onClick={launchGame}>
       <GameIcon $imageUrl={imageUrl}></GameIcon>
       <GradientBg>
         <CardContent>
