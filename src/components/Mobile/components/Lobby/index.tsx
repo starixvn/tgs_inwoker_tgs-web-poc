@@ -3,6 +3,7 @@ import LobbyCategory from '@/components/Mobile/components/LobbyCategory';
 import LobbyTagCategory from '@/components/Mobile/components/LobbyTagCategory';
 import styled from 'styled-components';
 import { gameTypeList, lobbyCategoryList } from "../../constants/tab";
+import { GroupByGameItem } from "../LobbyTagCategory";
 
 const LobbyContainer = styled.div`
     display: flex;
@@ -13,10 +14,13 @@ const LobbyContainer = styled.div`
 
 type Props = {
   handleGameTypeClick: (gameType: number) => void;
-}
+  groupBy_gameType: { [key in number]: GroupByGameItem }
+};
+
 
 const Lobby = ({
   handleGameTypeClick,
+  groupBy_gameType
 }: Props) => {
   return (
     <LobbyContainer>
@@ -42,6 +46,7 @@ const Lobby = ({
                 gameTypeList.find((item) => item.gameType === category.gameType)
                   ?.key || ""
               }
+              groupBy_gameType={Object.values(groupBy_gameType)}
             />
           );
         } else {

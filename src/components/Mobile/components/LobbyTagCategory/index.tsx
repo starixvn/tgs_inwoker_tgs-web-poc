@@ -43,6 +43,19 @@ type Props = {
   showDataLength: number;
   handleViewAllClick: () => void;
   gameTypeName: string;
+  groupBy_gameType: GroupByGameItem[];
+}
+
+export type GroupByGameItem = {
+  abbreviation: string;
+  game_platform_id: number;
+  game_platform_name: string;
+  is_try: number;
+  name: string;
+  params: null | string;
+  gpcode: string;
+  type: number;
+  status: number;
 }
 
 type GameItem = {
@@ -68,12 +81,21 @@ const LobbyTagCategory = ({
   gameTag,
   showDataLength,
   handleViewAllClick,
-  gameTypeName
+  gameTypeName,
+  groupBy_gameType
 }: Props) => {
   const { account } = useAccountStore();
   const history = useHistory();
   const [filteredGameList, setFilteredGameList] = useState<any[]>([]);
   const [visibleGameCount, setVisibleGameCount] = useState(showDataLength);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const statusMap = groupBy_gameType.reduce((accumulator, group) => {
+    group.forEach((item) => {
+      accumulator[item.gpcode] = item.status;
+    });
+    return accumulator;
+  }, {});
 
   const handleLoadMoreClick = () => {
     setVisibleGameCount(visibleGameCount + showDataLength);
@@ -104,15 +126,20 @@ const LobbyTagCategory = ({
   useEffect(() => {
     if (gameType && gameTag) {
       GameService.GetGameList("", gameType).then((res) => {
+        setIsLoading(true);
         if (res && res.data) {
           switch (gameTag) {
             case "Hot":
+              setIsLoading(false);
               return setFilteredGameList(res.data.filter((item: GameItem) => item.tag.hot));
             case "New":
+              setIsLoading(false);
               return setFilteredGameList(res.data.filter((item: GameItem) => item.tag.new));
             case "Recommend":
+              setIsLoading(false);
               return setFilteredGameList(res.data.filter((item: GameItem) => item.tag.recommend));
             default:
+              setIsLoading(false);
               return setFilteredGameList(res.data);
           }
         }
@@ -130,20 +157,23 @@ const LobbyTagCategory = ({
         <CategoryLabel imageUrl={iconUrl} text={text} />
         <ButtonText size="small" text={"View all"} onClick={handleViewAllClick} />
       </CategoryTitle>
-
-      <CategoryContent>
-        {filteredGameList.slice(0, visibleGameCount).map((game) => {
-          return (
-            <CardVendor
-              key={game?.id}
-              imageUrl={`${process.env.PUBLIC_URL}/assets/images/home/${gameTypeName}/${game?.gpcode}.png`}
-              gameName={game?.name}
-              venderName={game?.gpcode}
-              launchGame={() => launchGame(game?.id, game?.gpcode)}
-            />
-          )
-        })}
-      </CategoryContent>
+      {isLoading && <div>Loading...</div>}
+      {!isLoading &&
+        <CategoryContent>
+          {filteredGameList.slice(0, visibleGameCount).map((game) => {
+            return (
+              <CardVendor
+                key={game?.id}
+                imageUrl={`${process.env.PUBLIC_URL}/assets/images/home/${gameTypeName}/${game?.gpcode}.png`}
+                gameName={game?.name}
+                venderName={game?.gpcode}
+                launchGame={() => launchGame(game?.id, game?.gpcode)}
+                status={statusMap[game?.gpcode]}
+              />
+            )
+          })}
+        </CategoryContent>
+      }
 
       {visibleGameCount < filteredGameList.length && gameTag === "Hot" && (
         <ButtonContainer>

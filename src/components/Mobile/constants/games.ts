@@ -6,37 +6,44 @@ import game3 from "@/assets/images/home/mobile/game3.png";
 import game4 from "@/assets/images/home/mobile/game4.png";
 
 export const gamesList = [
-    {
-        key: "game1",
-        iconUrl: game1,
-        text: "game1",
-        isFavorite: false,
-        tag: ""
-    },
-    {
-        key: "game2",
-        iconUrl: game2,
-        text: "game2",
-        isFavorite: true,
-        tag: "hot"
-    },
-    {
-        key: "game3",
-        iconUrl: game3,
-        text: "game3",
-        isFavorite: false,
-        tag: ""
-    },
-    {
-        key: "game4",
-        iconUrl: game4,
-        text: "game4",
-        isFavorite: true,
-        tag: "new"
-    }
+  {
+    key: "game1",
+    iconUrl: game1,
+    text: "game1",
+    isFavorite: false,
+    tag: ""
+  },
+  {
+    key: "game2",
+    iconUrl: game2,
+    text: "game2",
+    isFavorite: true,
+    tag: "hot"
+  },
+  {
+    key: "game3",
+    iconUrl: game3,
+    text: "game3",
+    isFavorite: false,
+    tag: ""
+  },
+  {
+    key: "game4",
+    iconUrl: game4,
+    text: "game4",
+    isFavorite: true,
+    tag: "new"
+  }
 ]
 
 export const badgeList = {
-    "hot": hotIcon,
-    "new": newIcon,
+  "hot": hotIcon,
+  "new": newIcon,
+}
+
+export const providerStatus = {
+  Active: 0,
+  Inactive: 1,
+  Archived: 2,
+  Maintenance: 3
 }

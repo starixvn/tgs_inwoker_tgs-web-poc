@@ -14,20 +14,13 @@ import Tag from "@/components/Mobile/components/Tag";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
+import { media } from "@/theme/breakpoints";
 import getDisplayGameType from "@/utils/getDisplayGameType";
 import i18n from "@/utils/i18n";
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import { useHistory } from "react-router-dom";
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { gameTypeList, isNotEnterLobby } from "../constants/tab";
 import { gameTagList } from "../constants/tag";
-import { media } from "@/theme/breakpoints";
 
 type Props = {
   imageUrl: string;
@@ -53,6 +46,18 @@ type GameItem = {
 interface Theme {
   primaryDark: string;
   white: string;
+}
+
+type groupByGameType = {
+  abbreviation: string;
+  game_platform_id: number;
+  game_platform_name: string;
+  is_try: number;
+  name: string;
+  params: null | string;
+  gpcode: string;
+  type: number;
+  status: number;
 }
 
 const MainWrapper = styled.div<{ theme: Theme }>`
@@ -97,13 +102,6 @@ const VendorIcon = styled.div`
   background-size: cover;
 `;
 
-const LobbyContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-  width: 100%;
-`;
-
 const TagContainer = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -117,7 +115,6 @@ const TagContainer = styled.div`
 `;
 
 const Main = (props: Props) => {
-  const history = useHistory();
   const { game, getFavoriteGame } = useGameStore();
   const { general } = useGeneralStore();
   const { account } = useAccountStore();
@@ -215,6 +212,7 @@ const Main = (props: Props) => {
   useEffect(() => {
     if (activeGameTypeTab && !isEnterLobby) {
       GameService.GetGameList("", activeGameTypeTab).then((res) => {
+        setIsLoading(true);
         if (res && res.data) {
           const groupByProvider = filterAndGroupGames(res.data);
           setGroupByProvider(groupByProvider);
@@ -222,41 +220,32 @@ const Main = (props: Props) => {
           const filteredGameListWithFavorites =
             favoriteList.length > 0
               ? res.data.map((item: GameItem) => ({
-                  ...item,
-                  isFavorite: favoriteList.includes(item.id),
-                }))
+                ...item,
+                isFavorite: favoriteList.includes(item.id),
+              }))
               : res.data;
 
           switch (selectedTag) {
             case "All":
+              setIsLoading(false);
               return setFilteredGameList(filteredGameListWithFavorites);
             case "Favorite":
-              return setFilteredGameList(
-                filteredGameListWithFavorites.filter((item: GameItem) =>
-                  favoriteList.includes(item.id)
-                )
-              );
+              setIsLoading(false);
+              return setFilteredGameList(filteredGameListWithFavorites.filter((item: GameItem) => favoriteList.includes(item.id)));
             case "Hot":
-              return setFilteredGameList(
-                filteredGameListWithFavorites.filter(
-                  (item: GameItem) => item.tag.hot
-                )
-              );
+              setIsLoading(false);
+              return setFilteredGameList(filteredGameListWithFavorites.filter((item: GameItem) => item.tag.hot));
             case "New":
-              return setFilteredGameList(
-                filteredGameListWithFavorites.filter(
-                  (item: GameItem) => item.tag.new
-                )
-              );
+              setIsLoading(false);
+              return setFilteredGameList(filteredGameListWithFavorites.filter((item: GameItem) => item.tag.new));
             case "Recommend":
-              return setFilteredGameList(
-                filteredGameListWithFavorites.filter(
-                  (item: GameItem) => item.tag.recommend
-                )
-              );
+              setIsLoading(false);
+              return setFilteredGameList(filteredGameListWithFavorites.filter((item: GameItem) => item.tag.recommend));
             case selectedTag:
+              setIsLoading(false);
               return setFilteredGameList(groupByProvider[selectedTag]);
             default:
+              setIsLoading(false);
               return setFilteredGameList(filteredGameListWithFavorites);
           }
         }
@@ -307,9 +296,12 @@ const Main = (props: Props) => {
         )}
       </TabContainer>
 
-      {!activeGameTypeTab && (
-        <Lobby handleGameTypeClick={handleGameTypeClick} />
-      )}
+      {!activeGameTypeTab &&
+        <Lobby
+          handleGameTypeClick={handleGameTypeClick}
+          groupBy_gameType={groupBy_gameType}
+        />
+      }
 
       {isEnterLobby && (
         <Category
@@ -323,7 +315,7 @@ const Main = (props: Props) => {
       )}
 
       {/* Slot / Fishing / Egame */}
-      {!isEnterLobby && !!activeGameTypeTab && (
+      {!isEnterLobby && !!activeGameTypeTab && !isLoading && (
         <>
           <TagContainer>
             {tagList
@@ -356,13 +348,14 @@ const Main = (props: Props) => {
                   favoriteList={favoriteList}
                   fetchFavoriteList={fetchFavoriteList}
                   isFavorite={favoriteList.includes(item.id)}
+                  isActive={item.isactive}
                 />
               ))}
             {!filteredMatchGames.length && <div>No data</div>}
           </GameCardContainer>
         </>
       )}
-
+      {isLoading && <div>Loading...</div>}
       <TabPanel />
       <SocialMedia />
       <VendorIcon />
