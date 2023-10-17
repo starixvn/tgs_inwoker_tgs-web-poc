@@ -22,7 +22,7 @@ import rootReducer from "./api-services/reducers/rootReducer";
 import Config from "./config/config";
 import config from "./config/config";
 import i18n from "./utils/i18n";
-import Main from "@/components/Main";
+import Main from "@/SubIndex";
 import { NotificationContextProvider } from "@/contexts/notificationContext";
 import AudioPlayer from "./components/Share/audioplayer";
 import FeatureGetter from "./components/Share/feature-getter";

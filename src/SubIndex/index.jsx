@@ -19,8 +19,8 @@ import ErrorSwitcher from "@/utils/ErrorSwitcher";
 import i18n from "@/utils/i18n";
 import BlowFishEncryption from "@/utils/BlowFishEncryption";
 import Common from "@/utils/Common";
-import ForcedVerification from "../ForcedVerification";
-import LiveChat from "../Share/live-chat";
+import ForcedVerification from "../components/ForcedVerification";
+import LiveChat from "../components/Share/live-chat";
 import { routes } from "@/router";
 import PopupAlertModal from "@/components/Popup/PopupAlertDialog";
 import PopupAnnouncement from "@/components/Popup/PopupAnnouncement";
@@ -32,7 +32,7 @@ import FloatingToolIcons from "@/components/FloatingToolIcons";
 import { PageNameContextProvider } from "@/contexts/pageNameContext";
 import Loading from "@/components/UI/Loading";
 
-class Mobile extends Component {
+class SubIndex extends Component {
   constructor(props) {
     super(props);
 
@@ -660,4 +660,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Mobile));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(SubIndex));
