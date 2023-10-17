@@ -7,13 +7,13 @@ import reportImg from "@/assets/images/account/icon_report.svg";
 import inboxImg from "@/assets/images/account/icon_inbox.svg";
 import affiliateImg from "@/assets/images/account/icon_affiliate.svg";
 import downloadImg from "@/assets/images/account/icon_download.png";
-import AccountDialog from "@/components/Mobile/pages/Profile/ProfileMenu";
-import TransferDialog from "@/components/Mobile/pages/Transfer/TransferDialog";
-import ReportDialog from "@/components/Mobile/pages/Report/ReportDialog";
-import InboxDialog from "@/components/Mobile/pages/Inbox/InboxDialog";
-import AffiliateDialog from "@/components/Mobile/pages/Affiliate/AffiliateDialog";
-import ContactUsDialog from "@/components/Mobile/pages/ContactUs/ContactUsDialog";
-import DownloadAppDialog from "@/components/Mobile/pages/AppDownload/DownloadAppDialog";
+import AccountDialog from "@/pages/Profile/ProfileMenu";
+import TransferDialog from "@/pages/Transfer/TransferDialog";
+import ReportDialog from "@/pages/Report/ReportDialog";
+import InboxDialog from "@/pages/Inbox/InboxDialog";
+import AffiliateDialog from "@/pages/Affiliate/AffiliateDialog";
+import ContactUsDialog from "@/pages/ContactUs/ContactUsDialog";
+import DownloadAppDialog from "@/pages/AppDownload/DownloadAppDialog";
 import i18n from "@/utils/i18n";
 
 export enum NavCardKey {

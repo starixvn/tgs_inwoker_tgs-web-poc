@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GeneralState } from "@/types/general";
+import { GeneralState } from "@/types/stores/general";
 import {
   COMPOSEMEMO_BEGIN,
   COMPOSEMEMO_FAIL,

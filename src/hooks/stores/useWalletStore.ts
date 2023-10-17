@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { useDispatch, useSelector } from "react-redux";
-import { WalletState } from "@/types/wallet";
+import { WalletState } from "@/types/stores/wallet";
 import {
   GETWALLETBALANCE_BEGIN,
   GETWALLETEBALANCE_SUCCESS,

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Loading from "@/components/UI/Loading";
 import { GameService } from "@/api-services/services/GameService";
 import { GameTypeEnum } from "@/api-services/utils/Enum";
-import Maintenance from "@/components/Mobile/pages/Maintenance";
+import Maintenance from "@/pages/Maintenance";
 // try {
 // const channel = new BroadcastChannel('refreshBalance');
 // }catch {

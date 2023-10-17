@@ -5,7 +5,7 @@ import {
   BONUSNEW_FAILURE,
   BONUSNEW_SUCCESS,
 } from "@/api-services/constant/actionType";
-import { BonusState } from "@/types/bonus";
+import { BonusState } from "@/types/stores/bonus";
 
 /*
  * LIYI:
