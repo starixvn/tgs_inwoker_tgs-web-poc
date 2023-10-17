@@ -3,7 +3,7 @@ import Header from "@/components/Mobile/components/Header";
 import BottomAppBar from "@/components/Mobile/components/BottomAppBar";
 import styled from "styled-components";
 
-const MobileLayoutContainer = styled.div`
+const DefaultLayoutContainer = styled.div`
   position: relative;
   background: ${({ theme }) => theme.primaryDark};
 `;
@@ -19,11 +19,11 @@ type Props = {
 };
 const DefaultLayout = ({ children }: Props) => {
   return (
-    <MobileLayoutContainer>
+    <DefaultLayoutContainer>
       <Header />
       <ContentWrapper>{children}</ContentWrapper>
       <BottomAppBar />
-    </MobileLayoutContainer>
+    </DefaultLayoutContainer>
   );
 };
 
