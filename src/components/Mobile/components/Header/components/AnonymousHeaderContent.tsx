@@ -1,11 +1,40 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
-import { Button } from "@/components/Mobile/components/UI/Button";
 import { useHistory } from "react-router-dom";
+import { styled as muiStyled } from "@mui/material/styles";
+import { Button as MuiButton } from "@mui/material";
+import { media } from "@/theme/breakpoints";
 
 const ButtonContainer = styled.div`
   display: flex;
+  align-items: center;
+  gap: 20px;
+
+  ${media.sm} {
+    gap: 10px;
+  }
 `;
+
+export const HeaderButton = muiStyled(MuiButton)(({ theme }) => ({
+  whiteSpace: "nowrap",
+  padding: "12px 20px",
+  fontSize: "1.125rem",
+  lineHeight: "1.318rem",
+  fontWeight: 500,
+  borderRadius: "12px",
+  "&:disabled": {
+    background: theme.palette.tertiary.dark,
+    color: theme.palette.common.white,
+  },
+
+  [theme.breakpoints.up("sm")]: {
+    padding: "7px 20px",
+    borderRadius: "5px",
+    fontSize: "1rem",
+    lineHeight: "1,171rem",
+  },
+}));
+
 type Props = {};
 const AnonymousHeaderContent = (props: Props) => {
   const history = useHistory();
@@ -19,25 +48,24 @@ const AnonymousHeaderContent = (props: Props) => {
 
   return (
     <ButtonContainer>
-      <Button
+      <HeaderButton
         onClick={toggleLoginDialog}
         style={{
-          marginRight: "20px",
           background: "#5D50E0",
           color: "white",
           fontSize: "1rem",
         }}
       >
         Login
-      </Button>
+      </HeaderButton>
 
-      <Button
+      <HeaderButton
         color={"primary"}
         onClick={toggleRegisterDialog}
         style={{ background: "#E7415A", color: "white", fontSize: "1rem" }}
       >
         Register
-      </Button>
+      </HeaderButton>
     </ButtonContainer>
   );
 };
