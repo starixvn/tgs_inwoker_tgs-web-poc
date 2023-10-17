@@ -1,5 +1,6 @@
 import bg from "@/assets/images/home/mobile/vender_card_bg.png";
 import styled from "styled-components";
+import { media } from "@/theme/breakpoints";
 
 type Props = {
   imageUrl: string;
@@ -17,6 +18,10 @@ const CardVendorBg = styled.div`
   background-size: cover;
   box-sizing: border-box;
   position: relative;
+
+  ${media.sm} {
+    width: 118px;
+  }
 `;
 
 const GameIcon = styled.div<{ $imageUrl: string }>`
@@ -59,7 +64,7 @@ const GameName = styled.div`
 `;
 
 const VenderName = styled.div`
-   color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme.white};
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   font-size: 0.625rem;
   font-weight: 400;
@@ -80,9 +85,8 @@ const CardVendor = ({
   gameName,
   venderName,
   venderLogoUrl,
-  launchGame
+  launchGame,
 }: Props) => {
-
   return (
     <CardVendorBg onClick={launchGame}>
       <GameIcon $imageUrl={imageUrl}></GameIcon>
