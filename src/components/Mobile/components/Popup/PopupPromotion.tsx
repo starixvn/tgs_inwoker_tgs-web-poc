@@ -9,6 +9,7 @@ import { Dialog as MuiDialog } from "@mui/material";
 import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
 import IconCloseButton from "@/assets/images/promotion/close_icon.svg";
 import { useHistory } from "react-router-dom";
+import BannerImage from "@/components/Mobile/components/Promotion/BannerImage";
 
 const doNotShowPromotionDialogKey = "doNotShowPromotionDialog";
 
@@ -82,7 +83,7 @@ const PromotionBanner = ({
   };
   return (
     <PromotionBannerWrapper onClick={handleClickBanner}>
-      <img src={promotionData.mobileBanner} alt={promotionData.name} />
+      <BannerImage promotionData={promotionData} />
     </PromotionBannerWrapper>
   );
 };

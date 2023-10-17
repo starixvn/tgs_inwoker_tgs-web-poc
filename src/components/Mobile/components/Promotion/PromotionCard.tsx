@@ -5,7 +5,7 @@ import BannerImage from "./BannerImage";
 
 const PromotionCardContainer = styled.div`
   width: 100%;
-  height: 142px;
+  height: 128px;
   padding: 10px;
   border-radius: 10px;
   gap: 8px;
@@ -14,10 +14,11 @@ const PromotionCardContainer = styled.div`
   background: ${({ theme }) => theme.primaryLight};
 `;
 const BannerWrapper = styled.div`
-  width: 195px
-  height: 122px
+  width: 195px;
+  height: 108px;
 `;
 const PromotionTextContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -33,12 +34,14 @@ const DescriptionWrapper = styled.p`
   font-weight: 400;
   color: #ffffff;
   line-height: 16px;
-  height: 64px;
+  height: 32px;
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
 `;
 const ClickMoreText = styled.div`
+  position: absolute;
+  bottom: 0;
   color: #6a768b;
   font-size: 0.875rem;
   font-weight: 400;
