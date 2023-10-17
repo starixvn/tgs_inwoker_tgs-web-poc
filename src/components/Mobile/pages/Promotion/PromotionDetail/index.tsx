@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { Promotion } from "@/models/dto/general/GetPromotionListResDto";
-import JoinPromotionButton from "../../../components/Promotion/JoinPromotionButton";
-import BannerImage from "../../../components/Promotion/BannerImage";
+import JoinPromotionButton from "@/components/Mobile/components/Promotion/JoinPromotionButton";
+import BannerImage from "@/components/Mobile/components/Promotion/BannerImage";
 import i18n from "@/utils/i18n";
 import { NOT_SHOW_JOIN_BUTTON_KEY_LIST } from "@/components/Mobile/constants/promotion";
 import { media } from "@/theme/breakpoints";
@@ -20,6 +20,10 @@ const PromotionDetailContainer = styled.div`
 const BannerWrapper = styled.div`
   width: 100%;
   height: calc((100vw - 44px) * 0.4);
+  ${media.sm} {
+    height: calc(100% * 2.858);
+    border-radius: 12px;
+  }
 `;
 const ContentContainer = styled.div`
   margin: 20px 0;
@@ -32,11 +36,19 @@ const Title = styled.h2`
   color: ${({ theme }) => theme.yellow};
   font-size: 1.125rem;
   font-weight: 700;
+  ${media.sm} {
+    font-size: 2rem;
+    line-height: 2rem;
+  }
 `;
 const Description = styled.p`
   color: #ffffff;
   font-size: 0.875rem;
   font-weight: 500;
+  ${media.sm} {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+  }
 `;
 const JoinPromotionButtonWrapper = styled.div`
   position: fixed;
@@ -47,6 +59,10 @@ const JoinPromotionButtonWrapper = styled.div`
   justify-content: center;
   padding: 20px 0;
   background: ${({ theme }) => theme.primaryLight};
+  ${media.sm} {
+    position: relative;
+    background: transparent;
+  }
 `;
 
 const PromotionDetail = () => {

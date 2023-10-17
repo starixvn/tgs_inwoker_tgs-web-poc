@@ -8,8 +8,9 @@ import { REDIRECT_PROMOTION_TYPE } from "@/components/Mobile/constants/promotion
 import { useState } from "react";
 import Loading from "@/components/Mobile/components/UI/Loading";
 import i18n from "@/utils/i18n";
+import { media } from "@/theme/breakpoints";
 
-const Button = styled.button`
+const Button = styled.button<{ $disabled: boolean }>`
   width: 384px;
   height: 53px;
   padding: 12px 20px 12px 20px;
@@ -18,15 +19,19 @@ const Button = styled.button`
   background: ${({ theme }) => theme.secondary};
   color: #ffffff;
   font-size: 1.25rem;
-  curson: pointer;
-  background-image: ${({ disabled }: { disabled: boolean }) => {
-    return disabled
+  cursor: pointer;
+  background-image: ${({ $disabled }) => {
+    return $disabled
       ? `
     opacity: 0.65;
     background-color: grey;
     cursor: not-allowed;`
       : ``;
   }};
+  ${media.sm} {
+    height: 75px;
+    font-size: 2rem;
+  }
 `;
 
 const JoinPromotionButton = ({
@@ -77,7 +82,7 @@ const JoinPromotionButton = ({
   if (loading) return <Loading show={true} />;
 
   return (
-    <Button onClick={handleJoinPromotion} disabled={hasJoined}>
+    <Button onClick={handleJoinPromotion} $disabled={hasJoined}>
       Claim Bonus
     </Button>
   );
