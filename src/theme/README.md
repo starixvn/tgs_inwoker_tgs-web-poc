@@ -9,7 +9,8 @@ Here's an example of how to implement responsive design in each of them:
 
 > Note: We follow the mobile-first responsive design principle.
 
-## Styled Components
+## UI Frameworks
+### Styled Components
 ```typescript jsx
 import styled from "styled-components";
 import { media } from "@/theme/breakpoints";
@@ -30,7 +31,7 @@ const HeaderContainer = styled.div`
 `;
 ```
 
-## MUI
+### MUI
 ```typescript jsx
 import { styled as muiStyled } from "@mui/material/styles";
 
@@ -50,4 +51,28 @@ export const Button = muiStyled(MuiButton)(({ theme }) => ({
     padding: "7px 20px",
   },
 }))
+```
+
+## In JS
+```typescript jsx
+const DefaultLayout = ({ children }: Props) => {
+  // HERE!!!!!!!!!!!
+  const { isSmSize } = useRwd();
+  /*
+  * isSmSize,
+  * isMdSize,
+  * isLgSize,
+  * isXlSize, 
+  */ 
+
+  return (
+    <DefaultLayoutContainer>
+      <Header />
+      <ContentWrapper>{children}</ContentWrapper>
+
+      {/* HERE!!!!!!!!!!! */}
+      {isSmSize && <BottomAppBar />}
+    </DefaultLayoutContainer>
+  );
+};
 ```

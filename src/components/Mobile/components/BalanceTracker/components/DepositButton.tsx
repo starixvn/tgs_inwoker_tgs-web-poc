@@ -7,6 +7,7 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import { media } from "@/theme/breakpoints";
 import depositIcon from "@/assets/images/header/deposit_icon.svg";
 import Icon from "@/components/Mobile/components/Icon";
+import { useRwd } from "@/hooks/useRwd";
 
 const DepositButtonContainer = styled.div`
   background: linear-gradient(180deg, #922acf 0%, #2f26ad 100%);
@@ -29,8 +30,7 @@ const DepositButtonContainer = styled.div`
 
 const DepositButton = () => {
   const history = useHistory();
-  const theme = useTheme();
-  const isSmSize = useMediaQuery(theme.breakpoints.up("sm"));
+  const { isSmSize } = useRwd();
 
   const handleClick = useCallback(() => {
     history.push("/deposit");
