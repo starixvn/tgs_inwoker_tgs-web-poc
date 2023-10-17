@@ -20,7 +20,9 @@ const CardVendorBg = styled.div`
   position: relative;
 
   ${media.sm} {
-    width: 118px;
+    width: calc(16.67% - 14px);
+    min-width: 118px;
+    padding-bottom: calc((16.67% - 14px) * 1.34);
   }
 `;
 

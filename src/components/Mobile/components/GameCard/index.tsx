@@ -8,6 +8,7 @@ import Common from "@/utils/Common";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { badgeList } from "../../constants/games";
+import { media } from "@/theme/breakpoints";
 
 const GameCardWrapper = styled.div<{ $imageUrl: string }>`
   width: calc(50% - 8px);
@@ -17,6 +18,11 @@ const GameCardWrapper = styled.div<{ $imageUrl: string }>`
   box-sizing: border-box;
   position: relative;
   border: 1px solid ${(props) => props.theme.tertiary};
+
+  ${media.sm} {
+    width: calc(25% - 12px);
+    padding-top: calc(25% - 12px);
+  }
 `;
 
 const LikeIcon = styled.div<{ $imageUrl: string }>`
@@ -55,12 +61,12 @@ const NewBadgeIcon = styled.div<{ $imageUrl: string }>`
 `;
 
 const GameName = styled.div`
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    color: ${(props) => props.theme.tertiary};
-    font-size: 1.25rem;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  color: ${(props) => props.theme.tertiary};
+  font-size: 1.25rem;
 `;
 
 type GameCardProps = {
@@ -101,7 +107,10 @@ const GameCard = ({
       history.push("/login");
     } else {
       Common.closePreviousPopup();
-      Common.PopupCenter(`/joingame/${gameItem.id}/${gameItem.gpcode}`, "gamewindow");
+      Common.PopupCenter(
+        `/joingame/${gameItem.id}/${gameItem.gpcode}`,
+        "gamewindow"
+      );
 
       const gameWindow = window.open("", "gamewindow");
 
@@ -132,9 +141,11 @@ const GameCard = ({
   return (
     <GameCardWrapper
       onClick={launchGame}
-      $imageUrl={`${config.sourceUrl
-        }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${gameItem.code
-        }.jpg`}
+      $imageUrl={`${
+        config.sourceUrl
+      }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
+        gameItem.code
+      }.jpg`}
     >
       {isFavorite ? (
         <LikeIcon
