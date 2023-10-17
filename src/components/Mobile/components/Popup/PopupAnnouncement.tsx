@@ -6,6 +6,7 @@ import NotShowAgainHint from "@/components/Mobile/components/Popup/NotShowAgainH
 import { Dialog as MuiDialog } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
+import { media } from "@/theme/breakpoints";
 
 const dialogBgUrl =
   process.env.PUBLIC_URL + "/assets/images/announcement/announcement_bg.png";
@@ -23,13 +24,17 @@ const DialogContainer = styled(MuiDialog)`
     width: 321px;
     height: 283px;
     border-radius: 10px;
+
+    ${media.sm} {
+      width: 652px;
+      height: 386px;
+    }
   }
 `;
 
 const ChildContainer = styled.div`
   width: 100%;
   height: calc(283px - 20px - 20px);
-  overflow: scroll;
 `;
 
 const CloseIconContainer = styled.div`
@@ -52,6 +57,11 @@ const Content = styled.div`
   color: #ffffff;
   margin-top: 1rem;
   line-height: 1.2rem;
+
+  ${media.sm} {
+    font-size: 1.5rem;
+    line-height: 1.75rem;
+  }
 `;
 
 const Button = styled.div`
@@ -69,12 +79,17 @@ const Button = styled.div`
   bottom: 20px;
   transform: translateX(-50%);
   left: 50%;
+
+  ${media.sm} {
+    font-size: 2rem;
+    width: 281px;
+    height: 53px;
+  }
 `;
 
 const AnnouncementCardContainer = styled.div`
   padding: 20px;
   height: calc(283px - 52px - 20px - 20px);
-  overflow: scroll;
 `;
 
 const AnnouncementCard = ({

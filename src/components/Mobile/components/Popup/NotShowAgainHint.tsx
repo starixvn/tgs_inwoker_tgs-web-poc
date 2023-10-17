@@ -1,5 +1,6 @@
 import IconCheckBox from "@/assets/images/checkbox.svg";
 import styled from "styled-components";
+import { media } from "@/theme/breakpoints";
 
 const NotShowAgainHintContainer = styled.div`
   background: ${({ theme }) => theme.primaryLight};
@@ -17,6 +18,10 @@ const NotShowAgainHintContainer = styled.div`
   text-align: center;
   left: 50%;
   transform: translateX(-50%);
+
+  ${media.sm} {
+    top: calc(50% + 208px);
+  }
 `;
 
 type CheckBoxProps = {
@@ -28,7 +33,7 @@ const CheckBox = styled.div<CheckBoxProps>`
   background: ${(props: CheckBoxProps) =>
     props.$isCheck ? `url(${IconCheckBox}) no-repeat center center;` : null};
   margin-right: 10px;
-  border: ${(props) => (props.isCheck ? "0" : "1px")} solid #ffffff;
+  border: ${(props) => (props.$isCheck ? "0" : "1px")} solid #ffffff;
   border-radius: 5px;
 `;
 
