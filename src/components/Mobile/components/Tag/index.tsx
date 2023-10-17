@@ -17,7 +17,7 @@ const Wrapper = styled.div<{
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  min-width: ${({ $isShowIcon }) => ($isShowIcon ? "40px" : "60px")};
+  min-width: ${({ $isShowIcon }) => ($isShowIcon ? "40px" : "85px")};
   padding: 4px 8px;
   border-radius: 50px;
   background-color: ${({ $isActive, theme }) =>
