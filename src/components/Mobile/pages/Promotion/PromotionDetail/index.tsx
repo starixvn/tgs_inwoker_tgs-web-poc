@@ -5,13 +5,17 @@ import JoinPromotionButton from "../../../components/Promotion/JoinPromotionButt
 import BannerImage from "../../../components/Promotion/BannerImage";
 import i18n from "@/utils/i18n";
 import { NOT_SHOW_JOIN_BUTTON_KEY_LIST } from "@/components/Mobile/constants/promotion";
-
+import { media } from "@/theme/breakpoints";
 const moment = require("moment");
 
 const PromotionDetailContainer = styled.div`
   width: 100%;
   padding: 22px;
   color: #ffffff;
+  ${media.sm} {
+    max-width: 870px;
+    margin: 0 auto;
+  }
 `;
 const BannerWrapper = styled.div`
   width: 100%;
@@ -25,7 +29,7 @@ const TextArea = styled.div`
   margin-bottom: 40px;
 `;
 const Title = styled.h2`
-  color: #f3de4b;
+  color: ${({ theme }) => theme.yellow};
   font-size: 1.125rem;
   font-weight: 700;
 `;

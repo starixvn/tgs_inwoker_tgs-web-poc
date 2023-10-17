@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { useRwd } from "@/hooks/useRwd";
 
 const BannerImage = ({ promotionData }: { promotionData: Promotion }) => {
-  const { isSmSize } = useRwd();
+  const { isMobileSize } = useRwd();
   const language = i18n.language;
 
   const [mobileBanner, desktopBanner] = useMemo(() => {
@@ -27,11 +27,11 @@ const BannerImage = ({ promotionData }: { promotionData: Promotion }) => {
     return [mobileBanner, desktopBanner];
   }, [promotionData, language]);
 
-  const imageUrl = isSmSize ? mobileBanner : desktopBanner;
+  const imageUrl = isMobileSize ? mobileBanner : desktopBanner;
   return (
     <img
       src={imageUrl}
-      alt="promotion banner"
+      alt={promotionData.name}
       width={"100%"}
       height={"100%"}
       style={{ objectFit: "cover" }}

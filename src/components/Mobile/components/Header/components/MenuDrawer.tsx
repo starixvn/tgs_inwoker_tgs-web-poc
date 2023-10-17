@@ -44,16 +44,21 @@ type Props = {
   handleClose: () => void;
 };
 const MenuDrawer = ({ isOpen, handleClose }: Props) => {
-  const { isDesktopSize } = useRwd();
+  const { isDesktopSize, isMobileSize } = useRwd();
 
   const handleEnterVip = () => {
     AppHistory.push("/vip");
-    handleClose();
+    if (isMobileSize) handleClose();
   };
 
   const handleEnterBettingBonus = () => {
     AppHistory.push("/betting-bonus");
-    handleClose();
+    if (isMobileSize) handleClose();
+  };
+
+  const handleEnterPromotions = () => {
+    AppHistory.push("/promotion-list");
+    if (isMobileSize) handleClose();
   };
 
   return (
@@ -78,7 +83,7 @@ const MenuDrawer = ({ isOpen, handleClose }: Props) => {
         <img src={cardBonus} alt={"bonus"} />
       </DrawerCard>
 
-      <DrawerCard>
+      <DrawerCard onClick={handleEnterPromotions}>
         <img src={cardPromotions} alt={"promotions"} />
       </DrawerCard>
 

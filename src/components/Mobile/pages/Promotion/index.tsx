@@ -3,9 +3,14 @@ import PromotionCard from "@/components/Mobile/components/Promotion/PromotionCar
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { Promotion as TypePromotion } from "@/models/dto/general/GetPromotionListResDto";
 import EmptyPage from "@/components/Mobile/components/Promotion/EmptyPage";
+import { media } from "@/theme/breakpoints";
 
 const PromotionContainer = styled.div`
   padding: 22px 20px;
+  ${media.sm} {
+    max-width: 870px;
+    margin: 0 auto;
+  }
 `;
 
 const PromotionCardListContainer = styled.div`
