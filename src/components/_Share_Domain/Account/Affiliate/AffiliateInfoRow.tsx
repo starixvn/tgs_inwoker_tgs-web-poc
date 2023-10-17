@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import { Button } from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/UI/Button";
 import i18n from "@/utils/i18n";
 
 const AffiliateInfoRowContainer = styled.div`

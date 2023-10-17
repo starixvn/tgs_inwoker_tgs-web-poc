@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Tab from "@/components/Mobile/components/UI/Tabs/Tab";
+import Tab from "@/components/UI/Tabs/Tab";
 
 const TabsContainer = styled.div`
   display: flex;

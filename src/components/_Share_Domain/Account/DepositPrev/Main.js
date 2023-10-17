@@ -13,9 +13,9 @@ import {
   ItemContainer,
   Remark,
 } from "@/components/Mobile/styles/forms";
-import { Button } from "@/components/Mobile/components/UI/Button";
-import { Select } from "@/components/Mobile/components/UI/Select";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
+import { Button } from "@/components/UI/Button";
+import { Select } from "@/components/UI/Select";
+import { TextField } from "@/components/UI/TextField";
 import Avatar from "@/components/Mobile/components/Avatar";
 
 const GMOstyle = config.brand === "GMO";

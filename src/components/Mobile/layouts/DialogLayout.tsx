@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback } from "react";
 import BottomAppBar from "@/components/Mobile/components/BottomAppBar";
 import styled from "styled-components";
-import DialogHeader from "@/components/Mobile/components/UI/Dialog/DialogHeader";
+import DialogHeader from "@/components/UI/Dialog/DialogHeader";
 import { usePageName } from "@/hooks/usePageName";
 import { useHistory } from "react-router-dom";
 

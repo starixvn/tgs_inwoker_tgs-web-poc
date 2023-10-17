@@ -3,7 +3,7 @@ import i18n from "@/utils/i18n";
 import Common from "@/utils/Common";
 import styled from "styled-components";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
+import { TextField } from "@/components/UI/TextField";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import WalletSelect from "@/components/_Share_Domain/Account/TransferPrev/components/WalletSelect";
 import { theme } from "@/theme";

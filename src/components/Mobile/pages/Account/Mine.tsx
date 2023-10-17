@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import styled from "styled-components";
 import InfoCard from "@/components/Mobile/components/Account/InfoCard";
-import Tabs, { TabItem } from "@/components/Mobile/components/UI/Tabs";
+import Tabs, { TabItem } from "@/components/UI/Tabs";
 import accountImg from "@/assets/images/account/icon_account.png";
 import infoImg from "@/assets/images/account/icon_info.png";
 import { useTab } from "@/hooks/account/useTab";

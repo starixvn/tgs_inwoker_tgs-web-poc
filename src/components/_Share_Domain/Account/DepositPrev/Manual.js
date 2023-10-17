@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-
 import { withRouter } from "react-router-dom";
-
 import "react-lazy-load-image-component/src/effects/blur.css";
-
 import { walletAction } from "@/api-services/actions/walletAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
-import Button from "@/components/Share/Button";
 import i18n from "@/utils/i18n";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
+import { Button } from "@/components/UI/Button";
 
 const Container = styled.div``;
 const ContentBg = styled.div`
@@ -196,12 +193,9 @@ class Manual extends Component {
           })()}
         </ContentBg>
 
-        <Button
-          style={{ margin: "20px auto" }}
-          labelStyle={{ color: "#fff" }}
-          label={i18n.t("deposit.upload")}
-          onClick={this.handleDepositConfirmClick}
-        ></Button>
+        <Button onClick={this.handleDepositConfirmClick}>
+          {i18n.t("deposit.upload")}
+        </Button>
       </Container>
     );
   }

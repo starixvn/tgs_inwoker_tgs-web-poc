@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Arrow from "@/assets/images/bettingBonus/icon_arrow.svg";
-import LevelIcon from "@/components/Mobile/components/UI/LevelIcon";
+import LevelIcon from "@/components/UI/LevelIcon";
 import { TypeProductRebateByLevel } from "@/components/Mobile/pages/BettingBonus";
 
 const CurrentLevelBannerContainer = styled.div`

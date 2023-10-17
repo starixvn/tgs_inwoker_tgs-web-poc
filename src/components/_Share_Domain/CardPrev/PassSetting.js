@@ -6,11 +6,10 @@ import { styled as muiStyled } from "@mui/material/styles";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { AccountService } from "@/api-services/services/AccountService";
 import { UPDATE_INFO } from "@/api-services/constant/actionType";
-import Header from "@/components/Mobile/components/_PrevShare/Header";
-import Textbox from "@/components/Mobile/components/_PrevShare/Textbox";
-import Button from "@/components/Mobile/components/_PrevShare/Button";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
 import i18n from "@/utils/i18n";
+import { Button } from "@/components/UI/Button";
+import { TextField } from "@/components/UI/TextField";
 
 const Container = styled.div`
   width: 100%;
@@ -158,38 +157,27 @@ class NameVerification extends Component {
   render() {
     return (
       <Container>
-        <StyledAppBar>
-          <Header
-            onBackClick={this.handleBackClick}
-            title={i18n.t("card.passSetting.title")}
-            position={"sticky"}
-            backgroundColor={"transparent"}
-          ></Header>
-          <BalanceLabel>￥{this.props.balance}</BalanceLabel>
-        </StyledAppBar>
         <SubTitle>{i18n.t("card.passSetting.settingWithdrawalPass")}</SubTitle>
-        <Textbox
+        <TextField
           style={{ margin: "20px auto 20px auto" }}
           value={this.state.password}
           onChange={this.handlePasswordChange}
           type={"password"}
           placeholder={i18n.t("card.passSetting.withdrawalPassPlaceholder")}
           label={i18n.t("card.passSetting.withdrawalPass")}
-        ></Textbox>
-        <Textbox
+        />
+        <TextField
           style={{ margin: "20px auto 20px auto" }}
           value={this.state.confirmPassword}
           onChange={this.handleConfirmPasswordChange}
           type={"password"}
           placeholder={i18n.t("card.passSetting.confirmWithdrawalPass")}
           label={i18n.t("card.passSetting.reEnterWithdrawalPass")}
-        ></Textbox>
+        ></TextField>
         <BottomInfo>{i18n.t("card.passSetting.withdrawalPassDesc")}</BottomInfo>
-        <Button
-          style={{ margin: "40px auto 0 auto" }}
-          label={i18n.t("common.confirm")}
-          onClick={this.handleConfirmClick}
-        ></Button>
+        <Button onClick={this.handleConfirmClick}>
+          {i18n.t("common.confirm")}
+        </Button>
 
         <StyledModal onClose={this.handleClose} open={this.state.open}>
           <>

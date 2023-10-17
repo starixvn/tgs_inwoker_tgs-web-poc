@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Step from "@/components/Mobile/components/_PrevShare/Step";
+import Step from "@/components/_PrevShare/Step";
 import BaseProfile from "./BaseProfile";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { AccountService } from "@/api-services/services/AccountService";
@@ -11,8 +11,8 @@ import {
   LabelContainer,
   ItemContainer,
 } from "@/components/Mobile/styles/forms";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
-import TextFieldWithButton from "@/components/Mobile/components/UI/TextFieldWithButton";
+import { TextField } from "@/components/UI/TextField";
+import TextFieldWithButton from "@/components/UI/TextFieldWithButton";
 
 class ChangeEmail extends BaseProfile {
   componentDidMount() {

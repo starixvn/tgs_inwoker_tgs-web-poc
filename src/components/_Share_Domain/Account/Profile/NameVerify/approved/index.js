@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import i18n from "@/utils/i18n";
 import BaseProfile from "../../BaseProfile";
 import config from "@/config/config";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
+import { TextField } from "@/components/UI/TextField";
 import {
   FormControl,
   LabelContainer,

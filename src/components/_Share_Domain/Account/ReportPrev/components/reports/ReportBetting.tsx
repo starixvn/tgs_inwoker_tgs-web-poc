@@ -17,7 +17,7 @@ import {
 import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
 import { ReportService } from "@/services/ReportService";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
 
 export interface TabData {
   dateFrom: Date;

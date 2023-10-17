@@ -1,5 +1,5 @@
 import React from "react";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
 import CurrentLevelBanner from "@/components/Mobile/components/BettingBonus/CurrentLevelBanner";
 import { useBettingBonus } from "@/hooks/betting-bonus/useBettingBonus";
 import styled from "styled-components";

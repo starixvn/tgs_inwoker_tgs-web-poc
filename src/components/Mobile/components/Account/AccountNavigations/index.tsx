@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import BalanceTracker from "@/components/Mobile/components/BalanceTracker";
 import LanguageSwitch from "@/components/Mobile/components/LanguageSwitch";
-import { Button } from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/UI/Button";
 import styled from "styled-components";
 import NavCard from "@/components/Mobile/components/Account/AccountNavigations/NavCard";
 import AppDownloadButton from "@/components/Mobile/components/Account/AppDownloadButton";

@@ -1,10 +1,10 @@
 import React from "react";
 import i18n from "@/utils/i18n";
-import DialogPopup from "@/components/Mobile/components/UI/Dialog/DialogPopup";
+import DialogPopup from "@/components/UI/Dialog/DialogPopup";
 import {
   DialogContent,
   ButtonConfirm,
-} from "@/components/Mobile/components/UI/Dialog/dialogStyles";
+} from "@/components/UI/Dialog/dialogStyles";
 
 type Props = {
   isDialogOpen: boolean;

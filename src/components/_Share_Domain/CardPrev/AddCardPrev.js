@@ -6,18 +6,18 @@ import { styled as muiStyled } from "@mui/material/styles";
 import { walletAction } from "@/api-services/actions/walletAction";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
-import MessageDialog from "@/components/Mobile/components/_PrevShare/MessageDialog";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import MessageDialog from "@/components/_PrevShare/MessageDialog";
+import Loading from "@/components/UI/Loading";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
 import Common from "@/utils/Common";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
+import { TextField } from "@/components/UI/TextField";
 import {
   FormControl,
   ItemContainer,
   LabelContainer,
 } from "@/components/Mobile/styles/forms";
-import { Button } from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/UI/Button";
 
 const Container = styled.div`
   width: 100%;

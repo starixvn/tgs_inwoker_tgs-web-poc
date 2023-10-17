@@ -1,4 +1,4 @@
-import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
+import { UpTransition } from "@/components/UI/Dialog/Transition";
 import { Dialog as MuiDialog } from "@mui/material";
 import React, {
   CSSProperties,
@@ -7,7 +7,7 @@ import React, {
   RefAttributes,
 } from "react";
 import styled from "styled-components";
-import DialogHeader from "@/components/Mobile/components/UI/Dialog/DialogHeader";
+import DialogHeader from "@/components/UI/Dialog/DialogHeader";
 import { TransitionProps } from "@mui/material/transitions";
 
 const DialogContainer = styled(MuiDialog)`

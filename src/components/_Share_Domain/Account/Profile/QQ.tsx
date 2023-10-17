@@ -3,17 +3,17 @@ import { useHistory } from "react-router-dom";
 import i18n from "@/utils/i18n";
 import { AccountService } from "@/api-services/services/AccountService";
 import config from "@/config/config";
-import BottomNote from "@/components/Mobile/components/UI/BottomNote";
+import BottomNote from "@/components/UI/BottomNote";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import Loading from "@/components/Mobile/components/UI/Loading";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
+import Loading from "@/components/UI/Loading";
+import { TextField } from "@/components/UI/TextField";
 import {
   FormControl,
   LabelContainer,
   ItemContainer,
 } from "@/components/Mobile/styles/forms";
-import { Button } from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/UI/Button";
 
 const QQ = () => {
   const { account, getAccountProfile } = useAccountStore();

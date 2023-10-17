@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import BaseProfile from "./BaseProfile";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { AccountService } from "@/api-services/services/AccountService";
-import BottomNote from "@/components/Mobile/components/UI/BottomNote";
+import BottomNote from "@/components/UI/BottomNote";
 
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
@@ -13,8 +13,8 @@ import {
   ItemContainer,
   LabelContainer,
 } from "@/components/Mobile/styles/forms";
-import TextFieldWithButton from "@/components/Mobile/components/UI/TextFieldWithButton";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
+import TextFieldWithButton from "@/components/UI/TextFieldWithButton";
+import { TextField } from "@/components/UI/TextField";
 class Email extends BaseProfile {
   state = {
     countdownToken: 0,

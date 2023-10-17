@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { TypeProductRebateByLevel } from "@/components/Mobile/pages/BettingBonus";
-import LevelIcon from "@/components/Mobile/components/UI/LevelIcon";
+import LevelIcon from "@/components/UI/LevelIcon";
 
 const LevelTableContainer = styled.table`
   width: 100%;

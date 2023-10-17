@@ -6,7 +6,7 @@ import BaseProfile from "../../BaseProfile";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { RESET_ACCOUNTRESULT } from "@/api-services/constant/actionType";
 import config from "@/config/config";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
+import { TextField } from "@/components/UI/TextField";
 import {
   FormControl,
   LabelContainer,

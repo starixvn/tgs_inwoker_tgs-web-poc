@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { useState } from "react";
-import Carousel from "@/components/Mobile/components/UI/Carousel";
+import Carousel from "@/components/UI/Carousel";
 import { useUiStore } from "@/hooks/stores/useUiStore";
 import NotShowAgainHint from "@/components/Mobile/components/Popup/NotShowAgainHint";
 import { Dialog as MuiDialog } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
-import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
+import { UpTransition } from "@/components/UI/Dialog/Transition";
 import { media } from "@/theme/breakpoints";
 
 const mobileBgUrl =

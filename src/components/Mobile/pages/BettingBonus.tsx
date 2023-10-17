@@ -1,7 +1,7 @@
 import CurrentLevelBanner from "@/components/Mobile/components/BettingBonus/CurrentLevelBanner";
 import LevelTable from "@/components/Mobile/components/BettingBonus/LevelTable";
 import styled from "styled-components";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
 import { useBettingBonus } from "@/hooks/betting-bonus/useBettingBonus";
 import { media } from "@/theme/breakpoints";
 

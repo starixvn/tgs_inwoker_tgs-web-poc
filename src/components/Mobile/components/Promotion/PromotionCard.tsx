@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Promotion } from "@/models/dto/general/GetPromotionListResDto";
 import BannerImage from "./BannerImage";
 import { media } from "@/theme/breakpoints";
-import { Button } from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/UI/Button";
 import { useRwd } from "@/hooks/useRwd";
 import { useTheme } from "styled-components";
 

@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import i18n from "@/utils/i18n";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import { DatePicker } from "@/components/Mobile/components/UI/DatePicker";
+import { DatePicker } from "@/components/UI/DatePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 import styled from "styled-components";

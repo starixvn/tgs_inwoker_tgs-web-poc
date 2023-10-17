@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
 import { useHistory } from "react-router-dom";
-import BottomNote from "@/components/Mobile/components/UI/BottomNote";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import BottomNote from "@/components/UI/BottomNote";
+import Loading from "@/components/UI/Loading";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
@@ -17,7 +17,7 @@ import {
   ItemContainer,
   LabelContainer,
 } from "@/components/Mobile/styles/forms";
-import { Button } from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/UI/Button";
 
 const moment = require("moment");
 const localeMap: { [key in string]: Locale } = {

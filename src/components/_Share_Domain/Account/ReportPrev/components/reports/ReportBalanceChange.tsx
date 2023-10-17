@@ -13,7 +13,7 @@ import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
 import ErrorSwitcher from "@/utils/ErrorSwitcher";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { ReportService } from "@/services/ReportService";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
 
 export interface TabData {
   dateFrom: Date;

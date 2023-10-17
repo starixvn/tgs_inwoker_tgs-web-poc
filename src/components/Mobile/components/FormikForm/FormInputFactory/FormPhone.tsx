@@ -1,11 +1,8 @@
 import React from "react";
-import {
-  TextField,
-  GrayInputWrapper,
-} from "@/components/Mobile/components/UI/TextField";
+import { TextField, GrayInputWrapper } from "@/components/UI/TextField";
 import { FormikFormInput } from "@/components/Mobile/components/FormikForm";
 import styled from "styled-components";
-import { Select } from "@/components/Mobile/components/UI/Select";
+import { Select } from "@/components/UI/Select";
 import config from "@/config/config";
 import { MenuItem } from "@mui/material";
 

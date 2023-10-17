@@ -1,12 +1,12 @@
 import React from "react";
 import i18n from "@/utils/i18n";
 import FormikForm from "@/components/Mobile/components/FormikForm";
-import Checkbox from "@/components/Mobile/components/UI/Checkbox";
+import Checkbox from "@/components/UI/Checkbox";
 import RedirectToRegisterHint from "@/components/_Share_Domain/authentication/LoginForm/RedirectToRegisterHint";
 import { useLoginForm } from "@/hooks/auth/useAuthForm/useLoginForm";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
 
 const TitleContainer = styled.div`
   font-size: 2.5rem !important;

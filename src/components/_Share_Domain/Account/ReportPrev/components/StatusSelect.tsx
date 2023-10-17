@@ -1,6 +1,6 @@
 import React from "react";
 import i18n from "@/utils/i18n";
-import { Select } from "@/components/Mobile/components/UI/Select";
+import { Select } from "@/components/UI/Select";
 import styled from "styled-components";
 import { FormControl } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";

@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-
 import "react-lazy-load-image-component/src/effects/blur.css";
-
-import Button from "@/components/Share/Button";
 import i18n from "@/utils/i18n";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
+import { Button } from "@/components/UI/Button";
+
 const Container = styled.div``;
 const ContentBg = styled.div`
   background: #fff;
@@ -154,25 +153,19 @@ class DetailsManual extends Component {
           if (this.props.isManual === true) {
             return (
               <Button
-                style={{ margin: "20px auto" }}
-                labelStyle={{ color: "#fff" }}
-                label={i18n.t("deposit.uploadReceipt")}
                 onClick={this.handleUploadClick}
                 disabled={this.state.files.length <= 0}
-              ></Button>
+              >
+                {i18n.t("deposit.uploadReceipt")}
+              </Button>
             );
           }
         })()}
-        <Button
-          style={{ margin: "20px auto" }}
-          labelStyle={{ color: "#fff" }}
-          label={
-            this.props.isManual === true
-              ? i18n.t("common.back")
-              : i18n.t("common.complete")
-          }
-          onClick={this.props.handleRestartClick}
-        ></Button>
+        <Button onClick={this.props.handleRestartClick}>
+          {this.props.isManual === true
+            ? i18n.t("common.back")
+            : i18n.t("common.complete")}
+        </Button>
       </Container>
     );
   }

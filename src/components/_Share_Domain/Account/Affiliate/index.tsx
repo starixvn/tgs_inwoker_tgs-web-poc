@@ -1,12 +1,12 @@
 import AffiliateInfoRow from "@/components/_Share_Domain/Account/Affiliate/AffiliateInfoRow";
 import RebateTable from "@/components/_Share_Domain/Account/Affiliate/RebateTable";
-import { Button } from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/UI/Button";
 import { useRebateTable } from "@/hooks/account/affiliate/useRebateTable";
 import QRCode from "react-qr-code";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
 import React from "react";
-import { Select } from "@/components/Mobile/components/UI/Select";
+import { Select } from "@/components/UI/Select";
 import { FormControl } from "@/components/Mobile/styles/forms";
 import { ImageActionEnum, useImageActions } from "@/hooks/useImageActions";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";

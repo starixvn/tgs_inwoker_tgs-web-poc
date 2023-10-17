@@ -7,7 +7,7 @@ import { walletAction } from "@/api-services/actions/walletAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
 import WithdrawInfoCard from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawInfoCard";
 import ManageBankCardButton from "@/components/_Share_Domain/Account/WithdrawalPrev/components/ManageBankCardButton";
 import WithdrawAllToMainWallet from "@/components/_Share_Domain/Account/WithdrawalPrev/components/WithdrawAllToMainWallet";
@@ -17,9 +17,9 @@ import {
   LabelContainer,
   Remark,
 } from "@/components/Mobile/styles/forms";
-import { Button } from "@/components/Mobile/components/UI/Button";
-import { Select } from "@/components/Mobile/components/UI/Select";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
+import { Button } from "@/components/UI/Button";
+import { Select } from "@/components/UI/Select";
+import { TextField } from "@/components/UI/TextField";
 import Modal from "@mui/material/Modal";
 import { styled as muiStyled } from "@mui/material/styles";
 import styled from "styled-components";

@@ -1,5 +1,5 @@
 import React from "react";
-import { TabItem } from "@/components/Mobile/components/UI/Tabs/index";
+import { TabItem } from "@/components/UI/Tabs/index";
 import styled from "styled-components";
 import { theme } from "@/theme";
 

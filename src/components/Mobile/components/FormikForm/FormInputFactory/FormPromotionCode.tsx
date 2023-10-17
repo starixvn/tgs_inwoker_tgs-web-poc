@@ -1,12 +1,9 @@
 import React from "react";
-import {
-  GrayInputWrapper,
-  TextField,
-} from "@/components/Mobile/components/UI/TextField";
+import { GrayInputWrapper, TextField } from "@/components/UI/TextField";
 import { FormikFormInput } from "@/components/Mobile/components/FormikForm";
 import { getFormInputType } from "@/components/Mobile/components/FormikForm/utils/getFormInputType";
 import styled from "styled-components";
-import { Select } from "@/components/Mobile/components/UI/Select";
+import { Select } from "@/components/UI/Select";
 import { MenuItem } from "@mui/material";
 import { UserTypeEnum } from "@/hooks/auth/useAuthForm/useRegisterForm";
 import i18n from "@/utils/i18n";

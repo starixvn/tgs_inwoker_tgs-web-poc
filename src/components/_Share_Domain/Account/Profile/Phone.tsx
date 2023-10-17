@@ -3,19 +3,19 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
-import BottomNote from "@/components/Mobile/components/UI/BottomNote";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import BottomNote from "@/components/UI/BottomNote";
+import Loading from "@/components/UI/Loading";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { AccountService } from "@/services/AccountService";
-import TextFieldWithButton from "@/components/Mobile/components/UI/TextFieldWithButton";
+import TextFieldWithButton from "@/components/UI/TextFieldWithButton";
 import {
   FormControl,
   LabelContainer,
   ItemContainer,
 } from "@/components/Mobile/styles/forms";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
-import { Select } from "@/components/Mobile/components/UI/Select";
+import { TextField } from "@/components/UI/TextField";
+import { Select } from "@/components/UI/Select";
 
 const PhoneContainer = styled.div`
   display: flex;

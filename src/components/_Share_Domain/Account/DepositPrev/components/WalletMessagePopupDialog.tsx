@@ -3,12 +3,12 @@ import i18n from "@/utils/i18n";
 import { WALLET_HIDEMESSAGE } from "@/api-services/constant/actionType";
 import { useDispatch } from "react-redux";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
-import DialogPopup from "@/components/Mobile/components/UI/Dialog/DialogPopup";
+import DialogPopup from "@/components/UI/Dialog/DialogPopup";
 import {
   DialogContent,
   DialogTitle,
   ButtonConfirm,
-} from "@/components/Mobile/components/UI/Dialog/dialogStyles";
+} from "@/components/UI/Dialog/dialogStyles";
 
 type Props = {};
 const WalletMessagePopupDialog = (props: Props) => {

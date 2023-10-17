@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
-import { Button } from "@/components/Mobile/components/UI/Button";
+import { TextField } from "@/components/UI/TextField";
+import { Button } from "@/components/UI/Button";
 import { InputAdornment, TextFieldProps } from "@mui/material";
 
 const CustomText = styled.div`

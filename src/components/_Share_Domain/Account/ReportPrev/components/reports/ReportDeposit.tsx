@@ -10,11 +10,11 @@ import {
   ReportContainer,
 } from "@/components/_Share_Domain/Account/ReportPrev/styles";
 import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
-import { Button } from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/UI/Button";
 import { useHistory } from "react-router-dom";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { ReportService } from "@/services/ReportService";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
 import { useDepositStatus } from "@/components/_Share_Domain/Account/ReportPrev/hooks/useDepositStatus";
 import StatusSelect from "@/components/_Share_Domain/Account/ReportPrev/components/StatusSelect";
 

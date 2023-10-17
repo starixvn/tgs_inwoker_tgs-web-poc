@@ -5,7 +5,7 @@ import styled from "styled-components";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 import { accountAction } from "@/api-services/actions/accountAction";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
 import ReportTypeTabs from "@/components/_Share_Domain/Account/ReportPrev/components/ReportTypeTabs";
 import DateRangeWithDatePicker from "@/components/_Share_Domain/Account/ReportPrev/components/DateRangeWithDatePicker";
 import DateRangeWithIntervalSelector from "@/components/_Share_Domain/Account/ReportPrev/components/DateRangeWithIntervalSelector";

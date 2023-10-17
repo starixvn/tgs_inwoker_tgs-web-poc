@@ -4,14 +4,14 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { Modal, Slide } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
-import Button from "@/components/Mobile/components/_PrevShare/Button";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
 import i18n from "@/utils/i18n";
 import { walletAction } from "@/api-services/actions/walletAction";
 import { RESET_WALLETRESULT } from "@/api-services/constant/actionType";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { Button } from "@/components/UI/Button";
 
 const Container = styled.div``;
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -203,16 +203,10 @@ class Details extends Component {
                   </RightLabel>
                   <SplitBoth></SplitBoth>
                 </ContentBg>
-                <Button
-                  labelStyle={{ color: "#fff" }}
-                  onClick={this.handleWithdrawalCancelClick}
-                >
+                <Button onClick={this.handleWithdrawalCancelClick}>
                   {i18n.t("common.cancel")}
                 </Button>
-                <Button
-                  labelStyle={{ color: "#fff" }}
-                  onClick={this.handleWithdrawalConfirmClick}
-                >
+                <Button onClick={this.handleWithdrawalConfirmClick}>
                   {i18n.t("common.confirm")}
                 </Button>
               </React.Fragment>

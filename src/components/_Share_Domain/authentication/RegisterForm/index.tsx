@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Checkbox from "@/components/Mobile/components/UI/Checkbox";
+import Checkbox from "@/components/UI/Checkbox";
 import i18n from "@/utils/i18n";
 import RedirectToLoginHint from "@/components/_Share_Domain/authentication/RegisterForm/RedirectToLoginHint";
 import { useRegisterForm } from "@/hooks/auth/useAuthForm/useRegisterForm";

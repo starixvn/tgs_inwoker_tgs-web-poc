@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ContextMenu from "@/components/Mobile/components/ContextMenu";
 import avatarImg from "@/assets/images/account/avatar.png";
-import SvgIcon from "@/components/Mobile/components/UI/SvgIcon";
-import Modal from "@/components/Mobile/components/UI/Modal";
+import SvgIcon from "@/components/UI/SvgIcon";
+import Modal from "@/components/UI/Modal";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { media } from "@/theme/breakpoints";
 

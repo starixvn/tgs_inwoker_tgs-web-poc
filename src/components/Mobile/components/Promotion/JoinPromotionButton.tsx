@@ -6,7 +6,7 @@ import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useHistory } from "react-router-dom";
 import { REDIRECT_PROMOTION_TYPE } from "@/components/Mobile/constants/promotion";
 import { useState } from "react";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
 import i18n from "@/utils/i18n";
 import { media } from "@/theme/breakpoints";
 

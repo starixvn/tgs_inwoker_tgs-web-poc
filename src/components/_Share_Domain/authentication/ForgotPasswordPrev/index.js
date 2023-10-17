@@ -5,14 +5,11 @@ import { withRouter } from "react-router-dom";
 import { AccountService } from "@/api-services/services/AccountService";
 import config from "@/config/config";
 import i18n from "@/utils/i18n";
-import TextFieldWithButton from "@/components/Mobile/components/UI/TextFieldWithButton";
-import { Button } from "@/components/Mobile/components/UI/Button";
-import {
-  GrayInputWrapper,
-  TextField,
-} from "@/components/Mobile/components/UI/TextField";
+import TextFieldWithButton from "@/components/UI/TextFieldWithButton";
+import { Button } from "@/components/UI/Button";
+import { GrayInputWrapper, TextField } from "@/components/UI/TextField";
 import { FormControl } from "@/components/Mobile/styles/forms";
-import { Select } from "@/components/Mobile/components/UI/Select";
+import { Select } from "@/components/UI/Select";
 
 const PhoneContainer = styled.div`
   display: flex;

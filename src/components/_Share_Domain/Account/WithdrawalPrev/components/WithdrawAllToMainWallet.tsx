@@ -3,7 +3,7 @@ import i18n from "@/utils/i18n";
 import styled from "styled-components";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
-import { Button } from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/UI/Button";
 
 const CustomLabel = styled.div`
   font-size: 18px;

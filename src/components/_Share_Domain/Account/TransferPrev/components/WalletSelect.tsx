@@ -5,7 +5,7 @@ import { Provider } from "@/types/game";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import { TransferWallet } from "@/components/_Share_Domain/Account/TransferPrev/components/TransferCard";
 import i18n from "@/utils/i18n";
-import { Select } from "@/components/Mobile/components/UI/Select";
+import { Select } from "@/components/UI/Select";
 
 type Props = {
   value: string;

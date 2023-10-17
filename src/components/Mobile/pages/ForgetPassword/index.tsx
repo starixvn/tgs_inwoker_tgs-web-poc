@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import i18n from "@/utils/i18n";
 import styled from "styled-components";
-import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
+import Dialog from "@/components/UI/Dialog/Dialog";
 import ForgotPasswordPrev from "@/components/_Share_Domain/authentication/ForgotPasswordPrev";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { usePageName } from "@/hooks/usePageName";

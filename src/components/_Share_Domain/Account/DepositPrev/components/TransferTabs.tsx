@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import Tabs, { TabItem } from "@/components/Mobile/components/UI/Tabs";
+import Tabs, { TabItem } from "@/components/UI/Tabs";
 import i18n from "@/utils/i18n";
 import { useTab } from "@/hooks/account/useTab";
 import styled from "styled-components";

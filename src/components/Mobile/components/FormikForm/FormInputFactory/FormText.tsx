@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  TextField,
-  GrayInputWrapper,
-} from "@/components/Mobile/components/UI/TextField";
+import { TextField, GrayInputWrapper } from "@/components/UI/TextField";
 import { FormikFormInput } from "@/components/Mobile/components/FormikForm";
 import { getFormInputType } from "@/components/Mobile/components/FormikForm/utils/getFormInputType";
 

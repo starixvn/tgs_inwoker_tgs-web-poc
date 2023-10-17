@@ -1,4 +1,4 @@
-import { UpTransition } from "@/components/Mobile/components/UI/Dialog/Transition";
+import { UpTransition } from "@/components/UI/Dialog/Transition";
 import { Dialog as MuiDialog } from "@mui/material";
 import React from "react";
 import styled from "styled-components";

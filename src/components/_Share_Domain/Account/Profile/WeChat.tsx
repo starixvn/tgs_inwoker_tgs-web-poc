@@ -4,16 +4,16 @@ import i18n from "@/utils/i18n";
 import config from "@/config/config";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import Loading from "@/components/Mobile/components/UI/Loading";
-import BottomNote from "@/components/Mobile/components/UI/BottomNote";
+import Loading from "@/components/UI/Loading";
+import BottomNote from "@/components/UI/BottomNote";
 import { AccountService } from "@/services/AccountService";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
+import { TextField } from "@/components/UI/TextField";
 import {
   FormControl,
   LabelContainer,
   ItemContainer,
 } from "@/components/Mobile/styles/forms";
-import { Button } from "@/components/Mobile/components/UI/Button";
+import { Button } from "@/components/UI/Button";
 
 const WeChat = () => {
   const { account, getAccountProfile } = useAccountStore();

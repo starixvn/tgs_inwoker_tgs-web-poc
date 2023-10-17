@@ -1,13 +1,13 @@
 import React from "react";
 import i18n from "@/utils/i18n";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
-import DialogPopup from "@/components/Mobile/components/UI/Dialog/DialogPopup";
+import DialogPopup from "@/components/UI/Dialog/DialogPopup";
 import {
   ButtonConfirm,
   DialogContent,
   DialogTitle,
-} from "@/components/Mobile/components/UI/Dialog/dialogStyles";
-import { Button } from "@/components/Mobile/components/UI/Button";
+} from "@/components/UI/Dialog/dialogStyles";
+import { Button } from "@/components/UI/Button";
 import styled from "styled-components";
 
 const AlertContainer = styled.div`

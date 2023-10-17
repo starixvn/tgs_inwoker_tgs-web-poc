@@ -1,21 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Step from "@/components/Mobile/components/_PrevShare/Step";
+import Step from "@/components/_PrevShare/Step";
 import BaseProfile from "./BaseProfile";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { AccountService } from "@/api-services/services/AccountService";
 import i18n from "@/utils/i18n";
 import styled from "styled-components";
 import config from "@/config/config";
-import TextFieldWithButton from "@/components/Mobile/components/UI/TextFieldWithButton";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
+import TextFieldWithButton from "@/components/UI/TextFieldWithButton";
+import { TextField } from "@/components/UI/TextField";
 import {
   FormControl,
   LabelContainer,
   ItemContainer,
 } from "@/components/Mobile/styles/forms";
-import { Select } from "@/components/Mobile/components/UI/Select";
+import { Select } from "@/components/UI/Select";
 
 const PhoneContainer = styled.div`
   display: flex;

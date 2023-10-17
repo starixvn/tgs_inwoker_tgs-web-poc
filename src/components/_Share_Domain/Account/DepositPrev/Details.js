@@ -9,10 +9,10 @@ import { styled as muiStyled } from "@mui/material/styles";
 import { Textfit } from "react-textfit";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-import Button from "@/components/Share/Button";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
+import { Button } from "@/components/UI/Button";
 
 const Container = styled.div``;
 const ContentBg = styled.div`
@@ -400,26 +400,20 @@ class Details extends Component {
           ) {
             return (
               <Button
-                style={{ margin: "20px auto" }}
-                labelStyle={{ color: "#fff" }}
-                label={i18n.t("deposit.uploadReceipt")}
                 onClick={this.handleUploadClick}
                 disabled={this.state.files.length <= 0}
-              ></Button>
+              >
+                {i18n.t("deposit.uploadReceipt")}
+              </Button>
             );
           }
         })()}
-        <Button
-          style={{ margin: "20px auto" }}
-          labelStyle={{ color: "#fff" }}
-          label={
-            this.props.isManual === true &&
-            config.features.Deposit_UploadRequired
-              ? i18n.t("common.back")
-              : i18n.t("common.complete")
-          }
-          onClick={this.props.handleRestartClick}
-        ></Button>
+        <Button onClick={this.props.handleRestartClick}>
+          {this.props.isManual === true &&
+          config.features.Deposit_UploadRequired
+            ? i18n.t("common.back")
+            : i18n.t("common.complete")}
+        </Button>
 
         <StyledModalPopup
           onClose={this.handleClosePopup}

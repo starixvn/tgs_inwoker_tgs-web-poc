@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import RegisterForm from "@/components/_Share_Domain/authentication/RegisterForm";
-import Dialog from "@/components/Mobile/components/UI/Dialog/Dialog";
+import Dialog from "@/components/UI/Dialog/Dialog";
 import { usePageName } from "@/hooks/usePageName";
 import i18n from "@/utils/i18n";
 

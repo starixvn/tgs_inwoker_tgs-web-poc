@@ -30,7 +30,7 @@ import LayoutProvider from "@/components/Mobile/layouts/LayoutProvider";
 import { AuthGuard } from "@/components/_Share_Domain/authentication/AuthGuard";
 import FloatingToolIcons from "@/components/Mobile/components/FloatingToolIcons";
 import { PageNameContextProvider } from "@/contexts/pageNameContext";
-import Loading from "@/components/Mobile/components/UI/Loading";
+import Loading from "@/components/UI/Loading";
 
 class Mobile extends Component {
   constructor(props) {

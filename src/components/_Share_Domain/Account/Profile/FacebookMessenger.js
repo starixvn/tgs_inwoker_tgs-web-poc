@@ -6,13 +6,13 @@ import i18n from "@/utils/i18n";
 import { accountAction } from "@/api-services/actions/accountAction";
 import { AccountService } from "@/api-services/services/AccountService";
 import config from "@/config/config";
-import BottomNote from "@/components/Mobile/components/UI/BottomNote";
+import BottomNote from "@/components/UI/BottomNote";
 import {
   FormControl,
   LabelContainer,
   ItemContainer,
 } from "@/components/Mobile/styles/forms";
-import { TextField } from "@/components/Mobile/components/UI/TextField";
+import { TextField } from "@/components/UI/TextField";
 
 class FacebookMessenger extends BaseProfile {
   state = {
