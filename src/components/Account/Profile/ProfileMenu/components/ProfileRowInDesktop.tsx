@@ -10,7 +10,6 @@ const ProfileItemContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
 
   & .label {
     color: ${({ theme }) => theme.white};

@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
-import iconAccount from "@/assets/images/account/icon-account.svg";
-import Icon from "@/components/Icon";
+import iconAccount from "@/assets/images/account/badge/icon-account.svg";
 import { media } from "@/theme/breakpoints";
 import { useProfileMenu } from "@/hooks/account/useProfileMenu";
 import ProfileRowInDesktop from "@/components/Account/Profile/ProfileMenu/components/ProfileRowInDesktop";
+import PageBadge from "@/components/PageBadge";
+import iconDeposit from "@/assets/images/account/badge/icon-deposit.svg";
+import AccountPaper from "@/components/AccountPaper";
 
 const ProfileMenuContainer = styled.div`
   background: ${({ theme }) => theme.primaryLight};
@@ -17,21 +19,6 @@ const ProfileMenuContainer = styled.div`
   }
 `;
 
-const AccountBadge = styled.div`
-  padding: 10px 20px;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  background: ${({ theme }) => theme.primary};
-  color: ${({ theme }) => theme.white};
-  width: fit-content;
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1.437rem;
-`;
-
 type Props = {};
 
 const ProfileMenuDesktop = ({}: Props) => {
@@ -39,12 +26,10 @@ const ProfileMenuDesktop = ({}: Props) => {
     useProfileMenu();
 
   return (
-    <ProfileMenuContainer>
-      <AccountBadge>
-        <Icon iconUrl={iconAccount} width={"24px"} height={"24px"} />
-        {i18n.t("deposit.details.account")}
-      </AccountBadge>
-
+    <AccountPaper
+      pageName={i18n.t("deposit.details.account")}
+      iconUrl={iconAccount}
+    >
       <ProfileRowInDesktop
         profileItem={profileItemDictionary["name"]}
         handleClick={handleClickProfileItem}
@@ -87,7 +72,7 @@ const ProfileMenuDesktop = ({}: Props) => {
         profileItem={profileItemDictionary["password"]}
         handleClick={handleClickProfileItem}
       />
-    </ProfileMenuContainer>
+    </AccountPaper>
   );
 };
 
