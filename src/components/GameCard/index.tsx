@@ -19,6 +19,10 @@ const GameCardWrapper = styled.div`
 
   ${media.sm} {
     width: calc(25% - 12px);
+
+    & :hover {
+      color: ${({ theme }) => theme.white};
+    }
   }
 `;
 
