@@ -13,7 +13,8 @@ import { useHistory } from "react-router-dom";
 import ProfileMenu from "@/components/Account/Profile/ProfileMenu";
 
 const ProfileContainer = styled.div`
-  max-width: 769px;
+  padding: 21px 22px;
+  max-width: calc(848px + 22px * 2);
   margin: auto;
 `;
 

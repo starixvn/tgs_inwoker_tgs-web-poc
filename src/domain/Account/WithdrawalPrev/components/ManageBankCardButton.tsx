@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import iconImg from "@/assets/images/withdraw/manage-card-icon.svg";
 
 const ButtonContainer = styled.div`
+  cursor: pointer;
   font-weight: 400;
   font-size: 0.937rem;
   line-height: 1.098rem;
