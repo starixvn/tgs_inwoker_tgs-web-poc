@@ -19,9 +19,10 @@ const TagContainer = styled.div`
     transition: scroll-left 0.2s ease-in-out; 
   }
 `;
+type Tag = { name: string };
 
 type Props = {
-  tagList: {}[];
+  tagList: (Tag | null)[];
   selectedTag: string;
   setSelectedTag: (selectedTag: string) => void;
 };

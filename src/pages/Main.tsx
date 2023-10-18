@@ -49,6 +49,7 @@ type GameItem = {
   isFavorite: boolean;
 };
 
+type Tag = { name: string };
 interface Theme {
   primaryDark: string;
   white: string;
@@ -175,20 +176,21 @@ const Main = (props: Props) => {
     return filteredGroups;
   }, [game.homePageGameList]);
 
-  const tagList = useMemo(() => {
+  const tagList: (Tag | null)[] = useMemo(() => {
     const tags = Object.keys(groupByProvider);
     const filteredTags = tags
       .filter((key) => typeof key === "string")
       .map((provider) => ({ name: provider }));
-    return [
+    const additionalTags = [
       { name: "All" },
-      account.token && { name: "Favorite" },
+      account.token ? { name: "Favorite" } : null,
       { name: "Hot" },
       { name: "New" },
       { name: "Recommend" },
       ...filteredTags,
     ];
-  }, [groupByProvider]);
+    return additionalTags.filter(tag => tag !== null);
+  }, [groupByProvider, account.token]);
 
   const filterAndGroupGames = (gameList: any[]) => {
     const groupByGpcode = gameList.reduce((accumulator, game) => {
@@ -334,7 +336,7 @@ const Main = (props: Props) => {
       {!isEnterLobby && !!activeGameTypeTab && !isLoading && (
         <>
           <GameFilterTag
-            tagList={tagList}
+            tagList={tagList.filter(tag => tag !== null) || []}
             selectedTag={selectedTag}
             setSelectedTag={setSelectedTag}
           />
