@@ -1,121 +1,10 @@
-import React, { useCallback, useMemo } from "react";
-import styled from "styled-components";
-import i18n from "@/utils/i18n";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import config from "@/config/config";
 import { useHistory } from "react-router-dom";
-import iconAccount from "@/assets/images/account/icon-account.svg";
-import Icon from "@/components/Icon";
-import { Button } from "@/components/UI/Button";
-import { useTheme } from "@mui/material";
-import { media } from "@/theme/breakpoints";
+import { useCallback, useMemo } from "react";
+import i18n from "@/utils/i18n";
+import config from "@/config/config";
 
-const ProfileMenuContainer = styled.div`
-  background: ${({ theme }) => theme.primaryLight};
-  padding: 40px 30px;
-  margin: 22px;
-  border-radius: 20px;
-  ${media.lg} {
-    margin: 0;
-  }
-`;
-
-const AccountBadge = styled.div`
-  padding: 10px 20px;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  background: ${({ theme }) => theme.primary};
-  color: ${({ theme }) => theme.white};
-  width: fit-content;
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1.437rem;
-`;
-
-const ProfileCard = styled.div`
-  width: 100%;
-  background: ${({ theme }) => theme.primaryLight};
-  border-radius: 10px;
-  padding: 30px 63px;
-
-  margin-bottom: 15px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-`;
-
-const ProfileItemContainer = styled.div`
-  width: 100%;
-  padding: 21px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-
-  & .label {
-    color: ${({ theme }) => theme.white};
-    font-size: 1.25rem;
-    font-weight: 400;
-  }
-
-  & .status {
-    color: ${({ theme }) => theme.tertiary};
-    font-size: 0.93rem;
-    font-weight: 400;
-  }
-
-  & svg {
-    color: ${({ theme }) => theme.tertiary} !important;
-  }
-`;
-
-type ProfileItemProps = {
-  profileItem?: ProfileItem;
-  handleClick: (newProfileItem: ProfileItem) => void;
-};
-
-const ProfileRow = ({ profileItem, handleClick }: ProfileItemProps) => {
-  if (!profileItem) return null;
-  const theme: any = useTheme();
-
-  const { label, isVerified, status, buttonText } = profileItem;
-
-  return (
-    <ProfileItemContainer>
-      <div className={"label"} style={{ width: "33%" }}>
-        {label}
-      </div>
-      <div className={"status"} style={{ width: "33%" }}>
-        {status}
-      </div>
-
-      <Button
-        variant={isVerified ? "contained" : "outlined"}
-        // color={isVerified ? "primary" : theme.palette.white}
-        sx={{
-          color: isVerified
-            ? theme.palette.white
-            : theme.palette.tertiary.light,
-          width: "150px",
-        }}
-        onClick={() => {
-          if (!profileItem) return;
-          handleClick(profileItem);
-        }}
-      >
-        {buttonText}
-      </Button>
-    </ProfileItemContainer>
-  );
-};
-
-type Props = {};
-
-interface ProfileItem {
+export interface ProfileItem {
   key: string;
   label: string;
   isVerified?: boolean;
@@ -124,7 +13,7 @@ interface ProfileItem {
   buttonText: string;
 }
 
-const ProfileMenuDesktop = ({}: Props) => {
+export function useProfileMenu() {
   const { account } = useAccountStore();
   const history = useHistory();
 
@@ -265,57 +154,9 @@ const ProfileMenuDesktop = ({}: Props) => {
     history.push(newProfileItem.routePath);
   }, []);
 
-  return (
-    <ProfileMenuContainer>
-      <AccountBadge>
-        <Icon iconUrl={iconAccount} width={"24px"} height={"24px"} />
-        {i18n.t("deposit.details.account")}
-      </AccountBadge>
-
-      <ProfileRow
-        profileItem={profileItemDictionary["name"]}
-        handleClick={handleClickProfileItem}
-      />
-      <ProfileRow
-        profileItem={profileItemDictionary["phone"]}
-        handleClick={handleClickProfileItem}
-      />
-      <ProfileRow
-        profileItem={profileItemDictionary["email"]}
-        handleClick={handleClickProfileItem}
-      />
-      <ProfileRow
-        profileItem={profileItemDictionary["birth"]}
-        handleClick={handleClickProfileItem}
-      />
-
-      <ProfileRow
-        key={profileItemDictionary["qq"].key}
-        profileItem={profileItemDictionary["qq"]}
-        handleClick={handleClickProfileItem}
-      />
-      <ProfileRow
-        key={profileItemDictionary["wechat"].key}
-        profileItem={profileItemDictionary["wechat"]}
-        handleClick={handleClickProfileItem}
-      />
-
-      {customMessagingList.map((messagingItem) => {
-        return (
-          <ProfileRow
-            key={messagingItem.key}
-            profileItem={messagingItem}
-            handleClick={handleClickProfileItem}
-          />
-        );
-      })}
-
-      <ProfileRow
-        profileItem={profileItemDictionary["password"]}
-        handleClick={handleClickProfileItem}
-      />
-    </ProfileMenuContainer>
-  );
-};
-
-export default React.memo(ProfileMenuDesktop);
+  return {
+    profileItemDictionary,
+    customMessagingList,
+    handleClickProfileItem,
+  };
+}

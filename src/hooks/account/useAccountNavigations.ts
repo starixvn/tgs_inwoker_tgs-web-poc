@@ -7,7 +7,7 @@ import reportImg from "@/assets/images/account/icon_report.svg";
 import inboxImg from "@/assets/images/account/icon_inbox.svg";
 import affiliateImg from "@/assets/images/account/icon_affiliate.svg";
 import downloadImg from "@/assets/images/account/icon_download.png";
-import AccountDialog from "@/pages/Profile/ProfileMenu";
+import AccountDialog from "@/components/Account/Profile/ProfileMenu";
 import TransferDialog from "@/pages/Transfer/TransferDialog";
 import ReportDialog from "@/pages/Report/ReportDialog";
 import InboxDialog from "@/pages/Inbox/InboxDialog";

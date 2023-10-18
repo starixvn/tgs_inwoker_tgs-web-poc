@@ -5,6 +5,7 @@ import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import styled from "styled-components";
 import { useLocation } from "react-router";
 import TransferTabs from "@/domain/Account/DepositPrev/components/TransferTabs";
+import { useRwd } from "@/hooks/useRwd";
 
 const DepositContainer = styled.div`
   padding: 20px 24px;

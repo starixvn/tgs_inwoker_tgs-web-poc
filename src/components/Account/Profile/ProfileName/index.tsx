@@ -8,7 +8,6 @@ import { useNotifications } from "@/hooks/pageProps/useNotifications";
 type Props = {};
 const ProfileNamePage = (props: Props) => {
   const { updatePageName } = usePageName();
-
   useEffect(() => {
     updatePageName(i18n.t("profile.nameVerify.title"));
   }, []);

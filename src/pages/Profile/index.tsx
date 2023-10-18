@@ -1,19 +1,16 @@
-import React, { useEffect, useMemo } from "react";
-import { usePageName } from "@/hooks/usePageName";
-import i18n from "@/utils/i18n";
+import React, { useMemo } from "react";
 import { useRwd } from "@/hooks/useRwd";
 import {
   profilePageDictionary,
   ProfilePathEnum,
-} from "@/pages/Profile/profilePageDictionary";
+} from "@/components/Account/Profile/profilePageDictionary";
 import { useLocation } from "react-router";
 import { ValueOf } from "@/types/valueOf";
 import UserWalletInfo from "@/components/Account/UserWalletInfo";
 import styled from "styled-components";
-import ProfileMenuDesktop from "@/pages/Profile/ProfileMenu/ProfileMenuDesktop";
 import Dialog from "@/components/UI/Dialog/Dialog";
-import ProfileMenuMobile from "@/pages/Profile/ProfileMenu/ProfileMenuMobile";
 import { useHistory } from "react-router-dom";
+import ProfileMenu from "@/components/Account/Profile/ProfileMenu";
 
 const ProfileContainer = styled.div`
   max-width: 769px;
@@ -22,30 +19,25 @@ const ProfileContainer = styled.div`
 
 type Props = {};
 const ProfilePage = (props: Props) => {
-  const { updatePageName } = usePageName();
   const { isDesktopSize } = useRwd();
   const history = useHistory();
   const location = useLocation();
   const path = location.pathname as ValueOf<typeof ProfilePathEnum>;
 
-  useEffect(() => {
-    updatePageName(i18n.t("profile.basicInfo"));
-  }, []);
-
-  const Component = useMemo(() => {
+  const ProfilePageComponent = useMemo(() => {
     return profilePageDictionary[path];
   }, [path]);
 
-  if (path === ProfilePathEnum.PROFILE || !Component) {
+  if (path === ProfilePathEnum.PROFILE || !ProfilePageComponent) {
     return (
       <ProfileContainer>
         {isDesktopSize && <UserWalletInfo />}
-        {isDesktopSize ? <ProfileMenuDesktop /> : <ProfileMenuMobile />}
+        <ProfileMenu />
       </ProfileContainer>
     );
   }
 
-  const isDialogOpen = !!Component;
+  const isDialogOpen = !!ProfilePageComponent;
 
   const handleCloseDialog = () => {
     history.push("/profile");
@@ -54,11 +46,13 @@ const ProfilePage = (props: Props) => {
   return (
     <ProfileContainer>
       {isDesktopSize && <UserWalletInfo />}
-      {isDesktopSize ? <ProfileMenuDesktop /> : <Component />}
+      {isDesktopSize ? <ProfileMenu /> : <ProfilePageComponent />}
 
-      <Dialog isOpen={isDialogOpen} handleCloseDialog={handleCloseDialog}>
-        <Component />
-      </Dialog>
+      {isDesktopSize && (
+        <Dialog isOpen={isDialogOpen} handleCloseDialog={handleCloseDialog}>
+          <ProfilePageComponent />
+        </Dialog>
+      )}
     </ProfileContainer>
   );
 };
