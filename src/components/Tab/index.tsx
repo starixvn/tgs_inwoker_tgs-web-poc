@@ -38,7 +38,6 @@ const Wrapper = styled.div<{
     background-color: transparent;
     border-radius: 5px;
     margin-right: 5px;
-    padding: 9px 0;
     & :hover {
     color: ${({ theme }) => theme.white};
    }
@@ -62,6 +61,10 @@ const Text = styled.div<{ $fontSize: string; $isActive: boolean }>`
   font-size: ${({ $fontSize }) =>
     $fontSize === "small" ? "0.875rem" : "0.6875rem"};
   font-weight: 700;
+
+  ${media.sm} {
+    font-size: 0.875rem;
+  }
 `;
 
 const Tab = ({ imageUrl, text, isActive, fontSize, onClick }: Props) => {

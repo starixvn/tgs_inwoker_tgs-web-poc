@@ -19,7 +19,6 @@ const GameCardWrapper = styled.div`
 
   ${media.sm} {
     width: calc(25% - 12px);
-    padding-top: calc(25% - 12px);
   }
 `;
 
@@ -186,11 +185,9 @@ const GameCard = ({
     <>
       <GameCardWrapper onClick={launchGame}>
         <GameImage
-          src={`${
-            config.sourceUrl
-          }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
-            gameItem.code
-          }.jpg`}
+          src={`${config.sourceUrl
+            }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${gameItem.code
+            }.jpg`}
           alt={gameItem.name}
         />
 

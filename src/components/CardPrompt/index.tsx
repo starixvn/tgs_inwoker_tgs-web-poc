@@ -1,3 +1,4 @@
+import { media } from "@/theme/breakpoints";
 import styled from "styled-components";
 import Marquee from "../Marquee";
 import OnlineUser from "../OnlineUser";
@@ -13,6 +14,10 @@ const Container = styled.div`
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   gap: 10px;
+
+  ${media.sm} {
+    margin-bottom: 20px;
+  }
 `;
 
 const CardPromptContainer = () => {
