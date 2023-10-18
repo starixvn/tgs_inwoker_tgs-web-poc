@@ -19,7 +19,7 @@ const Wrapper = styled.div<{
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  white-space: nowrap; /* 防止标签换行 */
+  white-space: nowrap;
   min-width: ${({ $isShowIcon }) => ($isShowIcon ? "40px" : "85px")};
   padding: 4px 8px;
   border-radius: 50px;
