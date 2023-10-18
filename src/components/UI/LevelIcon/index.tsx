@@ -11,40 +11,41 @@ const type5 = "type5";
 const iconBaseWidthHeight = 70;
 
 interface LevelIconContainerProps {
-  readonly width: string;
-}
-interface LevelIconWrapperProps {
-  readonly img: string;
-}
-
-interface LevelTextProps {
-  readonly leveltype: string;
-  readonly scale: number;
+  readonly $width: string;
 }
 
 const LevelIconContainer = styled.div<LevelIconContainerProps>`
   position: relative;
-  width: ${(props) => props.width};
-  height: ${(props) => props.width};
+  width: ${({ $width }: LevelIconContainerProps) => $width};
+  height: ${({ $width }: LevelIconContainerProps) => $width};
   overflow: visible;
 `;
+
+interface LevelIconWrapperProps {
+  readonly $img: string;
+}
 
 const LevelIconWrapper = styled.div<LevelIconWrapperProps>`
   width: 100%;
   height: 100%;
   position: relative;
   overflow: visible;
-  background-image: url(${(props) => props.img});
+  background-image: url(${({ $img }: LevelIconWrapperProps) => $img});
   background-size: cover;
   background-position: center center;
 `;
+
+interface LevelTextProps {
+  readonly $levelType: string;
+  readonly $scale: number;
+}
 
 const LevelText = styled.div<LevelTextProps>`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: ${({ leveltype }: { leveltype: string }) => {
-      switch (leveltype) {
+  transform: ${({ $levelType }: LevelTextProps) => {
+      switch ($levelType) {
         case type1:
           return `translateX(-60%) translateY(-70%)`;
         case type3:
@@ -53,12 +54,13 @@ const LevelText = styled.div<LevelTextProps>`
           return `translateX(-60%) translateY(-50%)`;
       }
     }}
-    scale(${({ scale }: { scale: number }) => scale});
+    scale(${({ $scale }: LevelTextProps) => $scale});
   color: #ffffff;
   font-size: 1.2rem;
   text-stroke: 2px #e5c0a2;
   font-weight: 900;
 `;
+
 const CurrentLevelTagWrapper = styled.div`
   width: ${iconBaseWidthHeight}px;
   position: absolute;
@@ -99,21 +101,21 @@ const LevelIcon = ({
   width: string;
   isCurrentLevel?: boolean;
 }) => {
-  const leveltype = levelTypeMap[level];
-  const levelIcon = levelIconMap[leveltype];
+  const levelType = levelTypeMap[level];
+  const levelIcon = levelIconMap[levelType];
 
   const scale = width ? parseInt(width) / iconBaseWidthHeight : 1;
 
   return (
-    <LevelIconContainer width={width}>
-      <LevelIconWrapper img={levelIcon}>
-        <LevelText scale={scale} leveltype={leveltype}>
+    <LevelIconContainer $width={width}>
+      <LevelIconWrapper $img={levelIcon}>
+        <LevelText $scale={scale} $levelType={levelType}>
           {level}
         </LevelText>
       </LevelIconWrapper>
       {isCurrentLevel && (
         <CurrentLevelTagWrapper>
-          <img src={CurrentLevelTag} />
+          <img src={CurrentLevelTag} alt={"level"} />
         </CurrentLevelTagWrapper>
       )}
     </LevelIconContainer>
