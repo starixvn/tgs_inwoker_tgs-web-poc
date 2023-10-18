@@ -2,7 +2,6 @@ import React, { FC, useState } from "react";
 import styled, { keyframes, DefaultTheme } from "styled-components";
 import DynamicFont from "react-dynamic-font";
 import IconRefreshPNG from "@/assets/images/account/icon-refresh.png";
-
 import i18n from "@/utils/i18n";
 import Common from "@/utils/Common";
 import config from "@/config/config";
@@ -39,6 +38,14 @@ const PlayerName = styled.div`
   line-height: 2.343rem;
   font-weight: 500;
   color: ${({ theme }) => theme.white};
+`;
+
+const WalletsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 60px;
+  flex-wrap: wrap;
 `;
 
 const MainWalletContainer = styled.div`
@@ -119,8 +126,12 @@ const UserWalletInfo = ({}) => {
   };
 
   let ingame = 0;
-  game.providerList.map((item) => {
-    if (item.transferwallet) ingame += parseFloat(item.balance);
+  game.providerList.map((provider) => {
+    if (provider.transferwallet)
+      ingame +=
+        typeof provider.balance === "number"
+          ? provider.balance
+          : parseFloat(provider.balance);
   });
 
   return (
@@ -135,74 +146,78 @@ const UserWalletInfo = ({}) => {
         )}
       </PlayerInfoContainer>
 
-      <MainWalletContainer>
-        <MainAccountLabel>
-          {i18n.t("web.account.header.mainWallet")}:
-        </MainAccountLabel>
-        <AmountContainer>
-          {isLoading ? (
-            <span>-</span>
-          ) : (
-            <DynamicFont
-              content={
-                wallet.mainSymbol +
-                Common.formatNumberWithThousand(wallet.mainBalance)
-              }
-            />
-          )}
-          <RefreshButton
-            width={"44px"}
-            height={"44px"}
-            iconUrl={IconRefreshPNG}
-            onClick={handleRefreshClick}
-          />
-        </AmountContainer>
-      </MainWalletContainer>
-      {game.containTransferWallet && (
-        <>
-          <MainWalletContainer>
-            <MainAccountLabel>
-              {i18n.t("web.account.header.allGameWallet")}:
-            </MainAccountLabel>
-            <AmountContainer>
-              {isLoading ? (
-                <span>-</span>
-              ) : (
-                <DynamicFont content={wallet.mainSymbol + ingame.toFixed(2)} />
-              )}
-              <RefreshButton
-                width={"44px"}
-                height={"44px"}
-                iconUrl={IconRefreshPNG}
-                onClick={handleRefreshClick}
+      <WalletsWrapper>
+        <MainWalletContainer>
+          <MainAccountLabel>
+            {i18n.t("web.account.header.mainWallet")}:
+          </MainAccountLabel>
+          <AmountContainer>
+            {isLoading ? (
+              <span>-</span>
+            ) : (
+              <DynamicFont
+                content={
+                  wallet.mainSymbol +
+                  Common.formatNumberWithThousand(wallet.mainBalance)
+                }
               />
-            </AmountContainer>
-          </MainWalletContainer>
-        </>
-      )}
-      <MainWalletContainer>
-        <MainAccountLabel>
-          {i18n.t("web.account.header.total")}:
-        </MainAccountLabel>
-        <AmountContainer>
-          {isLoading ? (
-            <span>-</span>
-          ) : (
-            <DynamicFont
-              content={
-                wallet.mainSymbol +
-                Common.formatNumberWithThousand(wallet.mainBalance + ingame)
-              }
+            )}
+            <RefreshButton
+              width={"44px"}
+              height={"44px"}
+              iconUrl={IconRefreshPNG}
+              onClick={handleRefreshClick}
             />
-          )}
-          <RefreshButton
-            width={"44px"}
-            height={"44px"}
-            iconUrl={IconRefreshPNG}
-            onClick={handleRefreshClick}
-          />
-        </AmountContainer>
-      </MainWalletContainer>
+          </AmountContainer>
+        </MainWalletContainer>
+        {game.containTransferWallet && (
+          <>
+            <MainWalletContainer>
+              <MainAccountLabel>
+                {i18n.t("web.account.header.allGameWallet")}:
+              </MainAccountLabel>
+              <AmountContainer>
+                {isLoading ? (
+                  <span>-</span>
+                ) : (
+                  <DynamicFont
+                    content={wallet.mainSymbol + ingame.toFixed(2)}
+                  />
+                )}
+                <RefreshButton
+                  width={"44px"}
+                  height={"44px"}
+                  iconUrl={IconRefreshPNG}
+                  onClick={handleRefreshClick}
+                />
+              </AmountContainer>
+            </MainWalletContainer>
+          </>
+        )}
+        <MainWalletContainer>
+          <MainAccountLabel>
+            {i18n.t("web.account.header.total")}:
+          </MainAccountLabel>
+          <AmountContainer>
+            {isLoading ? (
+              <span>-</span>
+            ) : (
+              <DynamicFont
+                content={
+                  wallet.mainSymbol +
+                  Common.formatNumberWithThousand(wallet.mainBalance + ingame)
+                }
+              />
+            )}
+            <RefreshButton
+              width={"44px"}
+              height={"44px"}
+              iconUrl={IconRefreshPNG}
+              onClick={handleRefreshClick}
+            />
+          </AmountContainer>
+        </MainWalletContainer>
+      </WalletsWrapper>
     </Container>
   );
 };
