@@ -4,6 +4,8 @@ import styled from "styled-components";
 import DialogHeader from "@/components/UI/Dialog/DialogHeader";
 import { usePageName } from "@/hooks/usePageName";
 import { useHistory } from "react-router-dom";
+import { useRwd } from "@/hooks/useRwd";
+import DefaultLayout from "@/layouts/DefaultLayout";
 
 const DialogLayoutContainer = styled.div`
   position: relative;
@@ -23,10 +25,15 @@ type Props = {
 const DialogLayout = ({ children }: Props) => {
   const history = useHistory();
   const { pageName } = usePageName();
+  const { isDesktopSize } = useRwd();
 
   const handleCloseDialog = useCallback(() => {
     history.goBack();
   }, []);
+
+  if (isDesktopSize) {
+    return <DefaultLayout>{children}</DefaultLayout>;
+  }
 
   return (
     <DialogLayoutContainer>

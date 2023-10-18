@@ -1,6 +1,6 @@
-import { themeList } from "@/theme";
 import styled from "styled-components";
 import { NavCardItem } from "@/hooks/account/useAccountNavigations";
+import { media } from "@/theme/breakpoints";
 
 const NavCardContainer = styled.div`
   position: relative;
@@ -12,7 +12,7 @@ const NavCardContainer = styled.div`
   width: calc((100% - 3 * 8px) / 4);
   padding: 20px 30px;
 
-  color:${({ theme }) => theme.tertiary};
+  color: ${({ theme }) => theme.tertiary};
   font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
@@ -20,6 +20,10 @@ const NavCardContainer = styled.div`
   transition-duration: 0.4s;
   -webkit-transition-duration: 0.4s; /* Safari */
   overflow: visible;
+
+  ${media.sm} {
+    width: calc((100% - 7 * 8px) / 8);
+  }
 }
 `;
 

@@ -80,7 +80,7 @@ interface ProfileItem {
   routePath: string;
 }
 
-const ProfileMenuDialog = ({}: Props) => {
+const ProfileMenuMobile = ({}: Props) => {
   const { account } = useAccountStore();
   const history = useHistory();
 
@@ -246,4 +246,4 @@ const ProfileMenuDialog = ({}: Props) => {
   );
 };
 
-export default React.memo(ProfileMenuDialog);
+export default React.memo(ProfileMenuMobile);

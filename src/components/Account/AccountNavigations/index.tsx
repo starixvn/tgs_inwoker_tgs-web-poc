@@ -13,14 +13,17 @@ import {
 } from "@/hooks/account/useAccountNavigations";
 import { useAuth } from "@/hooks/auth/useAuth";
 import i18n from "@/utils/i18n";
+import { media } from "@/theme/breakpoints";
 
 const AccountNavsContainer = styled.div`
-  padding: 15px 0 0;
-  & > * {
-    margin-bottom: 8px;
+  & > div {
+    margin-bottom: 15px;
   }
-  & > *:first-child {
-    margin-bottom: 16px;
+
+  ${media.sm} {
+    & > div {
+      margin-bottom: 20px;
+    }
   }
 `;
 
@@ -67,6 +70,7 @@ const AccountNavigations = (props: Props) => {
             );
           })}
         </AccountNavCardsContainer>
+
         <LanguageSwitch />
 
         <Button

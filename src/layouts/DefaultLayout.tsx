@@ -17,9 +17,11 @@ const DefaultLayoutContainer = styled.div`
 const DashboardContainer = styled.div`
   display: flex;
   margin-top: 80px;
+  min-height: calc(100vh - 80px - 82px);
 
   ${media.sm} {
     margin-top: 60px;
+    min-height: calc(100vh - 60px);
   }
 `;
 

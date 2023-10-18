@@ -9,6 +9,7 @@ type IconContainerProps = {
 const IconContainer = styled.div<IconContainerProps>`
   width: ${({ $width }: IconContainerProps) => $width};
   height: ${({ $height }: IconContainerProps) => $height};
+  overflow: visible;
 
   & > img {
     width: 100%;

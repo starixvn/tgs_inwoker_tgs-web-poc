@@ -21,14 +21,15 @@ const BalanceTrackerContainer = styled.div<BalanceTrackerContainerProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.318rem;
 `;
 
 const BalanceContainer = styled.div`
   display: flex;
   align-items: center;
-  font-size: 1.125rem;
-  font-weight: 500;
-  line-height: 1.318rem;
 
   & span {
     margin-right: 10px;
