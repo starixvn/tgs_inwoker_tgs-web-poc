@@ -9,6 +9,7 @@ import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import Icon from "@/components/Icon";
+import { media } from "@/theme/breakpoints";
 
 const rotateKeyFrame = keyframes`
   0% {
@@ -23,14 +24,15 @@ const Container = styled.div`
   padding: 22px 50px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 60px;
   flex-wrap: wrap;
 `;
 
 const PlayerInfoContainer = styled.div`
-  flex-shrink: 0;
-  flex-grow: 1;
+  ${media.md} {
+    flex: 1;
+  }
 `;
 
 const PlayerName = styled.div`
@@ -44,8 +46,12 @@ const WalletsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 60px;
+  gap: 20px;
   flex-wrap: wrap;
+
+  ${media.lg} {
+    gap: 60px;
+  }
 `;
 
 const MainWalletContainer = styled.div`

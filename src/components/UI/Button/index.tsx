@@ -14,7 +14,7 @@ declare module "@mui/material/styles" {
   }
 }
 
-export const Button = muiStyled(MuiButton)(({ theme }) => ({
+export const StyledButton = muiStyled(MuiButton)(({ theme }) => ({
   whiteSpace: "nowrap",
   borderRadius: "5px",
   padding: "12px 20px",
@@ -29,3 +29,13 @@ export const Button = muiStyled(MuiButton)(({ theme }) => ({
     padding: "7px 20px",
   },
 }));
+
+export const Button = (props: ButtonProps) => {
+  return (
+    <StyledButton
+      variant={props.variant || "contained"}
+      color={props.color || "primary"}
+      {...props}
+    />
+  );
+};
