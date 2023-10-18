@@ -10,10 +10,23 @@ import { useAuth } from "@/hooks/auth/useAuth";
 import { useHistory } from "react-router-dom";
 import MyInfo from "@/components/Account/MyInfo";
 import i18n from "@/utils/i18n";
+import { media } from "@/theme/breakpoints";
 
 const AccountContainer = styled.div`
   background: ${({ theme }) => theme.primaryDark};
   padding: 40px 15px;
+  max-width: 870px;
+  margin: auto;
+
+  & > div {
+    margin-bottom: 15px;
+  }
+
+  ${media.sm} {
+    & > div {
+      margin-bottom: 20px;
+    }
+  }
 `;
 
 const AccountIcon = () => {

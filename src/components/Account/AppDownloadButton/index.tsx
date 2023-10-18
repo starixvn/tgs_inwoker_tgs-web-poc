@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { NavCardItem } from "@/hooks/account/useAccountNavigations";
+import { media } from "@/theme/breakpoints";
 
 const AppDownloadButtonContainer = styled.button`
   width: 100%;
@@ -12,6 +13,10 @@ const AppDownloadButtonContainer = styled.button`
   color: ${({ theme }) => theme.tertiary};
   border: none;
   cursor: pointer;
+
+  ${media.sm} {
+    margin-top: 12px;
+  }
 `;
 
 const LogoContainer = styled.span`

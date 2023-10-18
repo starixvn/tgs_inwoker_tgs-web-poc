@@ -7,6 +7,7 @@ type TabContainerProps = {
   $isActive: boolean;
 };
 const TabContainer = styled.div<TabContainerProps>`
+  cursor: pointer;
   flex: 1;
   padding: 7px;
   border-radius: 5px;
