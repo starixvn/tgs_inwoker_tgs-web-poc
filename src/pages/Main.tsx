@@ -94,23 +94,24 @@ const TabSearchContainer = styled.div`
   ${media.sm} {
     height: 40px;
     background: ${(props) => props.theme.primaryLight};
+    margin-bottom: 20px;
   }
 `;
 
 const TabContainer = styled.div`
-  /* margin-bottom: 15px; */
+  margin-bottom: 15px;
   overflow-x: auto;
   white-space: nowrap;
   scroll-behavior: smooth;
   width: 100%;
   -webkit-overflow-scrolling: touch;
   /* Enable smooth scrolling on iOS */
-  transition: scroll-left 0.2s ease-in-out; 
 
   ${media.sm} {
     overflow-x: hidden;
     width: calc(100% - 189px);
     margin-bottom: unset;
+    transition: scroll-left 0.2s ease-in-out; 
   }
 `;
 
@@ -145,8 +146,12 @@ const TagContainer = styled.div`
   overflow-x: auto;
   white-space: nowrap;
   scroll-behavior: smooth;
-  width: 100%;
   -webkit-overflow-scrolling: touch;
+
+  ${media.sm} {
+    overflow-x: hidden;
+    transition: scroll-left 0.2s ease-in-out; 
+  }
 `;
 
 const Main = (props: Props) => {
@@ -163,9 +168,11 @@ const Main = (props: Props) => {
   const [filteredMatchGames, setFilteredMatchGames] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isTagDragging, setIsTagDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const tabContainerRef = useRef<HTMLDivElement>(null);
-  const { isSmSize } = useRwd();
+  const tagContainerRef = useRef<HTMLDivElement>(null);
+  const { isDesktopSize, isMobileSize } = useRwd();
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
@@ -192,6 +199,36 @@ const Main = (props: Props) => {
       tabContainerRef.current.scrollLeft += 50;
       // number: 滾動條滾動距離,可控制反彈距離
       tabContainerRef.current.style.scrollBehavior = 'auto';
+    }
+  };
+
+  // for tags
+
+  const handleTagMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsTagDragging(true);
+    setStartX(e.pageX - (tagContainerRef.current?.scrollLeft ?? 0));
+    if (tagContainerRef.current) {
+      tagContainerRef.current.style.cursor = 'grabbing'; // 手指按下時,滑鼠游標變成手指
+    }
+  };
+
+  const handleTagMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isTagDragging) return;
+    if (!tagContainerRef.current) return;
+    const x = e.pageX - tagContainerRef.current.getBoundingClientRect().left;
+    const distance = (x - startX) * 3;
+    //  number: 滑鼠移動位移與滾動條滾動關係,數值越大越快
+    tagContainerRef.current.scrollLeft = startX + distance;
+  };
+
+  const handleTagMouseUp = () => {
+    setIsTagDragging(false);
+    if (tagContainerRef.current) {
+      tagContainerRef.current.style.cursor = 'grab';
+      tagContainerRef.current.style.scrollBehavior = 'smooth';
+      tagContainerRef.current.scrollLeft += 50;
+      // number: 滾動條滾動距離,可控制反彈距離
+      tagContainerRef.current.style.scrollBehavior = 'auto';
     }
   };
 
@@ -383,7 +420,7 @@ const Main = (props: Props) => {
             )
           )}
         </TabContainer>
-        {!isSmSize && <InputContainer>
+        {isDesktopSize && <InputContainer>
           <Input
             placeholder={i18n.t("slot.search")}
             imageUrl={searchIcon}
@@ -414,7 +451,12 @@ const Main = (props: Props) => {
       {/* Slot / Fishing / Egame */}
       {!isEnterLobby && !!activeGameTypeTab && !isLoading && (
         <>
-          <TagContainer>
+          <TagContainer
+            ref={tagContainerRef}
+            onMouseDown={handleTagMouseDown}
+            onMouseMove={handleTagMouseMove}
+            onMouseUp={handleTagMouseUp}
+          >
             {tagList
               .filter((item): item is GameItem => item !== null)
               .map((item: GameItem) => (
@@ -428,7 +470,7 @@ const Main = (props: Props) => {
               ))}
           </TagContainer>
 
-          {isSmSize &&
+          {isMobileSize &&
             <Input
               placeholder={i18n.t("slot.search")}
               imageUrl={searchIcon}

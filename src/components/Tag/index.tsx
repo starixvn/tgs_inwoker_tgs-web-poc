@@ -1,3 +1,5 @@
+import { useRwd } from "@/hooks/useRwd";
+import { media } from "@/theme/breakpoints";
 import styled from "styled-components";
 import { gameTagList } from "../../constants/gameTag";
 
@@ -17,17 +19,29 @@ const Wrapper = styled.div<{
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  white-space: nowrap; /* 防止标签换行 */
   min-width: ${({ $isShowIcon }) => ($isShowIcon ? "40px" : "85px")};
   padding: 4px 8px;
   border-radius: 50px;
   background-color: ${({ $isActive, theme }) =>
     $isActive ? theme.primary : theme.tertiaryDark};
   margin-right: 6px;
-  cursor: pointer;
   user-select: none;
+  
   & > img {
     width: 24px;
     height: 24px;
+  }
+
+  ${media.sm} {
+    & :hover {
+    color: ${({ theme }) => theme.white};
+   }
+    width: auto;
+    min-width: ${({ $isShowIcon }) => ($isShowIcon ? "87px" : "60px")};
+    padding: 4px;
+    gap: ${({ $isShowIcon }) => ($isShowIcon ? "4px" : "10px")};
+    align-self: stretch;
   }
 `;
 
@@ -37,10 +51,11 @@ const Text = styled.div<{ $isActive: boolean }>`
   font-size: 0.875rem;
   font-weight: 700;
   line-height: 0.875rem;
-  padding: 5px 0;
 `;
 
 const Tag = ({ text, isActive, isShowIcon, onClick }: Props) => {
+  const { isMobileSize } = useRwd();
+
   const transferIcon = () => {
     const tag = gameTagList.find((tag) => tag.text === text);
     return tag ? tag.iconUrl : "";
@@ -55,7 +70,7 @@ const Tag = ({ text, isActive, isShowIcon, onClick }: Props) => {
       onClick={onClick}
     >
       {imageUrl && <img src={imageUrl} alt={text} />}
-      {imageUrl ? null : <Text $isActive={isActive}>{text}</Text>}
+      {isMobileSize ? (imageUrl ? null : <Text $isActive={isActive}>{text}</Text>) : <Text $isActive={isActive}>{text}</Text>}
     </Wrapper>
   );
 };
