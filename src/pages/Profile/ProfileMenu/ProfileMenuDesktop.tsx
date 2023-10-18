@@ -193,11 +193,7 @@ const ProfileMenuDesktop = ({}: Props) => {
     history.push(newProfileItem.routePath);
   }, []);
 
-  return (
-    <>
-      <UserWalletInfo />
-    </>
-  );
+  return <>PROFILE</>;
 };
 
 export default React.memo(ProfileMenuDesktop);

@@ -38,10 +38,11 @@ import Withdrawal from "@/pages/Withdrawal";
 import WithdrawalDetails from "@/pages/Withdrawal/WithdrawalDetails";
 import config from "@/config/config";
 import React from "react";
-import PromotionDetail from "../pages/Promotion/PromotionDetail";
+import PromotionDetail from "@/pages/Promotion/PromotionDetail";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import ForgotPasswordPage from "@/pages/ForgetPassword";
 import DialogLayout from "@/layouts/DialogLayout";
+import { ProfilePathEnum } from "@/pages/Profile/ProfilePageDictionary";
 
 const Mine = React.lazy(() => import("@/pages/Account/Mine"));
 
@@ -52,6 +53,7 @@ export enum RouteCategoryEnum {
   INBOX,
   MINE,
 }
+
 export interface Route {
   path: string;
   component: any;
@@ -158,109 +160,109 @@ const routes: Route[] = [
     isAnonymousAllowed: true,
   },
   {
-    path: "/profile",
+    path: ProfilePathEnum.PROFILE,
     component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/name",
-    component: ProfileNamePage,
+    path: ProfilePathEnum.NAME,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/wechat",
-    component: ProfileWeChatPage,
+    path: ProfilePathEnum.WECHAT,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/birthdate",
+    path: ProfilePathEnum.BIRTHDATE,
     component: ProfileBirthDatePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/qq",
+    path: ProfilePathEnum.QQ,
     component: ProfileQQPage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/fb",
+    path: ProfilePathEnum.FB,
     component: ProfileFacebookMessengerPage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/telegram",
+    path: ProfilePathEnum.TELEGRAM,
     component: ProfileTelegramPage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/line",
+    path: ProfilePathEnum.LINE,
     component: ProfileLinePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/viber",
+    path: ProfilePathEnum.VIBER,
     component: ProfileViberPage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/whatsapp",
+    path: ProfilePathEnum.WHATSAPP,
     component: ProfileWhatsappPage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/email",
+    path: ProfilePathEnum.EMAIL,
     component: ProfileEmailPage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/changeemail",
+    path: ProfilePathEnum.CHANGE_EMAIL,
     component: ProfileChangeEmail,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/changephone",
+    path: ProfilePathEnum.CHANGE_PHONE,
     component: ProfileChangePhonePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/phone",
+    path: ProfilePathEnum.PHONE,
     component: ProfilePhonePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/changepassword",
+    path: ProfilePathEnum.CHANGE_PASSWORD,
     component: ProfileChangePasswordPage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/withdrawalpassword",
+    path: ProfilePathEnum.WIDHDRAWAL_PASSWORD,
     component: ProfileWithdrawalPasswordPage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/resetwithdrawalpassword",
+    path: ProfilePathEnum.RESET_WITHDRAWAL_PASSWORD,
     component: ProfileResetWithdrawalPasswordPage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
-    path: "/profile/changewithdrawalpassword",
+    path: ProfilePathEnum.CHANGE_WITHDRAWAL_PASSWORD,
     component: ProfileChangeWithdrawalPasswordPage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
