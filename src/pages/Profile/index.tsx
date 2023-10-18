@@ -11,6 +11,9 @@ import { ValueOf } from "@/types/valueOf";
 import UserWalletInfo from "@/components/Account/UserWalletInfo";
 import styled from "styled-components";
 import ProfileMenuDesktop from "@/pages/Profile/ProfileMenu/ProfileMenuDesktop";
+import Dialog from "@/components/UI/Dialog/Dialog";
+import ProfileMenuMobile from "@/pages/Profile/ProfileMenu/ProfileMenuMobile";
+import { useHistory } from "react-router-dom";
 
 const ProfileContainer = styled.div`
   max-width: 769px;
@@ -21,6 +24,7 @@ type Props = {};
 const ProfilePage = (props: Props) => {
   const { updatePageName } = usePageName();
   const { isDesktopSize } = useRwd();
+  const history = useHistory();
   const location = useLocation();
   const path = location.pathname as ValueOf<typeof ProfilePathEnum>;
 
@@ -29,18 +33,32 @@ const ProfilePage = (props: Props) => {
   }, []);
 
   const Component = useMemo(() => {
-    if (isDesktopSize) return ProfileMenuDesktop;
-
-    return (
-      profilePageDictionary[path] ??
-      profilePageDictionary[ProfilePathEnum.PROFILE]
-    );
+    return profilePageDictionary[path];
   }, [path]);
+
+  if (path === ProfilePathEnum.PROFILE || !Component) {
+    return (
+      <ProfileContainer>
+        {isDesktopSize && <UserWalletInfo />}
+        {isDesktopSize ? <ProfileMenuDesktop /> : <ProfileMenuMobile />}
+      </ProfileContainer>
+    );
+  }
+
+  const isDialogOpen = !!Component;
+
+  const handleCloseDialog = () => {
+    history.push("/profile");
+  };
 
   return (
     <ProfileContainer>
       {isDesktopSize && <UserWalletInfo />}
-      <Component />;
+      {isDesktopSize ? <ProfileMenuDesktop /> : <Component />}
+
+      <Dialog isOpen={isDialogOpen} handleCloseDialog={handleCloseDialog}>
+        <Component />
+      </Dialog>
     </ProfileContainer>
   );
 };

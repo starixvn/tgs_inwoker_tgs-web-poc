@@ -3,6 +3,7 @@ import { Dialog as MuiDialog } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import { Close as CloseIcon } from "@mui/icons-material";
+import { useRwd } from "@/hooks/useRwd";
 
 const DialogContainer = styled(MuiDialog)`
   & .MuiPaper-root {
@@ -38,9 +39,11 @@ type Props = {
   dialogHeaderTitle?: string;
 };
 const Dialog = ({ isOpen, handleCloseDialog, children }: Props) => {
+  const { isDesktopSize } = useRwd();
+
   return (
     <DialogContainer
-      fullScreen
+      fullScreen={!isDesktopSize}
       open={isOpen}
       TransitionComponent={UpTransition}
     >
