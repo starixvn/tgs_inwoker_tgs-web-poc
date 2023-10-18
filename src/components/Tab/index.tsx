@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { media } from "@/theme/breakpoints";
+import styled from "styled-components";
 
 const desktopActiveTabBgUrl =
   process.env.PUBLIC_URL + "assets/images/home/desktop_active_tab_bg.png";
@@ -9,7 +9,6 @@ type Props = {
   text: string;
   isActive: boolean;
   fontSize: "small" | "smaller" | string;
-  type: number;
   onClick: () => void;
 };
 
@@ -28,7 +27,6 @@ const Wrapper = styled.div<{
   background-color: ${({ theme, $isActive }) =>
     $isActive ? theme.primary : theme.primaryLight};
   margin-right: 12px;
-  cursor: pointer;
   user-select: none;
 
   ${media.sm} {
@@ -36,7 +34,14 @@ const Wrapper = styled.div<{
     height: 32px;
     flex-direction: row;
     background-image: ${({ $isActive }) =>
-      $isActive ? `url(${desktopActiveTabBgUrl})` : null};
+    $isActive ? `url(${desktopActiveTabBgUrl})` : null};
+    background-color: transparent;
+    border-radius: 5px;
+    margin-right: 5px;
+    padding: 9px 0;
+    & :hover {
+    color: ${({ theme }) => theme.white};
+   }
   }
 `;
 
@@ -59,7 +64,7 @@ const Text = styled.div<{ $fontSize: string; $isActive: boolean }>`
   font-weight: 700;
 `;
 
-const Tab = ({ imageUrl, text, isActive, fontSize, type, onClick }: Props) => {
+const Tab = ({ imageUrl, text, isActive, fontSize, onClick }: Props) => {
   return (
     <Wrapper
       $isActive={isActive}

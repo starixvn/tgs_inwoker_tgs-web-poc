@@ -22,11 +22,12 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  useState,
+  useRef,
+  useState
 } from "react";
 import styled from "styled-components";
-import { gameTypeList, isNotEnterLobby } from "../constants/tab";
 import { gameTagList } from "../constants/gameTag";
+import { gameTypeList, isNotEnterLobby } from "../constants/tab";
 
 type Props = {
   imageUrl: string;
@@ -90,6 +91,11 @@ const TabContainer = styled.div`
   width: 100%;
   -webkit-overflow-scrolling: touch;
   /* Enable smooth scrolling on iOS */
+
+  ${media.sm} {
+    margin-bottom: 20px;
+    overflow-x: hidden;
+  }
 `;
 
 const GameCardContainer = styled.div`
@@ -133,6 +139,25 @@ const Main = (props: Props) => {
   const [favoriteList, setFavoriteList] = useState<number[]>([]);
   const [filteredMatchGames, setFilteredMatchGames] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const tabContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    setStartX(e.pageX - (tabContainerRef.current?.scrollLeft ?? 0));
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !tabContainerRef.current) return;
+    const x = e.pageX - tabContainerRef.current.getBoundingClientRect().left;
+    const walk = (x - startX) * 5; // 调整滚动速度
+    tabContainerRef.current.scrollLeft = startX + walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
 
   const handleGameTypeClick = (gameType: number) => {
     setActiveGameTypeTab(gameType);
@@ -226,9 +251,9 @@ const Main = (props: Props) => {
           const filteredGameListWithFavorites =
             favoriteList.length > 0
               ? res.data.map((item: GameItem) => ({
-                  ...item,
-                  isFavorite: favoriteList.includes(item.id),
-                }))
+                ...item,
+                isFavorite: favoriteList.includes(item.id),
+              }))
               : res.data;
 
           switch (selectedTag) {
@@ -296,7 +321,12 @@ const Main = (props: Props) => {
 
       <CardPrompt />
 
-      <TabContainer>
+      <TabContainer
+        ref={tabContainerRef}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+      >
         {gameTypeList.map(
           (item: {
             key: string;
@@ -311,7 +341,6 @@ const Main = (props: Props) => {
               text={item.text}
               isActive={item.gameType === activeGameTypeTab}
               fontSize={item.fontSize}
-              type={item.gameType}
               onClick={() => handleGameTypeClick(item.gameType)}
             />
           )
