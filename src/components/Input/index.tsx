@@ -9,9 +9,10 @@ type Props = {
 
 const InputWrapper = styled.div`
     width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 8px 10px;
     border-radius: 10px;
     border: 1px solid ${(props) => props.theme.tertiary};
     color: ${(props) => props.theme.tertiary};

@@ -14,6 +14,7 @@ import Tag from "@/components/Tag";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
+import { useRwd } from "@/hooks/useRwd";
 import { media } from "@/theme/breakpoints";
 import getDisplayGameType from "@/utils/getDisplayGameType";
 import i18n from "@/utils/i18n";
@@ -82,19 +83,41 @@ const MainWrapper = styled.div<{ theme: Theme }>`
     margin: 0 auto;
   }
 `;
+const TabSearchContainer = styled.div`
+  width: 100%;
+  padding: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  
+  ${media.sm} {
+    height: 40px;
+    background: ${(props) => props.theme.primaryLight};
+  }
+`;
 
 const TabContainer = styled.div`
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   overflow-x: auto;
   white-space: nowrap;
   scroll-behavior: smooth;
   width: 100%;
   -webkit-overflow-scrolling: touch;
   /* Enable smooth scrolling on iOS */
+  transition: scroll-left 0.2s ease-in-out; 
 
   ${media.sm} {
-    margin-bottom: 20px;
     overflow-x: hidden;
+    width: calc(100% - 189px);
+    margin-bottom: unset;
+  }
+`;
+
+const InputContainer = styled.div`
+  ${media.sm} {
+    width: 189px;
+    height: 32px;
   }
 `;
 
@@ -142,21 +165,34 @@ const Main = (props: Props) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const tabContainerRef = useRef<HTMLDivElement>(null);
+  const { isSmSize } = useRwd();
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
     setStartX(e.pageX - (tabContainerRef.current?.scrollLeft ?? 0));
+    if (tabContainerRef.current) {
+      tabContainerRef.current.style.cursor = 'grabbing'; // 手指按下時,滑鼠游標變成手指
+    }
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging || !tabContainerRef.current) return;
+    if (!isDragging) return;
+    if (!tabContainerRef.current) return;
     const x = e.pageX - tabContainerRef.current.getBoundingClientRect().left;
-    const walk = (x - startX) * 5; // 调整滚动速度
-    tabContainerRef.current.scrollLeft = startX + walk;
+    const distance = (x - startX) * 3;
+    //  number: 滑鼠移動位移與滾動條滾動關係,數值越大越快
+    tabContainerRef.current.scrollLeft = startX + distance;
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
+    if (tabContainerRef.current) {
+      tabContainerRef.current.style.cursor = 'grab';
+      tabContainerRef.current.style.scrollBehavior = 'smooth';
+      tabContainerRef.current.scrollLeft += 50;
+      // number: 滾動條滾動距離,可控制反彈距離
+      tabContainerRef.current.style.scrollBehavior = 'auto';
+    }
   };
 
   const handleGameTypeClick = (gameType: number) => {
@@ -321,31 +357,41 @@ const Main = (props: Props) => {
 
       <CardPrompt />
 
-      <TabContainer
-        ref={tabContainerRef}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-      >
-        {gameTypeList.map(
-          (item: {
-            key: string;
-            iconUrl: string;
-            text: string;
-            fontSize: string;
-            gameType: number;
-          }) => (
-            <Tab
-              key={item.key}
-              imageUrl={item.iconUrl}
-              text={item.text}
-              isActive={item.gameType === activeGameTypeTab}
-              fontSize={item.fontSize}
-              onClick={() => handleGameTypeClick(item.gameType)}
-            />
-          )
-        )}
-      </TabContainer>
+      <TabSearchContainer>
+        <TabContainer
+          ref={tabContainerRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+        >
+          {gameTypeList.map(
+            (item: {
+              key: string;
+              iconUrl: string;
+              text: string;
+              fontSize: string;
+              gameType: number;
+            }) => (
+              <Tab
+                key={item.key}
+                imageUrl={item.iconUrl}
+                text={item.text}
+                isActive={item.gameType === activeGameTypeTab}
+                fontSize={item.fontSize}
+                onClick={() => handleGameTypeClick(item.gameType)}
+              />
+            )
+          )}
+        </TabContainer>
+        {!isSmSize && <InputContainer>
+          <Input
+            placeholder={i18n.t("slot.search")}
+            imageUrl={searchIcon}
+            handleChange={handleSearch}
+            value={searchString}
+          />
+        </InputContainer>}
+      </TabSearchContainer>
 
       {!activeGameTypeTab && (
         <Lobby
@@ -382,12 +428,14 @@ const Main = (props: Props) => {
               ))}
           </TagContainer>
 
-          <Input
-            placeholder={i18n.t("slot.search")}
-            imageUrl={searchIcon}
-            handleChange={handleSearch}
-            value={searchString}
-          />
+          {isSmSize &&
+            <Input
+              placeholder={i18n.t("slot.search")}
+              imageUrl={searchIcon}
+              handleChange={handleSearch}
+              value={searchString}
+            />
+          }
 
           <GameCardContainer>
             {filteredMatchGames &&
