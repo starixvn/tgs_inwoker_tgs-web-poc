@@ -5,14 +5,17 @@ import { useRwd } from "@/hooks/useRwd";
 import {
   profilePageDictionary,
   ProfilePathEnum,
-} from "@/pages/Profile/ProfilePageDictionary";
+} from "@/pages/Profile/profilePageDictionary";
 import { useLocation } from "react-router";
 import { ValueOf } from "@/types/valueOf";
 import UserWalletInfo from "@/components/Account/UserWalletInfo";
 import styled from "styled-components";
 import ProfileMenuDesktop from "@/pages/Profile/ProfileMenu/ProfileMenuDesktop";
 
-const ProfileContainer = styled.div``;
+const ProfileContainer = styled.div`
+  max-width: 769px;
+  margin: auto;
+`;
 
 type Props = {};
 const ProfilePage = (props: Props) => {
@@ -29,10 +32,10 @@ const ProfilePage = (props: Props) => {
     if (isDesktopSize) return ProfileMenuDesktop;
 
     return (
-      profilePageDictionary[path]?.(isDesktopSize) ??
-      profilePageDictionary[ProfilePathEnum.PROFILE]?.(isDesktopSize)
+      profilePageDictionary[path] ??
+      profilePageDictionary[ProfilePathEnum.PROFILE]
     );
-  }, []);
+  }, [path]);
 
   return (
     <ProfileContainer>
@@ -42,4 +45,4 @@ const ProfilePage = (props: Props) => {
   );
 };
 
-export default ProfilePage;
+export default React.memo(ProfilePage);

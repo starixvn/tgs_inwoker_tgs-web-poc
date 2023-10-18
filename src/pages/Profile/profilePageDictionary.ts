@@ -1,21 +1,5 @@
 import React, { NamedExoticComponent } from "react";
-import ProfileMenuDesktop from "@/pages/Profile/ProfileMenu/ProfileMenuDesktop";
 import ProfileMenuMobile from "@/pages/Profile/ProfileMenu/ProfileMenuMobile";
-import ProfileNamePage from "@/pages/Profile/ProfileName";
-import Card from "@/pages/Card";
-import AddCard from "@/pages/Card/AddCard";
-import Affiliate from "@/pages/Affiliate";
-import BettingBonus from "@/pages/BettingBonus";
-import ContactUsPage from "@/pages/ContactUs";
-import DepositPage from "@/pages/Deposit";
-import DepositDetails from "@/pages/Deposit/DepositDetails";
-import DepositManual from "@/pages/Deposit/DepositManual";
-import DepositPayment from "@/pages/Deposit/DepositPayment";
-import Inbox from "@/pages/Inbox";
-import LoginPage from "@/pages/Login";
-import Main from "@/pages/Main";
-import Maintenance from "@/pages/Maintenance";
-import ProfilePage from "@/pages/Profile";
 import ProfileBirthDatePage from "@/pages/Profile/ProfileBirthDate";
 import ProfileChangeEmail from "@/pages/Profile/ProfileChangeEmail";
 import ProfileChangePasswordPage from "@/pages/Profile/ProfileChangePassword";
@@ -24,6 +8,7 @@ import ProfileChangeWithdrawalPasswordPage from "@/pages/Profile/ProfileChangeWi
 import ProfileEmailPage from "@/pages/Profile/ProfileEmail";
 import ProfileFacebookMessengerPage from "@/pages/Profile/ProfileFacebookMessenger";
 import ProfileLinePage from "@/pages/Profile/ProfileLine";
+import ProfileNamePage from "@/pages/Profile/ProfileName";
 import ProfilePhonePage from "@/pages/Profile/ProfilePhone";
 import ProfileQQPage from "@/pages/Profile/ProfileQQ";
 import ProfileResetWithdrawalPasswordPage from "@/pages/Profile/ProfileResetWithdrawalPassword";
@@ -32,18 +17,6 @@ import ProfileViberPage from "@/pages/Profile/ProfileViber";
 import ProfileWithdrawalPasswordPage from "@/pages/Profile/ProfileWIthdrawalPassword";
 import ProfileWeChatPage from "@/pages/Profile/ProfileWeChat";
 import ProfileWhatsappPage from "@/pages/Profile/ProfileWhatsapp";
-import Promotion from "@/pages/Promotion";
-import RegisterPage from "@/pages/Register";
-import Report from "@/pages/Report";
-import Transfer from "@/pages/Transfer";
-import VIP from "@/pages/Vip";
-import Withdrawal from "@/pages/Withdrawal";
-import WithdrawalDetails from "@/pages/Withdrawal/WithdrawalDetails";
-import config from "@/config/config";
-import PromotionDetail from "@/pages/Promotion/PromotionDetail";
-import DefaultLayout from "@/layouts/DefaultLayout";
-import ForgotPasswordPage from "@/pages/ForgetPassword";
-import DialogLayout from "@/layouts/DialogLayout";
 import { ValueOf } from "@/types/valueOf";
 
 export const ProfilePathEnum = {
@@ -72,5 +45,22 @@ export const profilePageDictionary: {
 } = {
   [ProfilePathEnum.PROFILE]: ProfileMenuMobile,
   [ProfilePathEnum.NAME]: ProfileNamePage,
-  [ProfilePathEnum.NAME]: ProfileNamePage,
+  [ProfilePathEnum.WECHAT]: ProfileWeChatPage,
+  [ProfilePathEnum.BIRTHDATE]: ProfileBirthDatePage,
+  [ProfilePathEnum.QQ]: ProfileQQPage,
+  [ProfilePathEnum.FB]: ProfileFacebookMessengerPage,
+  [ProfilePathEnum.TELEGRAM]: ProfileTelegramPage,
+  [ProfilePathEnum.LINE]: ProfileLinePage,
+  [ProfilePathEnum.VIBER]: ProfileViberPage,
+  [ProfilePathEnum.WHATSAPP]: ProfileWhatsappPage,
+  [ProfilePathEnum.EMAIL]: ProfileEmailPage,
+  [ProfilePathEnum.CHANGE_EMAIL]: ProfileChangeEmail,
+  [ProfilePathEnum.CHANGE_PHONE]: ProfileChangePhonePage,
+  [ProfilePathEnum.PHONE]: ProfilePhonePage,
+  [ProfilePathEnum.CHANGE_PASSWORD]: ProfileChangePasswordPage,
+  [ProfilePathEnum.WIDHDRAWAL_PASSWORD]: ProfileWithdrawalPasswordPage,
+  [ProfilePathEnum.RESET_WITHDRAWAL_PASSWORD]:
+    ProfileResetWithdrawalPasswordPage,
+  [ProfilePathEnum.CHANGE_WITHDRAWAL_PASSWORD]:
+    ProfileChangeWithdrawalPasswordPage,
 };

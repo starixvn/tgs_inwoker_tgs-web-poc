@@ -1,11 +1,39 @@
 import React, { useCallback, useMemo } from "react";
 import styled from "styled-components";
-import { NavigateNext as NavigateNextIcon } from "@mui/icons-material";
 import i18n from "@/utils/i18n";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import config from "@/config/config";
 import { useHistory } from "react-router-dom";
-import UserWalletInfo from "@/components/Account/UserWalletInfo";
+import iconAccount from "@/assets/images/account/icon-account.svg";
+import Icon from "@/components/Icon";
+import { Button } from "@/components/UI/Button";
+import { useTheme } from "@mui/material";
+import { media } from "@/theme/breakpoints";
+
+const ProfileMenuContainer = styled.div`
+  background: ${({ theme }) => theme.primaryLight};
+  padding: 40px 30px;
+  margin: 22px;
+  border-radius: 20px;
+  ${media.lg} {
+    margin: 0;
+  }
+`;
+
+const AccountBadge = styled.div`
+  padding: 10px 20px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.white};
+  width: fit-content;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.437rem;
+`;
 
 const ProfileCard = styled.div`
   width: 100%;
@@ -52,22 +80,35 @@ type ProfileItemProps = {
 
 const ProfileRow = ({ profileItem, handleClick }: ProfileItemProps) => {
   if (!profileItem) return null;
+  const theme: any = useTheme();
 
-  const { label, status } = profileItem;
+  const { label, isVerified, status, buttonText } = profileItem;
 
   return (
-    <ProfileItemContainer
-      onClick={() => {
-        if (!profileItem) return;
-        handleClick(profileItem);
-      }}
-    >
-      <div>
-        <div className={"label"}>{label}</div>
-        <div className={"status"}>{status}</div>
+    <ProfileItemContainer>
+      <div className={"label"} style={{ width: "33%" }}>
+        {label}
+      </div>
+      <div className={"status"} style={{ width: "33%" }}>
+        {status}
       </div>
 
-      <NavigateNextIcon style={{ transform: "scale(2)" }} />
+      <Button
+        variant={isVerified ? "contained" : "outlined"}
+        // color={isVerified ? "primary" : theme.palette.white}
+        sx={{
+          color: isVerified
+            ? theme.palette.white
+            : theme.palette.tertiary.light,
+          width: "150px",
+        }}
+        onClick={() => {
+          if (!profileItem) return;
+          handleClick(profileItem);
+        }}
+      >
+        {buttonText}
+      </Button>
     </ProfileItemContainer>
   );
 };
@@ -77,8 +118,10 @@ type Props = {};
 interface ProfileItem {
   key: string;
   label: string;
+  isVerified?: boolean;
   status: string;
   routePath: string;
+  buttonText: string;
 }
 
 const ProfileMenuDesktop = ({}: Props) => {
@@ -116,6 +159,7 @@ const ProfileMenuDesktop = ({}: Props) => {
       name: {
         key: "name",
         label: i18n.t("profile.nameVerify.icNum"),
+        isVerified: !!account.info.member_name,
         status: account.info.member_name
           ? i18n.t(
               `${account.info.member_name} ${
@@ -126,52 +170,76 @@ const ProfileMenuDesktop = ({}: Props) => {
             )
           : i18n.t("profile.notSet"),
         routePath: "/profile/name",
+        buttonText: account.info.member_name
+          ? i18n.t("profile.details")
+          : i18n.t("profile.nowVerify"),
       },
       phone: {
         key: "phone",
         label: i18n.t("profile.phone.title"),
+        isVerified: !!account.info.member_phone,
         status: account.info.member_phone
           ? account.info.member_phone.substring(0, 1) + "**"
           : i18n.t("profile.notSet"),
         routePath: "/profile/phone",
+        buttonText: account.info.member_phone
+          ? i18n.t("profile.details")
+          : i18n.t("profile.nowVerify"),
       },
       email: {
         key: "email",
         label: i18n.t("common.emailAddress"),
+        isVerified: !!account.info.member_email,
         status: account.info.member_email
           ? account.info.member_email
           : i18n.t("profile.notSet"),
         routePath: "/profile/email",
+        buttonText: account.info.member_email
+          ? i18n.t("profile.details")
+          : i18n.t("profile.nowVerify"),
       },
       birth: {
         key: "birthdate",
         label: i18n.t("profile.birthdate.title"),
+        isVerified: !!account.info.member_birthdate,
         status: account.info.member_birthdate
           ? account.info.member_birthdate
           : i18n.t("profile.notSet"),
         routePath: "/profile/birthdate",
+        buttonText: account.info.member_birthdate
+          ? i18n.t("profile.details")
+          : i18n.t("profile.setNow"),
       },
       qq: {
         key: "qq",
         label: i18n.t("common.qqNumber"),
+        isVerified: !!account.info.member_qq,
         status: account.info.member_qq
           ? account.info.member_qq.substring(0, 1) + "**"
           : i18n.t("profile.notSet"),
         routePath: "/profile/qq",
+        buttonText: account.info.member_qq
+          ? i18n.t("profile.details")
+          : i18n.t("profile.setNow"),
       },
       wechat: {
         key: "wechat",
         label: i18n.t("common.wechatNumber"),
+        isVerified: !!account.info.member_wechat,
         status: account.info.member_wechat
           ? account.info.member_wechat.substring(0, 1) + "**"
           : i18n.t("profile.notSet"),
         routePath: "/profile/wechat",
+        buttonText: account.info.member_wechat
+          ? i18n.t("profile.details")
+          : i18n.t("profile.setNow"),
       },
       password: {
         key: "changepassword",
         label: i18n.t("profile.password.title"),
         status: "",
         routePath: "/profile/changepassword",
+        buttonText: i18n.t("profile.edit"),
       },
     };
   }, []);
@@ -181,10 +249,14 @@ const ProfileMenuDesktop = ({}: Props) => {
       return {
         key: platform,
         label: i18n.t("common." + platform),
+        isVerified: !!account.info["member_" + platform],
         status: account.info["member_" + platform]
           ? account.info["member_" + platform].substring(0, 1) + "**"
           : i18n.t("profile.notSet"),
         routePath: `/profile/${platform}`,
+        buttonText: account.info["member_" + platform]
+          ? i18n.t("profile.details")
+          : i18n.t("profile.setNow"),
       };
     });
   }, []);
@@ -193,7 +265,57 @@ const ProfileMenuDesktop = ({}: Props) => {
     history.push(newProfileItem.routePath);
   }, []);
 
-  return <>PROFILE</>;
+  return (
+    <ProfileMenuContainer>
+      <AccountBadge>
+        <Icon iconUrl={iconAccount} width={"24px"} height={"24px"} />
+        {i18n.t("deposit.details.account")}
+      </AccountBadge>
+
+      <ProfileRow
+        profileItem={profileItemDictionary["name"]}
+        handleClick={handleClickProfileItem}
+      />
+      <ProfileRow
+        profileItem={profileItemDictionary["phone"]}
+        handleClick={handleClickProfileItem}
+      />
+      <ProfileRow
+        profileItem={profileItemDictionary["email"]}
+        handleClick={handleClickProfileItem}
+      />
+      <ProfileRow
+        profileItem={profileItemDictionary["birth"]}
+        handleClick={handleClickProfileItem}
+      />
+
+      <ProfileRow
+        key={profileItemDictionary["qq"].key}
+        profileItem={profileItemDictionary["qq"]}
+        handleClick={handleClickProfileItem}
+      />
+      <ProfileRow
+        key={profileItemDictionary["wechat"].key}
+        profileItem={profileItemDictionary["wechat"]}
+        handleClick={handleClickProfileItem}
+      />
+
+      {customMessagingList.map((messagingItem) => {
+        return (
+          <ProfileRow
+            key={messagingItem.key}
+            profileItem={messagingItem}
+            handleClick={handleClickProfileItem}
+          />
+        );
+      })}
+
+      <ProfileRow
+        profileItem={profileItemDictionary["password"]}
+        handleClick={handleClickProfileItem}
+      />
+    </ProfileMenuContainer>
+  );
 };
 
 export default React.memo(ProfileMenuDesktop);

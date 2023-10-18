@@ -42,7 +42,7 @@ import PromotionDetail from "@/pages/Promotion/PromotionDetail";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import ForgotPasswordPage from "@/pages/ForgetPassword";
 import DialogLayout from "@/layouts/DialogLayout";
-import { ProfilePathEnum } from "@/pages/Profile/ProfilePageDictionary";
+import { ProfilePathEnum } from "@/pages/Profile/profilePageDictionary";
 
 const Mine = React.lazy(() => import("@/pages/Account/Mine"));
 
@@ -179,91 +179,91 @@ const routes: Route[] = [
   },
   {
     path: ProfilePathEnum.BIRTHDATE,
-    component: ProfileBirthDatePage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.QQ,
-    component: ProfileQQPage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.FB,
-    component: ProfileFacebookMessengerPage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.TELEGRAM,
-    component: ProfileTelegramPage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.LINE,
-    component: ProfileLinePage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.VIBER,
-    component: ProfileViberPage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.WHATSAPP,
-    component: ProfileWhatsappPage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.EMAIL,
-    component: ProfileEmailPage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.CHANGE_EMAIL,
-    component: ProfileChangeEmail,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.CHANGE_PHONE,
-    component: ProfileChangePhonePage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.PHONE,
-    component: ProfilePhonePage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.CHANGE_PASSWORD,
-    component: ProfileChangePasswordPage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.WIDHDRAWAL_PASSWORD,
-    component: ProfileWithdrawalPasswordPage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.RESET_WITHDRAWAL_PASSWORD,
-    component: ProfileResetWithdrawalPasswordPage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
   {
     path: ProfilePathEnum.CHANGE_WITHDRAWAL_PASSWORD,
-    component: ProfileChangeWithdrawalPasswordPage,
+    component: ProfilePage,
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
   },
