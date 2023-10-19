@@ -37,14 +37,14 @@ const JoinPromotionTable = ({ promotionDetails, totalCount }: Props) => {
                 border: "none",
               }}
             >
-              {i18n.t("report.time")}
+              {i18n.t("report.dateTime")}
             </TableCell>
             <TableCell
               sx={{
                 border: "none",
               }}
             >
-              {i18n.t("report.promoName")}
+              {i18n.t("report.joinedPromo.promoName")}
             </TableCell>
           </TableRow>
         </TableHead>
