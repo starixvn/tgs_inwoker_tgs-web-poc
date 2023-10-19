@@ -15,7 +15,7 @@ type Props = {
   balanceChangeDetails: TransactionLogViewModel[];
 };
 const BalanceChangeCards = ({ balanceChangeDetails }: Props) => {
-  if (balanceChangeDetails.length <= 0) {
+  if (!balanceChangeDetails?.length) {
     return <NoRecord />;
   }
 

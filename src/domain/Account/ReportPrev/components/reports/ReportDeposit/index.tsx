@@ -89,11 +89,11 @@ const ReportDeposit = ({ dateRangeInfo }: Props) => {
 
       {isDesktopSize ? (
         <DepositDetailTable
-          depositDetails={depositDetails}
+          transferDetails={depositDetails}
           totalCount={totalCount}
         />
       ) : (
-        <DepositDetailCards depositDetails={depositDetails} />
+        <DepositDetailCards transferDetails={depositDetails} />
       )}
 
       <Loading show={isLoading} />

@@ -16,7 +16,7 @@ type Props = {
   transactionDetails: TransactionDetail[];
 };
 const TransactionDetailCards = ({ transactionDetails }: Props) => {
-  if (transactionDetails.length <= 0) {
+  if (!transactionDetails?.length) {
     return <NoRecord />;
   }
 

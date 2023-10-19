@@ -27,7 +27,7 @@ const TransactionDetailTable = ({
   balanceChangeDetails,
   totalCount,
 }: Props) => {
-  if (balanceChangeDetails.length <= 0) {
+  if (!balanceChangeDetails?.length) {
     return <NoRecord />;
   }
 

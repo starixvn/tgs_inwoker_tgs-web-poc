@@ -16,11 +16,11 @@ import {
 import { DepositFormViewModel } from "@/models/dto/report/GetDepositDetailsResDto";
 
 type Props = {
-  depositDetails: DepositFormViewModel[];
+  transferDetails: DepositFormViewModel[];
   totalCount: number;
 };
-const TransactionDetailTable = ({ depositDetails, totalCount }: Props) => {
-  if (depositDetails.length <= 0) {
+const TransactionDetailTable = ({ transferDetails, totalCount }: Props) => {
+  if (!transferDetails?.length) {
     return <NoRecord />;
   }
 
@@ -61,7 +61,7 @@ const TransactionDetailTable = ({ depositDetails, totalCount }: Props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {depositDetails.map((depositDetail) => {
+          {transferDetails.map((depositDetail) => {
             const { id, createdOn, amount, orderno, status } = depositDetail;
 
             const date = moment(createdOn).format("YYYY-MM-DD hh:mm a");

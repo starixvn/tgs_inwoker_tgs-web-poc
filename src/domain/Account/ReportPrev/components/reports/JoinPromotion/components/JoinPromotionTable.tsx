@@ -23,7 +23,7 @@ type Props = {
   totalCount: number;
 };
 const JoinPromotionTable = ({ promotionDetails, totalCount }: Props) => {
-  if (promotionDetails.length <= 0) {
+  if (!promotionDetails?.length) {
     return <NoRecord />;
   }
 
