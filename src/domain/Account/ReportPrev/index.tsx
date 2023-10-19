@@ -9,8 +9,8 @@ import ReportBetting from "@/domain/Account/ReportPrev/components/reports/Report
 import ReportWithdraw from "@/domain/Account/ReportPrev/components/reports/ReportWithdraw";
 import ReportDeposit from "@/domain/Account/ReportPrev/components/reports/ReportDeposit";
 import ReportRebate from "@/domain/Account/ReportPrev/components/reports/ReportRebate";
-import ReportTransfer from "@/domain/Account/ReportPrev/components/reports/ReportTransfer";
-import ReportJoinPromotion from "@/domain/Account/ReportPrev/components/reports/ReportJoinPromotion";
+import Index from "@/domain/Account/ReportPrev/components/reports/ReportTransfer";
+import ReportJoinPromotion from "@/domain/Account/ReportPrev/components/reports/JoinPromotion";
 import ReportBalanceChange from "@/domain/Account/ReportPrev/components/reports/ReportBalanceChange";
 import ReportPlatform from "@/domain/Account/ReportPrev/components/reports/ReportPlatform";
 import { useDateRange } from "@/domain/Account/ReportPrev/hooks/useDateRange";
@@ -110,7 +110,7 @@ const Report = () => {
           case 5:
             return <ReportRebate dateRangeInfo={dateRangeInfo} />;
           case 6:
-            return <ReportTransfer dateRangeInfo={dateRangeInfo} />;
+            return <Index dateRangeInfo={dateRangeInfo} />;
           case 7:
             return <ReportJoinPromotion dateRangeInfo={dateRangeInfo} />;
           case 8:
