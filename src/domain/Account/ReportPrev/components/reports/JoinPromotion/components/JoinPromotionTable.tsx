@@ -49,13 +49,12 @@ const JoinPromotionTable = ({ promotionDetails, totalCount }: Props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {promotionDetails.map((promotionDetail) => {
-            const { id, joinedOn, promotionName } = promotionDetail;
-
+          {promotionDetails.map((promotionDetail, index) => {
+            const { joinedOn, promotionName } = promotionDetail;
             const date = moment(joinedOn).format("YYYY-MM-DD hh:mm a");
 
             return (
-              <TableRow key={id}>
+              <TableRow key={index}>
                 <TableCell>{date}</TableCell>
                 <TableCell>{promotionName}</TableCell>
               </TableRow>
