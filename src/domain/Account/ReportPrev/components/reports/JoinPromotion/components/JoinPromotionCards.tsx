@@ -14,7 +14,7 @@ type Props = {
   promotionDetails: JoinedPromotionsResponse[];
 };
 const JoinPromotionCards = ({ promotionDetails }: Props) => {
-  if (promotionDetails.length <= 0) {
+  if (!promotionDetails?.length) {
     return <NoRecord />;
   }
 

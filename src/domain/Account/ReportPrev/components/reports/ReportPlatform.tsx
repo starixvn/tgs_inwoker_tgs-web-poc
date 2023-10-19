@@ -103,7 +103,7 @@ const ReportPlatform = ({ dateRangeInfo }: Props) => {
         </ReportSummary>
 
         {(() => {
-          if (dataList.length <= 0) {
+          if (!dataList?.length) {
             return <NoRecord />;
           } else {
             return (

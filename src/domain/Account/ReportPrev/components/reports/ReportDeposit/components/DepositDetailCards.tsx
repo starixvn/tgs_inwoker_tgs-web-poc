@@ -15,9 +15,9 @@ import { DepositFormViewModel } from "@/models/dto/report/GetDepositDetailsResDt
 import { useHistory } from "react-router-dom";
 
 type Props = {
-  depositDetails: DepositFormViewModel[];
+  transferDetails: DepositFormViewModel[];
 };
-const DepositDetailCards = ({ depositDetails }: Props) => {
+const DepositDetailCards = ({ transferDetails }: Props) => {
   const history = useHistory();
 
   const handleManualDeposit = (id: string) => {
@@ -26,7 +26,7 @@ const DepositDetailCards = ({ depositDetails }: Props) => {
     });
   };
 
-  if (depositDetails.length <= 0) {
+  if (transferDetails.length <= 0) {
     return (
       <ReportContainer>
         <NoRecord />;
@@ -36,7 +36,7 @@ const DepositDetailCards = ({ depositDetails }: Props) => {
   return (
     <ReportContainer>
       <ReportCardsContainer>
-        {depositDetails.map((depositDetail, index) => {
+        {transferDetails.map((depositDetail, index) => {
           const { createdon, orderno, status, id, amount, canuploadcerts } =
             depositDetail;
           const date = moment(createdon).format("YYYY-MM-DD hh:mm a");

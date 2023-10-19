@@ -22,7 +22,7 @@ type Props = {
   totalCount: number;
 };
 const TransactionDetailTable = ({ transactionDetails, totalCount }: Props) => {
-  if (transactionDetails.length <= 0) {
+  if (!transactionDetails?.length) {
     return <NoRecord />;
   }
 

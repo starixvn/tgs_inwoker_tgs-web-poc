@@ -14,7 +14,7 @@ type Props = {
   withdrawalDetails: WithdrawFormViewModel[];
 };
 const WithdrawalDetailCards = ({ dataList: withdrawalDetails }: Props) => {
-  if (withdrawalDetails.length <= 0) {
+  if (!withdrawalDetails?.length) {
     return <NoRecord />;
   }
 

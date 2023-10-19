@@ -14,6 +14,10 @@ import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { ReportService } from "@/services/ReportService";
 import Loading from "@/components/UI/Loading";
 import { DateRangeInfo } from "@/domain/Account/ReportPrev/hooks/useDateRange";
+import { GameBalanceInfosViewModel } from "@/models/dto/report/GetTransferReportResDto";
+import { useRwd } from "@/hooks/useRwd";
+import TransferDetailTable from "@/domain/Account/ReportPrev/components/reports/ReportTransfer/components/TransferDetailTable";
+import TransferDetailCard from "@/domain/Account/ReportPrev/components/reports/ReportTransfer/components/TransferDetailCard";
 
 type Props = {
   dateRangeInfo: DateRangeInfo;
@@ -24,14 +28,18 @@ const Index = ({ dateRangeInfo }: Props) => {
   const { alert } = useNotifications();
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const { isDesktopSize } = useRwd();
 
-  const [dataList, setDataList] = useState<any[]>([]);
+  const [transferDetails, setTransferDetails] = useState<
+    GameBalanceInfosViewModel[]
+  >([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [isMaxPage, setIsMaxPage] = useState(false);
 
   const fetchReports = async () => {
     setIsLoading(true);
 
-    ReportService.GetTransferReport(
+    const getTransferReportRes = await ReportService.GetTransferReport(
       moment(dateRangeInfo.dateFrom).utc().format(),
       moment(dateRangeInfo.dateTo).utc().add(1, "days").format(),
       page,
@@ -40,19 +48,26 @@ const Index = ({ dateRangeInfo }: Props) => {
       true,
       "BalanceTime",
       false
-    ).then((response) => {
-      if (response.IsSuccess) {
-        const newDataList =
-          page > 1 ? dataList.concat(response.data.items) : response.data.items;
+    );
 
-        setDataList(newDataList);
-        setIsLoading(false);
-        setIsMaxPage(response.data.totalCount == newDataList.length);
-      } else {
-        alert("", response?.info || JSON.stringify(response));
-        setIsLoading(false);
-      }
-    });
+    if (getTransferReportRes.IsSuccess) {
+      const newTransferDetails =
+        page > 1
+          ? transferDetails.concat(getTransferReportRes.data.items)
+          : getTransferReportRes.data.items;
+
+      setTransferDetails(newTransferDetails);
+      setTotalCount(getTransferReportRes.data.totalCount || 0);
+      setIsMaxPage(
+        getTransferReportRes.data.totalCount == newTransferDetails.length
+      );
+    } else {
+      alert(
+        "",
+        getTransferReportRes?.info || JSON.stringify(getTransferReportRes)
+      );
+    }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -70,51 +85,14 @@ const Index = ({ dateRangeInfo }: Props) => {
 
   return (
     <ReportContainer>
-      {(() => {
-        if (dataList.length <= 0) {
-          return <NoRecord />;
-        } else {
-          return (
-            <ReportCardsContainer>
-              {dataList.map((row, index) => {
-                return (
-                  <ReportCard key={index}>
-                    <ReportCardRow>
-                      {i18n.t("report.transfer.table.from")} :{" "}
-                      <ReportCardCol>
-                        {row.from
-                          ? row.from === "BTI" && config.currency === "PHP"
-                            ? "PHSB"
-                            : row.from
-                          : ""}
-                      </ReportCardCol>
-                    </ReportCardRow>
-                    <ReportCardRow>
-                      {i18n.t("report.transfer.table.to")} :{" "}
-                      <ReportCardCol>
-                        {row.to
-                          ? row.to === "BTI" && config.currency === "PHP"
-                            ? "PHSB"
-                            : row.to
-                          : ""}
-                      </ReportCardCol>
-                    </ReportCardRow>
-                    <ReportCardRow>
-                      {i18n.t("report.amount")} :{" "}
-                      <ReportCardCol>{row.amount}</ReportCardCol>
-                    </ReportCardRow>
-                    <ReportCardRow>
-                      <ReportCardCol>
-                        {moment(row.balancetime).format("YYYY-MM-DD hh:mm a")}
-                      </ReportCardCol>
-                    </ReportCardRow>
-                  </ReportCard>
-                );
-              })}
-            </ReportCardsContainer>
-          );
-        }
-      })()}
+      {isDesktopSize ? (
+        <TransferDetailTable
+          transferDetails={transferDetails}
+          totalCount={totalCount}
+        />
+      ) : (
+        <TransferDetailCard transferDetails={transferDetails} />
+      )}
       <Loading show={isLoading} />
     </ReportContainer>
   );
