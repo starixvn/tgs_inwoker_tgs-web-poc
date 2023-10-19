@@ -1,10 +1,13 @@
 import { media } from "@/theme/breakpoints";
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { gameTypeList } from "../../constants/tab";
+import { gameTypeList } from "@/constants/tab";
 import Tab from "./Tab";
 
-const TabContainer = styled.div<{ isDragging: boolean }> `
+type TabContainerProps = {
+  $isDragging: boolean;
+};
+const TabContainer = styled.div<TabContainerProps>`
   margin-bottom: 15px;
   overflow-x: auto;
   white-space: nowrap;
@@ -18,7 +21,8 @@ const TabContainer = styled.div<{ isDragging: boolean }> `
     width: calc(100% - 189px);
     margin-bottom: unset;
     transition: scroll-left 0.2s ease-in-out;
-    cursor: ${({ isDragging }) => isDragging ? 'grabbing' : 'grab'};
+    cursor: ${({ $isDragging }: TabContainerProps) =>
+      $isDragging ? "grabbing" : "grab"};
   }
 `;
 
@@ -37,7 +41,7 @@ const GameTypeTab = ({ activeGameTypeTab, handleGameTypeClick }: Props) => {
     setIsDragging(true);
     setStartX(e.pageX - (tabContainerRef.current?.scrollLeft ?? 0));
     if (tabContainerRef.current) {
-      tabContainerRef.current.style.cursor = 'grabbing'; // 手指按下時,滑鼠游標變成手指
+      tabContainerRef.current.style.cursor = "grabbing"; // 手指按下時,滑鼠游標變成手指
     }
   };
 
@@ -53,11 +57,11 @@ const GameTypeTab = ({ activeGameTypeTab, handleGameTypeClick }: Props) => {
   const handleMouseUp = () => {
     setIsDragging(false);
     if (tabContainerRef.current) {
-      tabContainerRef.current.style.cursor = 'grab';
-      tabContainerRef.current.style.scrollBehavior = 'smooth';
+      tabContainerRef.current.style.cursor = "grab";
+      tabContainerRef.current.style.scrollBehavior = "smooth";
       tabContainerRef.current.scrollLeft += 50;
       // number: 滾動條滾動距離,可控制反彈距離
-      tabContainerRef.current.style.scrollBehavior = 'auto';
+      tabContainerRef.current.style.scrollBehavior = "auto";
     }
   };
 
@@ -67,27 +71,23 @@ const GameTypeTab = ({ activeGameTypeTab, handleGameTypeClick }: Props) => {
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
-      isDragging={isDragging} // Add isDragging prop here
+      $isDragging={isDragging} // Add isDragging prop here
     >
-      {gameTypeList.map(
-        (item: {
-          key: string;
-          iconUrl: string;
-          text: string;
-          fontSize: string;
-          gameType: number;
-        }) => (
+      {gameTypeList.map((gameTypeItem) => {
+        const { key, iconUrl, text, gameType, fontSize } = gameTypeItem;
+
+        return (
           <Tab
-            key={item.key}
-            imageUrl={item.iconUrl}
-            text={item.text}
-            isActive={item.gameType === activeGameTypeTab}
-            fontSize={item.fontSize}
-            onClick={() => handleGameTypeClick(item.gameType)}
+            key={key}
+            imageUrl={iconUrl}
+            text={text}
+            isActive={gameType === activeGameTypeTab}
+            fontSize={fontSize}
+            onClick={() => handleGameTypeClick(gameType)}
             isDraggable={isDragging}
           />
-        )
-      )}
+        );
+      })}
     </TabContainer>
   );
 };
