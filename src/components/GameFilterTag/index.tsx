@@ -4,7 +4,11 @@ import styled from "styled-components";
 import { gameTagList } from "../../constants/gameTag";
 import Tag from "./Tag";
 
-const TagContainer = styled.div`
+type TagContainerProps = {
+  $isDragging: boolean;
+};
+
+const TagContainer = styled.div<TagContainerProps>`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -17,7 +21,8 @@ const TagContainer = styled.div`
   ${media.sm} {
     overflow-x: hidden;
     transition: scroll-left 0.2s ease-in-out;
-    cursor: ${({ isDragging }) => isDragging ? 'grabbing' : 'grab'};
+    cursor: ${({ $isDragging }: TagContainerProps) =>
+      $isDragging ? "grabbing" : "grab"};
   }
 `;
 type Tag = { name: string };
@@ -54,7 +59,7 @@ const GameFilterTag = ({ tagList, selectedTag, setSelectedTag }: Props) => {
     setIsTagDragging(true);
     setStartX(e.pageX - (tagContainerRef.current?.scrollLeft ?? 0));
     if (tagContainerRef.current) {
-      tagContainerRef.current.style.cursor = 'grabbing'; // 手指按下時,滑鼠游標變成手指
+      tagContainerRef.current.style.cursor = "grabbing"; // 手指按下時,滑鼠游標變成手指
     }
   };
 
@@ -70,11 +75,11 @@ const GameFilterTag = ({ tagList, selectedTag, setSelectedTag }: Props) => {
   const handleTagMouseUp = () => {
     setIsTagDragging(false);
     if (tagContainerRef.current) {
-      tagContainerRef.current.style.cursor = 'grab';
-      tagContainerRef.current.style.scrollBehavior = 'smooth';
+      tagContainerRef.current.style.cursor = "grab";
+      tagContainerRef.current.style.scrollBehavior = "smooth";
       tagContainerRef.current.scrollLeft += 50;
       // number: 滾動條滾動距離,可控制反彈距離
-      tagContainerRef.current.style.scrollBehavior = 'auto';
+      tagContainerRef.current.style.scrollBehavior = "auto";
     }
   };
 
@@ -84,7 +89,7 @@ const GameFilterTag = ({ tagList, selectedTag, setSelectedTag }: Props) => {
       onMouseDown={handleTagMouseDown}
       onMouseMove={handleTagMouseMove}
       onMouseUp={handleTagMouseUp}
-      isDragging={isDragging}
+      $isDragging={isTagDragging}
     >
       {tagList
         .filter((item): item is GameItem => item !== null)
