@@ -31,6 +31,7 @@ import { AuthGuard } from "@/domain/authentication/AuthGuard";
 import FloatingToolIcons from "@/components/FloatingToolIcons";
 import { PageNameContextProvider } from "@/contexts/pageNameContext";
 import Loading from "@/components/UI/Loading";
+import ScrollToTop from "@/utils/ScrollToTop";
 
 class SubIndex extends Component {
   constructor(props) {
@@ -515,6 +516,7 @@ class SubIndex extends Component {
           <AuthContextProvider>
             <PageNameContextProvider>
               <Router history={AppHistory}>
+                <ScrollToTop />
                 <Switch>
                   {routes.map((route, index) => {
                     return (

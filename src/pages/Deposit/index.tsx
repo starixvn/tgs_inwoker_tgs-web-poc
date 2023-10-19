@@ -13,7 +13,8 @@ import PageBadge from "@/components/PageBadge";
 import AccountPaper from "@/components/AccountPaper";
 
 const DepositContainer = styled.div`
-  max-width: 769px;
+  padding: 21px 22px;
+  max-width: calc(848px + 22px * 2);
   margin: auto;
 `;
 

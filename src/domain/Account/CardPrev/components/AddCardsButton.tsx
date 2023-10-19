@@ -11,6 +11,7 @@ const InputContainer = styled.div`
   align-items: center;
   gap: 8px;
   border-radius: 5px;
+  cursor: pointer;
 `;
 
 const EmptyCardTitle = styled.div`

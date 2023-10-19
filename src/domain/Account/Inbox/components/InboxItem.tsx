@@ -8,10 +8,11 @@ const InboxItemContainer = styled.div`
   width: 100%;
   padding: 8px 15px;
   background: ${({ theme }) => theme.primaryLight};
+  cursor: pointer;
 `;
 
 type CheckboxContainerProps = {
-  $edit: boolean;
+  $isEdit: boolean;
 };
 const CheckboxContainer = styled.div<CheckboxContainerProps>`
   float: left;
@@ -19,8 +20,8 @@ const CheckboxContainer = styled.div<CheckboxContainerProps>`
   height: 46px;
   margin: 56px 0 0 20px;
 
-  ${({ $edit }: CheckboxContainerProps) =>
-    $edit ? `display:block` : `display:none`};
+  ${({ $isEdit }: CheckboxContainerProps) =>
+    $isEdit ? `display:block` : `display:none`};
 `;
 
 const ContentContainer = styled.div`
@@ -31,11 +32,11 @@ const ContentContainer = styled.div`
 const ItemContainer = styled.div``;
 
 type MsgTitleProps = {
-  $isread: boolean;
+  $isRead: boolean;
 };
 const MsgTitle = styled.div<MsgTitleProps>`
   font-size: 1.25rem;
-  font-weight: ${({ $isread }: MsgTitleProps) => ($isread ? "400" : "600")};
+  font-weight: ${({ $isRead }: MsgTitleProps) => ($isRead ? "400" : "600")};
   color: ${({ theme }) => theme.white};
   white-space: nowrap;
   margin-bottom: 5px;
@@ -77,56 +78,57 @@ const LetterContent = styled.div`
 `;
 
 type Props = {
-  row: InboxMessage;
-  edit: boolean;
+  inboxMessage: InboxMessage;
+  isEdit: boolean;
   handleCheckboxClick: (id: string, GUID: string) => void;
-  selected: string[];
+  isSelected: boolean;
   handleItemClick: (id: string) => void;
 };
 
 const InboxItem = ({
-  row,
-  edit,
+  inboxMessage,
+  isEdit,
   handleCheckboxClick,
-  selected,
+  isSelected,
   handleItemClick,
 }: Props) => {
   const [opened, setOpened] = useState(false);
+  const { id, isread, createon, subject, content, localization } = inboxMessage;
 
   const handleShowDetail = (isread: boolean) => {
-    if (!opened && !isread) handleItemClick(row.id);
+    if (!opened && !isread) handleItemClick(inboxMessage.id);
     setOpened(!opened);
   };
 
   return (
     <InboxItemContainer>
-      <CheckboxContainer $edit={edit}>
+      <CheckboxContainer $isEdit={isEdit}>
         <CheckboxCircle
-          onClick={() => handleCheckboxClick(row.id, row.id.toString())}
-          checked={selected.includes(row.id)}
+          onClick={() => handleCheckboxClick(id, id.toString())}
+          checked={isSelected}
         ></CheckboxCircle>
       </CheckboxContainer>
 
       <ItemContainer>
-        <ContentContainer onClick={() => handleShowDetail(row.isread)}>
-          <MsgTitle $isread={row.isread}>
+        <ContentContainer onClick={() => handleShowDetail(isread)}>
+          <MsgTitle $isRead={isread}>
             <MsgTitleSpan>
-              {row.localization !== null && row.localization.subject
-                ? row.localization.subject
-                : row.subject}
+              {localization !== null && localization.subject
+                ? localization.subject
+                : subject}
             </MsgTitleSpan>
           </MsgTitle>
-          <MsgDate>{moment(row.createon).format("YYYY-MM-DD hh:mm a")}</MsgDate>
+          <MsgDate>{moment(createon).format("YYYY-MM-DD hh:mm a")}</MsgDate>
         </ContentContainer>
         <Collapse in={opened}>
           <LetterContent
             dangerouslySetInnerHTML={{
               __html:
-                row.localization !== null && row.localization.content
-                  ? row.localization.content
-                  : row.content,
+                localization !== null && localization.content
+                  ? localization.content
+                  : content,
             }}
-          ></LetterContent>
+          />
         </Collapse>
       </ItemContainer>
     </InboxItemContainer>

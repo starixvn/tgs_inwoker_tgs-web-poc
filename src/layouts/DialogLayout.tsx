@@ -18,8 +18,8 @@ const ContentWrapper = styled.div`
   margin: 80px 0 82px;
   position: relative;
   z-index: 1;
-  padding: 21px 22px;
 `;
+
 type Props = {
   children: ReactElement;
 };

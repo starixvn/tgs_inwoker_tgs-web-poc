@@ -3,18 +3,33 @@ import { useHistory } from "react-router-dom";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import styled from "styled-components";
 import Payment from "@/domain/Account/DepositPrev/Payment";
+import { useRwd } from "@/hooks/useRwd";
+import UserWalletInfo from "@/components/Account/UserWalletInfo";
+import TransferTabs from "@/domain/Account/DepositPrev/components/TransferTabs";
+import i18n from "@/utils/i18n";
+import iconDeposit from "@/assets/images/account/badge/icon-deposit.svg";
+import AccountPaper from "@/components/AccountPaper";
 
 const DepositContainer = styled.div`
-  padding: 20px 24px;
+  padding: 21px 22px;
+  max-width: calc(848px + 22px * 2);
+  margin: auto;
 `;
 
 type Props = {};
 const Deposit = (props: Props) => {
+  const { isDesktopSize } = useRwd();
   const history = useHistory();
   const { alert } = useNotifications();
+
   return (
     <DepositContainer>
-      <Payment appHistory={history} alert={alert} />;
+      {isDesktopSize && <UserWalletInfo />}
+
+      {!isDesktopSize && <TransferTabs />}
+      <AccountPaper pageName={i18n.t("common.deposit")} iconUrl={iconDeposit}>
+        <Payment appHistory={history} alert={alert} />;
+      </AccountPaper>
     </DepositContainer>
   );
 };

@@ -5,6 +5,7 @@ type BadgeContainerProps = {
   $isActive: boolean;
 };
 const BadgeContainer = styled.div<BadgeContainerProps>`
+  cursor: pointer;
   border-radius: 50px;
   padding: 12px 20px;
   //min-width: 86px;
