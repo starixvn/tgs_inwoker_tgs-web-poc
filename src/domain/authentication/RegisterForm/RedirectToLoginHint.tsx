@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import i18n from "@/utils/i18n";
+import { useRwd } from "@/hooks/useRwd";
+import { useAuthDialog } from "@/hooks/auth/useAuthDialog";
+import { useHistory } from "react-router";
 
 const CreateAccountContainer = styled.div`
   color: white;
@@ -15,17 +18,32 @@ const CreateAccountContainer = styled.div`
   .link {
     color: #5d50e0;
     margin-left: 8px;
+    cursor: pointer;
   }
 `;
 
 type Props = {};
 const RedirectToLoginHint = (props: Props) => {
+  const { isDesktopSize } = useRwd();
+  const { handleToggleRegisterDialog, handleToggleLoginDialog } =
+    useAuthDialog();
+  const history = useHistory();
+
+  const handleRedirect = useCallback(() => {
+    if (!isDesktopSize) {
+      return history.push("/register");
+    }
+
+    handleToggleRegisterDialog();
+    handleToggleLoginDialog();
+  }, []);
+
   return (
     <CreateAccountContainer>
       <span>{i18n.t("T13.proceedLogin")}</span>
-      <Link to={"/login"} className={"link"}>
+      <span onClick={handleRedirect} className={"link"}>
         {i18n.t("common.login")}
-      </Link>
+      </span>
     </CreateAccountContainer>
   );
 };

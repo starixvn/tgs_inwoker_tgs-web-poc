@@ -33,6 +33,7 @@ import { Redirect, Route, Router, Switch } from "react-router";
 import { AppHistory } from "@/history/History";
 import { muiTheme } from "@/theme/mui";
 import { HeaderContextProvider } from "@/contexts/headerContext";
+import { AuthDialogContextProvider } from "@/contexts/authDialogContext";
 
 require("es6-promise").polyfill();
 
@@ -174,12 +175,14 @@ const App = () => {
                   ref={notistackRef}
                 >
                   <HeaderContextProvider>
-                    <Router history={AppHistory}>
-                      <Switch>
-                        <Route path={"/"} render={(props) => <Main />} />
-                        <Redirect to={`/`} />
-                      </Switch>
-                    </Router>
+                    <AuthDialogContextProvider>
+                      <Router history={AppHistory}>
+                        <Switch>
+                          <Route path={"/"} render={(props) => <Main />} />
+                          <Redirect to={`/`} />
+                        </Switch>
+                      </Router>
+                    </AuthDialogContextProvider>
                   </HeaderContextProvider>
                 </SnackbarProvider>
               </StyleComponentThemeProvider>

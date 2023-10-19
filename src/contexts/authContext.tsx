@@ -2,7 +2,6 @@ import React, { createContext } from "react";
 import { LoginState, useLogin } from "@/hooks/auth/useAuth/useLogin";
 import { LogoutState, useLogout } from "@/hooks/auth/useAuth/useLogout";
 import { RegisterState, useRegister } from "@/hooks/auth/useAuth/useRegister";
-import Register from "@/components/App/Register";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { RegisterReqDto } from "@/models/dto/player/RegisterReqDto";
 

@@ -32,6 +32,8 @@ import FloatingToolIcons from "@/components/FloatingToolIcons";
 import { PageNameContextProvider } from "@/contexts/pageNameContext";
 import Loading from "@/components/UI/Loading";
 import ScrollToTop from "@/utils/ScrollToTop";
+import LoginDialog from "@/domain/authentication/LoginDialog";
+import RegisterDialog from "@/domain/authentication/RegisterDialog";
 
 class SubIndex extends Component {
   constructor(props) {
@@ -530,6 +532,9 @@ class SubIndex extends Component {
                               <AuthGuard route={route}>
                                 <LayoutProvider route={route}>
                                   <route.component />
+
+                                  <LoginDialog />
+                                  <RegisterDialog />
                                 </LayoutProvider>
                               </AuthGuard>
                             </Suspense>
