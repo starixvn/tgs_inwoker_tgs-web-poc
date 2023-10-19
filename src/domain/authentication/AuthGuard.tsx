@@ -23,7 +23,6 @@ export const AuthGuard = (props: AuthGuard) => {
 
   const validate = async () => {
     const isHasAccessToViewPage = checkIfHasAccessToViewPage();
-
     if (!isHasAccessToViewPage) {
       history.push("/login");
     }

@@ -29,10 +29,7 @@ import FeatureGetter from "./components/Share/feature-getter";
 import { GlobalStyles } from "./global";
 import { theme } from "./theme";
 import { createRoot } from "react-dom/client";
-import { Redirect, Route, Router, Switch } from "react-router";
-import { AppHistory } from "@/history/History";
 import { muiTheme } from "@/theme/mui";
-import { HeaderContextProvider } from "@/contexts/headerContext";
 
 require("es6-promise").polyfill();
 
@@ -173,14 +170,7 @@ const App = () => {
                   }}
                   ref={notistackRef}
                 >
-                  <HeaderContextProvider>
-                    <Router history={AppHistory}>
-                      <Switch>
-                        <Route path={"/"} render={(props) => <Main />} />
-                        <Redirect to={`/`} />
-                      </Switch>
-                    </Router>
-                  </HeaderContextProvider>
+                  <Main />
                 </SnackbarProvider>
               </StyleComponentThemeProvider>
             </MuiThemeProvider>

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
-import { theme } from "@/theme";
 import { CircularProgress } from "@mui/material";
 
 type LoadingContainer = {

@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import { styled as muiStyled } from "@mui/material/styles";
 import { Button as MuiButton } from "@mui/material";
 import { media } from "@/theme/breakpoints";
+import { useRwd } from "@/hooks/useRwd";
+import { useAuthDialog } from "@/hooks/auth/useAuthDialog";
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -38,11 +40,24 @@ export const HeaderButton = muiStyled(MuiButton)(({ theme }) => ({
 type Props = {};
 const AnonymousHeaderContent = (props: Props) => {
   const history = useHistory();
+  const { isDesktopSize } = useRwd();
+  const { handleToggleLoginDialog, handleToggleRegisterDialog } =
+    useAuthDialog();
 
   const toggleLoginDialog = useCallback(() => {
+    if (isDesktopSize) {
+      handleToggleLoginDialog();
+      return;
+    }
+
     history.push("/login");
   }, []);
+
   const toggleRegisterDialog = useCallback(() => {
+    if (isDesktopSize) {
+      handleToggleRegisterDialog();
+      return;
+    }
     history.push("/register");
   }, []);
 

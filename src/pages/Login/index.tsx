@@ -1,17 +1,29 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import Dialog from "@/components/UI/Dialog/Dialog";
+import React, { useEffect } from "react";
 import LoginForm from "@/domain/authentication/LoginForm";
 import { usePageName } from "@/hooks/usePageName";
 import i18n from "@/utils/i18n";
+import { useRwd } from "@/hooks/useRwd";
+import { useHistory } from "react-router-dom";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 type Props = {};
 const LoginPage = (props: Props) => {
   const { updatePageName } = usePageName();
+  const { isLogin } = useAuth();
+  const history = useHistory();
+  const { isDesktopSize } = useRwd();
 
   useEffect(() => {
+    if (isLogin) {
+      history.push("/");
+    }
+
     updatePageName(i18n.t("common.login"));
   }, []);
+
+  if (isDesktopSize) {
+    return null;
+  }
 
   return <LoginForm />;
 };

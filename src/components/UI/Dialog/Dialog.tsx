@@ -18,6 +18,7 @@ const DialogContainer = styled(MuiDialog)`
 `;
 
 const CloseIconContainer = styled.div`
+  cursor: pointer;
   position: absolute;
   top: 20px;
   right: 20px;
