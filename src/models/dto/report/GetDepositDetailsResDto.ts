@@ -1,6 +1,6 @@
 import { FlowState } from "@/models/dto/report/GetWithdrawalDetailsResDto";
 
-interface DepositFormViewModel {
+export interface DepositFormViewModel {
   id: string;
   status: FlowState | null;
   amount: number | null;
@@ -15,7 +15,7 @@ interface DepositFormViewModelPagedResponse {
   errors: (string | null)[];
   message: string;
   valid: boolean;
-  items: (DepositFormViewModel | null)[];
+  items: DepositFormViewModel[];
   totalCount: number | null;
 }
 

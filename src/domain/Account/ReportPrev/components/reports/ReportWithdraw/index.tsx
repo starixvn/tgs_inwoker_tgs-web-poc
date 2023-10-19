@@ -8,13 +8,14 @@ import {
   ReportCardRow,
   ReportCardsContainer,
   ReportContainer,
+  ReportSummary,
+  ReportSummaryCol,
+  ReportSummaryRow,
 } from "@/domain/Account/ReportPrev/styles";
-import { Button } from "@/components/UI/Button";
-import { useHistory } from "react-router-dom";
-import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { ReportService } from "@/services/ReportService";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import Loading from "@/components/UI/Loading";
-import { useDepositStatus } from "@/domain/Account/ReportPrev/hooks/useDepositStatus";
+import { useWithdrawalStatus } from "@/domain/Account/ReportPrev/hooks/useWithdrawalStatus";
 import StatusSelect from "@/domain/Account/ReportPrev/components/StatusSelect";
 import { DateRangeInfo } from "@/domain/Account/ReportPrev/hooks/useDateRange";
 
@@ -23,28 +24,22 @@ type Props = {
 };
 
 const PAGE_SIZE = 20;
-const ReportDeposit = ({ dateRangeInfo }: Props) => {
-  const history = useHistory();
-
-  const handleManualDeposit = (id: string) => {
-    history.push({
-      pathname: "/manual/" + id,
-    });
-  };
-
+const ReportWithdraw = ({ dateRangeInfo }: Props) => {
   const { alert } = useNotifications();
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
 
   const [dataList, setDataList] = useState<any[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [isMaxPage, setIsMaxPage] = useState(false);
 
-  const { statusDictionary, status, handleStatusChange } = useDepositStatus();
+  const { statusDictionary, status, handleStatusChange } =
+    useWithdrawalStatus();
 
   const fetchReports = async () => {
     setIsLoading(true);
 
-    ReportService.GetDepositDetails(
+    ReportService.GetWithdrawalDetails(
       status,
       moment(dateRangeInfo.dateFrom).utc().format(),
       moment(dateRangeInfo.dateTo).utc().add(1, "days").format(),
@@ -89,7 +84,23 @@ const ReportDeposit = ({ dateRangeInfo }: Props) => {
         status={status}
         handleStatusChange={handleStatusChange}
       />
+
       <ReportContainer>
+        <ReportSummary>
+          <ReportSummaryRow>
+            <ReportSummaryCol style={{ width: "33%" }}>
+              {i18n.t("report.dateTime")}
+            </ReportSummaryCol>
+
+            <ReportSummaryCol style={{ width: "33%" }}>
+              {i18n.t("report.status")}
+            </ReportSummaryCol>
+            <ReportSummaryCol style={{ width: "33%" }}>
+              {i18n.t("common.amount")}
+            </ReportSummaryCol>
+          </ReportSummaryRow>
+        </ReportSummary>
+
         {(() => {
           if (dataList.length <= 0) {
             return <NoRecord />;
@@ -103,28 +114,22 @@ const ReportDeposit = ({ dateRangeInfo }: Props) => {
                   return (
                     <ReportCard key={index}>
                       <ReportCardRow>
-                        {i18n.t("report.NewOrderNumber")} :{" "}
-                        <ReportCardCol>{row.orderno}</ReportCardCol>
+                        <div>
+                          {i18n.t("report.NewOrderNumber")} :{" "}
+                          <ReportCardCol>{row.orderno}</ReportCardCol>
+                        </div>
                       </ReportCardRow>
+
                       <ReportCardRow>
-                        <ReportCardCol>
-                          {i18n.t(`report.deposit.status${row.status}`)}
+                        <ReportCardCol style={{ width: "33%" }}>
+                          {date}
                         </ReportCardCol>
-                        <ReportCardCol>{row.amount}</ReportCardCol>
-                        <ReportCardCol>
-                          {row.status === 1 && row.canuploadcerts === true && (
-                            <Button
-                              onClick={() => {
-                                handleManualDeposit(row.id);
-                              }}
-                            >
-                              {i18n.t("deposit.uploadReceipt")}
-                            </Button>
-                          )}
+                        <ReportCardCol style={{ width: "33%" }}>
+                          {i18n.t(`report.withdrawal.status${row.status}`)}
                         </ReportCardCol>
-                        <ReportCardRow>
-                          <ReportCardCol>{date}</ReportCardCol>
-                        </ReportCardRow>
+                        <ReportCardCol style={{ width: "33%" }}>
+                          {row.amount}
+                        </ReportCardCol>
                       </ReportCardRow>
                     </ReportCard>
                   );
@@ -139,4 +144,4 @@ const ReportDeposit = ({ dateRangeInfo }: Props) => {
   );
 };
 
-export default ReportDeposit;
+export default ReportWithdraw;

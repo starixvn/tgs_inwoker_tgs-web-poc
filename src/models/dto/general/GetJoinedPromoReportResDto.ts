@@ -1,11 +1,11 @@
-interface JoinedPromotionsResponse {
+export interface JoinedPromotionsResponse {
   joinedOn: string;
   promotionName: string | null;
 }
 
 interface JoinedPromotionsResponsePagingResponse {
-  items: (JoinedPromotionsResponse | null)[];
-  totalCount: number;
+  items: JoinedPromotionsResponse[];
+  totalcount: number;
 }
 
 export interface GetJoinedPromoReportResDto {

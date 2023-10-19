@@ -3,14 +3,16 @@ import { InboxMessage } from "@/types/stores/account";
 import styled from "styled-components";
 import { styled as muiStyled } from "@mui/material/styles";
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from "@mui/material";
 import i18n from "@/utils/i18n";
 import moment from "moment/moment";
-import { Dialog, TablePagination } from "@mui/material";
 
 const InboxListContainer = styled.div`
   & > div {
@@ -56,7 +58,7 @@ const MobileInboxList = ({
 }: Props) => {
   return (
     <InboxListContainer>
-      <StyledTable sx={{ minWidth: 650 }} aria-label="simple table">
+      <StyledTable aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell

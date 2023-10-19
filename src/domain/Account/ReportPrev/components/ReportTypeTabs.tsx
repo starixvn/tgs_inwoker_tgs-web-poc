@@ -15,6 +15,7 @@ type TabButtonProps = {
 };
 
 const TabButton = styled.button<TabButtonProps>`
+  white-space: nowrap;
   cursor: pointer;
   background: ${({ $isSelected }: TabButtonProps) => {
     return $isSelected
@@ -31,6 +32,7 @@ const TabButton = styled.button<TabButtonProps>`
   border-radius: 5px;
   font-size: 0.937rem;
   width: calc((100% - 2 * 9px) / 3);
+  min-width: 125px;
 
   ${media.sm} {
     width: calc((100% - 5 * 9px) / 6);

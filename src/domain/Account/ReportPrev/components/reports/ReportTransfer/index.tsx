@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import config from "@/config/config";
 import i18n from "@/utils/i18n";
 import NoRecord from "@/domain/Account/ReportPrev/components/NoRecord";
 import moment from "moment/moment";
@@ -9,11 +10,9 @@ import {
   ReportCardsContainer,
   ReportContainer,
 } from "@/domain/Account/ReportPrev/styles";
-import ErrorSwitcher from "@/utils/ErrorSwitcher";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { ReportService } from "@/services/ReportService";
 import Loading from "@/components/UI/Loading";
-import { TransactionLogViewModel } from "@/models/dto/report/GetBalanceChangesResDto";
 import { DateRangeInfo } from "@/domain/Account/ReportPrev/hooks/useDateRange";
 
 type Props = {
@@ -21,22 +20,26 @@ type Props = {
 };
 
 const PAGE_SIZE = 20;
-const ReportBalanceChange = ({ dateRangeInfo }: Props) => {
+const Index = ({ dateRangeInfo }: Props) => {
   const { alert } = useNotifications();
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
 
-  const [dataList, setDataList] = useState<TransactionLogViewModel[]>([]);
+  const [dataList, setDataList] = useState<any[]>([]);
   const [isMaxPage, setIsMaxPage] = useState(false);
 
   const fetchReports = async () => {
     setIsLoading(true);
 
-    ReportService.GetBalanceChanges(
+    ReportService.GetTransferReport(
       moment(dateRangeInfo.dateFrom).utc().format(),
       moment(dateRangeInfo.dateTo).utc().add(1, "days").format(),
       page,
-      PAGE_SIZE
+      PAGE_SIZE,
+      1,
+      true,
+      "BalanceTime",
+      false
     ).then((response) => {
       if (response.IsSuccess) {
         const newDataList =
@@ -74,30 +77,36 @@ const ReportBalanceChange = ({ dateRangeInfo }: Props) => {
           return (
             <ReportCardsContainer>
               {dataList.map((row, index) => {
-                const date = moment(row.recordedon).format(
-                  "YYYY/MM/DD hh:mm:ss"
-                );
                 return (
                   <ReportCard key={index}>
                     <ReportCardRow>
+                      {i18n.t("report.transfer.table.from")} :{" "}
                       <ReportCardCol>
-                        {i18n.t("report.dateTime")} :{" "}
-                      </ReportCardCol>
-                      <ReportCardCol>{date}</ReportCardCol>
-                    </ReportCardRow>
-                    <ReportCardRow>
-                      <ReportCardCol>
-                        {i18n.t("report.balanceChanges.type")}:{" "}
-                      </ReportCardCol>
-                      <ReportCardCol>
-                        {ErrorSwitcher.getTranslation(row.type)}
+                        {row.from
+                          ? row.from === "BTI" && config.currency === "PHP"
+                            ? "PHSB"
+                            : row.from
+                          : ""}
                       </ReportCardCol>
                     </ReportCardRow>
                     <ReportCardRow>
+                      {i18n.t("report.transfer.table.to")} :{" "}
                       <ReportCardCol>
-                        {i18n.t("report.balanceChanges.amount")}:{" "}
+                        {row.to
+                          ? row.to === "BTI" && config.currency === "PHP"
+                            ? "PHSB"
+                            : row.to
+                          : ""}
                       </ReportCardCol>
+                    </ReportCardRow>
+                    <ReportCardRow>
+                      {i18n.t("report.amount")} :{" "}
                       <ReportCardCol>{row.amount}</ReportCardCol>
+                    </ReportCardRow>
+                    <ReportCardRow>
+                      <ReportCardCol>
+                        {moment(row.balancetime).format("YYYY-MM-DD hh:mm a")}
+                      </ReportCardCol>
                     </ReportCardRow>
                   </ReportCard>
                 );
@@ -111,4 +120,4 @@ const ReportBalanceChange = ({ dateRangeInfo }: Props) => {
   );
 };
 
-export default ReportBalanceChange;
+export default Index;

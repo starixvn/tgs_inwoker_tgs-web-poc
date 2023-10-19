@@ -7,7 +7,7 @@ export interface TransactionLogViewModel {
 
 export interface TransactionLogViewModelPagingResponse {
   items: TransactionLogViewModel[];
-  totalCount: number;
+  totalcount: number;
 }
 
 export interface GetBalanceChangesResDto {
