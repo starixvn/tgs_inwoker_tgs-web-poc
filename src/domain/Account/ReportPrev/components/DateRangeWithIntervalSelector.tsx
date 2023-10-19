@@ -15,6 +15,7 @@ type DateRangSelectionTypes = {
   $isSelected: boolean;
 };
 const DateRangSelection = styled.div<DateRangSelectionTypes>`
+  cursor: pointer;
   background: ${({ $isSelected }: DateRangSelectionTypes) => {
     return $isSelected
       ? `linear-gradient(180deg, #922ACF 0%, #2F26AD 100%)`

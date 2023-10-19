@@ -14,6 +14,7 @@ type TabButtonProps = {
 };
 
 const TabButton = styled.button<TabButtonProps>`
+  cursor: pointer;
   background: ${({ $isSelected }: TabButtonProps) => {
     return $isSelected
       ? `linear-gradient(180deg, #922ACF 0%, #2F26AD 100%)`

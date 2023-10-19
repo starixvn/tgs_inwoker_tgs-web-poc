@@ -4,10 +4,13 @@ import Loading from "@/components/UI/Loading";
 import i18n from "@/utils/i18n";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useInboxStore } from "@/hooks/stores/useInboxStore";
-import InboxItem from "./InboxItem";
+import InboxItem from "./components/InboxItem";
 import { InboxMessage } from "@/types/stores/account";
 import { useAuth } from "@/hooks/auth/useAuth";
 import styled from "styled-components";
+import { useRwd } from "@/hooks/useRwd";
+import MobileInboxList from "@/domain/Account/Inbox/components/MobileInboxList";
+import DesktopInboxList from "@/domain/Account/Inbox/components/DesktopInboxList";
 
 const InboxListContainer = styled.div`
   & > div {
@@ -21,14 +24,15 @@ const Inbox = () => {
   const { inbox, token } = account;
   const { getMessages, setMessageRead } = useInboxStore();
 
-  const [edit, setEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [limit] = useState(10);
   const [page, setPage] = useState(0);
   const [isBottom, setIsBottom] = useState(false);
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedGuid, setSelectedGuid] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState(false);
+  const { isDesktopSize } = useRwd();
 
   const getMessageList = async (page: number, isNew: boolean = false) => {
     setLoading(true);
@@ -53,7 +57,7 @@ const Inbox = () => {
   };
 
   const handleItemClick = (id: string) => {
-    if (!edit) {
+    if (!isEdit) {
       setMessageRead([id]).then((response) => {
         getMessages(i18n.language, 1, 99, true, true);
       });
@@ -62,40 +66,43 @@ const Inbox = () => {
     }
   };
 
-  const handleCheckboxClick = (SubjectID: string, GUID: string) => {
-    let updatedSelected = [...selected];
+  const handleCheckboxClick = (subjectID: string, guid: string) => {
+    let updatedSelected = [...selectedIds];
     let updatedSelectedGuid = [...selectedGuid];
 
-    if (selected.includes(SubjectID)) {
-      updatedSelected = updatedSelected.filter((item) => item !== SubjectID);
-      updatedSelectedGuid = updatedSelectedGuid.filter((item) => item !== GUID);
+    if (selectedIds.includes(subjectID)) {
+      updatedSelected = updatedSelected.filter((item) => item !== subjectID);
+      updatedSelectedGuid = updatedSelectedGuid.filter((item) => item !== guid);
     } else {
-      updatedSelected.push(SubjectID);
-      updatedSelectedGuid.push(GUID);
+      updatedSelected.push(subjectID);
+      updatedSelectedGuid.push(guid);
     }
 
-    setSelected(updatedSelected);
+    setSelectedIds(updatedSelected);
     setSelectedGuid(updatedSelectedGuid);
   };
 
   return (
     <>
-      <InboxListContainer>
-        {inbox
-          ? inbox.items.map((inboxMessage: InboxMessage, index: number) => {
-              return (
-                <InboxItem
-                  key={index}
-                  row={inboxMessage}
-                  selected={selected}
-                  edit={edit}
-                  handleCheckboxClick={handleCheckboxClick}
-                  handleItemClick={handleItemClick}
-                />
-              );
-            })
-          : null}
-      </InboxListContainer>
+      {isDesktopSize ? (
+        <DesktopInboxList
+          inboxMessageList={inbox?.items || []}
+          selectedIds={selectedIds}
+          isEdit={isEdit}
+          handleCheckboxClick={handleCheckboxClick}
+          handleItemClick={handleItemClick}
+          totalCount={inbox?.totalcount || 0}
+        />
+      ) : (
+        <MobileInboxList
+          inboxMessageList={inbox?.items || []}
+          selectedIds={selectedIds}
+          isEdit={isEdit}
+          handleCheckboxClick={handleCheckboxClick}
+          handleItemClick={handleItemClick}
+        />
+      )}
+
       <BottomScrollListener onBottom={handleScrollBottom} />
 
       <Loading show={loading} />

@@ -10,6 +10,7 @@ import { Select } from "@/components/UI/Select";
 import { FormControl } from "@/styles/forms";
 import { ImageActionEnum, useImageActions } from "@/hooks/useImageActions";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
+import { media } from "@/theme/breakpoints";
 
 const AffiliateContainer = styled.div`
   color: ${({ theme }) => theme.white};
@@ -17,6 +18,19 @@ const AffiliateContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px 9px;
+
+  ${media.sm} {
+    flex-direction: row;
+    gap: 19px;
+    align-items: flex-start;
+  }
+`;
+
+const FlexContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const AffiliateTitle = styled.h2`
@@ -80,67 +94,73 @@ const Affiliate = (props: Props) => {
 
   return (
     <AffiliateContainer>
-      {/* QRCode */}
-      <AffiliateTitle>{i18n.t("affiliate.qrCode")}</AffiliateTitle>
+      <FlexContainer>
+        {/* QRCode */}
+        <AffiliateTitle>{i18n.t("affiliate.qrCode")}</AffiliateTitle>
 
-      <QRCodeContainer id={imageId}>
-        <QRCode value={affiliateLink} />
-      </QRCodeContainer>
+        <QRCodeContainer id={imageId}>
+          <QRCode value={affiliateLink} />
+        </QRCodeContainer>
 
-      {/* QRCode action region */}
-      <ActionButtonContainer>
-        <Button
-          variant={isCopied ? "outlined" : "contained"}
-          onClick={() => handleQrAction(ImageActionEnum.COPY)}
-        >
-          {isCopied ? i18n.t("affiliate.copied") : i18n.t("common.copy")}
-        </Button>
-        <Button
-          variant={isDownloaded ? "outlined" : "contained"}
-          onClick={() => handleQrAction(ImageActionEnum.DOWNLOAD)}
-        >
-          {isDownloaded ? i18n.t("common.download") : i18n.t("common.download")}
-        </Button>
-      </ActionButtonContainer>
+        {/* QRCode action region */}
+        <ActionButtonContainer>
+          <Button
+            variant={isCopied ? "outlined" : "contained"}
+            onClick={() => handleQrAction(ImageActionEnum.COPY)}
+          >
+            {isCopied ? i18n.t("affiliate.copied") : i18n.t("common.copy")}
+          </Button>
+          <Button
+            variant={isDownloaded ? "outlined" : "contained"}
+            onClick={() => handleQrAction(ImageActionEnum.DOWNLOAD)}
+          >
+            {isDownloaded
+              ? i18n.t("common.download")
+              : i18n.t("common.download")}
+          </Button>
+        </ActionButtonContainer>
 
-      {/* Referral ID/Link */}
-      <AffiliateInfoRowContainer>
-        <AffiliateInfoRow
-          label={i18n.t("affiliate.promoId")}
-          value={account.info.playercode}
-        />
-        <AffiliateInfoRow
-          label={i18n.t("affiliate.promoLink")}
-          value={affiliateLink}
-        />
-      </AffiliateInfoRowContainer>
+        {/* Referral ID/Link */}
+        <AffiliateInfoRowContainer>
+          <AffiliateInfoRow
+            label={i18n.t("affiliate.promoId")}
+            value={account.info.playercode}
+          />
+          <AffiliateInfoRow
+            label={i18n.t("affiliate.promoLink")}
+            value={affiliateLink}
+          />
+        </AffiliateInfoRowContainer>
+      </FlexContainer>
 
-      {/* Table */}
-      <AffiliateTitle style={{ alignSelf: "flex-start" }}>
-        {i18n.t("rebateRate.title")}
-      </AffiliateTitle>
+      <FlexContainer>
+        {/* Table */}
+        <AffiliateTitle style={{ alignSelf: "flex-start" }}>
+          {i18n.t("rebateRate.title")}
+        </AffiliateTitle>
 
-      <FormControl style={{ marginBottom: "20px" }}>
-        <Select
-          fullWidth
-          // disableUnderline
-          native
-          value={selectedRebateItem.value}
-          onChange={handleChangeSelectItem}
-          color={"primary"}
-        >
-          {rebateItemList.map((rebateItem, index) => {
-            return (
-              <option key={index} value={rebateItem.value}>
-                {/*{i18n.t("deposit.msgPlsSelectPayment")}*/}
-                {i18n.t(`common.${rebateItem.label}`)}
-              </option>
-            );
-          })}
-        </Select>
-      </FormControl>
+        <FormControl style={{ marginBottom: "20px" }}>
+          <Select
+            fullWidth
+            // disableUnderline
+            native
+            value={selectedRebateItem.value}
+            onChange={handleChangeSelectItem}
+            color={"primary"}
+          >
+            {rebateItemList.map((rebateItem, index) => {
+              return (
+                <option key={index} value={rebateItem.value}>
+                  {/*{i18n.t("deposit.msgPlsSelectPayment")}*/}
+                  {i18n.t(`common.${rebateItem.label}`)}
+                </option>
+              );
+            })}
+          </Select>
+        </FormControl>
 
-      <RebateTable rebateTableRow={rebateTableRow} />
+        <RebateTable rebateTableRow={rebateTableRow} />
+      </FlexContainer>
     </AffiliateContainer>
   );
 };

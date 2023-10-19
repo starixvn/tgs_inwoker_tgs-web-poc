@@ -2,9 +2,10 @@ import React, { useCallback } from "react";
 import styled from "styled-components";
 import { BrandsSupport } from "@/types/stores/general";
 import i18n from "@/utils/i18n";
+import Icon from "@/components/Icon";
+import { media } from "@/theme/breakpoints";
 
 const SupportCardContainer = styled.div`
-  width: calc((100% - 16px) / 2);
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -22,6 +23,12 @@ const SupportCardContainer = styled.div`
     &:last-child {
       margin-bottom: 0;
     }
+  }
+
+  width: calc((100% - 16px * (2 - 1)) / 2);
+
+  ${media.sm} {
+    width: calc((100% - 16px * (3 - 1)) / 4);
   }
 `;
 
@@ -50,17 +57,14 @@ const iconSwitcher = (icon: string) => {
   }
 };
 
-type IconProps = { icon: string };
-const Icon = styled.div<IconProps>`
+const IconContainer = styled.div`
   width: 60px;
   height: 60px;
+  border-radius: 30px;
   background-color: ${({ theme }) => theme.tertiary};
-  mask: ${({ icon }: IconProps) => {
-    return `url(${
-      process.env.PUBLIC_URL + "/assets/images/wapp/" + iconSwitcher(icon)
-    }) no-repeat center /
-    contain;`;
-  }};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ContactButton = styled.div`
@@ -88,7 +92,15 @@ const SupportCard = ({ brandsSupport, handleClick }: Props) => {
 
   return (
     <SupportCardContainer onClick={handleClickCard}>
-      <Icon icon={brandsSupport.type} />
+      <IconContainer icon={brandsSupport.type}>
+        <Icon
+          iconUrl={`${
+            process.env.PUBLIC_URL
+          }/assets/images/support/${iconSwitcher(brandsSupport.type)}`}
+          width={"26px"}
+          height={"26px"}
+        />
+      </IconContainer>
 
       <span>{type}</span>
 

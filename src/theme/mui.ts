@@ -63,6 +63,27 @@ const muiTheme = createTheme({
       color: theme.white,
     },
   },
+  components: {
+    MuiTablePagination: {
+      styleOverrides: {
+        actions: {
+          "& .MuiButtonBase-root": {
+            color: "#707070",
+            "&:hover": {
+              // backgroundColor: "#your_hover_color_here", // 设置鼠标悬停时的背景颜色
+            },
+          },
+        },
+      },
+    },
+    // MuiTableRow: {
+    //   styleOverrides: {
+    //     root: {
+    //       borderBottom: "1px solid #707070", // 替换为你想要的边框颜色值
+    //     },
+    //   },
+    // },
+  },
 });
 
 export { muiTheme };

@@ -4,6 +4,17 @@ import ReportPrev from "@/domain/Account/ReportPrev";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { usePageName } from "@/hooks/usePageName";
 import i18n from "@/utils/i18n";
+import styled from "styled-components";
+import UserWalletInfo from "@/components/Account/UserWalletInfo";
+import iconReport from "@/assets/images/account/badge/icon-report.svg";
+import { useRwd } from "@/hooks/useRwd";
+import AccountPaper from "@/components/AccountPaper";
+
+const ReportContainer = styled.div`
+  padding: 21px 22px;
+  max-width: calc(848px + 22px * 2);
+  margin: auto;
+`;
 
 type Props = {};
 const Report = (props: Props) => {
@@ -15,8 +26,16 @@ const Report = (props: Props) => {
 
   const { alert } = useNotifications();
   const history = useHistory();
+  const { isDesktopSize } = useRwd();
 
-  return <ReportPrev alert={alert} history={history} />;
+  return (
+    <ReportContainer>
+      {isDesktopSize && <UserWalletInfo />}
+      <AccountPaper pageName={i18n.t("affiliate.report")} iconUrl={iconReport}>
+        <ReportPrev alert={alert} history={history} />;
+      </AccountPaper>
+    </ReportContainer>
+  );
 };
 
 export default Report;
