@@ -18,19 +18,14 @@ import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
 import { ReportService } from "@/services/ReportService";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import Loading from "@/components/UI/Loading";
+import { DateRangeInfo } from "@/domain/Account/ReportPrev/hooks/useDateRange";
 
-export interface TabData {
-  dateFrom: Date;
-  dateTo: Date;
-  type: number;
-  dateRange: number;
-}
 type Props = {
-  tabData: TabData;
+  dateRangeInfo: DateRangeInfo;
 };
 
 const PAGE_SIZE = 20;
-const ReportBetting = ({ tabData }: Props) => {
+const ReportBetting = ({ dateRangeInfo }: Props) => {
   const { alert } = useNotifications();
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -46,43 +41,54 @@ const ReportBetting = ({ tabData }: Props) => {
   const fetchReports = async () => {
     setIsLoading(true);
 
-    ReportService.GetTransactionDetails(
-      moment(tabData.dateFrom).utc().format(),
-      moment(tabData.dateTo).utc().add(1, "days").format(),
+    const getTransactionDetailsRes = await ReportService.GetTransactionDetails(
+      moment(dateRangeInfo.dateFrom).utc().format(),
+      moment(dateRangeInfo.dateTo).utc().add(1, "days").format(),
       page,
       PAGE_SIZE,
       true,
       "",
       false
-    ).then((response) => {
-      if (response.IsSuccess) {
-        const newDataList =
-          page > 1 ? dataList.concat(response.data.items) : response.data.items;
+    );
 
-        setDataList(newDataList);
-        setIsLoading(false);
-        setIsMaxPage(response.data.totalCount == newDataList.length);
-      } else {
-        alert("", response?.info || JSON.stringify(response));
-        setIsLoading(false);
-      }
-    });
+    if (getTransactionDetailsRes.IsSuccess) {
+      const newDataList =
+        page > 1
+          ? dataList.concat(getTransactionDetailsRes.data.items)
+          : getTransactionDetailsRes.data.items;
 
-    config.features.Report_ShowRoundsTotal &&
-      ReportService.GetRoundsTotal(
-        moment(tabData.dateFrom).utc().format(),
-        moment(tabData.dateTo).utc().add(1, "days").format()
-      ).then((result) => {
-        if (result.IsSuccess) {
-          setRoundTotal(result.data);
-        }
-      });
+      setDataList(newDataList);
+      setIsMaxPage(
+        getTransactionDetailsRes.data.totalCount == newDataList.length
+      );
+    } else {
+      alert(
+        "",
+        getTransactionDetailsRes?.info ||
+          JSON.stringify(getTransactionDetailsRes)
+      );
+      setIsLoading(false);
+    }
+
+    if (!config.features.Report_ShowRoundsTotal) return;
+
+    const getRoundsTotalRes = await ReportService.GetRoundsTotal(
+      moment(dateRangeInfo.dateFrom).utc().format(),
+      moment(dateRangeInfo.dateTo).utc().add(1, "days").format()
+    );
+
+    if (getRoundsTotalRes.IsSuccess) {
+      setRoundTotal(getRoundsTotalRes.data);
+    }
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
+    setPage(1);
     setIsMaxPage(false);
     fetchReports();
-  }, [JSON.stringify(tabData)]);
+  }, [JSON.stringify(dateRangeInfo)]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;

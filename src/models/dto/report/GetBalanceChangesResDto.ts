@@ -1,12 +1,12 @@
-interface TransactionLogViewModel {
+export interface TransactionLogViewModel {
   amount: number;
   id: string;
   recordedon: string;
   type: string | null;
 }
 
-interface TransactionLogViewModelPagingResponse {
-  items: (TransactionLogViewModel | null)[];
+export interface TransactionLogViewModelPagingResponse {
+  items: TransactionLogViewModel[];
   totalCount: number;
 }
 

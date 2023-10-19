@@ -10,24 +10,17 @@ import {
   ReportCardsContainer,
   ReportContainer,
 } from "@/domain/Account/ReportPrev/styles";
-import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { ReportService } from "@/services/ReportService";
 import Loading from "@/components/UI/Loading";
+import { DateRangeInfo } from "@/domain/Account/ReportPrev/hooks/useDateRange";
 
-export interface TabData {
-  dateFrom: Date;
-  dateTo: Date;
-  type: number;
-  dateRange: number;
-  roundTotal: RoundTotalDto;
-}
 type Props = {
-  tabData: TabData;
+  dateRangeInfo: DateRangeInfo;
 };
 
 const PAGE_SIZE = 20;
-const ReportTransfer = ({ tabData }: Props) => {
+const ReportTransfer = ({ dateRangeInfo }: Props) => {
   const { alert } = useNotifications();
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -39,8 +32,8 @@ const ReportTransfer = ({ tabData }: Props) => {
     setIsLoading(true);
 
     ReportService.GetTransferReport(
-      moment(tabData.dateFrom).utc().format(),
-      moment(tabData.dateTo).utc().add(1, "days").format(),
+      moment(dateRangeInfo.dateFrom).utc().format(),
+      moment(dateRangeInfo.dateTo).utc().add(1, "days").format(),
       page,
       PAGE_SIZE,
       1,
@@ -63,9 +56,10 @@ const ReportTransfer = ({ tabData }: Props) => {
   };
 
   useEffect(() => {
+    setPage(1);
     setIsMaxPage(false);
     fetchReports();
-  }, [JSON.stringify(tabData)]);
+  }, [JSON.stringify(dateRangeInfo)]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;

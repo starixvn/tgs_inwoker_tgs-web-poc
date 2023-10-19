@@ -9,7 +9,6 @@ import {
   ReportCardsContainer,
   ReportContainer,
 } from "@/domain/Account/ReportPrev/styles";
-import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
 import { Button } from "@/components/UI/Button";
 import { useHistory } from "react-router-dom";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
@@ -17,20 +16,14 @@ import { ReportService } from "@/services/ReportService";
 import Loading from "@/components/UI/Loading";
 import { useDepositStatus } from "@/domain/Account/ReportPrev/hooks/useDepositStatus";
 import StatusSelect from "@/domain/Account/ReportPrev/components/StatusSelect";
+import { DateRangeInfo } from "@/domain/Account/ReportPrev/hooks/useDateRange";
 
-export interface TabData {
-  dateFrom: Date;
-  dateTo: Date;
-  type: number;
-  dateRange: number;
-  roundTotal: RoundTotalDto;
-}
 type Props = {
-  tabData: TabData;
+  dateRangeInfo: DateRangeInfo;
 };
 
 const PAGE_SIZE = 20;
-const ReportDeposit = ({ tabData }: Props) => {
+const ReportDeposit = ({ dateRangeInfo }: Props) => {
   const history = useHistory();
 
   const handleManualDeposit = (id: string) => {
@@ -53,8 +46,8 @@ const ReportDeposit = ({ tabData }: Props) => {
 
     ReportService.GetDepositDetails(
       status,
-      moment(tabData.dateFrom).utc().format(),
-      moment(tabData.dateTo).utc().add(1, "days").format(),
+      moment(dateRangeInfo.dateFrom).utc().format(),
+      moment(dateRangeInfo.dateTo).utc().add(1, "days").format(),
       page,
       PAGE_SIZE,
       true,
@@ -77,9 +70,10 @@ const ReportDeposit = ({ tabData }: Props) => {
   };
 
   useEffect(() => {
+    setPage(1);
     setIsMaxPage(false);
     fetchReports();
-  }, [JSON.stringify(tabData), status]);
+  }, [JSON.stringify(dateRangeInfo), status]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;
