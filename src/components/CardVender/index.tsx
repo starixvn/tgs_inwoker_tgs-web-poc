@@ -1,3 +1,4 @@
+import playIcon from "@/assets/images/home/mobile/play.svg";
 import bg from "@/assets/images/home/mobile/vender_card_bg.png";
 import { media } from "@/theme/breakpoints";
 import styled from "styled-components";
@@ -10,7 +11,29 @@ type Props = {
   venderLogoUrl?: string;
   launchGame: () => void;
   status: number;
+  hoverVenderName?: string;
 };
+
+const CardHoverBg = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgb(0 0 0 / 80%);
+  border-radius: 10px;
+  display: none;
+  text-align: center;
+`;
+
+const HoverVenderName = styled.div`
+  color: ${(props) => props.theme.white};
+  text-align: center;
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  word-wrap:break-word;
+`;
 
 const CardVendorBg = styled.div`
   width: calc(33.33% - 10px);
@@ -25,6 +48,18 @@ const CardVendorBg = styled.div`
     width: calc(16.67% - 14px);
     min-width: 118px;
     padding-bottom: calc((16.67% - 14px) * 1.34);
+
+    &:hover ${CardHoverBg} {
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    &:hover ${HoverVenderName} {
+      word-wrap:break-word;
+    }
   }
 `;
 
@@ -66,6 +101,14 @@ const GameName = styled.div`
   font-weight: 900;
   margin-bottom: 4px;
   text-align: center;
+`;
+
+const HoverGameName = styled.div`
+  color: ${(props) => props.theme.white};
+  text-align: center;
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin-bottom: 16px;
 `;
 
 const VenderName = styled.div`
@@ -122,6 +165,7 @@ const CardVendor = ({
   venderLogoUrl,
   launchGame,
   status,
+  hoverVenderName
 }: Props) => {
   return (
     <CardVendorBg onClick={launchGame}>
@@ -144,6 +188,11 @@ const CardVendor = ({
           </MaintenanceContent>
         </MaintenanceBg>
       )}
+      <CardHoverBg>
+        {gameName && <HoverGameName>{gameName}</HoverGameName>}
+        {hoverVenderName && <HoverVenderName>{hoverVenderName}</HoverVenderName>}
+        <img src={playIcon} alt={"play"} />
+      </CardHoverBg>
     </CardVendorBg>
   );
 };

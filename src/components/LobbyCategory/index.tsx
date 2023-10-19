@@ -151,6 +151,7 @@ const LobbyCategory = ({
                 venderLogoUrl={`${process.env.PUBLIC_URL}/assets/images/home/provider_logo/${gameTypeName}/${game?.gpcode}.png`}
                 launchGame={() => launchLobbyGame(game?.gpcode)}
                 status={game?.status}
+                hoverVenderName={game?.name}
               />
             );
           })}

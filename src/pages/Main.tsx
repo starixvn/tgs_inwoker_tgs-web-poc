@@ -4,16 +4,17 @@ import vendorsIcon from "@/assets/images/home/mobile/vendors.png";
 import CardPrompt from "@/components/CardPrompt";
 import Category from "@/components/Category";
 import GameCard from "@/components/GameCard";
+import GameFilterTag from "@/components/GameFilterTag";
+import GameTypeTab from "@/components/GameTypeTab";
 import Input from "@/components/Input";
 import Lobby from "@/components/Lobby";
 import Slider from "@/components/Slider";
 import SocialMedia from "@/components/SocialMedia";
-import Tab from "@/components/Tab";
 import TabPanel from "@/components/TabPanel";
-import Tag from "@/components/Tag";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
+import { useRwd } from "@/hooks/useRwd";
 import { media } from "@/theme/breakpoints";
 import getDisplayGameType from "@/utils/getDisplayGameType";
 import i18n from "@/utils/i18n";
@@ -22,11 +23,10 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  useState,
+  useState
 } from "react";
 import styled from "styled-components";
 import { gameTypeList, isNotEnterLobby } from "../constants/tab";
-import { gameTagList } from "../constants/gameTag";
 
 type Props = {
   imageUrl: string;
@@ -49,6 +49,7 @@ type GameItem = {
   isFavorite: boolean;
 };
 
+type Tag = { name: string };
 interface Theme {
   primaryDark: string;
   white: string;
@@ -82,14 +83,26 @@ const MainWrapper = styled.div<{ theme: Theme }>`
   }
 `;
 
-const TabContainer = styled.div`
-  margin-bottom: 15px;
-  overflow-x: auto;
-  white-space: nowrap;
-  scroll-behavior: smooth;
+const TabSearchContainer = styled.div`
   width: 100%;
-  -webkit-overflow-scrolling: touch;
-  /* Enable smooth scrolling on iOS */
+  padding: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  
+  ${media.sm} {
+    height: 40px;
+    background: ${(props) => props.theme.primaryLight};
+    margin-bottom: 20px;
+  }
+`;
+
+const InputContainer = styled.div`
+  ${media.sm} {
+    width: 189px;
+    height: 32px;
+  }
 `;
 
 const GameCardContainer = styled.div`
@@ -108,18 +121,6 @@ const VendorIcon = styled.div`
   background-size: cover;
 `;
 
-const TagContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 8px;
-  overflow-x: auto;
-  white-space: nowrap;
-  scroll-behavior: smooth;
-  width: 100%;
-  -webkit-overflow-scrolling: touch;
-`;
-
 const Main = (props: Props) => {
   const { game, getFavoriteGame } = useGameStore();
   const { general } = useGeneralStore();
@@ -133,6 +134,7 @@ const Main = (props: Props) => {
   const [favoriteList, setFavoriteList] = useState<number[]>([]);
   const [filteredMatchGames, setFilteredMatchGames] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { isDesktopSize, isMobileSize } = useRwd();
 
   const handleGameTypeClick = (gameType: number) => {
     setActiveGameTypeTab(gameType);
@@ -174,20 +176,21 @@ const Main = (props: Props) => {
     return filteredGroups;
   }, [game.homePageGameList]);
 
-  const tagList = useMemo(() => {
+  const tagList: (Tag | null)[] = useMemo(() => {
     const tags = Object.keys(groupByProvider);
     const filteredTags = tags
       .filter((key) => typeof key === "string")
       .map((provider) => ({ name: provider }));
-    return [
+    const additionalTags = [
       { name: "All" },
-      account.token && { name: "Favorite" },
+      account.token ? { name: "Favorite" } : null,
       { name: "Hot" },
       { name: "New" },
       { name: "Recommend" },
       ...filteredTags,
     ];
-  }, [groupByProvider]);
+    return additionalTags.filter(tag => tag !== null);
+  }, [groupByProvider, account.token]);
 
   const filterAndGroupGames = (gameList: any[]) => {
     const groupByGpcode = gameList.reduce((accumulator, game) => {
@@ -226,9 +229,9 @@ const Main = (props: Props) => {
           const filteredGameListWithFavorites =
             favoriteList.length > 0
               ? res.data.map((item: GameItem) => ({
-                  ...item,
-                  isFavorite: favoriteList.includes(item.id),
-                }))
+                ...item,
+                isFavorite: favoriteList.includes(item.id),
+              }))
               : res.data;
 
           switch (selectedTag) {
@@ -296,27 +299,20 @@ const Main = (props: Props) => {
 
       <CardPrompt />
 
-      <TabContainer>
-        {gameTypeList.map(
-          (item: {
-            key: string;
-            iconUrl: string;
-            text: string;
-            fontSize: string;
-            gameType: number;
-          }) => (
-            <Tab
-              key={item.key}
-              imageUrl={item.iconUrl}
-              text={item.text}
-              isActive={item.gameType === activeGameTypeTab}
-              fontSize={item.fontSize}
-              type={item.gameType}
-              onClick={() => handleGameTypeClick(item.gameType)}
-            />
-          )
-        )}
-      </TabContainer>
+      <TabSearchContainer>
+        <GameTypeTab
+          activeGameTypeTab={activeGameTypeTab}
+          handleGameTypeClick={handleGameTypeClick}
+        />
+        {isDesktopSize && <InputContainer>
+          <Input
+            placeholder={i18n.t("slot.search")}
+            imageUrl={searchIcon}
+            handleChange={handleSearch}
+            value={searchString}
+          />
+        </InputContainer>}
+      </TabSearchContainer>
 
       {!activeGameTypeTab && (
         <Lobby
@@ -339,26 +335,20 @@ const Main = (props: Props) => {
       {/* Slot / Fishing / Egame */}
       {!isEnterLobby && !!activeGameTypeTab && !isLoading && (
         <>
-          <TagContainer>
-            {tagList
-              .filter((item): item is GameItem => item !== null)
-              .map((item: GameItem) => (
-                <Tag
-                  key={item?.name}
-                  text={item?.name}
-                  isActive={item?.name === selectedTag && !!item.name}
-                  isShowIcon={gameTagList.some((tag) => tag.text === item.name)}
-                  onClick={() => setSelectedTag(item.name)}
-                />
-              ))}
-          </TagContainer>
-
-          <Input
-            placeholder={i18n.t("slot.search")}
-            imageUrl={searchIcon}
-            handleChange={handleSearch}
-            value={searchString}
+          <GameFilterTag
+            tagList={tagList.filter(tag => tag !== null) || []}
+            selectedTag={selectedTag}
+            setSelectedTag={setSelectedTag}
           />
+
+          {isMobileSize &&
+            <Input
+              placeholder={i18n.t("slot.search")}
+              imageUrl={searchIcon}
+              handleChange={handleSearch}
+              value={searchString}
+            />
+          }
 
           <GameCardContainer>
             {filteredMatchGames &&

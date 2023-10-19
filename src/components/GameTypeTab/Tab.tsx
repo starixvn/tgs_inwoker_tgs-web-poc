@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { media } from "@/theme/breakpoints";
+import styled from "styled-components";
 
 const desktopActiveTabBgUrl =
   process.env.PUBLIC_URL + "assets/images/home/desktop_active_tab_bg.png";
@@ -9,8 +9,8 @@ type Props = {
   text: string;
   isActive: boolean;
   fontSize: "small" | "smaller" | string;
-  type: number;
   onClick: () => void;
+  isDraggable: boolean;
 };
 
 const Wrapper = styled.div<{
@@ -28,7 +28,6 @@ const Wrapper = styled.div<{
   background-color: ${({ theme, $isActive }) =>
     $isActive ? theme.primary : theme.primaryLight};
   margin-right: 12px;
-  cursor: pointer;
   user-select: none;
 
   ${media.sm} {
@@ -36,7 +35,13 @@ const Wrapper = styled.div<{
     height: 32px;
     flex-direction: row;
     background-image: ${({ $isActive }) =>
-      $isActive ? `url(${desktopActiveTabBgUrl})` : null};
+    $isActive ? `url(${desktopActiveTabBgUrl})` : null};
+    background-color: transparent;
+    border-radius: 5px;
+    margin-right: 5px;
+    & :hover {
+    color: ${({ theme }) => theme.white};
+   }
   }
 `;
 
@@ -57,15 +62,26 @@ const Text = styled.div<{ $fontSize: string; $isActive: boolean }>`
   font-size: ${({ $fontSize }) =>
     $fontSize === "small" ? "0.875rem" : "0.6875rem"};
   font-weight: 700;
+
+  ${media.sm} {
+    font-size: 0.875rem;
+  }
 `;
 
-const Tab = ({ imageUrl, text, isActive, fontSize, type, onClick }: Props) => {
+const Tab = ({ imageUrl, text, isActive, fontSize, onClick, isDraggable }: Props) => {
+
+  const handleClick = () => {
+    if (!isDraggable) {
+      onClick(); // 只有非拖動時才能觸發onClick
+    }
+  };
+
   return (
     <Wrapper
       $isActive={isActive}
       $imageUrl={imageUrl}
       $text={text}
-      onClick={onClick}
+      onClick={handleClick}
     >
       <GameIcon src={imageUrl} alt={text} />
       <Text $isActive={isActive} $fontSize={fontSize}>

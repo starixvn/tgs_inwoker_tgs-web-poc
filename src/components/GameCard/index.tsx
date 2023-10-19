@@ -1,25 +1,46 @@
 import { GameService } from "@/api-services/services/GameService";
-import dislikeIcon from "@/assets/images/home/mobile/dislike.png";
-import likeIcon from "@/assets/images/home/mobile/like.png";
+import playIcon from "@/assets/images/home/mobile/play.svg";
 import config from "@/config/config";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
+import { useRwd } from "@/hooks/useRwd";
 import { media } from "@/theme/breakpoints";
 import Common from "@/utils/Common";
 import { MouseEvent } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { badgeList } from "../../constants/games";
+import Favorite from "../Favorite";
+
+const CardHoverBg = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgb(0 0 0 / 80%);
+  border-radius: 10px;
+  display: none;
+  text-align: center;
+`;
 
 const GameCardWrapper = styled.div`
   width: calc(50% - 8px);
   height: 184px;
   position: relative;
   border: 1px solid ${(props) => props.theme.tertiary};
+  border-radius: 10px;
 
   ${media.sm} {
     width: calc(25% - 12px);
-    padding-top: calc(25% - 12px);
+
+    &:hover ${CardHoverBg} {
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
   }
 `;
 
@@ -72,6 +93,14 @@ const GameName = styled.div`
   left: 0;
   color: ${(props) => props.theme.tertiary};
   font-size: 1.25rem;
+`;
+
+const HoverGameName = styled.div`
+  color: ${(props) => props.theme.white};
+  text-align: center;
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin-bottom: 16px;
 `;
 
 const MaintenanceBg = styled.div`
@@ -138,6 +167,7 @@ const GameCard = ({
   const { setFavoriteGame, removeFavoriteGame } = useGameStore();
   const { account } = useAccountStore();
   const history = useHistory();
+  const { isDesktopSize, isMobileSize } = useRwd();
 
   const launchGame = () => {
     if (!account.token) {
@@ -165,7 +195,7 @@ const GameCard = ({
   };
 
   const handleToggleFavorite = async (
-    event: MouseEvent<HTMLDivElement, MouseEvent>,
+    event: MouseEvent,
     gameId: number
   ) => {
     event.stopPropagation();
@@ -186,25 +216,19 @@ const GameCard = ({
     <>
       <GameCardWrapper onClick={launchGame}>
         <GameImage
-          src={`${
-            config.sourceUrl
-          }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
-            gameItem.code
-          }.jpg`}
+          src={`${config.sourceUrl
+            }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${gameItem.code
+            }.jpg`}
           alt={gameItem.name}
         />
 
-        {isFavorite ? (
-          <LikeIcon
-            $imageUrl={likeIcon}
-            onClick={(event) => handleToggleFavorite(event, gameItem.id)}
+        {isMobileSize &&
+          <Favorite
+            isFavorite={isFavorite}
+            handleToggleFavorite={handleToggleFavorite}
+            gameItemId={gameItem.id}
           />
-        ) : (
-          <LikeIcon
-            $imageUrl={dislikeIcon}
-            onClick={(event) => handleToggleFavorite(event, gameItem.id)}
-          />
-        )}
+        }
 
         {gameItem.tag.hot && gameItem.tag.new && selectedTag === "All" && (
           <>
@@ -228,6 +252,18 @@ const GameCard = ({
             </MaintenanceContent>
           </MaintenanceBg>
         )}
+
+        <CardHoverBg>
+          {isDesktopSize &&
+            <Favorite
+              isFavorite={isFavorite}
+              handleToggleFavorite={handleToggleFavorite}
+              gameItemId={gameItem.id}
+            />
+          }
+          {gameItem.name && <HoverGameName>{gameItem.name}</HoverGameName>}
+          <img src={playIcon} alt={"play"} />
+        </CardHoverBg>
       </GameCardWrapper>
     </>
   );
