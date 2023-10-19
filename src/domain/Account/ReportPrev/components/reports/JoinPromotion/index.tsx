@@ -11,9 +11,15 @@ import {
 } from "@/domain/Account/ReportPrev/styles";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { GeneralService } from "@/api-services/services/GeneralService";
-import { GetJoinedPromoReportResDto } from "@/models/dto/general/GetJoinedPromoReportResDto";
+import {
+  GetJoinedPromoReportResDto,
+  JoinedPromotionsResponse,
+} from "@/models/dto/general/GetJoinedPromoReportResDto";
 import Loading from "@/components/UI/Loading";
 import { DateRangeInfo } from "@/domain/Account/ReportPrev/hooks/useDateRange";
+import { useRwd } from "@/hooks/useRwd";
+import JoinPromotionCards from "@/domain/Account/ReportPrev/components/reports/JoinPromotion/components/JoinPromotionCards";
+import JoinPromotionTable from "@/domain/Account/ReportPrev/components/reports/JoinPromotion/components/JoinPromotionTable";
 
 type Props = {
   dateRangeInfo: DateRangeInfo;
@@ -25,35 +31,44 @@ const ReportJoinPromotion = ({ dateRangeInfo }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
 
-  const [dataList, setDataList] = useState<any[]>([]);
+  const [promotionDetails, setPromotionDetails] = useState<
+    JoinedPromotionsResponse[]
+  >([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [isMaxPage, setIsMaxPage] = useState(false);
+  const { isDesktopSize } = useRwd();
 
   const fetchReports = async () => {
     setIsLoading(true);
 
-    (
-      GeneralService.GetJoinedPromoReport(
-        moment(dateRangeInfo.dateFrom).utc().format(),
-        moment(dateRangeInfo.dateTo).utc().add(1, "days").format(),
-        page,
-        PAGE_SIZE,
-        false,
-        "",
-        false
-      ) as unknown as Promise<GetJoinedPromoReportResDto>
-    ).then((response) => {
-      if (response.IsSuccess) {
-        const newDataList =
-          page > 1 ? dataList.concat(response.data.items) : response.data.items;
+    const getJoinedPromoReportRes = (await GeneralService.GetJoinedPromoReport(
+      moment(dateRangeInfo.dateFrom).utc().format(),
+      moment(dateRangeInfo.dateTo).utc().add(1, "days").format(),
+      page,
+      PAGE_SIZE,
+      false,
+      "",
+      false
+    )) as unknown as GetJoinedPromoReportResDto;
 
-        setDataList(newDataList);
-        setIsLoading(false);
-        setIsMaxPage(response.data.totalCount == newDataList.length);
-      } else {
-        alert("", response?.info || JSON.stringify(response));
-        setIsLoading(false);
-      }
-    });
+    if (getJoinedPromoReportRes.IsSuccess) {
+      const newPromotionDetails =
+        page > 1
+          ? promotionDetails.concat(getJoinedPromoReportRes.data.items)
+          : getJoinedPromoReportRes.data.items;
+
+      setPromotionDetails(newPromotionDetails);
+      setTotalCount(getJoinedPromoReportRes.data.totalcount || 0);
+      setIsMaxPage(
+        getJoinedPromoReportRes.data.totalcount == newPromotionDetails.length
+      );
+    } else {
+      alert(
+        "",
+        getJoinedPromoReportRes?.info || JSON.stringify(getJoinedPromoReportRes)
+      );
+    }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -71,36 +86,14 @@ const ReportJoinPromotion = ({ dateRangeInfo }: Props) => {
 
   return (
     <ReportContainer>
-      {(() => {
-        if (dataList.length <= 0) {
-          return <NoRecord />;
-        } else {
-          return (
-            <ReportCardsContainer>
-              {dataList.map((row, index) => {
-                const date = moment(row.joinedOn).format("YYYY-MM-DD hh:mm a");
-                return (
-                  <ReportCard key={index}>
-                    <ReportCardRow>
-                      <ReportCardCol>
-                        {i18n.t("report.dateTime")} :{" "}
-                      </ReportCardCol>
-                      <ReportCardCol>{date}</ReportCardCol>
-                    </ReportCardRow>
-
-                    <ReportCardRow>
-                      <ReportCardCol>
-                        {i18n.t("report.joinedPromo.promoName")}:{" "}
-                      </ReportCardCol>
-                      <ReportCardCol>{row.promotionName}</ReportCardCol>
-                    </ReportCardRow>
-                  </ReportCard>
-                );
-              })}
-            </ReportCardsContainer>
-          );
-        }
-      })()}
+      {isDesktopSize ? (
+        <JoinPromotionTable
+          promotionDetails={promotionDetails}
+          totalCount={totalCount}
+        />
+      ) : (
+        <JoinPromotionCards promotionDetails={promotionDetails} />
+      )}
       <Loading show={isLoading} />
     </ReportContainer>
   );
