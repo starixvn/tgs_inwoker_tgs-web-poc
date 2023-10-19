@@ -2,6 +2,7 @@ import React, { ChangeEvent } from "react";
 import styled from "styled-components";
 import { useReportTypeTabs } from "@/domain/Account/ReportPrev/hooks/useReportTypeTabs";
 import { theme } from "@/theme";
+import { media } from "@/theme/breakpoints";
 
 const ReportTypeTabsContainer = styled.div`
   display: flex;
@@ -24,12 +25,16 @@ const TabButton = styled.button<TabButtonProps>`
     return $isSelected ? theme.white : theme.tertiaryLight;
   }};
   padding: 13px 23px;
-  width: calc((100% - 2 * 9px) / 3);
   border: ${({ $isSelected, theme }: TabButtonProps) => {
     return $isSelected ? "none" : `1px solid ${theme.tertiaryLight}`;
   }};
   border-radius: 5px;
   font-size: 0.937rem;
+  width: calc((100% - 2 * 9px) / 3);
+
+  ${media.sm} {
+    width: calc((100% - 5 * 9px) / 6);
+  }
 `;
 
 type Props = {

@@ -4,9 +4,8 @@ import styled from "styled-components";
 import { theme } from "@/theme";
 
 const DateRangContainer = styled.div`
-  margin-bottom: 20px;
   display: flex;
-  align-items: center;
+  //align-items: center;
   justify-content: center;
   gap: 13px;
 `;
@@ -15,20 +14,20 @@ type DateRangSelectionTypes = {
   $isSelected: boolean;
 };
 const DateRangSelection = styled.div<DateRangSelectionTypes>`
+  text-align: center;
   cursor: pointer;
-  background: ${({ $isSelected }: DateRangSelectionTypes) => {
-    return $isSelected
-      ? `linear-gradient(180deg, #922ACF 0%, #2F26AD 100%)`
-      : "none";
+  width: 83px;
+  height: 47px;
+  white-space: nowrap;
+  background: ${({ $isSelected, theme }: DateRangSelectionTypes) => {
+    return $isSelected ? theme.primary : "none";
   }};
-  color: ${({ $isSelected }: DateRangSelectionTypes) => {
+  color: ${({ $isSelected, theme }: DateRangSelectionTypes) => {
     return $isSelected ? theme.white : theme.tertiaryLight;
   }};
   padding: 13px 23px;
-  border: ${({ $isSelected }: DateRangSelectionTypes) => {
-    return $isSelected
-      ? "none"
-      : `1px solid ${({ theme }) => theme.tertiaryLight}`;
+  border: ${({ $isSelected, theme }: DateRangSelectionTypes) => {
+    return $isSelected ? "none" : `1px solid ${theme.tertiaryLight}`;
   }};
   border-radius: 5px;
   font-size: 0.937rem;

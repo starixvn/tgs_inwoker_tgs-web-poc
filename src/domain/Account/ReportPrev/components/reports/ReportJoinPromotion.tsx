@@ -9,25 +9,18 @@ import {
   ReportCardsContainer,
   ReportContainer,
 } from "@/domain/Account/ReportPrev/styles";
-import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { GeneralService } from "@/api-services/services/GeneralService";
 import { GetJoinedPromoReportResDto } from "@/models/dto/general/GetJoinedPromoReportResDto";
 import Loading from "@/components/UI/Loading";
+import { DateRangeInfo } from "@/domain/Account/ReportPrev/hooks/useDateRange";
 
-export interface TabData {
-  dateFrom: Date;
-  dateTo: Date;
-  type: number;
-  dateRange: number;
-  roundTotal: RoundTotalDto;
-}
 type Props = {
-  tabData: TabData;
+  dateRangeInfo: DateRangeInfo;
 };
 
 const PAGE_SIZE = 20;
-const ReportJoinPromotion = ({ tabData }: Props) => {
+const ReportJoinPromotion = ({ dateRangeInfo }: Props) => {
   const { alert } = useNotifications();
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -40,8 +33,8 @@ const ReportJoinPromotion = ({ tabData }: Props) => {
 
     (
       GeneralService.GetJoinedPromoReport(
-        moment(tabData.dateFrom).utc().format(),
-        moment(tabData.dateTo).utc().add(1, "days").format(),
+        moment(dateRangeInfo.dateFrom).utc().format(),
+        moment(dateRangeInfo.dateTo).utc().add(1, "days").format(),
         page,
         PAGE_SIZE,
         false,
@@ -64,9 +57,10 @@ const ReportJoinPromotion = ({ tabData }: Props) => {
   };
 
   useEffect(() => {
+    setPage(1);
     setIsMaxPage(false);
     fetchReports();
-  }, [JSON.stringify(tabData)]);
+  }, [JSON.stringify(dateRangeInfo)]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;

@@ -12,25 +12,18 @@ import {
   ReportSummaryCol,
   ReportSummaryRow,
 } from "@/domain/Account/ReportPrev/styles";
-import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import Loading from "@/components/UI/Loading";
 import { usePlatformStatus } from "@/domain/Account/ReportPrev/hooks/usePlatformStatus";
 import StatusSelect from "@/domain/Account/ReportPrev/components/StatusSelect";
+import { DateRangeInfo } from "@/domain/Account/ReportPrev/hooks/useDateRange";
 
-export interface TabData {
-  dateFrom: Date;
-  dateTo: Date;
-  type: number;
-  dateRange: number;
-  roundTotal: RoundTotalDto;
-}
 type Props = {
-  tabData: TabData;
+  dateRangeInfo: DateRangeInfo;
 };
 
 const PAGE_SIZE = 20;
-const ReportPlatform = ({ tabData }: Props) => {
+const ReportPlatform = ({ dateRangeInfo }: Props) => {
   const { alert } = useNotifications();
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -74,9 +67,10 @@ const ReportPlatform = ({ tabData }: Props) => {
   };
 
   useEffect(() => {
+    setPage(1);
     setIsMaxPage(false);
     fetchReports();
-  }, [JSON.stringify(tabData), status]);
+  }, [JSON.stringify(dateRangeInfo), status]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;

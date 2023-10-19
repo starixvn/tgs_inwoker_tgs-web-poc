@@ -1,1 +1,1 @@
-Refactor: combine SubIndex with src/index.js
+Refactor: combine SubIndex with src/index.tsx
