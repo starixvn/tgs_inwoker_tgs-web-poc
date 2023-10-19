@@ -2,44 +2,20 @@ import React from "react";
 import NoRecord from "@/domain/Account/ReportPrev/components/NoRecord";
 import {
   CustomWinLose,
-  ReportCard,
-  ReportCardCol,
-  ReportCardRow,
   ReportCardsContainer,
+  ReportTable,
 } from "@/domain/Account/ReportPrev/styles";
 import moment from "moment";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
 import { TransactionDetail } from "@/models/dto/report/GetTransactionDetailsResDto";
-import { styled as muiStyled } from "@mui/material/styles";
 import {
-  Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
 } from "@mui/material";
-import styled from "styled-components";
-
-const StyledTable = muiStyled(Table)(({ theme }) => ({
-  "& .MuiTableHead-root .MuiTableCell-root": {
-    fontSize: "1.375rem",
-    lineHeight: "1.611rem",
-    fontWeight: 400,
-    whiteSpace: "nowrap",
-    padding: "0 5px",
-  },
-
-  "& .MuiTableBody-root .MuiTableCell-root": {
-    fontSize: "1.125rem",
-    fontWeight: 400,
-    lineHeight: "1.318rem",
-    color: theme.palette.tertiary.light,
-    borderBottom: `1px solid ${theme.palette.tertiary.light}`,
-    padding: "26px 5px 10px",
-  },
-}));
 
 type Props = {
   transactionDetails: TransactionDetail[];
@@ -52,7 +28,7 @@ const TransactionDetailTable = ({ transactionDetails, totalCount }: Props) => {
 
   return (
     <ReportCardsContainer>
-      <StyledTable sx={{ minWidth: 650 }} aria-label="simple table">
+      <ReportTable aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell
@@ -115,8 +91,6 @@ const TransactionDetailTable = ({ transactionDetails, totalCount }: Props) => {
               gameName,
             } = transactionDetail;
 
-            console.log(transactionDetail);
-
             const date = moment(createdOn).format("YYYY-MM-DD hh:mm a");
 
             return (
@@ -142,7 +116,7 @@ const TransactionDetailTable = ({ transactionDetails, totalCount }: Props) => {
             );
           })}
         </TableBody>
-      </StyledTable>
+      </ReportTable>
 
       <TablePagination
         rowsPerPageOptions={[25]}

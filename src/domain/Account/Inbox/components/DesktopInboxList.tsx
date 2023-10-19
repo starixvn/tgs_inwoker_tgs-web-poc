@@ -58,7 +58,7 @@ const MobileInboxList = ({
 }: Props) => {
   return (
     <InboxListContainer>
-      <StyledTable sx={{ minWidth: 650 }} aria-label="simple table">
+      <StyledTable aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell

@@ -30,7 +30,9 @@ const ReportWithdraw = ({ dateRangeInfo }: Props) => {
   const [page, setPage] = useState(1);
 
   const [dataList, setDataList] = useState<any[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [isMaxPage, setIsMaxPage] = useState(false);
+
   const { statusDictionary, status, handleStatusChange } =
     useWithdrawalStatus();
 
@@ -86,10 +88,16 @@ const ReportWithdraw = ({ dateRangeInfo }: Props) => {
       <ReportContainer>
         <ReportSummary>
           <ReportSummaryRow>
-            <ReportSummaryCol>{i18n.t("report.dateTime")}</ReportSummaryCol>
+            <ReportSummaryCol style={{ width: "33%" }}>
+              {i18n.t("report.dateTime")}
+            </ReportSummaryCol>
 
-            <ReportSummaryCol>{i18n.t("report.status")}</ReportSummaryCol>
-            <ReportSummaryCol>{i18n.t("common.amount")}</ReportSummaryCol>
+            <ReportSummaryCol style={{ width: "33%" }}>
+              {i18n.t("report.status")}
+            </ReportSummaryCol>
+            <ReportSummaryCol style={{ width: "33%" }}>
+              {i18n.t("common.amount")}
+            </ReportSummaryCol>
           </ReportSummaryRow>
         </ReportSummary>
 
@@ -106,15 +114,22 @@ const ReportWithdraw = ({ dateRangeInfo }: Props) => {
                   return (
                     <ReportCard key={index}>
                       <ReportCardRow>
-                        {i18n.t("report.NewOrderNumber")} :{" "}
-                        <ReportCardCol>{row.orderno}</ReportCardCol>
+                        <div>
+                          {i18n.t("report.NewOrderNumber")} :{" "}
+                          <ReportCardCol>{row.orderno}</ReportCardCol>
+                        </div>
                       </ReportCardRow>
+
                       <ReportCardRow>
-                        <ReportCardCol>{date}</ReportCardCol>
-                        <ReportCardCol>
+                        <ReportCardCol style={{ width: "33%" }}>
+                          {date}
+                        </ReportCardCol>
+                        <ReportCardCol style={{ width: "33%" }}>
                           {i18n.t(`report.withdrawal.status${row.status}`)}
                         </ReportCardCol>
-                        <ReportCardCol>{row.amount}</ReportCardCol>
+                        <ReportCardCol style={{ width: "33%" }}>
+                          {row.amount}
+                        </ReportCardCol>
                       </ReportCardRow>
                     </ReportCard>
                   );

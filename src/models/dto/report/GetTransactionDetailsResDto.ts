@@ -35,7 +35,7 @@ export interface GetTransactionDetailsResDto {
   code: number;
   data: {
     items: TransactionDetail[];
-    totalCount: number | null;
+    totalcount: number | null;
   };
   info: string | null;
 }

@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import config from "@/config/config";
 import i18n from "@/utils/i18n";
-import NoRecord from "@/domain/Account/ReportPrev/components/NoRecord";
 import moment from "moment/moment";
 import {
   CustomWinLose,
-  ReportCard,
-  ReportCardCol,
-  ReportCardRow,
-  ReportCardsContainer,
   ReportContainer,
   ReportSummary,
   ReportSummaryCol,
@@ -23,6 +18,7 @@ import { TransactionDetail } from "@/models/dto/report/GetTransactionDetailsResD
 import TransactionDetailCards from "@/domain/Account/ReportPrev/components/reports/ReportBetting/components/TransactionDetailCards";
 import { useRwd } from "@/hooks/useRwd";
 import TransactionDetailTable from "@/domain/Account/ReportPrev/components/reports/ReportBetting/components/TransactionDetailTable";
+import TotalState from "@/domain/Account/ReportPrev/components/reports/ReportBetting/components/TotalState";
 
 type Props = {
   dateRangeInfo: DateRangeInfo;
@@ -60,8 +56,6 @@ const ReportBetting = ({ dateRangeInfo }: Props) => {
       false
     );
 
-    getTransactionDetailsRes.data.totalCount;
-
     if (getTransactionDetailsRes.IsSuccess) {
       const newDataList =
         page > 1
@@ -70,9 +64,9 @@ const ReportBetting = ({ dateRangeInfo }: Props) => {
 
       setTransactionDetails(newDataList);
       setIsMaxPage(
-        getTransactionDetailsRes.data.totalCount == newDataList.length
+        getTransactionDetailsRes.data.totalcount == newDataList.length
       );
-      setTotalCount(getTransactionDetailsRes.data.totalCount || 0);
+      setTotalCount(getTransactionDetailsRes.data.totalcount || 0);
     } else {
       alert(
         "",
@@ -111,32 +105,7 @@ const ReportBetting = ({ dateRangeInfo }: Props) => {
 
   return (
     <ReportContainer>
-      {config.features.Report_ShowRoundsTotal &&
-        roundTotal &&
-        (roundTotal.betAmount ||
-          roundTotal.validBetAmount ||
-          roundTotal.validBetAmount) && (
-          <ReportSummary>
-            <ReportSummaryRow>
-              <ReportSummaryCol>
-                {roundTotal &&
-                  i18n.t("report.totalBetAmount") + ": " + roundTotal.betAmount}
-              </ReportSummaryCol>
-              <ReportSummaryCol>
-                {roundTotal &&
-                  i18n.t("report.totalValidBet") +
-                    ": " +
-                    roundTotal.validBetAmount}
-              </ReportSummaryCol>
-              <ReportSummaryCol>
-                {i18n.t("report.totalWinLose") + ": "}
-                <CustomWinLose value={roundTotal && roundTotal.winLoss}>
-                  {roundTotal && roundTotal.winLoss}
-                </CustomWinLose>
-              </ReportSummaryCol>
-            </ReportSummaryRow>
-          </ReportSummary>
-        )}
+      <TotalState roundTotal={roundTotal} />
 
       {isDesktopSize ? (
         <TransactionDetailTable
