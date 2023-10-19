@@ -13,31 +13,33 @@ import { WithdrawFormViewModel } from "@/models/dto/report/GetWithdrawalDetailsR
 type Props = {
   withdrawalDetails: WithdrawFormViewModel[];
 };
-const WithdrawalDetailCards = ({ dataList: withdrawalDetails }: Props) => {
+const WithdrawalDetailCards = ({ withdrawalDetails }: Props) => {
   if (!withdrawalDetails?.length) {
     return <NoRecord />;
   }
 
   return (
     <ReportCardsContainer>
-      {withdrawalDetails.map((row, index) => {
-        const date = moment(row.createdon).format("YYYY-MM-DD hh:mm a");
+      {withdrawalDetails.map((withdrawalDetail, index) => {
+        const date = moment(withdrawalDetail.createdon).format(
+          "YYYY-MM-DD hh:mm a"
+        );
         return (
           <ReportCard key={index}>
             <ReportCardRow>
               <div>
                 {i18n.t("report.NewOrderNumber")} :{" "}
-                <ReportCardCol>{row.orderno}</ReportCardCol>
+                <ReportCardCol>{withdrawalDetail.orderno}</ReportCardCol>
               </div>
             </ReportCardRow>
 
             <ReportCardRow>
               <ReportCardCol style={{ width: "33%" }}>{date}</ReportCardCol>
               <ReportCardCol style={{ width: "33%" }}>
-                {i18n.t(`report.withdrawal.status${row.status}`)}
+                {i18n.t(`report.withdrawal.status${withdrawalDetail.status}`)}
               </ReportCardCol>
               <ReportCardCol style={{ width: "33%" }}>
-                {row.amount}
+                {withdrawalDetail.amount}
               </ReportCardCol>
             </ReportCardRow>
           </ReportCard>
