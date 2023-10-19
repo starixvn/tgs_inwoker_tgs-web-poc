@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { gameTypeList } from "@/constants/tab";
 import Tab from "./Tab";
+import { useDomDragging } from "@/hooks/main/useDomDragging";
 
 type TabContainerProps = {
   $isDragging: boolean;
@@ -32,42 +33,17 @@ type Props = {
 };
 
 const GameTypeTab = ({ activeGameTypeTab, handleGameTypeClick }: Props) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const tabContainerRef = useRef<HTMLDivElement>(null);
-
-  // 說明:滑鼠單次點擊切換Tab ; 滑鼠長按不放可拖曳
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    setStartX(e.pageX - (tabContainerRef.current?.scrollLeft ?? 0));
-    if (tabContainerRef.current) {
-      tabContainerRef.current.style.cursor = "grabbing"; // 手指按下時,滑鼠游標變成手指
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
-    if (!tabContainerRef.current) return;
-    const x = e.pageX - tabContainerRef.current.getBoundingClientRect().left;
-    const distance = (x - startX) * 3;
-    //  number: 滑鼠移動位移與滾動條滾動關係,數值越大越快
-    tabContainerRef.current.scrollLeft = startX + distance;
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    if (tabContainerRef.current) {
-      tabContainerRef.current.style.cursor = "grab";
-      tabContainerRef.current.style.scrollBehavior = "smooth";
-      tabContainerRef.current.scrollLeft += 50;
-      // number: 滾動條滾動距離,可控制反彈距離
-      tabContainerRef.current.style.scrollBehavior = "auto";
-    }
-  };
+  const {
+    isDragging,
+    domRef,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+  } = useDomDragging();
 
   return (
     <TabContainer
-      ref={tabContainerRef}
+      ref={domRef}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
