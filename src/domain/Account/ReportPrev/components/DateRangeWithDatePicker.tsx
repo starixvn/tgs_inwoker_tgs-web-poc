@@ -9,6 +9,7 @@ import zhLocale from "date-fns/locale/zh-CN";
 import enLocale from "date-fns/locale/en-US";
 import thLocale from "date-fns/locale/th";
 import addDays from "date-fns/addDays";
+import { media } from "@/theme/breakpoints";
 
 const localeMap = {
   zh: zhLocale,
@@ -16,19 +17,16 @@ const localeMap = {
   th: thLocale,
 };
 
-const DateContainer = styled.div``;
+const DateContainer = styled.div`
+  width: 100%;
 
-const DateTitle = styled.div`
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1.465rem;
-  color: ${({ theme }) => theme.white};
-  margin-bottom: 20px;
+  ${media.sm} {
+    width: auto;
+  }
 `;
 
 const FlatStraightLine = styled.div`
   display: flex;
-  justify-content: space-between;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -43,6 +41,7 @@ const DateSpliter = styled.div`
 `;
 const DateInner = styled.div`
   padding: 10px;
+  max-width: 168px;
 
   border: 1px solid ${({ theme }) => theme.tertiaryLight};
   border-radius: 5px;
@@ -91,8 +90,6 @@ const DateRangeWithDatePicker = ({
   return (
     //@ts-ignore
     <DateContainer {...others}>
-      <DateTitle>{i18n.t("report.date")}</DateTitle>
-
       <FlatStraightLine>
         <DateInner>
           {/*<DateLabel>{i18n.t("report.startDate")}</DateLabel>*/}
@@ -134,7 +131,7 @@ const DateRangeWithDatePicker = ({
           </LocalizationProvider>
         </DateInner>
       </FlatStraightLine>
-      <div className="clear"></div>
+      {/*<div className="clear"></div>*/}
     </DateContainer>
   );
 };

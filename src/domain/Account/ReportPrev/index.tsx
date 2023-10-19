@@ -14,9 +14,37 @@ import ReportJoinPromotion from "@/domain/Account/ReportPrev/components/reports/
 import ReportBalanceChange from "@/domain/Account/ReportPrev/components/reports/ReportBalanceChange";
 import ReportPlatform from "@/domain/Account/ReportPrev/components/reports/ReportPlatform";
 import { useDateRange } from "@/domain/Account/ReportPrev/hooks/useDateRange";
+import i18n from "@/utils/i18n";
+import { media } from "@/theme/breakpoints";
 
 const Container = styled.div`
   width: 100%;
+`;
+
+const DateRangeSelector = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  ${media.sm} {
+    flex-direction: row;
+  }
+`;
+
+const DateTitle = styled.div`
+  align-self: flex-start;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.465rem;
+  color: ${({ theme }) => theme.white};
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  ${media.sm} {
+    align-self: center;
+  }
 `;
 
 const Report = () => {
@@ -51,18 +79,22 @@ const Report = () => {
         handleChangeTab={handleChangeTab}
         style={{ marginBottom: "20px" }}
       />
-      <DateRangeWithDatePicker
-        dateFrom={dateRangeInfo.dateFrom}
-        handleDateFromChange={handleDateFromChange}
-        dateTo={dateRangeInfo.dateTo}
-        handleDateToChange={handleDateToChange}
-        selectedType={selectedType}
-        style={{ marginBottom: "16px" }}
-      />
-      <DateRangeWithIntervalSelector
-        dateRange={dateRangeInfo.dateRange}
-        handleDateRangeChange={changeDateRange}
-      />
+
+      <DateRangeSelector>
+        <DateTitle>{i18n.t("report.date")}</DateTitle>
+
+        <DateRangeWithDatePicker
+          dateFrom={dateRangeInfo.dateFrom}
+          dateTo={dateRangeInfo.dateTo}
+          handleDateFromChange={handleDateFromChange}
+          handleDateToChange={handleDateToChange}
+          selectedType={selectedType}
+        />
+        <DateRangeWithIntervalSelector
+          dateRange={dateRangeInfo.dateRange}
+          handleDateRangeChange={changeDateRange}
+        />
+      </DateRangeSelector>
 
       {(() => {
         switch (selectedType) {
