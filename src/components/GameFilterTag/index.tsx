@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { gameTagList } from "../../constants/gameTag";
 import Tag from "./Tag";
+import { useDomDragging } from "@/hooks/main/useDomDragging";
 
 type TagContainerProps = {
   $isDragging: boolean;
@@ -51,45 +52,21 @@ type GameItem = {
 };
 
 const GameFilterTag = ({ tagList, selectedTag, setSelectedTag }: Props) => {
-  const [isTagDragging, setIsTagDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const tagContainerRef = useRef<HTMLDivElement>(null);
-
-  const handleTagMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsTagDragging(true);
-    setStartX(e.pageX - (tagContainerRef.current?.scrollLeft ?? 0));
-    if (tagContainerRef.current) {
-      tagContainerRef.current.style.cursor = "grabbing"; // 手指按下時,滑鼠游標變成手指
-    }
-  };
-
-  const handleTagMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isTagDragging) return;
-    if (!tagContainerRef.current) return;
-    const x = e.pageX - tagContainerRef.current.getBoundingClientRect().left;
-    const distance = (x - startX) * 3;
-    //  number: 滑鼠移動位移與滾動條滾動關係,數值越大越快
-    tagContainerRef.current.scrollLeft = startX + distance;
-  };
-
-  const handleTagMouseUp = () => {
-    setIsTagDragging(false);
-    if (tagContainerRef.current) {
-      tagContainerRef.current.style.cursor = "grab";
-      tagContainerRef.current.style.scrollBehavior = "smooth";
-      tagContainerRef.current.scrollLeft += 50;
-      // number: 滾動條滾動距離,可控制反彈距離
-      tagContainerRef.current.style.scrollBehavior = "auto";
-    }
-  };
+  const {
+    isDragging,
+    domRef,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+  } = useDomDragging();
 
   return (
     <TagContainer
-      ref={tagContainerRef}
-      onMouseDown={handleTagMouseDown}
-      onMouseMove={handleTagMouseMove}
-      onMouseUp={handleTagMouseUp}
-      $isDragging={isTagDragging}
+      ref={domRef}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      $isDragging={isDragging}
     >
       {tagList
         .filter((item): item is GameItem => item !== null)
