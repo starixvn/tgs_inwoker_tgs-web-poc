@@ -19,6 +19,10 @@ import { ReportService } from "@/services/ReportService";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import Loading from "@/components/UI/Loading";
 import { DateRangeInfo } from "@/domain/Account/ReportPrev/hooks/useDateRange";
+import { TransactionDetail } from "@/models/dto/report/GetTransactionDetailsResDto";
+import TransactionDetailCards from "@/domain/Account/ReportPrev/components/reports/ReportBetting/components/TransactionDetailCards";
+import { useRwd } from "@/hooks/useRwd";
+import TransactionDetailTable from "@/domain/Account/ReportPrev/components/reports/ReportBetting/components/TransactionDetailTable";
 
 type Props = {
   dateRangeInfo: DateRangeInfo;
@@ -30,7 +34,10 @@ const ReportBetting = ({ dateRangeInfo }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
 
-  const [dataList, setDataList] = useState<any[]>([]);
+  const [transactionDetails, setTransactionDetails] = useState<
+    TransactionDetail[]
+  >([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [isMaxPage, setIsMaxPage] = useState(false);
   const [roundTotal, setRoundTotal] = useState<RoundTotalDto>({
     betAmount: null,
@@ -38,6 +45,8 @@ const ReportBetting = ({ dateRangeInfo }: Props) => {
     winLoss: null,
     settleAmount: null,
   });
+  const { isDesktopSize } = useRwd();
+
   const fetchReports = async () => {
     setIsLoading(true);
 
@@ -51,16 +60,19 @@ const ReportBetting = ({ dateRangeInfo }: Props) => {
       false
     );
 
+    getTransactionDetailsRes.data.totalCount;
+
     if (getTransactionDetailsRes.IsSuccess) {
       const newDataList =
         page > 1
-          ? dataList.concat(getTransactionDetailsRes.data.items)
+          ? transactionDetails.concat(getTransactionDetailsRes.data.items)
           : getTransactionDetailsRes.data.items;
 
-      setDataList(newDataList);
+      setTransactionDetails(newDataList);
       setIsMaxPage(
         getTransactionDetailsRes.data.totalCount == newDataList.length
       );
+      setTotalCount(getTransactionDetailsRes.data.totalCount || 0);
     } else {
       alert(
         "",
@@ -126,57 +138,14 @@ const ReportBetting = ({ dateRangeInfo }: Props) => {
           </ReportSummary>
         )}
 
-      {(() => {
-        if (dataList.length <= 0) {
-          return <NoRecord />;
-        } else {
-          return (
-            <ReportCardsContainer>
-              {dataList.map((row, index) => {
-                const date = moment(row.createdOn).format("YYYY-MM-DD hh:mm a");
-                return (
-                  <ReportCard key={index}>
-                    <ReportCardRow>
-                      {i18n.t("report.betid")} :{" "}
-                      <ReportCardCol>{row.id}</ReportCardCol>
-                    </ReportCardRow>
-
-                    <ReportCardRow>
-                      <ReportCardCol>
-                        {config.features.WGHK_Setup
-                          ? row.subGameProviderName
-                          : row.gameProviderName
-                          ? row.gameProviderName === "BTI" &&
-                            config.currency === "PHP"
-                            ? "PHSB"
-                            : row.gameProviderName
-                          : ""}
-                        - {row.gameName}
-                      </ReportCardCol>
-                      <ReportCardCol> {date}</ReportCardCol>
-                    </ReportCardRow>
-
-                    <ReportCardRow>
-                      <ReportCardCol>
-                        {i18n.t("report.betAmount")} :{row.betAmount}
-                      </ReportCardCol>{" "}
-                      <ReportCardCol>
-                        {i18n.t("report.validBet")} :{row.validBetAmount}
-                      </ReportCardCol>{" "}
-                      <ReportCardCol>
-                        {i18n.t("report.winloss")} :
-                        <CustomWinLose value={row.winLoss}>
-                          {row.winLoss}
-                        </CustomWinLose>
-                      </ReportCardCol>
-                    </ReportCardRow>
-                  </ReportCard>
-                );
-              })}
-            </ReportCardsContainer>
-          );
-        }
-      })()}
+      {isDesktopSize ? (
+        <TransactionDetailTable
+          transactionDetails={transactionDetails}
+          totalCount={totalCount}
+        />
+      ) : (
+        <TransactionDetailCards transactionDetails={transactionDetails} />
+      )}
       <Loading show={isLoading} />
     </ReportContainer>
   );

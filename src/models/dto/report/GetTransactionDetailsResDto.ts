@@ -1,4 +1,4 @@
-interface TransactionDetail {
+export interface TransactionDetail {
   id: string;
   externalRoundId: string;
   gameId: number | null;
@@ -34,7 +34,7 @@ export interface GetTransactionDetailsResDto {
   IsSuccess: boolean;
   code: number;
   data: {
-    items: (TransactionDetail | null)[];
+    items: TransactionDetail[];
     totalCount: number | null;
   };
   info: string | null;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { media } from "@/theme/breakpoints";
 
 export const ReportContainer = styled.div``;
 
@@ -7,6 +8,10 @@ export const ReportSummary = styled.div`
   color: ${({ theme }) => theme.white};
   border-radius: 5px;
   margin-bottom: 5px;
+
+  ${media.sm} {
+    margin-bottom: 20px;
+  }
 `;
 
 export const ReportSummaryRow = styled.div`
@@ -42,8 +47,10 @@ export const ReportCardCol = styled.span`
   font-weight: normal;
 `;
 
-export const CustomWinLose = styled.span`
-  color: ${({ value }) => {
-    return value === 0 ? "" : value > 0 ? "rgb(3,189, 0)" : "rgb(255, 0, 0)";
+type CustomWinLoseProps = { $value: number | null };
+
+export const CustomWinLose = styled.span<CustomWinLoseProps>`
+  color: ${({ $value }: CustomWinLoseProps) => {
+    return $value === 0 ? "" : $value > 0 ? "rgb(3,189, 0)" : "rgb(255, 0, 0)";
   }};
 `;

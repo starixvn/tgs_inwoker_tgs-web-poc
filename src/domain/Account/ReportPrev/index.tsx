@@ -27,6 +27,7 @@ const DateRangeSelector = styled.div`
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
+  margin-bottom: 20px;
 
   ${media.sm} {
     flex-direction: row;
