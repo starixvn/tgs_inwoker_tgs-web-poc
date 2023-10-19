@@ -2,7 +2,6 @@ import React, { Component, Suspense } from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Router, Switch } from "react-router";
 import { AppHistory } from "@/history/History";
-import { withRouter } from "react-router-dom";
 import {
   SHOW_LOGIN,
   UPDATING_SCREEN_SIZE,
@@ -34,6 +33,8 @@ import Loading from "@/components/UI/Loading";
 import ScrollToTop from "@/utils/ScrollToTop";
 import LoginDialog from "@/domain/authentication/LoginDialog";
 import RegisterDialog from "@/domain/authentication/RegisterDialog";
+import { HeaderContextProvider } from "@/contexts/headerContext";
+import { AuthDialogContextProvider } from "@/contexts/authDialogContext";
 
 class SubIndex extends Component {
   constructor(props) {
@@ -93,7 +94,7 @@ class SubIndex extends Component {
       Common.loadScript("/js/iovation.js", () => {});
     });
 
-    const urlpath = this.props.location.pathname.split("/");
+    const urlpath = window.location.pathname.split("/");
 
     if (urlpath.length === 3) {
       if (urlpath[1] === "a") {
@@ -147,7 +148,7 @@ class SubIndex extends Component {
     //this.props.getHomePageGameList();
     //this.props.getMarquee();
     // this.props.getBanner();
-    let urlParams = new URLSearchParams(this.props.location.search);
+    let urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has("goto")) {
       const gotoValue = urlParams.get("goto");
       if (gotoValue) {
@@ -492,8 +493,8 @@ class SubIndex extends Component {
   render() {
     const scale = this.props.screenWidth / 750;
     const matchingpath =
-      this.props.location.pathname === "/" ||
-      this.props.location.pathname === "/main/home";
+      window.location.pathname === "/" ||
+      window.location.pathname === "/main/home";
 
     const showPopupAnnouncement =
       config.features.PopupAnnouncement &&
@@ -515,85 +516,88 @@ class SubIndex extends Component {
     } else {
       return (
         <>
-          <AuthContextProvider>
-            <PageNameContextProvider>
-              <Router history={AppHistory}>
-                <ScrollToTop />
-                <Switch>
-                  {routes.map((route, index) => {
-                    return (
-                      <Route
-                        exact
-                        key={index}
-                        path={route.path}
-                        render={(props) => {
-                          return (
-                            <Suspense fallback={<Loading show={true} />}>
-                              <AuthGuard route={route}>
-                                <LayoutProvider route={route}>
-                                  <route.component />
+          <Router history={AppHistory}>
+            <AuthContextProvider>
+              <PageNameContextProvider>
+                <HeaderContextProvider>
+                  <AuthDialogContextProvider>
+                    <ScrollToTop />
+                    <Switch>
+                      {routes.map((route, index) => {
+                        return (
+                          <Route
+                            exact
+                            key={index}
+                            path={route.path}
+                            render={(props) => {
+                              return (
+                                <Suspense fallback={<Loading show={true} />}>
+                                  <AuthGuard route={route}>
+                                    <LayoutProvider route={route}>
+                                      <route.component />
+                                    </LayoutProvider>
+                                  </AuthGuard>
+                                </Suspense>
+                              );
+                            }}
+                          />
+                        );
+                      })}
+                      <Redirect to="/" />
+                    </Switch>
+                  </AuthDialogContextProvider>
+                </HeaderContextProvider>
 
-                                  <LoginDialog />
-                                  <RegisterDialog />
-                                </LayoutProvider>
-                              </AuthGuard>
-                            </Suspense>
-                          );
-                        }}
+                {(() => {
+                  if (
+                    config.features.LiveChatVendor.brand &&
+                    config.features.LiveChatVendor.license
+                  ) {
+                    return (
+                      <LiveChat
+                        license={config.features.LiveChatVendor.license}
+                        vendor={config.features.LiveChatVendor.brand}
+                        group={
+                          config.features.LiveChatVendor.group
+                            ? config.features.LiveChatVendor.group
+                            : 0
+                        }
                       />
                     );
-                  })}
-                  <Redirect to="/" />
-                </Switch>
-              </Router>
+                  }
+                })()}
 
-              {(() => {
-                if (
-                  config.features.LiveChatVendor.brand &&
-                  config.features.LiveChatVendor.license
-                ) {
-                  return (
-                    <LiveChat
-                      license={config.features.LiveChatVendor.license}
-                      vendor={config.features.LiveChatVendor.brand}
-                      group={
-                        config.features.LiveChatVendor.group
-                          ? config.features.LiveChatVendor.group
-                          : 0
-                      }
-                    />
-                  );
-                }
-              })()}
+                {config.features.SMSVerification &&
+                  this.props.account.registercompleted === false &&
+                  config.features.ForcedVerification && (
+                    <>
+                      <ForcedVerification
+                        forcedverify={true}
+                        alert={this.handleOpenPopupAlert}
+                      />
+                    </>
+                  )}
 
-              {config.features.SMSVerification &&
-                this.props.account.registercompleted === false &&
-                config.features.ForcedVerification && (
-                  <>
-                    <ForcedVerification
-                      forcedverify={true}
-                      alert={this.handleOpenPopupAlert}
-                    />
-                  </>
+                {showPopupAnnouncement && (
+                  <PopupAnnouncement
+                    open={this.state.openAnnouncement}
+                    onClose={this.handleCloseAnnouncement}
+                  />
+                )}
+                {showPopupPromotion && (
+                  <PopupPromotion
+                    open={this.state.showPromotion}
+                    onClose={this.handleClosePromotion}
+                  />
                 )}
 
-              {showPopupAnnouncement && (
-                <PopupAnnouncement
-                  open={this.state.openAnnouncement}
-                  onClose={this.handleCloseAnnouncement}
-                />
-              )}
-              {showPopupPromotion && (
-                <PopupPromotion
-                  open={this.state.showPromotion}
-                  onClose={this.handleClosePromotion}
-                />
-              )}
-
-              <PopupAlertModal />
-              <FloatingToolIcons />
-            </PageNameContextProvider>
-          </AuthContextProvider>
+                <PopupAlertModal />
+                <FloatingToolIcons />
+                <LoginDialog />
+                <RegisterDialog />
+              </PageNameContextProvider>
+            </AuthContextProvider>
+          </Router>
         </>
       );
     }
@@ -667,7 +671,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(SubIndex));
+export default connect(mapStateToProps, mapDispatchToProps)(SubIndex);
