@@ -16,7 +16,8 @@ const TagContainer = styled.div`
 
   ${media.sm} {
     overflow-x: hidden;
-    transition: scroll-left 0.2s ease-in-out; 
+    transition: scroll-left 0.2s ease-in-out;
+    cursor: ${({ isDragging }) => isDragging ? 'grabbing' : 'grab'};
   }
 `;
 type Tag = { name: string };
@@ -83,6 +84,7 @@ const GameFilterTag = ({ tagList, selectedTag, setSelectedTag }: Props) => {
       onMouseDown={handleTagMouseDown}
       onMouseMove={handleTagMouseMove}
       onMouseUp={handleTagMouseUp}
+      isDragging={isDragging}
     >
       {tagList
         .filter((item): item is GameItem => item !== null)

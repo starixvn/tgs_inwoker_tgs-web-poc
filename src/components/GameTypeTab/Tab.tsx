@@ -10,6 +10,7 @@ type Props = {
   isActive: boolean;
   fontSize: "small" | "smaller" | string;
   onClick: () => void;
+  isDraggable: boolean;
 };
 
 const Wrapper = styled.div<{
@@ -67,13 +68,20 @@ const Text = styled.div<{ $fontSize: string; $isActive: boolean }>`
   }
 `;
 
-const Tab = ({ imageUrl, text, isActive, fontSize, onClick }: Props) => {
+const Tab = ({ imageUrl, text, isActive, fontSize, onClick, isDraggable }: Props) => {
+
+  const handleClick = () => {
+    if (!isDraggable) {
+      onClick(); // 只有非拖動時才能觸發onClick
+    }
+  };
+
   return (
     <Wrapper
       $isActive={isActive}
       $imageUrl={imageUrl}
       $text={text}
-      onClick={onClick}
+      onClick={handleClick}
     >
       <GameIcon src={imageUrl} alt={text} />
       <Text $isActive={isActive} $fontSize={fontSize}>

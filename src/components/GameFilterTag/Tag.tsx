@@ -9,6 +9,7 @@ type Props = {
   isShowIcon: boolean;
   fontSize?: "small" | "smaller";
   onClick: () => void;
+  isDraggable: boolean;
 };
 
 const Wrapper = styled.div<{
@@ -53,7 +54,7 @@ const Text = styled.div<{ $isActive: boolean }>`
   line-height: 0.875rem;
 `;
 
-const Tag = ({ text, isActive, isShowIcon, onClick }: Props) => {
+const Tag = ({ text, isActive, isShowIcon, onClick, isDraggable }: Props) => {
   const { isMobileSize } = useRwd();
 
   const transferIcon = () => {
@@ -62,12 +63,18 @@ const Tag = ({ text, isActive, isShowIcon, onClick }: Props) => {
   };
   const imageUrl = transferIcon();
 
+  const handleClick = () => {
+    if (!isDraggable) {
+      onClick(); // 只有非拖動時才能觸發onClick
+    }
+  };
+
   return (
     <Wrapper
       $isActive={isActive}
       $text={text}
       $isShowIcon={isShowIcon}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {imageUrl && <img src={imageUrl} alt={text} />}
       {isMobileSize ? (imageUrl ? null : <Text $isActive={isActive}>{text}</Text>) : <Text $isActive={isActive}>{text}</Text>}

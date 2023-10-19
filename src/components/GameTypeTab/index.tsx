@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { gameTypeList } from "../../constants/tab";
 import Tab from "./Tab";
 
-const TabContainer = styled.div`
+const TabContainer = styled.div<{ isDragging: boolean }> `
   margin-bottom: 15px;
   overflow-x: auto;
   white-space: nowrap;
@@ -17,7 +17,8 @@ const TabContainer = styled.div`
     overflow-x: hidden;
     width: calc(100% - 189px);
     margin-bottom: unset;
-    transition: scroll-left 0.2s ease-in-out; 
+    transition: scroll-left 0.2s ease-in-out;
+    cursor: ${({ isDragging }) => isDragging ? 'grabbing' : 'grab'};
   }
 `;
 
@@ -31,6 +32,7 @@ const GameTypeTab = ({ activeGameTypeTab, handleGameTypeClick }: Props) => {
   const [startX, setStartX] = useState(0);
   const tabContainerRef = useRef<HTMLDivElement>(null);
 
+  // 說明:滑鼠單次點擊切換Tab ; 滑鼠長按不放可拖曳
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
     setStartX(e.pageX - (tabContainerRef.current?.scrollLeft ?? 0));
@@ -65,6 +67,7 @@ const GameTypeTab = ({ activeGameTypeTab, handleGameTypeClick }: Props) => {
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
+      isDragging={isDragging} // Add isDragging prop here
     >
       {gameTypeList.map(
         (item: {
@@ -81,6 +84,7 @@ const GameTypeTab = ({ activeGameTypeTab, handleGameTypeClick }: Props) => {
             isActive={item.gameType === activeGameTypeTab}
             fontSize={item.fontSize}
             onClick={() => handleGameTypeClick(item.gameType)}
+            isDraggable={isDragging}
           />
         )
       )}
