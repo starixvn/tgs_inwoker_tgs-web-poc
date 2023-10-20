@@ -5,9 +5,7 @@ import { DRAWER_WIDTH } from "@/contexts/headerContext";
 import { useHeader } from "@/hooks/useHeader";
 import { useRwd } from "@/hooks/useRwd";
 import { media } from "@/theme/breakpoints";
-import { styled as muiStyled } from "@mui/material/styles";
-import { ReactElement } from "react";
-import styled from "styled-components";
+import Footer from "@/components/Footer";
 
 const DefaultLayoutContainer = styled.div`
   position: relative;
@@ -17,7 +15,6 @@ const DefaultLayoutContainer = styled.div`
 const DashboardContainer = styled.div`
   display: flex;
   margin-top: 80px;
-  margin-bottom: 82px;
   min-height: calc(100vh - 80px - 82px);
 
   ${media.sm} {
@@ -48,6 +45,14 @@ const ContentWrapper = muiStyled("div", {
   };
 });
 
+const ChildrenWrapper = styled.div`
+  padding-bottom: 82px;
+
+  ${media.sm} {
+    padding-bottom: 0;
+  }
+`;
+
 type Props = {
   children: ReactElement;
 };
@@ -66,7 +71,10 @@ const DefaultLayout = ({ children }: Props) => {
         />
 
         <ContentWrapper $isOpen={isDesktopSize && isMenuOpen}>
-          {children}
+          <>
+            <ChildrenWrapper>{children}</ChildrenWrapper>
+            <Footer />
+          </>
         </ContentWrapper>
       </DashboardContainer>
 
