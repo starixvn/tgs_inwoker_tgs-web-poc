@@ -117,7 +117,7 @@ const DepositStatus = (props) => {
   const connect = new HubConnectionBuilder()
     .withUrl(config.baseUrl.replace("http" || "https", "ws") + "notify", {
       accessTokenFactory: () => {
-        return localStorage.getItem("token" + (isMobileOnly ? "1" : "0"));
+        return localStorage.getItem("token" + (isMobileOnly ? "1" : "1"));
       },
       transport: 1,
       skipNegotiation: true,

@@ -532,15 +532,21 @@ class SubIndex extends Component {
                             path={route.path}
                             render={(props) => {
                               return (
-                                <Suspense
-                                  fallback={<Loading show={true} opacity={1} />}
-                                >
-                                  <AuthGuard route={route}>
-                                    <LayoutProvider route={route}>
+                                <AuthGuard route={route}>
+                                  <LayoutProvider route={route}>
+                                    <Suspense
+                                      fallback={
+                                        <Loading
+                                          show={true}
+                                          opacity={1}
+                                          noShrink={true}
+                                        />
+                                      }
+                                    >
                                       <route.component />
-                                    </LayoutProvider>
-                                  </AuthGuard>
-                                </Suspense>
+                                    </Suspense>
+                                  </LayoutProvider>
+                                </AuthGuard>
                               );
                             }}
                           />

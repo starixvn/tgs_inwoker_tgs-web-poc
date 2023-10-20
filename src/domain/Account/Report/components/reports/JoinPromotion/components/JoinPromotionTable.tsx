@@ -63,15 +63,15 @@ const JoinPromotionTable = ({ promotionDetails, totalCount }: Props) => {
         </TableBody>
       </ReportTable>
 
-      <TablePagination
-        rowsPerPageOptions={[25]}
-        component="div"
-        count={totalCount}
-        rowsPerPage={25}
-        page={0}
-        onPageChange={() => {}}
-        onRowsPerPageChange={() => {}}
-      />
+      {/*<TablePagination*/}
+      {/*  rowsPerPageOptions={[25]}*/}
+      {/*  component="div"*/}
+      {/*  count={totalCount}*/}
+      {/*  rowsPerPage={25}*/}
+      {/*  page={0}*/}
+      {/*  onPageChange={() => {}}*/}
+      {/*  onRowsPerPageChange={() => {}}*/}
+      {/*/>*/}
     </ReportCardsContainer>
   );
 };

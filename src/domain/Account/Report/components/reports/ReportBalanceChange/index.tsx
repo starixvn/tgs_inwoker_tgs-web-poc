@@ -9,6 +9,7 @@ import { DateRangeInfo } from "@/domain/Account/Report/hooks/useDateRange";
 import { useRwd } from "@/hooks/useRwd";
 import BalanceChangeCards from "@/domain/Account/Report/components/reports/ReportBalanceChange/components/BalanceChangeCards";
 import TransactionDetailTable from "@/domain/Account/Report/components/reports/ReportBalanceChange/components/BalanceChangeTable";
+import BottomScrollListener from "react-bottom-scroll-listener";
 
 type Props = {
   dateRangeInfo: DateRangeInfo;
@@ -27,7 +28,7 @@ const ReportBalanceChange = ({ dateRangeInfo }: Props) => {
   const [isMaxPage, setIsMaxPage] = useState(false);
   const { isDesktopSize } = useRwd();
 
-  const fetchReports = async () => {
+  const fetchReports = async (page: number) => {
     setIsLoading(true);
 
     const getBalanceChangeRes = await ReportService.GetBalanceChanges(
@@ -56,16 +57,19 @@ const ReportBalanceChange = ({ dateRangeInfo }: Props) => {
   };
 
   useEffect(() => {
-    setPage(1);
+    const currentPage = 1;
+
+    setPage(currentPage);
+    fetchReports(currentPage);
     setIsMaxPage(false);
-    fetchReports();
   }, [JSON.stringify(dateRangeInfo)]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;
 
-    setPage((prevState) => prevState++);
-    await fetchReports();
+    const nextPage = page + 1;
+    setPage(nextPage);
+    await fetchReports(nextPage);
   };
 
   return (
@@ -79,6 +83,7 @@ const ReportBalanceChange = ({ dateRangeInfo }: Props) => {
         <BalanceChangeCards balanceChangeDetails={balanceChangeDetails} />
       )}
       <Loading show={isLoading} />
+      <BottomScrollListener onBottom={handleLoadMore} />
     </ReportContainer>
   );
 };
