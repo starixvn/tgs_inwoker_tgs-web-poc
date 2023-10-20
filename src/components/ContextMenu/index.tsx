@@ -69,7 +69,7 @@ const ContextMenu = () => {
         break;
 
       case "/main/support":
-        history.push("/account?contact");
+        history.push("/support");
         break;
     }
   };

@@ -32,6 +32,7 @@ const Container = styled.div`
 const PlayerInfoContainer = styled.div`
   ${media.md} {
     flex: 1;
+    min-width: 184px;
   }
 `;
 

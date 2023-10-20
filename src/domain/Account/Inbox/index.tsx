@@ -4,19 +4,11 @@ import Loading from "@/components/UI/Loading";
 import i18n from "@/utils/i18n";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useInboxStore } from "@/hooks/stores/useInboxStore";
-import InboxItem from "./components/InboxItem";
-import { InboxMessage } from "@/types/stores/account";
 import { useAuth } from "@/hooks/auth/useAuth";
 import styled from "styled-components";
 import { useRwd } from "@/hooks/useRwd";
 import MobileInboxList from "@/domain/Account/Inbox/components/MobileInboxList";
 import DesktopInboxList from "@/domain/Account/Inbox/components/DesktopInboxList";
-
-const InboxListContainer = styled.div`
-  & > div {
-    margin-bottom: 10px;
-  }
-`;
 
 const Inbox = () => {
   const { isLogin } = useAuth();
@@ -47,6 +39,7 @@ const Inbox = () => {
   }, [token]);
 
   const handleScrollBottom = () => {
+    console.log("YOYO");
     if (!isBottom) {
       if (inbox.items.length < inbox.totalcount) {
         getMessageList(page + 1);
