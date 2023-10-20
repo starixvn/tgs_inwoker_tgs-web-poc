@@ -4,7 +4,6 @@ import i18n from "@/utils/i18n";
 import { useHistory } from "react-router-dom";
 import BottomNote from "@/components/UI/BottomNote";
 import Loading from "@/components/UI/Loading";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
@@ -15,6 +14,7 @@ import enLocale from "date-fns/locale/en-US";
 import thLocale from "date-fns/locale/th";
 import { ItemContainer, LabelContainer } from "@/styles/forms";
 import { Button } from "@/components/UI/Button";
+import DatePicker from "@/components/UI/DatePicker";
 
 const moment = require("moment");
 const localeMap: { [key in string]: Locale } = {
@@ -37,7 +37,6 @@ const CustomDatepicker = styled.div<CustomDatepickerProps>`
     return disabled && `pointer-events: none;`;
   }}
   background: none;
-  padding: 10px;
   border-radius: 5px;
   margin-top: 10px;
   border: 1px solid ${({ theme }) => theme.tertiary};
@@ -122,29 +121,21 @@ const Birthdate = () => {
   const showLoading = (loading: boolean) => {
     setIsLoading(loading);
   };
-
   return (
     <Container>
       <ItemContainer>
         <LabelContainer>{i18n.t("profile.birthdate.title")}</LabelContainer>
-        <LocalizationProvider
-          dateAdapter={AdapterDateFns}
-          locale={localeMap[i18n.language.substring(0, 2)]}
+        <CustomDatepicker
+          brand={config.brand}
+          disabled={isConfigured && config.features.Profile_SetUpBirthdateOnce}
         >
-          <CustomDatepicker
-            brand={config.brand}
-            disabled={
-              isConfigured && config.features.Profile_SetUpBirthdateOnce
-            }
-          >
-            <DatePicker
-              invalidDateMessage={false}
-              format="yyyy/MM/dd"
-              selectedDate={birthdate}
-              onChange={(e) => handleChangeNumber(e)}
-            />
-          </CustomDatepicker>
-        </LocalizationProvider>
+          <DatePicker
+            invalidDateMessage={false}
+            format="yyyy/MM/dd"
+            value={new Date(birthdate)}
+            onChange={(e) => handleChangeNumber(e)}
+          />
+        </CustomDatepicker>
       </ItemContainer>
 
       <ItemContainer>

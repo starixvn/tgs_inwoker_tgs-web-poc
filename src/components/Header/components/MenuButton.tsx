@@ -4,10 +4,6 @@ import styled from "styled-components";
 import { useHeader } from "@/hooks/useHeader";
 import Icon from "@/components/Icon";
 
-const MenuIcon = styled.div`
-  cursor: pointer;
-`;
-
 type Props = {};
 const MenuButton = ({}: Props) => {
   const { handleToggleMenu } = useHeader();
@@ -18,6 +14,9 @@ const MenuButton = ({}: Props) => {
       width={"33px"}
       height={"33px"}
       onClick={() => handleToggleMenu()}
+      style={{
+        cursor: "pointer",
+      }}
     />
   );
 };

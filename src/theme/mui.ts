@@ -76,13 +76,6 @@ const muiTheme = createTheme({
         },
       },
     },
-    // MuiTableRow: {
-    //   styleOverrides: {
-    //     root: {
-    //       borderBottom: "1px solid #707070", // 替换为你想要的边框颜色值
-    //     },
-    //   },
-    // },
   },
 });
 
