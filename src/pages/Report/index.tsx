@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import ReportPrev from "@/domain/Account/ReportPrev";
+import Report from "@/domain/Account/Report";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { usePageName } from "@/hooks/usePageName";
 import i18n from "@/utils/i18n";
@@ -17,7 +17,7 @@ const ReportContainer = styled.div`
 `;
 
 type Props = {};
-const Report = (props: Props) => {
+const ReportPage = (props: Props) => {
   const { updatePageName } = usePageName();
 
   useEffect(() => {
@@ -32,10 +32,10 @@ const Report = (props: Props) => {
     <ReportContainer>
       {isDesktopSize && <UserWalletInfo />}
       <AccountPaper pageName={i18n.t("affiliate.report")} iconUrl={iconReport}>
-        <ReportPrev alert={alert} history={history} />;
+        <Report alert={alert} history={history} />;
       </AccountPaper>
     </ReportContainer>
   );
 };
 
-export default Report;
+export default ReportPage;

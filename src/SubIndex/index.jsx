@@ -513,7 +513,7 @@ class SubIndex extends Component {
         this.props.general.token === null) &&
       this.props.general.isMaintenance === false
     ) {
-      return <Loading show={this.state.loading} />;
+      return <Loading show={this.state.loading} opacity={1} />;
     } else {
       return (
         <>
@@ -532,7 +532,9 @@ class SubIndex extends Component {
                             path={route.path}
                             render={(props) => {
                               return (
-                                <Suspense fallback={<Loading show={true} />}>
+                                <Suspense
+                                  fallback={<Loading show={true} opacity={1} />}
+                                >
                                   <AuthGuard route={route}>
                                     <LayoutProvider route={route}>
                                       <route.component />
