@@ -16,8 +16,9 @@ const Interceptor = {
         }
 
         const token = localStorage.getItem(
-          "token" + (isMobileOnly ? "1" : "0")
+          "token" + (isMobileOnly ? "1" : "1")
         );
+        console.log(token);
         if (token !== null && token !== "") {
           config.headers["Token"] = token;
         }
@@ -63,14 +64,14 @@ const Interceptor = {
           response.config.url.toUpperCase().indexOf("/API/PLAYER/LOGIN") >= 0
         ) {
           localStorage.setItem(
-            "token" + (isMobileOnly ? "1" : "0"),
+            "token" + (isMobileOnly ? "1" : "1"),
             response.data.token
           );
         }
         if (
           response.config.url.toUpperCase().indexOf("/API/PLAYER/LOGOUT") >= 0
         ) {
-          localStorage.removeItem("token" + (isMobileOnly ? "1" : "0"));
+          localStorage.removeItem("token" + (isMobileOnly ? "1" : "1"));
         }
         if (
           response.config.url.toUpperCase().indexOf("/BANK/HELP2PAY/PAY") >= 0
@@ -94,7 +95,7 @@ const Interceptor = {
           newResponse.code === 101 ||
           newResponse.code === 210
         ) {
-          localStorage.removeItem("token" + (isMobileOnly ? "1" : "0"));
+          localStorage.removeItem("token" + (isMobileOnly ? "1" : "1"));
           store.dispatch({ type: UNAUTHORIZE });
 
           if (newResponse.code === 210) {
@@ -118,7 +119,7 @@ const Interceptor = {
               error.response.config.url.indexOf("Player/Login") < 0 &&
               error.response.config.url.indexOf("player/password") < 0
             ) {
-              localStorage.removeItem("token" + (isMobileOnly ? "1" : "0"));
+              localStorage.removeItem("token" + (isMobileOnly ? "1" : "1"));
               store.dispatch({ type: UNAUTHORIZE });
               if (error.response.data.err === 210) {
                 AppHistory.replace("/banned");

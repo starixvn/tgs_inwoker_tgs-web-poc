@@ -116,15 +116,15 @@ const MobileInboxList = ({
         </TableBody>
       </StyledTable>
 
-      <TablePagination
-        rowsPerPageOptions={[25]}
-        component="div"
-        count={totalCount}
-        rowsPerPage={25}
-        page={0}
-        onPageChange={() => {}}
-        onRowsPerPageChange={() => {}}
-      />
+      {/*<TablePagination*/}
+      {/*  rowsPerPageOptions={[25]}*/}
+      {/*  component="div"*/}
+      {/*  count={totalCount}*/}
+      {/*  rowsPerPage={25}*/}
+      {/*  page={0}*/}
+      {/*  onPageChange={() => {}}*/}
+      {/*  onRowsPerPageChange={() => {}}*/}
+      {/*/>*/}
     </InboxListContainer>
   );
 };
