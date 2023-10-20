@@ -1,13 +1,13 @@
-import React, { ReactElement } from "react";
-import Header from "@/components/Header";
 import BottomAppBar from "@/components/BottomAppBar";
-import styled from "styled-components";
-import { styled as muiStyled } from "@mui/material/styles";
-import { useRwd } from "@/hooks/useRwd";
+import Header from "@/components/Header";
 import MenuDrawer from "@/components/Header/components/MenuDrawer";
-import { useHeader } from "@/hooks/useHeader";
 import { DRAWER_WIDTH } from "@/contexts/headerContext";
+import { useHeader } from "@/hooks/useHeader";
+import { useRwd } from "@/hooks/useRwd";
 import { media } from "@/theme/breakpoints";
+import { styled as muiStyled } from "@mui/material/styles";
+import { ReactElement } from "react";
+import styled from "styled-components";
 
 const DefaultLayoutContainer = styled.div`
   position: relative;
@@ -23,6 +23,7 @@ const DashboardContainer = styled.div`
   ${media.sm} {
     margin-top: 60px;
     min-height: calc(100vh - 60px);
+    margin-bottom: unset;
   }
 `;
 

@@ -1,5 +1,6 @@
-import useVipStore from "@/hooks/useVipStore";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
+import useVipStore from "@/hooks/useVipStore";
+import { media } from "@/theme/breakpoints";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { levelItemStyleList } from "../../constants/vip";
@@ -12,9 +13,34 @@ const VipScrollableContainer = styled.div`
   scroll-snap-type: x mandatory;
   padding: 20px;
   margin: 0 20px;
-  background-color: ${(props: { theme: { primaryDark: any } }) =>
-    props.theme.primaryDark};
-  color: ${(props: { theme: { white: any } }) => props.theme.white};
+  background-color: ${(props) => props.theme.primaryDark};
+  color: ${(props) => props.theme.white};
+  box-sizing: border-box;
+  /* 對外層的高度修正 */
+  margin-top: unset;
+  margin-bottom: unset;
+
+   ${media.sm} {
+    max-width: 870px;
+    margin: 0 auto;
+    scroll-snap-type: unset;
+    &::-webkit-scrollbar {
+      width: 10px;
+	    background-color: #1d1d1d40;
+    }
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+      border-radius: 8px;
+      background: ${(props) => props.theme.primaryLight};
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+      background-color: ${(props) => props.theme.tertiary};
+    }
+  }
 `;
 
 const VIP = () => {
