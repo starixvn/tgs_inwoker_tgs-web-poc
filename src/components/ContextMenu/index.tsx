@@ -3,30 +3,8 @@ import ContextMenuItem from "./ContextMenuItem";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useHistory } from "react-router-dom";
 import Avatar from "@/components/Avatar";
-
-const contextMenuList = [
-  {
-    label: "My Account",
-    iconUrl:
-      process.env.PUBLIC_URL +
-      `/assets/images/mobile/contextMenu/icon_my_account.svg`,
-    routePath: "/account",
-  },
-  {
-    label: "Service/Support",
-    iconUrl:
-      process.env.PUBLIC_URL +
-      `/assets/images/mobile/contextMenu/icon_service_support.svg`,
-    routePath: "/main/support", // TODO: handle support
-  },
-  {
-    label: "Logout",
-    iconUrl:
-      process.env.PUBLIC_URL +
-      `/assets/images/mobile/contextMenu/icon_logout.svg`,
-    routePath: "/logout", // TODO: handle logout
-  },
-];
+import { useMemo } from "react";
+import i18n from "@/utils/i18n";
 
 const ContextMenuContainer = styled.div`
   width: 272px;
@@ -57,6 +35,32 @@ const AvatarLevelWrapper = styled.div`
 const ContextMenu = () => {
   const { handleLogout, logoutState } = useAuth();
   const history = useHistory();
+
+  const contextMenuList = useMemo(() => {
+    return [
+      {
+        label: i18n.t("wap.main.my"),
+        iconUrl:
+          process.env.PUBLIC_URL +
+          `/assets/images/mobile/contextMenu/icon_my_account.svg`,
+        routePath: "/account",
+      },
+      {
+        label: i18n.t("support.online"),
+        iconUrl:
+          process.env.PUBLIC_URL +
+          `/assets/images/mobile/contextMenu/icon_service_support.svg`,
+        routePath: "/main/support", // TODO: handle support
+      },
+      {
+        label: i18n.t("wap.main.account.signout"),
+        iconUrl:
+          process.env.PUBLIC_URL +
+          `/assets/images/mobile/contextMenu/icon_logout.svg`,
+        routePath: "/logout", // TODO: handle logout
+      },
+    ];
+  }, []);
 
   const handleClick = async (routerPath: string) => {
     switch (routerPath) {

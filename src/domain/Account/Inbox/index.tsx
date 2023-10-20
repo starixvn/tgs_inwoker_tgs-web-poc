@@ -39,7 +39,6 @@ const Inbox = () => {
   }, [token]);
 
   const handleScrollBottom = () => {
-    console.log("YOYO");
     if (!isBottom) {
       if (inbox.items.length < inbox.totalcount) {
         getMessageList(page + 1);
