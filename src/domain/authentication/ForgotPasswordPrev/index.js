@@ -10,6 +10,17 @@ import { Button } from "@/components/UI/Button";
 import { GrayInputWrapper, TextField } from "@/components/UI/TextField";
 import { FormControl } from "@/styles/forms";
 import { Select } from "@/components/UI/Select";
+import { media } from "@/theme/breakpoints";
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 56px 15px;
+
+  ${media.sm} {
+    padding: 42px 42px;
+  }
+`;
 
 const PhoneContainer = styled.div`
   display: flex;
@@ -17,8 +28,6 @@ const PhoneContainer = styled.div`
   align-items: stretch;
   margin-bottom: 21px;
 `;
-
-const Wrapper = styled.div``;
 
 class ForgotPasswordPrev extends Component {
   state = {
@@ -151,124 +160,122 @@ class ForgotPasswordPrev extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Wrapper>
-          {(() => {
-            if (this.state.step === 1) {
-              return config.features.SMSVerification ? (
-                <>
-                  <PhoneContainer>
-                    <GrayInputWrapper style={{ width: "30%" }}>
-                      <Select
-                        style={{ width: "100%" }}
-                        native
-                        value={this.state.areaCode}
-                        onChange={(e) => {
-                          this.setState({
-                            ...this.state,
-                            areaCode: e.target.value,
-                          });
-                        }}
-                        disabled={this.state.currentStep === 1}
-                      >
-                        <option value={config.features.PhonePrefix}>
-                          {config.features.PhonePrefix}
-                        </option>
-                      </Select>
-                    </GrayInputWrapper>
+      <Wrapper>
+        {(() => {
+          if (this.state.step === 1) {
+            return config.features.SMSVerification ? (
+              <>
+                <PhoneContainer>
+                  <GrayInputWrapper style={{ width: "30%" }}>
+                    <Select
+                      style={{ width: "100%" }}
+                      native
+                      value={this.state.areaCode}
+                      onChange={(e) => {
+                        this.setState({
+                          ...this.state,
+                          areaCode: e.target.value,
+                        });
+                      }}
+                      disabled={this.state.currentStep === 1}
+                    >
+                      <option value={config.features.PhonePrefix}>
+                        {config.features.PhonePrefix}
+                      </option>
+                    </Select>
+                  </GrayInputWrapper>
 
-                    <GrayInputWrapper style={{ width: "70%" }}>
-                      <TextField
-                        value={this.state.phone}
-                        onChange={this.handlePhoneChange}
-                        placeholder={i18n.t("common.msgEnterPhone")}
-                        type={"text"}
-                      />
-                    </GrayInputWrapper>
-                  </PhoneContainer>
-                  {/* 發送驗證碼 */}
-                  <GrayInputWrapper style={{ marginBottom: "20px" }}>
-                    <TextFieldWithButton
-                      buttonlabel={i18n.t("common.msgSendToken")}
-                      value={this.state.code}
-                      onChange={this.handleCodeChange}
-                      placeholder={i18n.t("common.msgEnterCode")}
-                      label={i18n.t("common.token")}
-                      onClick={this.handleGetCodeClick}
+                  <GrayInputWrapper style={{ width: "70%" }}>
+                    <TextField
+                      value={this.state.phone}
+                      onChange={this.handlePhoneChange}
+                      placeholder={i18n.t("common.msgEnterPhone")}
                       type={"text"}
                     />
                   </GrayInputWrapper>
-                </>
-              ) : (
-                <>
-                  <GrayInputWrapper style={{ marginBottom: "20px" }}>
-                    <TextField
-                      value={this.state.email}
-                      onChange={this.handleEmailChange}
-                      placeholder={i18n.t("common.msgEnterEmail")}
-                      type={"text"}
-                      // label={i18n.t("common.emailAddress")}
-                    />
-                  </GrayInputWrapper>
+                </PhoneContainer>
+                {/* 發送驗證碼 */}
+                <GrayInputWrapper style={{ marginBottom: "20px" }}>
+                  <TextFieldWithButton
+                    buttonlabel={i18n.t("common.msgSendToken")}
+                    value={this.state.code}
+                    onChange={this.handleCodeChange}
+                    placeholder={i18n.t("common.msgEnterCode")}
+                    label={i18n.t("common.token")}
+                    onClick={this.handleGetCodeClick}
+                    type={"text"}
+                  />
+                </GrayInputWrapper>
+              </>
+            ) : (
+              <>
+                <GrayInputWrapper style={{ marginBottom: "20px" }}>
+                  <TextField
+                    value={this.state.email}
+                    onChange={this.handleEmailChange}
+                    placeholder={i18n.t("common.msgEnterEmail")}
+                    type={"text"}
+                    // label={i18n.t("common.emailAddress")}
+                  />
+                </GrayInputWrapper>
 
-                  <GrayInputWrapper style={{ marginBottom: "20px" }}>
-                    <TextFieldWithButton
-                      buttonlabel={i18n.t("common.msgSendToken")}
-                      style={{ margin: "20px auto 20px auto" }}
-                      value={this.state.code}
-                      onChange={this.handleCodeChange}
-                      placeholder={i18n.t("common.msgEnterCodeEmail")}
-                      label={i18n.t("common.token")}
-                      onClick={this.handleGetCodeClick}
-                      type={"text"}
-                    />
-                  </GrayInputWrapper>
-                </>
-              );
-            } else if (this.state.step === 2) {
-              return (
-                <React.Fragment>
-                  <GrayInputWrapper>
-                    <TextField
-                      onChange={this.handlePasswordChange}
-                      placeholder={i18n.t("wap.register.password")}
-                      type={"password"}
-                      label={i18n.t("common.NewPass")}
-                    />
-                  </GrayInputWrapper>
+                <GrayInputWrapper style={{ marginBottom: "20px" }}>
+                  <TextFieldWithButton
+                    buttonlabel={i18n.t("common.msgSendToken")}
+                    style={{ margin: "20px auto 20px auto" }}
+                    value={this.state.code}
+                    onChange={this.handleCodeChange}
+                    placeholder={i18n.t("common.msgEnterCodeEmail")}
+                    label={i18n.t("common.token")}
+                    onClick={this.handleGetCodeClick}
+                    type={"text"}
+                  />
+                </GrayInputWrapper>
+              </>
+            );
+          } else if (this.state.step === 2) {
+            return (
+              <React.Fragment>
+                <GrayInputWrapper>
+                  <TextField
+                    onChange={this.handlePasswordChange}
+                    placeholder={i18n.t("wap.register.password")}
+                    type={"password"}
+                    label={i18n.t("common.NewPass")}
+                  />
+                </GrayInputWrapper>
 
-                  <GrayInputWrapper>
-                    <TextField
-                      value={this.state.password2}
-                      onChange={this.handlePassword2Change}
-                      placeholder={i18n.t("common.msgEnterConfirmPass")}
-                      type={"password"}
-                      label={i18n.t("common.ConfirmPass")}
-                    />
-                  </GrayInputWrapper>
-                </React.Fragment>
-              );
-            }
-          })()}
+                <GrayInputWrapper>
+                  <TextField
+                    value={this.state.password2}
+                    onChange={this.handlePassword2Change}
+                    placeholder={i18n.t("common.msgEnterConfirmPass")}
+                    type={"password"}
+                    label={i18n.t("common.ConfirmPass")}
+                  />
+                </GrayInputWrapper>
+              </React.Fragment>
+            );
+          }
+        })()}
 
-          <Button
-            fullWidth
-            disabled={
-              this.state.step === 1
-                ? (config.features.SMSVerification
-                    ? this.state.phone.length < 1
-                    : this.state.email.length < 1) || this.state.code.length < 6
-                : this.state.password.length < 6 ||
-                  this.state.password2.length < 6
-            }
-            onClick={this.handleNextClick}
-          >
-            {this.state.step === 1
-              ? i18n.t("common.nextStep")
-              : i18n.t("common.confirm")}
-          </Button>
-        </Wrapper>
-      </React.Fragment>
+        <Button
+          fullWidth
+          disabled={
+            this.state.step === 1
+              ? (config.features.SMSVerification
+                  ? this.state.phone.length < 1
+                  : this.state.email.length < 1) || this.state.code.length < 6
+              : this.state.password.length < 6 ||
+                this.state.password2.length < 6
+          }
+          onClick={this.handleNextClick}
+        >
+          {this.state.step === 1
+            ? i18n.t("common.nextStep")
+            : i18n.t("common.confirm")}
+        </Button>
+      </Wrapper>
     );
   }
 }

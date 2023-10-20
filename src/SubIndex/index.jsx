@@ -35,6 +35,7 @@ import LoginDialog from "@/domain/authentication/LoginDialog";
 import RegisterDialog from "@/domain/authentication/RegisterDialog";
 import { HeaderContextProvider } from "@/contexts/headerContext";
 import { AuthDialogContextProvider } from "@/contexts/authDialogContext";
+import ForgetPasswordDialog from "@/domain/authentication/ForgetPasswordDialog";
 
 class SubIndex extends Component {
   constructor(props) {
@@ -545,56 +546,57 @@ class SubIndex extends Component {
                       })}
                       <Redirect to="/" />
                     </Switch>
+
+                    {(() => {
+                      if (
+                        config.features.LiveChatVendor.brand &&
+                        config.features.LiveChatVendor.license
+                      ) {
+                        return (
+                          <LiveChat
+                            license={config.features.LiveChatVendor.license}
+                            vendor={config.features.LiveChatVendor.brand}
+                            group={
+                              config.features.LiveChatVendor.group
+                                ? config.features.LiveChatVendor.group
+                                : 0
+                            }
+                          />
+                        );
+                      }
+                    })()}
+
+                    {config.features.SMSVerification &&
+                      this.props.account.registercompleted === false &&
+                      config.features.ForcedVerification && (
+                        <>
+                          <ForcedVerification
+                            forcedverify={true}
+                            alert={this.handleOpenPopupAlert}
+                          />
+                        </>
+                      )}
+
+                    {showPopupAnnouncement && (
+                      <PopupAnnouncement
+                        open={this.state.openAnnouncement}
+                        onClose={this.handleCloseAnnouncement}
+                      />
+                    )}
+                    {showPopupPromotion && (
+                      <PopupPromotion
+                        open={this.state.showPromotion}
+                        onClose={this.handleClosePromotion}
+                      />
+                    )}
+
+                    <PopupAlertModal />
+                    <FloatingToolIcons />
+                    <LoginDialog />
+                    <RegisterDialog />
+                    <ForgetPasswordDialog />
                   </AuthDialogContextProvider>
                 </HeaderContextProvider>
-
-                {(() => {
-                  if (
-                    config.features.LiveChatVendor.brand &&
-                    config.features.LiveChatVendor.license
-                  ) {
-                    return (
-                      <LiveChat
-                        license={config.features.LiveChatVendor.license}
-                        vendor={config.features.LiveChatVendor.brand}
-                        group={
-                          config.features.LiveChatVendor.group
-                            ? config.features.LiveChatVendor.group
-                            : 0
-                        }
-                      />
-                    );
-                  }
-                })()}
-
-                {config.features.SMSVerification &&
-                  this.props.account.registercompleted === false &&
-                  config.features.ForcedVerification && (
-                    <>
-                      <ForcedVerification
-                        forcedverify={true}
-                        alert={this.handleOpenPopupAlert}
-                      />
-                    </>
-                  )}
-
-                {showPopupAnnouncement && (
-                  <PopupAnnouncement
-                    open={this.state.openAnnouncement}
-                    onClose={this.handleCloseAnnouncement}
-                  />
-                )}
-                {showPopupPromotion && (
-                  <PopupPromotion
-                    open={this.state.showPromotion}
-                    onClose={this.handleClosePromotion}
-                  />
-                )}
-
-                <PopupAlertModal />
-                <FloatingToolIcons />
-                <LoginDialog />
-                <RegisterDialog />
               </PageNameContextProvider>
             </AuthContextProvider>
           </Router>

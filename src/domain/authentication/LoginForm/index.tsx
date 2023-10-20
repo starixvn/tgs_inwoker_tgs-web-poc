@@ -5,13 +5,26 @@ import Checkbox from "@/components/UI/Checkbox";
 import RedirectToRegisterHint from "@/domain/authentication/LoginForm/RedirectToRegisterHint";
 import { useLoginForm } from "@/hooks/auth/useAuthForm/useLoginForm";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Loading from "@/components/UI/Loading";
+import { media } from "@/theme/breakpoints";
+import { useRwd } from "@/hooks/useRwd";
+import { useAuthDialog } from "@/hooks/auth/useAuthDialog";
+
+const LoginFormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 56px 15px;
+
+  ${media.sm} {
+    padding: 42px 42px;
+  }
+`;
 
 const TitleContainer = styled.div`
-  font-size: 2.5rem !important;
-  line-height: 3.5rem !important;
-  font-weight: 700 !important;
+  font-size: 2.5rem;
+  line-height: 3.5rem;
+  font-weight: 700;
   color: white;
   display: flex;
   flex-direction: column;
@@ -19,12 +32,14 @@ const TitleContainer = styled.div`
   margin-bottom: 41px;
   white-space: nowrap;
 
-  margin-top: 15.76%;
-
   & > .bottom-border {
     width: 68px;
     height: 5px;
     background: #6152dd;
+  }
+
+  ${media.sm} {
+    display: none;
   }
 `;
 
@@ -41,15 +56,17 @@ const RememberMeContainer = styled.div`
   align-items: center;
   color: #6152dd;
   font-size: 0.937rem;
+  cursor: pointer;
   //margin: 8px 0;
 `;
 
-const ForgotPasswordContainer = styled(Link)`
+const ForgotPasswordContainer = styled.span`
   color: #5d50e0;
   font-size: 0.937rem;
   font-weight: 400;
   line-height: 1.245;
   white-space: nowrap;
+  cursor: pointer;
 `;
 
 type Props = {};
@@ -63,9 +80,23 @@ const LoginForm = (props: Props) => {
     needToRemember,
     handleClickNeedToRemember,
   } = useLoginForm();
+  const history = useHistory();
+  const { isDesktopSize } = useRwd();
+  const { handleToggleLoginDialog, handleToggleForgetPasswordDialog } =
+    useAuthDialog();
+
+  const handleClickForgetPassword = () => {
+    if (isDesktopSize) {
+      handleToggleLoginDialog();
+      handleToggleForgetPasswordDialog();
+      return;
+    }
+
+    history.push("/forgot-password");
+  };
 
   return (
-    <>
+    <LoginFormContainer>
       <TitleContainer>
         {i18n.t("common.login")}
         <div className="bottom-border" />
@@ -79,10 +110,9 @@ const LoginForm = (props: Props) => {
         buttonText={i18n.t("common.login")}
       >
         <FormSubContainer>
-          <RememberMeContainer>
+          <RememberMeContainer onClick={handleClickNeedToRemember}>
             <Checkbox
-              value={needToRemember}
-              onChange={handleClickNeedToRemember}
+              checked={needToRemember}
               style={{
                 padding: "0px 5px 0px",
               }}
@@ -90,7 +120,7 @@ const LoginForm = (props: Props) => {
             {i18n.t("wap.login.rememberMe")}
           </RememberMeContainer>
 
-          <ForgotPasswordContainer to={"/forgot-password"}>
+          <ForgotPasswordContainer onClick={handleClickForgetPassword}>
             {i18n.t("forgotPassword.title")}?
           </ForgotPasswordContainer>
         </FormSubContainer>
@@ -99,7 +129,7 @@ const LoginForm = (props: Props) => {
       <RedirectToRegisterHint />
 
       <Loading show={isLoading} />
-    </>
+    </LoginFormContainer>
   );
 };
 

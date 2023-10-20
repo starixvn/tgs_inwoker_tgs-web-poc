@@ -43,6 +43,7 @@ import DefaultLayout from "@/layouts/DefaultLayout";
 import ForgotPasswordPage from "@/pages/ForgetPassword";
 import DialogLayout from "@/layouts/DialogLayout";
 import { ProfilePathEnum } from "@/components/Account/Profile/profilePageDictionary";
+import AuthDialogLayout from "@/layouts/AuthDialogLayout";
 
 const Mine = React.lazy(() => import("@/pages/Account/Mine"));
 
@@ -112,21 +113,21 @@ const routes: Route[] = [
     path: "/login",
     component: LoginPage,
     category: RouteCategoryEnum.MINE,
-    layout: DialogLayout,
+    layout: AuthDialogLayout,
     isAnonymousAllowed: true,
   },
   {
     path: "/register",
     component: RegisterPage,
     category: RouteCategoryEnum.MINE,
-    layout: DialogLayout,
+    layout: AuthDialogLayout,
     isAnonymousAllowed: true,
   },
   {
     path: "/forgot-password",
     component: ForgotPasswordPage,
     category: RouteCategoryEnum.MINE,
-    layout: DialogLayout,
+    layout: AuthDialogLayout,
     isAnonymousAllowed: true,
   },
   // TODO:these 4 params looks like is unused?

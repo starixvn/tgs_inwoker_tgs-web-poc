@@ -5,22 +5,36 @@ import i18n from "@/utils/i18n";
 import RedirectToLoginHint from "@/domain/authentication/RegisterForm/RedirectToLoginHint";
 import { useRegisterForm } from "@/hooks/auth/useAuthForm/useRegisterForm";
 import FormikForm from "@/components/FormikForm";
+import { media } from "@/theme/breakpoints";
+
+const RegisterFormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 56px 15px;
+
+  ${media.sm} {
+    padding: 42px 42px;
+  }
+`;
 
 const TitleContainer = styled.div`
-  font-size: 3rem !important;
-  line-height: 3.5rem !important;
-  font-weight: 700 !important;
+  font-size: 3rem;
+  line-height: 3.5rem;
+  font-weight: 700;
   color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 41px;
-  margin-top: 15.76%;
 
   & > .bottom-border {
     width: 68px;
     height: 5px;
     background: #6152dd;
+  }
+
+  ${media.sm} {
+    display: none;
   }
 `;
 
@@ -46,7 +60,7 @@ const RegisterForm = () => {
   } = useRegisterForm();
 
   return (
-    <>
+    <RegisterFormContainer>
       <TitleContainer>
         {i18n.t("common.register")}
         <div className="bottom-border" />
@@ -69,7 +83,7 @@ const RegisterForm = () => {
       </FormikForm>
 
       <RedirectToLoginHint />
-    </>
+    </RegisterFormContainer>
   );
 };
 

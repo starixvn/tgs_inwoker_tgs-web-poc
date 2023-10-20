@@ -17,7 +17,7 @@ export function useGenerateRegisterFormik({ handleClickSubmit }: Props) {
   const formInputConfigList = useMemo<FormikFormInput[]>(() => {
     return [
       {
-        label: i18n.t("wap.register.username"),
+        label: i18n.t("common.username"),
         name: "username",
         initialValue: "",
         type: FormInputTypeEnum.TEXT,
@@ -28,7 +28,7 @@ export function useGenerateRegisterFormik({ handleClickSubmit }: Props) {
           }),
       },
       {
-        label: i18n.t("wap.register.password"),
+        label: i18n.t("common.password"),
         name: "password",
         type: FormInputTypeEnum.PASSWORD,
         initialValue: "",
