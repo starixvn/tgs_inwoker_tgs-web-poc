@@ -14,7 +14,7 @@ import { media } from "@/theme/breakpoints";
 
 const AccountContainer = styled.div`
   background: ${({ theme }) => theme.primaryDark};
-  padding: 40px 15px;
+  padding: 40px 15px 0;
   max-width: 870px;
   margin: auto;
 
