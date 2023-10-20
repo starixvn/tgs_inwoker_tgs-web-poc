@@ -3,12 +3,17 @@ import i18n from "@/utils/i18n";
 import { useWalletStore } from "@/hooks/stores/useWalletStore";
 import styled from "styled-components";
 import Badge from "@/domain/Account/DepositPrev/components/PaymentTabsHeader/Badge";
+import { media } from "@/theme/breakpoints";
 
 const BadgeContainer = styled.div`
   display: flex;
   gap: 5px 14px;
   flex-wrap: wrap;
   margin-bottom: 12px;
+
+  ${media.sm} {
+    margin-bottom: 40px;
+  }
 `;
 
 type Props = {

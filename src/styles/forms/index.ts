@@ -32,3 +32,12 @@ export const FormControl = muiStyled(MuiFormControl)(({ theme }) => ({
     border: "none",
   },
 }));
+
+export const InfoContainer = styled.div`
+  width: 100%;
+  font-size: 0.937rem;
+  color: ${({ theme }) => theme.white};
+
+  display: flex;
+  align-items: center;
+`;
