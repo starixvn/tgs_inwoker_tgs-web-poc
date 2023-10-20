@@ -2,9 +2,10 @@ import bdcakeIcon from "@/assets/images/vip/bdcake.svg";
 import calendarIcon from "@/assets/images/vip/calendar.svg";
 import rocketIcon from "@/assets/images/vip/rocket.svg";
 import uncompletedIcon from "@/assets/images/vip/uncompleted.svg";
+import VipBonusStampGrid from "@/components/VipBonusStampGrid";
+import { media } from "@/theme/breakpoints";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
-import VipBonusStampGrid from "../../components/VipBonusStampGrid";
 
 export type VipCardItem = any;
 
@@ -33,6 +34,10 @@ const VipScrollableItem = styled.div`
   align-items: center;
   justify-content: flex-start;
   margin-right: 20px;
+
+  ${media.sm} {
+    width: 100%;
+  }
 `;
 
 type VipCardProps = {
@@ -52,6 +57,24 @@ const VipCard = styled.div<VipCardProps>`
   background-repeat: no-repeat;
   background-position: center;
   padding: 20px;
+
+  ${media.sm} {
+    background-size: 100% 100%;
+    max-width: 100%;
+    padding: 0 93px;
+    border-radius: 20px;
+  }
+`;
+
+const VipCardLevelText = styled.div<Props>`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+
+  ${media.sm} {
+    justify-content: unset;
+  }
 `;
 
 type VipLineProps = {
@@ -88,6 +111,8 @@ const VipPrivilegeContent = styled.div<Props>`
   padding: 10px 10px 20px 10px;
   border-radius: 10px;
   background: ${(props) => props.theme.primaryLight};
+  gap: 17px;
+  align-self: stretch;
 `;
 
 type VipBadgeProps = {
@@ -99,13 +124,10 @@ const VipBadge = styled.div<VipBadgeProps>`
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 98px
+    max-width: 98px;
     min-height: 91px;
-    margin: 17px 0;
     background-image: url(${(props: VipBadgeProps) =>
-      process.env.PUBLIC_URL +
-      "/assets/images/vip/mobile" +
-      props.$badgeImage});
+    process.env.PUBLIC_URL + "/assets/images/vip/mobile" + props.$badgeImage});
     background-size: contain;
     background-repeat: no-repeat;
 `;
@@ -115,7 +137,6 @@ type VipPrivilegeTextProps = {
 };
 const VipPrivilegeText = styled.div<VipPrivilegeTextProps>`
   color: ${(props: VipPrivilegeTextProps) => props.$privilegeTitleColor};
-  margin-bottom: 17px;
 `;
 
 const VipPrivilegeItemWrapper = styled.div<Props>`
@@ -124,7 +145,6 @@ const VipPrivilegeItemWrapper = styled.div<Props>`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-bottom: 20px;
 `;
 
 const VipPrivilegeItem = styled.div<Props>`
@@ -156,7 +176,12 @@ const LevelText = styled.div<LevelTextTypes>`
   color: ${({ $levelColor }: LevelTextTypes) => $levelColor};
   font-style: italic;
   font-weight: 700;
-  font-size: min(max(2.5vw, 1.25rem), 2.25rem);
+  font-size: 2.2rem;
+
+  ${media.sm} {
+    margin-right: 30px;
+    font-size: 2rem;
+  }
 `;
 
 type CurrentLevelTextTypes = {
@@ -165,6 +190,11 @@ type CurrentLevelTextTypes = {
 const CurrentLevelText = styled.div<CurrentLevelTextTypes>`
   color: ${({ $levelStatusColor }: CurrentLevelTextTypes) => $levelStatusColor};
   font-weight: 500;
+  font-size: 1rem;
+
+  ${media.sm} {
+    font-size: 1.5rem;
+  }
 `;
 
 const LevelStatusTag = styled.div<Props>`
@@ -174,6 +204,7 @@ const LevelStatusTag = styled.div<Props>`
   border-radius: 50px;
   background: rgba(0, 0, 0, 0.5);
   color: ${(props) => props.theme.white};
+  font-size: 0.875rem;
 `;
 
 type SingleCardProps = {
@@ -203,21 +234,24 @@ const VipSingleItem = ({
   return (
     <VipScrollableItem ref={currentItemRef}>
       <VipCard $cardImage={item.levelStyle.cardImage}>
-        <LevelText $levelColor={item.levelStyle.levelColor}>
-          {item.levelStyle.level}
-        </LevelText>
-        {isCurrentLevel ? (
-          <CurrentLevelText
-            $levelStatusColor={item.levelStyle.levelStatusColor}
-          >
-            Current level
-          </CurrentLevelText>
-        ) : (
-          <LevelStatusTag>
-            <img src={uncompletedIcon} alt="uncompleted" />
-            Uncompleted
-          </LevelStatusTag>
-        )}
+        <VipCardLevelText>
+          <LevelText $levelColor={item.levelStyle.levelColor}>
+            {item.levelStyle.level}
+          </LevelText>
+          {isCurrentLevel ? (
+            <CurrentLevelText
+              $levelStatusColor={item.levelStyle.levelStatusColor}
+            >
+              Current level
+            </CurrentLevelText>
+          ) : (
+            <LevelStatusTag>
+              <img src={uncompletedIcon} alt="uncompleted" />
+              Uncompleted
+            </LevelStatusTag>
+          )}
+        </VipCardLevelText>
+
         <VipBadge $badgeImage={item.levelStyle.badgeImage} />
       </VipCard>
 

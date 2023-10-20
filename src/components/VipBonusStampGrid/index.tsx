@@ -1,3 +1,4 @@
+import { media } from "@/theme/breakpoints";
 import styled from "styled-components";
 import LockerSvgIcon from "../LockerSvgIcon";
 
@@ -16,24 +17,32 @@ type Props = {
 
 const VipBonusStampGridContainer = styled.div<Props>`
   display: flex;
-  flex-wrap: wrap;
   align-content: center;
   justify-content: center;
   width: 100%;
   margin: 26px 0;
   gap: 15px;
+
+  ${media.sm} {
+    margin: 20px 0;
+  }
 `;
 
 const VipBonusStampContainer = styled.div<Props>`
-    flex 1;
-    max-width: 112px
-    min-height: 156px;
-    position: relative;
+  flex 1;
+  width: 100%;
+  max-width: 112px;
+  min-height: 156px;
+  position: relative;
 
-    @media (max-width: 400px) {
-      max-width: 95.2px
-      min-height: 132.6px;
-    }
+  @media (max-width: 400px) {
+    max-width: 95.2px;
+    min-height: 132.6px;
+  }
+
+  ${media.sm} {
+    max-width: 259px;
+  }
 `;
 
 type VipBonusStampAboveProps = {
@@ -43,7 +52,7 @@ type VipBonusStampAboveProps = {
 const VipBonusStampAbove = styled.div<VipBonusStampAboveProps>`
   background-image: url(${(props: VipBonusStampAboveProps) =>
     process.env.PUBLIC_URL + "/assets/images/vip/mobile" + props.$stampImage});
-  background-size: contain;
+  background-size: 100% auto;
   background-repeat: no-repeat;
   width: 100%;
   display: flex;
@@ -56,6 +65,10 @@ const VipBonusStampAbove = styled.div<VipBonusStampAboveProps>`
   left: 0;
   right: 0;
   padding: 9px 7px;
+
+  ${media.sm} {
+    background-size: 100% 100%;
+  }
 `;
 
 const VipBonusStampBelow = styled.div<Props>`
@@ -68,6 +81,16 @@ const VipBonusStampBelow = styled.div<Props>`
   justify-content: center;
   align-items: center;
 `;
+const VipBonusStampTitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  ${media.sm} {
+    flex-direction: row;
+  }
+`;
 
 type VipBonusStampTitleProps = {
   $bonusTextColor?: string | undefined;
@@ -77,6 +100,7 @@ const VipBonusStampTitle = styled.div<VipBonusStampTitleProps>`
   font-weight: 400;
   line-height: 1.125rem;
   font-size: 1.0625rem;
+  margin-right: 5px;
   @media (max-width: 414px) {
     padding: 5px;
     line-height: 0.625rem;
@@ -114,6 +138,9 @@ const BonusIcon = styled.div<BonusIconTypes>`
   @media (max-width: 414px) {
     margin: 4px 0;
   }
+  ${media.sm} {
+    margin: 10px 0;
+  }
 `;
 
 const VipBonusStampGrid = ({
@@ -133,12 +160,14 @@ const VipBonusStampGrid = ({
               $stampImage={stampImage}
               $bonusTextColor={bonusTextColor && bonusTextColor[index]}
             >
-              <VipBonusStampTitle $bonusTextColor={bonusTextColor}>
-                {bonusTextTitle && bonusTextTitle[index]}
-              </VipBonusStampTitle>
-              <VipBonusStampTitle $bonusTextColor={bonusTextColor}>
-                BONUS
-              </VipBonusStampTitle>
+              <VipBonusStampTitleWrapper>
+                <VipBonusStampTitle $bonusTextColor={bonusTextColor}>
+                  {bonusTextTitle && bonusTextTitle[index]}
+                </VipBonusStampTitle>
+                <VipBonusStampTitle $bonusTextColor={bonusTextColor}>
+                  BONUS
+                </VipBonusStampTitle>
+              </VipBonusStampTitleWrapper>
               <BonusIcon
                 $iconUrl={iconUrl ? iconUrl[index] : undefined}
               ></BonusIcon>
