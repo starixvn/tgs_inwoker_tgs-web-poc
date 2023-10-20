@@ -10,6 +10,7 @@ import { DepositFormViewModel } from "@/models/dto/report/GetDepositDetailsResDt
 import DepositDetailCards from "@/domain/Account/Report/components/reports/ReportDeposit/components/DepositDetailCards";
 import { useRwd } from "@/hooks/useRwd";
 import DepositDetailTable from "@/domain/Account/Report/components/reports/ReportDeposit/components/DepositDetailTable";
+import BottomScrollListener from "react-bottom-scroll-listener";
 
 type Props = {
   dateRangeInfo: DateRangeInfo;
@@ -30,7 +31,7 @@ const ReportDeposit = ({ dateRangeInfo }: Props) => {
 
   const { statusDictionary, status, handleStatusChange } = useDepositStatus();
 
-  const fetchReports = async () => {
+  const fetchReports = async (page: number) => {
     setIsLoading(true);
 
     const getDepositDetailsRes = await ReportService.GetDepositDetails(
@@ -67,16 +68,19 @@ const ReportDeposit = ({ dateRangeInfo }: Props) => {
   };
 
   useEffect(() => {
-    setPage(1);
+    const currentPage = 1;
+
+    setPage(currentPage);
+    fetchReports(currentPage);
     setIsMaxPage(false);
-    fetchReports();
   }, [JSON.stringify(dateRangeInfo), status]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;
 
-    setPage((prevState) => prevState++);
-    await fetchReports();
+    const nextPage = page + 1;
+    setPage(nextPage);
+    await fetchReports(nextPage);
   };
 
   return (
@@ -97,6 +101,7 @@ const ReportDeposit = ({ dateRangeInfo }: Props) => {
       )}
 
       <Loading show={isLoading} />
+      <BottomScrollListener onBottom={handleLoadMore} />
     </>
   );
 };

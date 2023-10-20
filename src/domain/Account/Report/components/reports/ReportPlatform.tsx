@@ -17,6 +17,7 @@ import Loading from "@/components/UI/Loading";
 import { usePlatformStatus } from "@/domain/Account/Report/hooks/usePlatformStatus";
 import StatusSelect from "@/domain/Account/Report/components/StatusSelect";
 import { DateRangeInfo } from "@/domain/Account/Report/hooks/useDateRange";
+import BottomScrollListener from "react-bottom-scroll-listener";
 
 type Props = {
   dateRangeInfo: DateRangeInfo;
@@ -34,7 +35,7 @@ const ReportPlatform = ({ dateRangeInfo }: Props) => {
   const { statusDictionary, status, handleStatusChange } = usePlatformStatus();
 
   // TODO: no ReportService.GetAccountDetails found
-  const fetchReports = async () => {
+  const fetchReports = async (page: number) => {
     // this.setState({ ...this.state, loading: true });
     // ReportService.GetAccountDetails(
     //   moment(this.state.dateFrom).utc().format(),
@@ -67,16 +68,19 @@ const ReportPlatform = ({ dateRangeInfo }: Props) => {
   };
 
   useEffect(() => {
-    setPage(1);
+    const currentPage = 1;
+
+    setPage(currentPage);
+    fetchReports(currentPage);
     setIsMaxPage(false);
-    fetchReports();
   }, [JSON.stringify(dateRangeInfo), status]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;
 
-    setPage((prevState) => prevState++);
-    await fetchReports();
+    const nextPage = page + 1;
+    setPage(nextPage);
+    await fetchReports(nextPage);
   };
 
   return (
@@ -134,6 +138,7 @@ const ReportPlatform = ({ dateRangeInfo }: Props) => {
           }
         })()}
         <Loading show={isLoading} />
+        <BottomScrollListener onBottom={handleLoadMore} />
       </ReportContainer>
     </>
   );

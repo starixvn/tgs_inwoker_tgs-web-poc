@@ -43,9 +43,10 @@ const LogoImg = styled.img`
 type Props = {
   show: boolean;
   opacity?: number;
+  noShrink?: boolean;
 };
 
-const Loading = ({ show, opacity }: Props) => {
+const Loading = ({ show, opacity, noShrink }: Props) => {
   const { general } = useGeneralStore();
   const { isMenuOpen } = useHeader();
 
@@ -55,7 +56,7 @@ const Loading = ({ show, opacity }: Props) => {
     <LoadingContainer
       $open={show}
       $opacity={backgroundOpacity}
-      $isMenuOpen={isMenuOpen}
+      $isMenuOpen={isMenuOpen && !noShrink}
     >
       <Inner>
         <LogoImg src={general.brand && general.brand.loadingUrl} />

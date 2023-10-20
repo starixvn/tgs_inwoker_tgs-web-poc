@@ -18,6 +18,7 @@ import { GameBalanceInfosViewModel } from "@/models/dto/report/GetTransferReport
 import { useRwd } from "@/hooks/useRwd";
 import TransferDetailTable from "@/domain/Account/Report/components/reports/ReportTransfer/components/TransferDetailTable";
 import TransferDetailCard from "@/domain/Account/Report/components/reports/ReportTransfer/components/TransferDetailCard";
+import BottomScrollListener from "react-bottom-scroll-listener";
 
 type Props = {
   dateRangeInfo: DateRangeInfo;
@@ -36,7 +37,7 @@ const Index = ({ dateRangeInfo }: Props) => {
   const [totalCount, setTotalCount] = useState(0);
   const [isMaxPage, setIsMaxPage] = useState(false);
 
-  const fetchReports = async () => {
+  const fetchReports = async (page: number) => {
     setIsLoading(true);
 
     const getTransferReportRes = await ReportService.GetTransferReport(
@@ -71,16 +72,19 @@ const Index = ({ dateRangeInfo }: Props) => {
   };
 
   useEffect(() => {
-    setPage(1);
+    const currentPage = 1;
+
+    setPage(currentPage);
+    fetchReports(currentPage);
     setIsMaxPage(false);
-    fetchReports();
   }, [JSON.stringify(dateRangeInfo)]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;
 
-    setPage((prevState) => prevState++);
-    await fetchReports();
+    const nextPage = page + 1;
+    setPage(nextPage);
+    await fetchReports(nextPage);
   };
 
   return (
@@ -94,6 +98,7 @@ const Index = ({ dateRangeInfo }: Props) => {
         <TransferDetailCard transferDetails={transferDetails} />
       )}
       <Loading show={isLoading} />
+      <BottomScrollListener onBottom={handleLoadMore} />
     </ReportContainer>
   );
 };

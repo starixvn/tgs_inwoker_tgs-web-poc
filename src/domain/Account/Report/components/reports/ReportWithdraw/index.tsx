@@ -11,6 +11,7 @@ import { WithdrawFormViewModel } from "@/models/dto/report/GetWithdrawalDetailsR
 import { useRwd } from "@/hooks/useRwd";
 import WithdrawalDetailTable from "@/domain/Account/Report/components/reports/ReportWithdraw/components/WithdrawalDetailTable";
 import WithdrawalDetailCards from "@/domain/Account/Report/components/reports/ReportWithdraw/components/WithdrawalDetailCards";
+import BottomScrollListener from "react-bottom-scroll-listener";
 
 type Props = {
   dateRangeInfo: DateRangeInfo;
@@ -32,7 +33,7 @@ const ReportWithdraw = ({ dateRangeInfo }: Props) => {
   const { statusDictionary, status, handleStatusChange } =
     useWithdrawalStatus();
 
-  const fetchReports = async () => {
+  const fetchReports = async (page: number) => {
     setIsLoading(true);
 
     const getWithdrawalDetailsRes = await ReportService.GetWithdrawalDetails(
@@ -67,16 +68,19 @@ const ReportWithdraw = ({ dateRangeInfo }: Props) => {
   };
 
   useEffect(() => {
-    setPage(1);
+    const currentPage = 1;
+
+    setPage(currentPage);
+    fetchReports(currentPage);
     setIsMaxPage(false);
-    fetchReports();
   }, [JSON.stringify(dateRangeInfo), status]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;
 
-    setPage((prevState) => prevState++);
-    await fetchReports();
+    const nextPage = page + 1;
+    setPage(nextPage);
+    await fetchReports(nextPage);
   };
 
   return (
@@ -98,6 +102,7 @@ const ReportWithdraw = ({ dateRangeInfo }: Props) => {
         )}
         <Loading show={isLoading} />
       </ReportContainer>
+      <BottomScrollListener onBottom={handleLoadMore} />
     </>
   );
 };

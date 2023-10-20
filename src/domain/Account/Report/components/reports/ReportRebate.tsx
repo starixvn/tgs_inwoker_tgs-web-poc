@@ -14,6 +14,7 @@ import {
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import Loading from "@/components/UI/Loading";
 import { DateRangeInfo } from "@/domain/Account/Report/hooks/useDateRange";
+import BottomScrollListener from "react-bottom-scroll-listener";
 
 type Props = {
   dateRangeInfo: DateRangeInfo;
@@ -29,7 +30,7 @@ const ReportRebate = ({ dateRangeInfo }: Props) => {
   const [isMaxPage, setIsMaxPage] = useState(false);
 
   // TODO: no ReportService.GetRebateDetails found
-  const fetchReports = async () => {
+  const fetchReports = async (page: number) => {
     // this.setState({ ...this.state, loading: true });
     // ReportService.GetRebateDetails(
     //   moment(this.state.dateFrom).utc().format(),
@@ -60,16 +61,19 @@ const ReportRebate = ({ dateRangeInfo }: Props) => {
   };
 
   useEffect(() => {
-    setPage(1);
+    const currentPage = 1;
+
+    setPage(currentPage);
+    fetchReports(currentPage);
     setIsMaxPage(false);
-    fetchReports();
   }, [JSON.stringify(dateRangeInfo)]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;
 
-    setPage((prevState) => prevState++);
-    await fetchReports();
+    const nextPage = page + 1;
+    setPage(nextPage);
+    await fetchReports(nextPage);
   };
 
   return (
@@ -115,6 +119,7 @@ const ReportRebate = ({ dateRangeInfo }: Props) => {
         }
       })()}
       <Loading show={isLoading} />
+      <BottomScrollListener onBottom={handleLoadMore} />
     </ReportContainer>
   );
 };
