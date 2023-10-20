@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react";
 import config from "@/config/config";
-import i18n from "@/utils/i18n";
 import moment from "moment/moment";
-import {
-  CustomWinLose,
-  ReportContainer,
-  ReportSummary,
-  ReportSummaryCol,
-  ReportSummaryRow,
-} from "@/domain/Account/Report/styles";
+import { ReportContainer } from "@/domain/Account/Report/styles";
 import { RoundTotalDto } from "@/models/dto/report/GetRoundsTotalResDto";
 import { ReportService } from "@/services/ReportService";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
@@ -44,7 +37,7 @@ const ReportBetting = ({ dateRangeInfo }: Props) => {
   });
   const { isDesktopSize } = useRwd();
 
-  const fetchReports = async () => {
+  const fetchReports = async (page: number) => {
     setIsLoading(true);
 
     const getTransactionDetailsRes = await ReportService.GetTransactionDetails(
@@ -92,16 +85,19 @@ const ReportBetting = ({ dateRangeInfo }: Props) => {
   };
 
   useEffect(() => {
-    setPage(1);
+    const currentPage = 1;
+
+    setPage(currentPage);
+    fetchReports(currentPage);
     setIsMaxPage(false);
-    fetchReports();
   }, [JSON.stringify(dateRangeInfo)]);
 
   const handleLoadMore = async () => {
     if (isMaxPage) return;
 
-    setPage((prevState) => prevState++);
-    await fetchReports();
+    const nextPage = page + 1;
+    setPage(nextPage);
+    await fetchReports(nextPage);
   };
 
   return (
