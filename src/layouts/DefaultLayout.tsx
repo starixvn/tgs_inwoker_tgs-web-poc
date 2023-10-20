@@ -6,6 +6,9 @@ import { useHeader } from "@/hooks/useHeader";
 import { useRwd } from "@/hooks/useRwd";
 import { media } from "@/theme/breakpoints";
 import Footer from "@/components/Footer";
+import { styled as muiStyled } from "@mui/material/styles";
+import styled from "styled-components";
+import { ReactElement } from "react";
 
 const DefaultLayoutContainer = styled.div`
   position: relative;
