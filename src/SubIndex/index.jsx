@@ -35,6 +35,7 @@ import LoginDialog from "@/domain/authentication/LoginDialog";
 import RegisterDialog from "@/domain/authentication/RegisterDialog";
 import { HeaderContextProvider } from "@/contexts/headerContext";
 import { AuthDialogContextProvider } from "@/contexts/authDialogContext";
+import ForgetPasswordDialog from "@/domain/authentication/ForgetPasswordDialog";
 
 class SubIndex extends Component {
   constructor(props) {
@@ -593,6 +594,7 @@ class SubIndex extends Component {
                     <FloatingToolIcons />
                     <LoginDialog />
                     <RegisterDialog />
+                    <ForgetPasswordDialog />
                   </AuthDialogContextProvider>
                 </HeaderContextProvider>
               </PageNameContextProvider>

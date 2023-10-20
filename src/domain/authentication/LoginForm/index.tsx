@@ -5,9 +5,11 @@ import Checkbox from "@/components/UI/Checkbox";
 import RedirectToRegisterHint from "@/domain/authentication/LoginForm/RedirectToRegisterHint";
 import { useLoginForm } from "@/hooks/auth/useAuthForm/useLoginForm";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Loading from "@/components/UI/Loading";
 import { media } from "@/theme/breakpoints";
+import { useRwd } from "@/hooks/useRwd";
+import { useAuthDialog } from "@/hooks/auth/useAuthDialog";
 
 const LoginFormContainer = styled.div`
   display: flex;
@@ -54,15 +56,17 @@ const RememberMeContainer = styled.div`
   align-items: center;
   color: #6152dd;
   font-size: 0.937rem;
+  cursor: pointer;
   //margin: 8px 0;
 `;
 
-const ForgotPasswordContainer = styled(Link)`
+const ForgotPasswordContainer = styled.span`
   color: #5d50e0;
   font-size: 0.937rem;
   font-weight: 400;
   line-height: 1.245;
   white-space: nowrap;
+  cursor: pointer;
 `;
 
 type Props = {};
@@ -76,6 +80,20 @@ const LoginForm = (props: Props) => {
     needToRemember,
     handleClickNeedToRemember,
   } = useLoginForm();
+  const history = useHistory();
+  const { isDesktopSize } = useRwd();
+  const { handleToggleLoginDialog, handleToggleForgetPasswordDialog } =
+    useAuthDialog();
+
+  const handleClickForgetPassword = () => {
+    if (isDesktopSize) {
+      handleToggleLoginDialog();
+      handleToggleForgetPasswordDialog();
+      return;
+    }
+
+    history.push("/forgot-password");
+  };
 
   return (
     <LoginFormContainer>
@@ -92,10 +110,9 @@ const LoginForm = (props: Props) => {
         buttonText={i18n.t("common.login")}
       >
         <FormSubContainer>
-          <RememberMeContainer>
+          <RememberMeContainer onClick={handleClickNeedToRemember}>
             <Checkbox
-              value={needToRemember}
-              onChange={handleClickNeedToRemember}
+              checked={needToRemember}
               style={{
                 padding: "0px 5px 0px",
               }}
@@ -103,7 +120,7 @@ const LoginForm = (props: Props) => {
             {i18n.t("wap.login.rememberMe")}
           </RememberMeContainer>
 
-          <ForgotPasswordContainer to={"/forgot-password"}>
+          <ForgotPasswordContainer onClick={handleClickForgetPassword}>
             {i18n.t("forgotPassword.title")}?
           </ForgotPasswordContainer>
         </FormSubContainer>

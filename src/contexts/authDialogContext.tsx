@@ -5,13 +5,17 @@ import { useHistory } from "react-router-dom";
 export const initialState: {
   isLoginDialogOpen: boolean;
   isRegisterDialogOpen: boolean;
+  isForgetPasswordDialogOpen: boolean;
   handleToggleLoginDialog: () => void;
   handleToggleRegisterDialog: () => void;
+  handleToggleForgetPasswordDialog: () => void;
 } = {
   isLoginDialogOpen: false,
   isRegisterDialogOpen: false,
+  isForgetPasswordDialogOpen: false,
   handleToggleLoginDialog: () => {},
   handleToggleRegisterDialog: () => {},
+  handleToggleForgetPasswordDialog: () => {},
 };
 
 export const AuthDialogContext = createContext({
@@ -25,6 +29,8 @@ type ProviderProps = {
 export const AuthDialogContextProvider = ({ children }: ProviderProps) => {
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
+  const [isForgetPasswordDialogOpen, setIsForgetPasswordDialogOpen] =
+    useState(false);
   const location = useLocation();
   const history = useHistory();
 
@@ -43,13 +49,23 @@ export const AuthDialogContextProvider = ({ children }: ProviderProps) => {
     // }
   }, []);
 
+  const handleToggleForgetPasswordDialog = useCallback(() => {
+    setIsForgetPasswordDialogOpen((prevState) => !prevState);
+
+    // if (location.pathname === "/register") {
+    //   history.push("/");
+    // }
+  }, []);
+
   return (
     <AuthDialogContext.Provider
       value={{
         isLoginDialogOpen,
         isRegisterDialogOpen,
+        isForgetPasswordDialogOpen,
         handleToggleLoginDialog,
         handleToggleRegisterDialog,
+        handleToggleForgetPasswordDialog,
       }}
     >
       {children}
