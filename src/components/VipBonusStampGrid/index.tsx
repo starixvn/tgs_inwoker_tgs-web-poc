@@ -1,4 +1,5 @@
 import { media } from "@/theme/breakpoints";
+import formatAmount from "@/utils/getFormatAmount";
 import styled from "styled-components";
 import LockerSvgIcon from "../LockerSvgIcon";
 
@@ -12,7 +13,7 @@ type Props = {
   bonusTextColor?: string;
   bonusTextTitle?: string[];
   lockerIconColor?: string;
-  vipBonus?: string[];
+  vipBonus?: number[];
 };
 
 const VipBonusStampGridContainer = styled.div<Props>`
@@ -173,7 +174,7 @@ const VipBonusStampGrid = ({
               ></BonusIcon>
 
               <VipBonusStampNumber $bonusTextColor={bonusTextColor}>
-                {vipBonus && vipBonus[index]}
+                {vipBonus && formatAmount(vipBonus[index])}
               </VipBonusStampNumber>
             </VipBonusStampAbove>
             <VipBonusStampBelow>

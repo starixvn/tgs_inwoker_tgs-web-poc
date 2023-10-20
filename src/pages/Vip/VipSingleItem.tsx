@@ -4,6 +4,7 @@ import rocketIcon from "@/assets/images/vip/rocket.svg";
 import uncompletedIcon from "@/assets/images/vip/uncompleted.svg";
 import VipBonusStampGrid from "@/components/VipBonusStampGrid";
 import { media } from "@/theme/breakpoints";
+import formatAmount from "@/utils/getFormatAmount";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
@@ -286,13 +287,13 @@ const VipSingleItem = ({
           <VipPrivilegeItem>
             <VipPrivilegeItemText>Deposit</VipPrivilegeItemText>
             <VipPrivilegeItemNumber>
-              {item.levelUpAccumulateDeposit}/ Daily
+              {formatAmount(item.levelUpAccumulateDeposit)}/ Daily
             </VipPrivilegeItemNumber>
           </VipPrivilegeItem>
           <VipPrivilegeItem>
             <VipPrivilegeItemText>Betting</VipPrivilegeItemText>
             <VipPrivilegeItemNumber>
-              {item.levelUpAccumulateBetAmount}/ Daily
+              {formatAmount(item.levelUpAccumulateBetAmount)}/ Daily
             </VipPrivilegeItemNumber>
           </VipPrivilegeItem>
         </VipPrivilegeItemWrapper>
@@ -303,13 +304,13 @@ const VipSingleItem = ({
           <VipPrivilegeItem>
             <VipPrivilegeItemText>Deposit</VipPrivilegeItemText>
             <VipPrivilegeItemNumber>
-              {item.levelKeepAccumulateDeposit}/ Quarterly
+              {formatAmount(item.levelKeepAccumulateDeposit)}/ Quarterly
             </VipPrivilegeItemNumber>
           </VipPrivilegeItem>
           <VipPrivilegeItem>
             <VipPrivilegeItemText>Betting</VipPrivilegeItemText>
             <VipPrivilegeItemNumber>
-              {item.levelKeepAccumulateBetAmount}/ Quarterly
+              {formatAmount(item.levelKeepAccumulateBetAmount)}/ Quarterly
             </VipPrivilegeItemNumber>
           </VipPrivilegeItem>
         </VipPrivilegeItemWrapper>
