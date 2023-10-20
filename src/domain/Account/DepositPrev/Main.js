@@ -12,35 +12,28 @@ import {
   LabelContainer,
   ItemContainer,
   Remark,
+  InfoContainer,
 } from "@/styles/forms";
 import { Button } from "@/components/UI/Button";
 import { Select } from "@/components/UI/Select";
 import { TextField } from "@/components/UI/TextField";
-import Avatar from "@/components/Avatar";
-
-const GMOstyle = config.brand === "GMO";
+import CopyIcon from "@/domain/Account/DepositPrev/components/CopyIcon";
 
 const LimitLabel = styled.span`
-  color: #747474;
+  color: ${({ theme }) => theme.tertiary};
 `;
 
 const LimitAmount = styled.span`
-  color: #c0252d;
+  color: ${({ theme }) => theme.white};
 `;
-const TransferContainer = styled.div`
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  color: white;
-`;
+
 const TransferLabel = styled.div``;
 const TransferValue = styled.div``;
 
 const ExchangeRateContainer = styled.div`
   margin: 20px auto;
-  font-size: ${() => (config.brand === "WGHK" ? `24px` : `28px`)};
-  font-weight: ${() => (config.brand === "WGHK" ? `400` : `normal`)};
-  padding: 0px 20px 20px 48px;
+  font-size: 0.937rem;
+  font-weight: 400;
 `;
 
 const QRCodeImg = styled.img`
@@ -48,16 +41,6 @@ const QRCodeImg = styled.img`
   margin-top: 10px;
   width: 200px;
   height: 200px;
-`;
-
-const CopyIcon = styled.div`
-  width: 30px;
-  height: 30px;
-  margin-left: 20px;
-  background-color: ${({ theme }) => theme.primary};
-  mask: url(${process.env.PUBLIC_URL + `/assets/images/deposit/copy.png`})
-    no-repeat center / contain;
-  cursor: pointer;
 `;
 
 const HintText = styled.div`
@@ -121,16 +104,6 @@ class Main extends Component {
       this.props.alert("", i18n.t("affiliate.copied"));
 
       utility.copy(content);
-    };
-
-    const CopyFeature = ({ copyContent }) => {
-      return (
-        <CopyIcon
-          onClick={() => {
-            performCopy(copyContent);
-          }}
-        />
-      );
     };
 
     const formatBankCardDetail = (data) => {
@@ -298,68 +271,69 @@ class Main extends Component {
                 </LabelContainer>
 
                 {methodCode("BANKTRANSFER") && (
-                  <TransferContainer>
+                  <InfoContainer>
                     <TransferLabel>
                       {i18n.t("deposit.details.bank")}:
                     </TransferLabel>
                     {channel.channelname && (
-                      <React.Fragment>
+                      <>
                         <TransferValue>{channel.channelname}</TransferValue>
-                        <CopyFeature copyContent={channel.channelname} />
-                      </React.Fragment>
+                        <CopyIcon copyContent={channel.channelname} />
+                      </>
                     )}
-                  </TransferContainer>
-                )}
-                {methodCode("BANKTRANSFER") && (
-                  <TransferContainer>
-                    <TransferLabel>{i18n.t("deposit.accName")}:</TransferLabel>
-                    {channelExtend.name && (
-                      <React.Fragment>
-                        <TransferValue>{channelExtend.name}</TransferValue>
-                        <CopyFeature copyContent={channelExtend.name} />
-                      </React.Fragment>
-                    )}
-                  </TransferContainer>
+                  </InfoContainer>
                 )}
 
                 {methodCode("BANKTRANSFER") && (
-                  <TransferContainer>
+                  <InfoContainer>
+                    <TransferLabel>{i18n.t("deposit.accName")}:</TransferLabel>
+                    {channelExtend.name && (
+                      <>
+                        <TransferValue>{channelExtend.name}</TransferValue>
+                        <CopyIcon copyContent={channelExtend.name} />
+                      </>
+                    )}
+                  </InfoContainer>
+                )}
+
+                {methodCode("BANKTRANSFER") && (
+                  <InfoContainer>
                     <TransferLabel>{i18n.t("deposit.cardNum")}:</TransferLabel>
                     {channelExtend.bankAccount && (
-                      <React.Fragment>
+                      <>
                         <TransferValue>
                           {channelExtend.bankAccount}
                         </TransferValue>
-                        <CopyFeature copyContent={channelExtend.bankAccount} />
-                      </React.Fragment>
+                        <CopyIcon copyContent={channelExtend.bankAccount} />
+                      </>
                     )}
-                  </TransferContainer>
+                  </InfoContainer>
                 )}
                 {(methodCode("EWALLET") || methodCode("PULSA")) && (
-                  <TransferContainer>
+                  <InfoContainer>
                     <TransferLabel>{i18n.t("deposit.phone")}:</TransferLabel>
                     {channelExtend.phone && (
-                      <React.Fragment>
+                      <>
                         <TransferValue>{channelExtend.phone}</TransferValue>
-                        <CopyFeature copyContent={channelExtend.phone} />
-                      </React.Fragment>
+                        <CopyIcon copyContent={channelExtend.phone} />
+                      </>
                     )}
-                  </TransferContainer>
+                  </InfoContainer>
                 )}
                 {methodCode("EWALLET") && (
-                  <TransferContainer>
+                  <InfoContainer>
                     <TransferLabel>
                       {i18n.t("deposit.eWalletAccount")}:
                     </TransferLabel>
                     {channelExtend.eMoneyName && (
-                      <React.Fragment>
+                      <>
                         <TransferValue>
                           {channelExtend.eMoneyName}
                         </TransferValue>
-                        <CopyFeature copyContent={channelExtend.eMoneyName} />
-                      </React.Fragment>
+                        <CopyIcon copyContent={channelExtend.eMoneyName} />
+                      </>
                     )}
-                  </TransferContainer>
+                  </InfoContainer>
                 )}
               </ItemContainer>
             );
@@ -388,22 +362,23 @@ class Main extends Component {
                     return (
                       <>
                         <QRCodeImg
+                          key={index}
                           src={content[key]}
                           alt={content[key]}
-                          key={index}
+                          style={{ marginBottom: "10px" }}
                         />
                       </>
                     );
                   } else {
                     return (
-                      <TransferContainer key={index}>
+                      <InfoContainer key={index}>
                         <TransferLabel>
                           {i18n.t("extended." + [key])}:
                         </TransferLabel>
                         <TransferValue>{content[key]}</TransferValue>
 
-                        <CopyFeature copyContent={content[key]} />
-                      </TransferContainer>
+                        <CopyIcon copyContent={content[key]} />
+                      </InfoContainer>
                     );
                   }
                 }
@@ -429,7 +404,10 @@ class Main extends Component {
                   <LabelContainer>
                     {i18n.t("deposit.transferAccount")}
                   </LabelContainer>
-                  <QRCodeImg src={channelExtend.qrCode} />
+                  <QRCodeImg
+                    src={channelExtend.qrCode}
+                    style={{ marginBottom: "10px" }}
+                  />
                 </ItemContainer>
               );
             } else {
@@ -500,30 +478,36 @@ class Main extends Component {
                           </FormControl>
                         </ItemContainer>
                       ) : (
-                        <TextField
-                          style={{ margin: "20px auto 20px auto" }}
-                          type={"text"}
-                          placeholder={
-                            config.features.Deposit_OriginAccount
-                              ? i18n.t("idr1.pleaseEnterAccountName")
-                              : i18n.t("common.pleaseEnterAccountName")
-                          }
-                          label={
-                            config.features.Deposit_OriginAccount
+                        <ItemContainer>
+                          <LabelContainer>
+                            {config.features.Deposit_OriginAccount
                               ? i18n.t("idr1.pleaseEnterAccountName")
                               : i18n.t("common.pleaseEnterAccountName") +
                                 (config.features.Deposit_AddTips
                                   ? " *" + i18n.t("mgm.accountDepositTips")
-                                  : "")
-                          }
-                          value={this.props.account}
-                          disabled={
-                            !config.features.Deposit_AccountNameManualInput &&
-                            config.features.Deposit_AutofillFirstCard &&
-                            this.props.wallet.bankCardList.length > 1
-                          }
-                          onChange={(e) => this.props.handleAccountChange(e)}
-                        />
+                                  : "")}
+                          </LabelContainer>
+                          <FormControl variant="outlined">
+                            <TextField
+                              type={"text"}
+                              placeholder={
+                                config.features.Deposit_OriginAccount
+                                  ? i18n.t("idr1.pleaseEnterAccountName")
+                                  : i18n.t("common.pleaseEnterAccountName")
+                              }
+                              value={this.props.account}
+                              disabled={
+                                !config.features
+                                  .Deposit_AccountNameManualInput &&
+                                config.features.Deposit_AutofillFirstCard &&
+                                this.props.wallet.bankCardList.length > 1
+                              }
+                              onChange={(e) =>
+                                this.props.handleAccountChange(e)
+                              }
+                            />
+                          </FormControl>
+                        </ItemContainer>
                       )}
                     </>
                   )}
@@ -654,7 +638,7 @@ class Main extends Component {
               alteredPaymentCode("manual")
             ) {
               return (
-                <ExchangeRateContainer style={{ marginTop: "4px" }}>
+                <ExchangeRateContainer>
                   {/*汇率*/}
                   <LimitLabel>
                     {i18n.t("deposit.exchangeRate")} 1 {`${config.currency}`} :{" "}
@@ -681,7 +665,7 @@ class Main extends Component {
           if (methodCode("Crypto")) {
             if (paymentCode("leepay")) {
               return (
-                <ExchangeRateContainer style={{ marginTop: "4px" }}>
+                <ExchangeRateContainer>
                   <LimitLabel>{i18n.t("deposit.exchangeRate")}: </LimitLabel>
                   <LimitAmount>{` ${this.props.exchangeRate.buyprice}`}</LimitAmount>
                   <LimitLabel style={{ marginLeft: "26px" }}>
@@ -701,7 +685,7 @@ class Main extends Component {
                 return Object.keys(this.props.exchangeRate[key]).map((key2) => {
                   if (key2 === "HKD") {
                     return (
-                      <ExchangeRateContainer style={{ marginTop: "4px" }}>
+                      <ExchangeRateContainer>
                         <LimitLabel>
                           {i18n.t("deposit.exchangeRate")}:{" "}
                         </LimitLabel>

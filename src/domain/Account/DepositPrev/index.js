@@ -803,9 +803,7 @@ class DepositPrev extends Component {
           return (
             <>
               {config.features.Deposit_AddCard ? (
-                <React.Fragment>
-                  {this.state.showTabContainer && <DepositAddCard />}
-                </React.Fragment>
+                <>{this.state.showTabContainer && <DepositAddCard />}</>
               ) : (
                 <PaymentTabsHeader
                   selectedPaymentIndex={this.state.selectedPaymentIndex}
