@@ -1,21 +1,9 @@
 import React, { useMemo } from "react";
-import i18n from "@/utils/i18n";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { DatePicker } from "@/components/UI/DatePicker";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import DatePicker from "@/components/UI/DatePicker";
 
 import styled from "styled-components";
-import zhLocale from "date-fns/locale/zh-CN";
-import enLocale from "date-fns/locale/en-US";
-import thLocale from "date-fns/locale/th";
 import addDays from "date-fns/addDays";
 import { media } from "@/theme/breakpoints";
-
-const localeMap = {
-  zh: zhLocale,
-  en: enLocale,
-  th: thLocale,
-};
 
 const DateContainer = styled.div`
   width: 100%;
@@ -93,42 +81,34 @@ const DateRangeWithDatePicker = ({
       <FlatStraightLine>
         <DateInner>
           {/*<DateLabel>{i18n.t("report.startDate")}</DateLabel>*/}
-          <LocalizationProvider
-            dateAdapter={AdapterDateFns}
-            locale={localeMap[i18n.language.substring(0, 2)]}
-          >
-            <DatePicker
-              autoOk
-              clearable
-              disableFuture
-              minDate={minDateFrom}
-              maxDate={dateTo}
-              format="yyyy/MM/dd"
-              value={dateFrom}
-              onChange={handleDateFromChange}
-            />
-          </LocalizationProvider>
+
+          <DatePicker
+            autoOk
+            clearable
+            disableFuture
+            minDate={minDateFrom}
+            maxDate={dateTo}
+            format="yyyy/MM/dd"
+            value={dateFrom}
+            onChange={handleDateFromChange}
+          />
         </DateInner>
 
         <DateSpliter>-</DateSpliter>
 
         <DateInner>
           {/*<DateLabel>{i18n.t("report.endDate")}</DateLabel>*/}
-          <LocalizationProvider
-            dateAdapter={AdapterDateFns}
-            locale={localeMap[i18n.language.substring(0, 2)]}
-          >
-            <DatePicker
-              autoOk
-              clearable
-              disableFuture
-              minDate={dateFrom}
-              maxDate={maxDateTo}
-              format="yyyy/MM/dd"
-              value={dateTo}
-              onChange={handleDateToChange}
-            />
-          </LocalizationProvider>
+
+          <DatePicker
+            autoOk
+            clearable
+            disableFuture
+            minDate={dateFrom}
+            maxDate={maxDateTo}
+            format="yyyy/MM/dd"
+            value={dateTo}
+            onChange={handleDateToChange}
+          />
         </DateInner>
       </FlatStraightLine>
       {/*<div className="clear"></div>*/}
