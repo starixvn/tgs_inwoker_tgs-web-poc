@@ -5,6 +5,7 @@ import i18n from "@/utils/i18n";
 import { useRwd } from "@/hooks/useRwd";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "@/hooks/auth/useAuth";
+import { useAuthDialog } from "@/hooks/auth/useAuthDialog";
 
 type Props = {};
 const LoginPage = (props: Props) => {
@@ -12,10 +13,15 @@ const LoginPage = (props: Props) => {
   const { isLogin } = useAuth();
   const history = useHistory();
   const { isDesktopSize } = useRwd();
+  const { handleToggleLoginDialog } = useAuthDialog();
 
   useEffect(() => {
     if (isLogin) {
       history.push("/");
+    }
+
+    if (isDesktopSize) {
+      handleToggleLoginDialog();
     }
 
     updatePageName(i18n.t("common.login"));

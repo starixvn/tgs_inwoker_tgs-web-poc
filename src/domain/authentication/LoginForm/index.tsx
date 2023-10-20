@@ -7,11 +7,22 @@ import { useLoginForm } from "@/hooks/auth/useAuthForm/useLoginForm";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Loading from "@/components/UI/Loading";
+import { media } from "@/theme/breakpoints";
+
+const LoginFormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 56px 15px;
+
+  ${media.sm} {
+    padding: 42px 42px;
+  }
+`;
 
 const TitleContainer = styled.div`
-  font-size: 2.5rem !important;
-  line-height: 3.5rem !important;
-  font-weight: 700 !important;
+  font-size: 2.5rem;
+  line-height: 3.5rem;
+  font-weight: 700;
   color: white;
   display: flex;
   flex-direction: column;
@@ -19,12 +30,14 @@ const TitleContainer = styled.div`
   margin-bottom: 41px;
   white-space: nowrap;
 
-  margin-top: 15.76%;
-
   & > .bottom-border {
     width: 68px;
     height: 5px;
     background: #6152dd;
+  }
+
+  ${media.sm} {
+    display: none;
   }
 `;
 
@@ -65,7 +78,7 @@ const LoginForm = (props: Props) => {
   } = useLoginForm();
 
   return (
-    <>
+    <LoginFormContainer>
       <TitleContainer>
         {i18n.t("common.login")}
         <div className="bottom-border" />
@@ -99,7 +112,7 @@ const LoginForm = (props: Props) => {
       <RedirectToRegisterHint />
 
       <Loading show={isLoading} />
-    </>
+    </LoginFormContainer>
   );
 };
 

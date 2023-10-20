@@ -1,18 +1,22 @@
 import React from "react";
-import Dialog from "@/components/UI/Dialog/Dialog";
 import LoginForm from "@/domain/authentication/LoginForm";
 import { useAuthDialog } from "@/hooks/auth/useAuthDialog";
+import AuthDialog from "@/components/UI/Dialog/AuthDialog";
+import AuthSwitchButtons from "@/domain/authentication/components/AuthSwitchButtons";
 
 type Props = {};
 const LoginDialog = ({}: Props) => {
   const { isLoginDialogOpen, handleToggleLoginDialog } = useAuthDialog();
   return (
-    <Dialog
+    <AuthDialog
       isOpen={isLoginDialogOpen}
       handleCloseDialog={handleToggleLoginDialog}
     >
-      <LoginForm />
-    </Dialog>
+      <>
+        <AuthSwitchButtons activeAuthStep={"login"} />
+        <LoginForm />
+      </>
+    </AuthDialog>
   );
 };
 

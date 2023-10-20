@@ -1,4 +1,6 @@
 import React, { createContext, useCallback, useState } from "react";
+import { useLocation } from "react-router";
+import { useHistory } from "react-router-dom";
 
 export const initialState: {
   isLoginDialogOpen: boolean;
@@ -23,12 +25,22 @@ type ProviderProps = {
 export const AuthDialogContextProvider = ({ children }: ProviderProps) => {
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
+  const location = useLocation();
+  const history = useHistory();
 
   const handleToggleLoginDialog = useCallback(() => {
     setIsLoginDialogOpen((prevState) => !prevState);
+
+    // if (location.pathname === "/login") {
+    //   history.push("/");
+    // }
   }, []);
   const handleToggleRegisterDialog = useCallback(() => {
     setIsRegisterDialogOpen((prevState) => !prevState);
+
+    // if (location.pathname === "/register") {
+    //   history.push("/");
+    // }
   }, []);
 
   return (
