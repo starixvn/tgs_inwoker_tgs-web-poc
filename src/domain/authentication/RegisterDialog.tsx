@@ -11,7 +11,7 @@ const RegisterDialog = ({}: Props) => {
   return (
     <AuthDialog
       isOpen={isRegisterDialogOpen}
-      handleCloseDialog={handleToggleRegisterDialog}
+      handleCloseDialog={() => handleToggleRegisterDialog(false)}
     >
       <>
         <AuthSwitchButtons activeAuthStep={"register"} />

@@ -29,7 +29,7 @@ const ForgetPasswordDialog = ({}: Props) => {
   return (
     <AuthDialog
       isOpen={isForgetPasswordDialogOpen}
-      handleCloseDialog={handleToggleForgetPasswordDialog}
+      handleCloseDialog={() => handleToggleForgetPasswordDialog(false)}
     >
       <>
         <TitleContainer>{i18n.t("forgotPassword.title")}</TitleContainer>

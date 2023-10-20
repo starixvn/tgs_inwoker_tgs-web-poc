@@ -34,8 +34,8 @@ const RedirectToLoginHint = (props: Props) => {
       return history.push("/register");
     }
 
-    handleToggleRegisterDialog();
-    handleToggleLoginDialog();
+    handleToggleRegisterDialog(false);
+    handleToggleLoginDialog(true);
   }, []);
 
   return (

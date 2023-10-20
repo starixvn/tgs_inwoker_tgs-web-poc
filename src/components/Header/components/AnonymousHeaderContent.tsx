@@ -46,7 +46,7 @@ const AnonymousHeaderContent = (props: Props) => {
 
   const toggleLoginDialog = useCallback(() => {
     if (isDesktopSize) {
-      handleToggleLoginDialog();
+      handleToggleLoginDialog(true);
       return;
     }
 
@@ -55,7 +55,7 @@ const AnonymousHeaderContent = (props: Props) => {
 
   const toggleRegisterDialog = useCallback(() => {
     if (isDesktopSize) {
-      handleToggleRegisterDialog();
+      handleToggleRegisterDialog(true);
       return;
     }
     history.push("/register");

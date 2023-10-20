@@ -10,7 +10,7 @@ const LoginDialog = ({}: Props) => {
   return (
     <AuthDialog
       isOpen={isLoginDialogOpen}
-      handleCloseDialog={handleToggleLoginDialog}
+      handleCloseDialog={() => handleToggleLoginDialog(false)}
     >
       <>
         <AuthSwitchButtons activeAuthStep={"login"} />

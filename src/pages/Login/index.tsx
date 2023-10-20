@@ -21,7 +21,7 @@ const LoginPage = (props: Props) => {
     }
 
     if (isDesktopSize) {
-      handleToggleLoginDialog();
+      handleToggleLoginDialog(true);
     }
 
     updatePageName(i18n.t("common.login"));

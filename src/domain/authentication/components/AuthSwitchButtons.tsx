@@ -36,15 +36,15 @@ const AuthSwitchButtons = ({ activeAuthStep }: Props) => {
   const handleLogin = () => {
     if (activeAuthStep === "login") return;
 
-    handleToggleLoginDialog();
-    handleToggleRegisterDialog();
+    handleToggleLoginDialog(false);
+    handleToggleRegisterDialog(true);
   };
 
   const handleRegister = () => {
     if (activeAuthStep === "register") return;
 
-    handleToggleRegisterDialog();
-    handleToggleLoginDialog();
+    handleToggleRegisterDialog(false);
+    handleToggleLoginDialog(true);
   };
 
   return (

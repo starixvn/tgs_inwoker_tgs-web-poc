@@ -87,8 +87,8 @@ const LoginForm = (props: Props) => {
 
   const handleClickForgetPassword = () => {
     if (isDesktopSize) {
-      handleToggleLoginDialog();
-      handleToggleForgetPasswordDialog();
+      handleToggleLoginDialog(false);
+      handleToggleForgetPasswordDialog(true);
       return;
     }
 

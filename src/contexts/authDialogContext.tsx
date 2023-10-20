@@ -6,9 +6,9 @@ export const initialState: {
   isLoginDialogOpen: boolean;
   isRegisterDialogOpen: boolean;
   isForgetPasswordDialogOpen: boolean;
-  handleToggleLoginDialog: () => void;
-  handleToggleRegisterDialog: () => void;
-  handleToggleForgetPasswordDialog: () => void;
+  handleToggleLoginDialog: (isOpen?: boolean) => void;
+  handleToggleRegisterDialog: (isOpen?: boolean) => void;
+  handleToggleForgetPasswordDialog: (isOpen?: boolean) => void;
 } = {
   isLoginDialogOpen: false,
   isRegisterDialogOpen: false,
@@ -34,14 +34,24 @@ export const AuthDialogContextProvider = ({ children }: ProviderProps) => {
   const location = useLocation();
   const history = useHistory();
 
-  const handleToggleLoginDialog = useCallback(() => {
+  const handleToggleLoginDialog = useCallback((isOpen?: boolean) => {
+    if (typeof isOpen !== "undefined") {
+      setIsLoginDialogOpen(isOpen);
+      return;
+    }
+
     setIsLoginDialogOpen((prevState) => !prevState);
 
     // if (location.pathname === "/login") {
     //   history.push("/");
     // }
   }, []);
-  const handleToggleRegisterDialog = useCallback(() => {
+  const handleToggleRegisterDialog = useCallback((isOpen?: boolean) => {
+    if (typeof isOpen !== "undefined") {
+      setIsRegisterDialogOpen(isOpen);
+      return;
+    }
+
     setIsRegisterDialogOpen((prevState) => !prevState);
 
     // if (location.pathname === "/register") {
@@ -49,7 +59,12 @@ export const AuthDialogContextProvider = ({ children }: ProviderProps) => {
     // }
   }, []);
 
-  const handleToggleForgetPasswordDialog = useCallback(() => {
+  const handleToggleForgetPasswordDialog = useCallback((isOpen?: boolean) => {
+    if (typeof isOpen !== "undefined") {
+      setIsForgetPasswordDialogOpen(isOpen);
+      return;
+    }
+
     setIsForgetPasswordDialogOpen((prevState) => !prevState);
 
     // if (location.pathname === "/register") {
