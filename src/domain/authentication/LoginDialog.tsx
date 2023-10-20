@@ -6,7 +6,6 @@ import { useAuthDialog } from "@/hooks/auth/useAuthDialog";
 type Props = {};
 const LoginDialog = ({}: Props) => {
   const { isLoginDialogOpen, handleToggleLoginDialog } = useAuthDialog();
-
   return (
     <Dialog
       isOpen={isLoginDialogOpen}
