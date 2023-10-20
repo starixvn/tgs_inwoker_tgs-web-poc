@@ -17,7 +17,7 @@ import { GetFavoriteGameResDto } from "@/models/dto/game/GetFavoriteGameResDto";
 import { GetHomePageGameListResDto } from "@/models/dto/game/GetHomePageGameListResDto";
 import { RemoveFavoriteGameResDto } from "@/models/dto/game/RemoveFavoriteGameResDto";
 import { SetFavoriteGameResDto } from "@/models/dto/game/SetFavoriteGameResDto";
-import { GameState } from "@/types/game";
+import { GameState } from "@/types/stores/game";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

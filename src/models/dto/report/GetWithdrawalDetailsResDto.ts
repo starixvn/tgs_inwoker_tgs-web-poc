@@ -22,7 +22,7 @@ interface WithdrawFormViewModelPagedResponse {
   errors: (string | null)[];
   message: string;
   valid: boolean;
-  items: (WithdrawFormViewModel | null)[];
+  items: WithdrawFormViewModel[];
   totalCount: number | null;
 }
 

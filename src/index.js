@@ -8,9 +8,8 @@ import * as serviceWorker from "./utils/serviceWorker";
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import InterceptorService from "./api-services/services/InterceptorService";
-import { makeStyles } from "@mui/styles";
+import { makeStyles, StylesProvider } from "@mui/styles";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-import { StylesProvider } from "@mui/styles";
 import { SnackbarProvider } from "notistack";
 import { composeWithDevTools } from "redux-devtools-extension";
 import styled, {
@@ -23,16 +22,15 @@ import rootReducer from "./api-services/reducers/rootReducer";
 import Config from "./config/config";
 import config from "./config/config";
 import i18n from "./utils/i18n";
-import Mobile from "@/components/Mobile";
+import Main from "@/SubIndex";
 import { NotificationContextProvider } from "@/contexts/notificationContext";
 import AudioPlayer from "./components/Share/audioplayer";
 import FeatureGetter from "./components/Share/feature-getter";
 import { GlobalStyles } from "./global";
-import { theme, themeList } from "./theme";
+import { theme } from "./theme";
 import { createRoot } from "react-dom/client";
-import { Redirect, Route, Router, Switch } from "react-router";
-import { AppHistory } from "@/history/History";
 import { muiTheme } from "@/theme/mui";
+
 require("es6-promise").polyfill();
 
 // TODO: hide on production
@@ -95,7 +93,7 @@ document
 //   Config.baseUrl = baseUrl;
 // }
 
-const AppWrapper = () => {
+const App = () => {
   const classes = useStyles();
   const languageDetector =
     i18n.language ||
@@ -172,12 +170,7 @@ const AppWrapper = () => {
                   }}
                   ref={notistackRef}
                 >
-                  <Router history={AppHistory}>
-                    <Switch>
-                      <Route path={"/"} render={(props) => <Mobile />} />
-                      <Redirect to={`/`} />
-                    </Switch>
-                  </Router>
+                  <Main />
                 </SnackbarProvider>
               </StyleComponentThemeProvider>
             </MuiThemeProvider>
@@ -186,13 +179,13 @@ const AppWrapper = () => {
       </Provider>
     );
   } else {
-    return <React.Fragment></React.Fragment>;
+    return null;
   }
 };
 
 const container = document.getElementById("root");
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
-root.render(<AppWrapper />);
+root.render(<App />);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

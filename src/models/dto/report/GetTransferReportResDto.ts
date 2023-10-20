@@ -1,4 +1,4 @@
-interface GameBalanceInfosViewModel {
+export interface GameBalanceInfosViewModel {
   amount: number | null;
   balancetime: string;
   from: string | null;
@@ -9,7 +9,7 @@ interface GameBalanceInfosViewModelPagedResponse {
   errors: (string | null)[];
   message: string;
   valid: boolean;
-  items: (GameBalanceInfosViewModel | null)[];
+  items: GameBalanceInfosViewModel[];
   totalCount: number | null;
 }
 

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { FormikFormInput } from "@/components/Mobile/components/FormikForm";
+import { FormikFormInput } from "@/components/FormikForm";
 import i18n from "@/utils/i18n";
-import { FormInputTypeEnum } from "@/components/Mobile/components/FormikForm/FormInputFactory";
+import { FormInputTypeEnum } from "@/components/FormikForm/FormInputFactory";
 import * as Yup from "yup";
 import { FormikValues, useFormik } from "formik";
 import { useFormikInitValue } from "@/hooks/auth/useAuthForm/hooks/useFormikInitValue";
@@ -17,7 +17,7 @@ export function useGenerateRegisterFormik({ handleClickSubmit }: Props) {
   const formInputConfigList = useMemo<FormikFormInput[]>(() => {
     return [
       {
-        label: i18n.t("wap.register.username"),
+        label: i18n.t("common.username"),
         name: "username",
         initialValue: "",
         type: FormInputTypeEnum.TEXT,
@@ -28,7 +28,7 @@ export function useGenerateRegisterFormik({ handleClickSubmit }: Props) {
           }),
       },
       {
-        label: i18n.t("wap.register.password"),
+        label: i18n.t("common.password"),
         name: "password",
         type: FormInputTypeEnum.PASSWORD,
         initialValue: "",

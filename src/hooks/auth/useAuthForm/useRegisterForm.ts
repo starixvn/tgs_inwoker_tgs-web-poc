@@ -6,6 +6,8 @@ import { usePromotionCode } from "@/hooks/auth/useAuthForm/hooks/usePromotionCod
 import { useSnackbar } from "notistack";
 import i18n from "@/utils/i18n";
 import { useConfirmAdult } from "@/hooks/auth/useAuthForm/hooks/useConfirmAdult";
+import { useRwd } from "@/hooks/useRwd";
+import { useAuthDialog } from "@/hooks/auth/useAuthDialog";
 
 export enum UserTypeEnum {
   AGENT = "a",
@@ -16,6 +18,8 @@ export function useRegisterForm() {
   const { promotionData } = usePromotionCode();
   const { isConfirmedAdult, handleClickConfirmAdult } = useConfirmAdult();
   const { enqueueSnackbar } = useSnackbar();
+  const { handleToggleRegisterDialog } = useAuthDialog();
+  const { isDesktopSize } = useRwd();
 
   // ===== handle click register =====
   const handleClickRegister = useCallback(
@@ -37,6 +41,10 @@ export function useRegisterForm() {
           invitationcode:
             userType === UserTypeEnum.AGENT ? promotionData.promoId : "",
         });
+
+        if (isDesktopSize) {
+          handleToggleRegisterDialog(false);
+        }
       } catch (error: any) {
         console.error(error);
         enqueueSnackbar(error.message, {

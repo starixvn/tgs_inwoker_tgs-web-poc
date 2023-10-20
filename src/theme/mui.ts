@@ -2,6 +2,7 @@ import { createTheme } from "@mui/material/styles";
 import { theme } from "@/theme/index";
 import i18n from "@/utils/i18n";
 import { fontFamily } from "@/theme/fontFamily";
+import { breakpoints } from "@/theme/breakpoints";
 
 theme.lang = i18n.language;
 
@@ -18,6 +19,15 @@ declare module "@mui/material/styles" {
 }
 
 const muiTheme = createTheme({
+  breakpoints: {
+    values: {
+      xs: breakpoints.xs,
+      sm: breakpoints.sm,
+      md: breakpoints.md,
+      lg: breakpoints.lg,
+      xl: breakpoints.xl,
+    },
+  },
   palette: {
     primary: {
       main: theme.primary,
@@ -52,6 +62,27 @@ const muiTheme = createTheme({
     MuiSelect: {
       color: theme.white,
     },
+  },
+  components: {
+    MuiTablePagination: {
+      styleOverrides: {
+        actions: {
+          "& .MuiButtonBase-root": {
+            color: "#707070",
+            "&:hover": {
+              // backgroundColor: "#your_hover_color_here", // 设置鼠标悬停时的背景颜色
+            },
+          },
+        },
+      },
+    },
+    // MuiTableRow: {
+    //   styleOverrides: {
+    //     root: {
+    //       borderBottom: "1px solid #707070", // 替换为你想要的边框颜色值
+    //     },
+    //   },
+    // },
   },
 });
 

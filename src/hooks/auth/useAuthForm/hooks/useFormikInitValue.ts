@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { FormikValues } from "formik";
-import { FormikFormInput } from "@/components/Mobile/components/FormikForm";
+import { FormikFormInput } from "@/components/FormikForm";
 
 export function useFormikInitValue() {
   const getFormikInitValue = useCallback(

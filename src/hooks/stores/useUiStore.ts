@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { UiState } from "@/types/ui";
+import { UiState } from "@/types/stores/ui";
 import {
   GETANNOUNCEMENT_BEGIN,
   GETANNOUNCEMENT_FAIL,
