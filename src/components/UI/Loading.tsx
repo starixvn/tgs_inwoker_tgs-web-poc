@@ -2,15 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { CircularProgress } from "@mui/material";
+import { useHeader } from "@/hooks/useHeader";
+import { DRAWER_WIDTH } from "@/contexts/headerContext";
 
 type LoadingContainer = {
   $opacity: number;
   $open: boolean;
+  $isMenuOpen?: boolean | undefined;
 };
 const LoadingContainer = styled.div<LoadingContainer>`
-  width: 100%;
+  width: ${({ $isMenuOpen }: LoadingContainer) =>
+    $isMenuOpen ? `calc(100% - ${DRAWER_WIDTH})` : "100%"};
   top: 0;
-  left: 0;
+  left: ${({ $isMenuOpen }: LoadingContainer) =>
+    $isMenuOpen ? DRAWER_WIDTH : 0};
   position: fixed;
   transition: opacity 0.2s linear, height 0.02s linear 0.2s;
   background-color: rgba(
@@ -42,11 +47,16 @@ type Props = {
 
 const Loading = ({ show, opacity }: Props) => {
   const { general } = useGeneralStore();
+  const { isMenuOpen } = useHeader();
 
   const backgroundOpacity = typeof opacity === "number" ? opacity : 0.5;
 
   return (
-    <LoadingContainer $open={show} $opacity={backgroundOpacity}>
+    <LoadingContainer
+      $open={show}
+      $opacity={backgroundOpacity}
+      $isMenuOpen={isMenuOpen}
+    >
       <Inner>
         <LogoImg src={general.brand && general.brand.loadingUrl} />
         <div className="clear" />
