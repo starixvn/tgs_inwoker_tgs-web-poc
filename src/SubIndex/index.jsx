@@ -2,10 +2,7 @@ import React, { Component, Suspense } from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Router, Switch } from "react-router";
 import { AppHistory } from "@/history/History";
-import {
-  SHOW_LOGIN,
-  UPDATING_SCREEN_SIZE,
-} from "@/api-services/constant/actionType";
+import { SHOW_LOGIN } from "@/api-services/constant/actionType";
 import { uiAction } from "@/api-services/actions/uiAction";
 import { gameAction } from "@/api-services/actions/gameAction";
 import { generalAction } from "@/api-services/actions/generalAction";
@@ -51,8 +48,6 @@ class SubIndex extends Component {
       message: "",
       action: "",
       // Popup
-      openPopup: false,
-      popupUrl: "",
       openAnnouncement: false,
       showPromotion: false,
     };
@@ -78,194 +73,154 @@ class SubIndex extends Component {
     window.open(newURL, "_blank");
   };
 
-  updateScreenSize = () => {
-    const w = window.screen.width;
-    const h = Math.max(
-      document.documentElement.clientHeight,
-      window.innerHeight || 0
-    );
+  // =========================
+  saveUrlInfoToLocalStorage() {
+    const urlpath = window.location.pathname.split("/");
 
-    const scale = w / 750;
+    if (urlpath.length !== 3) {
+      localStorage.setItem("invitationtype", "");
+      localStorage.setItem("upper", ""); //reset
+      localStorage.setItem("promotionId", ""); //reset
+      return;
+    }
 
-    this.props.updateScreenSize(w, h, scale);
-  };
+    if (urlpath[1] === "a") {
+      localStorage.setItem("promotionId", urlpath[2] || "");
+      localStorage.setItem("upper", ""); //reset
+      localStorage.setItem("invitationtype", "a");
+    }
+
+    if (urlpath[1] === "p") {
+      localStorage.setItem("upper", urlpath[2] || "");
+      localStorage.setItem("promotionId", ""); //reset
+      localStorage.setItem("invitationtype", "p");
+    }
+  }
+
+  handleGoto() {
+    let urlParams = new URLSearchParams(window.location.search);
+    if (!urlParams.has("goto")) return;
+
+    const gotoValue = urlParams.get("goto");
+    if (gotoValue) {
+      window.location.href = gotoValue;
+    }
+  }
+
+  handleTo() {
+    let urlParams = new URLSearchParams(window.location.search);
+    if (!urlParams.has("do")) return;
+
+    const doValue = urlParams.get("do");
+    switch (doValue) {
+      case "login":
+      case "logout":
+      case "register":
+      case "login_auth":
+      case "register_auth":
+        localStorage.removeItem("token1");
+        break;
+
+      case "login_token":
+        const decryptedToken = BlowFishEncryption.Decrypt(
+          urlParams.get("token")
+        );
+
+        localStorage.setItem("token1", decryptedToken);
+        AppHistory.replace("/");
+        break;
+
+      default:
+        return "";
+    }
+  }
+
+  async handleSiteDataFetching() {
+    if (!this.props.general.token) {
+      this.props.getSiteToken();
+      return;
+    }
+
+    this.props.getBrandLanguage();
+    this.props.getMarquee(i18n.language);
+    this.props.getAnnouncement(i18n.language);
+    this.props.getBanner();
+    this.props.getBrand();
+    this.props.getBrandCommunicationList();
+    this.props.getLiveChatURL();
+    this.props.getPromotion();
+    this.props.getDepositMethod();
+    this.props.getWithdrawalChannel();
+    this.props.getAffiliateStatus();
+  }
+
+  async handleAccountDataFetching() {
+    const localStorageToken = localStorage.getItem("token1");
+
+    const isNeedToRestoreAccountData =
+      !!localStorageToken &&
+      !this.props.account.token &&
+      !this.props.account.info.token;
+    if (!isNeedToRestoreAccountData) return;
+
+    const responseToken = await this.props.checkTokenIsValid(localStorageToken);
+    if (!responseToken.IsSuccess) return;
+
+    const getMemberInfoRes = await this.props.getAccountProfile(true);
+    let bankInfoAuthentication = getMemberInfoRes.data.bankinfoauthentication;
+    let isPhoneNull = !getMemberInfoRes.data.phone;
+    let isEmailNull = !getMemberInfoRes.data.email;
+    let isRegisterCompleted = getMemberInfoRes.data.registercompleted;
+
+    if (config.features.ForceRedirectAddCard && !bankInfoAuthentication) {
+      this.setState({ ...this.state, loading: false });
+      if (isPhoneNull) {
+        this.props.history.push({
+          pathname: "/profile/phone",
+          state: { forced: true },
+        });
+      }
+
+      if (isEmailNull) {
+        this.props.history.push({
+          pathname: "/profile/email",
+          state: { forced: true },
+        });
+      }
+
+      if (!isRegisterCompleted) {
+        this.props.history.push("/card/add");
+      }
+
+      return;
+    }
+
+    this.props.getBalanceList();
+    this.handleUpdateProviderBalance();
+    this.props.getMessageList(i18n.language, 1, 99);
+    this.props.getBankCardList();
+    this.props.getAutoTransferStatus();
+    this.props.getDepositMethod();
+    this.props.getWithdrawalChannel();
+    this.props.getPromotionRouletteCount();
+  }
 
   async componentDidMount() {
     Common.loadScript("/js/config.js", () => {
       Common.loadScript("/js/iovation.js", () => {});
     });
 
-    const urlpath = window.location.pathname.split("/");
+    this.saveUrlInfoToLocalStorage();
 
-    if (urlpath.length === 3) {
-      if (urlpath[1] === "a") {
-        localStorage.setItem("promotionId", urlpath[2] || "");
-        localStorage.setItem("upper", ""); //reset
-        localStorage.setItem("invitationtype", "a");
-      }
-      if (urlpath[1] === "p") {
-        localStorage.setItem("upper", urlpath[2] || "");
-        localStorage.setItem("promotionId", ""); //reset
-        localStorage.setItem("invitationtype", "p");
-      }
-    } else {
-      localStorage.setItem("invitationtype", "");
-      localStorage.setItem("upper", ""); //reset
-      localStorage.setItem("promotionId", ""); //reset
-    }
+    await this.handleSiteDataFetching();
 
-    window.addEventListener("resize", () => {
-      this.updateScreenSize();
-    });
+    this.handleGoto();
+    this.handleTo();
+    await this.handleAccountDataFetching();
 
-    // const response = await GeneralService.CheckIPRestrict();
-
-    // if (response.code === 50000) {
-    //   AppHistory.replace({
-    //     pathname:  "/ip-restrict-mobile",
-    //     search: "?query=error",
-    //     state: { ip: response.data.ip },
-    //   });
-    //   this.setState({ ...this.state, isIpRestrict: true, loading: false });
-    // } else {
-    if (this.props.general.token == "") {
-      this.props.getSiteToken();
-    } else {
-      this.props.getBrandLanguage();
-      this.props.getMarquee(i18n.language);
-      this.props.getAnnouncement(i18n.language);
-      this.props.getBanner();
-      this.props.getBrand();
-      this.props.getBrandCommunicationList();
-      this.props.getLiveChatURL();
-      this.props.getPromotion();
-      this.props.getDepositMethod();
-      this.props.getWithdrawalChannel();
-      this.props.getAffiliateStatus();
-    }
-
-    // this.props.getMobilePrefix();
-    // this.props.getBankList();
-    //this.props.getHomePageGameList();
-    //this.props.getMarquee();
-    // this.props.getBanner();
-    let urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has("goto")) {
-      const gotoValue = urlParams.get("goto");
-      if (gotoValue) {
-        window.location.href = gotoValue;
-      }
-    }
-
-    if (urlParams.has("do")) {
-      const doValue = urlParams.get("do");
-
-      switch (doValue) {
-        case "login":
-        case "logout":
-        case "register":
-        case "login_auth":
-        case "register_auth":
-          localStorage.removeItem("token1");
-          break;
-        case "login_token":
-          const decryptedToken = BlowFishEncryption.Decrypt(
-            urlParams.get("token")
-          );
-
-          localStorage.setItem("token1", decryptedToken);
-          AppHistory.replace("/");
-          break;
-        default:
-          return "";
-      }
-    }
-    const localStorageToken = localStorage.getItem("token1");
-    if (
-      localStorageToken != null &&
-      this.props.account.token == null &&
-      this.props.account.info.token === ""
-    ) {
-      const responseToken = await this.props.checkTokenIsValid(
-        localStorageToken
-      );
-      if (responseToken.IsSuccess) {
-        // document
-        //   .getElementById("ioBB")
-        //   .parentNode.removeChild(document.getElementById("ioBB"));
-        // this.props.checkGame();
-        let bankInfoAuthentication = null;
-        let isPhoneNull = null;
-        let isEmailNull = null;
-        let isRegisterCompleted = null;
-
-        await this.props.getAccountProfile(true).then((response) => {
-          bankInfoAuthentication = response.data.bankinfoauthentication;
-          isPhoneNull = response.data.phone === null;
-          isEmailNull = response.data.email === null;
-          isRegisterCompleted = response.data.registercompleted;
-        });
-        if (config.features.ForceRedirectAddCard && !bankInfoAuthentication) {
-          this.setState({ ...this.state, loading: false });
-          if (isPhoneNull) {
-            this.props.history.push({
-              pathname: "/profile/phone",
-              state: { forced: true },
-            });
-          } else if (isEmailNull) {
-            this.props.history.push({
-              pathname: "/profile/email",
-              state: { forced: true },
-            });
-          } else if (!isRegisterCompleted) {
-            this.props.history.push("/card/add");
-          }
-          return;
-        }
-        // const responseVIP = await this.props.getVIPInfo(
-        //   responseToken.data.token
-        // );
-        this.props.getBalanceList();
-        this.props.game.providerList
-          .filter((item) => item.status === 0 && item.transferwallet === true)
-          .filter(
-            (item) =>
-              item.abbreviation !== "NTTF" && item.abbreviation !== "RTTF"
-          )
-          .map((a) => {
-            this.props.getGameBalance(a.abbreviation);
-          });
-        this.props.getMessageList(i18n.language, 1, 99);
-        this.props.getBankCardList();
-        this.props.getAutoTransferStatus();
-        this.props.getDepositMethod();
-        this.props.getWithdrawalChannel();
-        this.props.getPromotionRouletteCount();
-        // this.props.getIDCardNo();
-        //this.props.getDepositChannel();
-
-        // this.props.getInviteLink();
-      }
-    }
     this.setState({ ...this.state, loading: false });
     //}
     window.addEventListener("focus", this.onFocus);
-    // let GAScript = `<script  async  src="https://www.googletagmanager.com/gtag/js?id=UA-156359717-1"></script>
-    // <script>
-    //   window.dataLayer = window.dataLayer || [];
-    //   function gtag() {
-    //     dataLayer.push(arguments);
-    //   }
-    //   gtag("js", new Date());
-
-    //   gtag("config", "UA-156359717-1");
-    // </script>`;
-
-    // if (process.env.REACT_APP_CUSTOM_NODE_ENV != "development") {
-    //   var e = document.createElement("div");
-    //   e.innerHTML = GAScript;
-    //   document.body.appendChild(e);
-    // }
   }
 
   componentWillUnmount() {
@@ -273,13 +228,101 @@ class SubIndex extends Component {
   }
 
   onFocus = () => {
-    if (this.props.account.token !== null) {
-      this.props.getBalanceList();
-    }
+    if (!this.props.account.token) return;
+
+    this.props.getBalanceList();
   };
 
+  handleLoginTokenChanged() {
+    // if token became empty
+    if (!this.props.general.token) {
+      this.props.getSiteToken();
+      this.props.getPromotion();
+      return;
+    }
+
+    localStorage.setItem("client-token", this.props.general.token);
+    //this.props.getMarquee(i18n.language);
+
+    GeneralService.GetLocalization().then((response) => {
+      if (response.IsSuccess) {
+        ErrorSwitcher.setTranslation(response.data);
+      }
+    });
+
+    this.props.getHomePageGameList();
+    this.props.getBrandLanguage();
+    this.props.getMarquee(i18n.language);
+    this.props.getAnnouncement(i18n.language);
+    this.props.getBanner();
+    this.props.getBrand();
+    this.props.getBrandCommunicationList();
+    this.props.getLiveChatURL();
+    this.props.getPromotion();
+    this.props.getAffiliateStatus();
+  }
+
+  handleUpdateProviderBalance() {
+    if (
+      config.features.ForceRedirectAddCard &&
+      !this.props.account.info.bankInfoAuthentication
+    )
+      return;
+
+    // update provider's game balance
+    this.props.game.providerList
+      .filter((item) => item.status === 0 && item.transferwallet === true)
+      .filter(
+        (item) => item.abbreviation !== "NTTF" && item.abbreviation !== "RTTF"
+      )
+      .map((a) => {
+        this.props.getGameBalance(a.abbreviation);
+      });
+  }
+
+  handleUm() {
+    if (this.props.general.isMaintenance === true) {
+      this.props.history.push("/maintenance");
+    }
+  }
+
+  handleLanguageChanged() {
+    const { brandLanguage } = this.props.general;
+    const currentLanguage = i18n.language;
+    const pathParts = window.location.pathname.split("/");
+
+    if (!brandLanguage.length) return;
+
+    const isLanguageInBrand = brandLanguage.some(
+      (lang) => lang.culturecode === currentLanguage
+    );
+
+    if (isLanguageInBrand) {
+      if (!(pathParts[1] !== currentLanguage || pathParts.length > 3)) return;
+      i18n.changeLanguage(currentLanguage);
+    } else {
+      const newLanguage = brandLanguage[0].culturecode;
+      i18n.changeLanguage(newLanguage);
+      window.location.reload();
+    }
+  }
+
+  handleRegister() {
+    if (
+      this.props.account.registercompleted === false &&
+      config.features.Register_ShowPhone &&
+      config.features.ForcedVerification
+    ) {
+      this.props.history.push({
+        pathname: "/profile/phone",
+        state: { forced: true },
+      });
+    }
+  }
+
   componentDidUpdate(preProps) {
-    var isInHomePage =
+    // popup announcement logic
+    const isInHomePage =
       this.props.ui.mains &&
       this.props.ui.mains !== preProps.ui.mains &&
       this.props.ui.mains.length > 0;
@@ -293,6 +336,7 @@ class SubIndex extends Component {
       }
     }
 
+    // popup promotion logic
     if (config.features.PopupPromotion) {
       if (
         isInHomePage &&
@@ -308,128 +352,50 @@ class SubIndex extends Component {
       }
     }
 
+    // verify if token changed
     if (preProps.general.token !== this.props.general.token) {
-      if (this.props.general.token == null || this.props.general.token == "") {
-        this.props.getSiteToken();
-      } else {
-        localStorage.setItem("client-token", this.props.general.token);
-        //this.props.getMarquee(i18n.language);
+      this.handleLoginTokenChanged();
+    }
 
-        GeneralService.GetLocalization().then((response) => {
-          if (response.IsSuccess) {
-            ErrorSwitcher.setTranslation(response.data);
-          }
-        });
-        this.props.getHomePageGameList();
-        this.props.getBrandLanguage();
-        this.props.getMarquee(i18n.language);
-        this.props.getAnnouncement(i18n.language);
-        this.props.getBanner();
-        this.props.getBrand();
-        this.props.getBrandCommunicationList();
-        this.props.getLiveChatURL();
-        this.props.getPromotion();
-        this.props.getAffiliateStatus();
-      }
-    }
-    if (
-      preProps.account.token !== this.props.account.token &&
-      (this.props.account.token === null || this.props.account.token === "")
-    ) {
-      this.props.getPromotion();
-    }
+    // handle provider changed
     if (
       preProps.game.providerList.length !==
         this.props.game.providerList.length &&
       this.props.account.token !== null
     ) {
-      if (
-        config.features.ForceRedirectAddCard &&
-        !this.props.account.info.bankInfoAuthentication
-      ) {
-        return;
-      }
-      this.props.game.providerList
-        .filter((item) => item.status === 0 && item.transferwallet === true)
-        .filter(
-          (item) => item.abbreviation !== "NTTF" && item.abbreviation !== "RTTF"
-        )
-        .map((a) => {
-          this.props.getGameBalance(a.abbreviation);
-        });
+      this.handleUpdateProviderBalance();
     }
 
-    if (
-      preProps.general.isMaintenance !== this.props.general.isMaintenance &&
-      this.props.general.isMaintenance === true
-    ) {
-      this.props.history.push("/maintenance");
-    }
-    if (
-      preProps.general.brandLanguage !== this.props.general.brandLanguage &&
-      this.props.general.brandLanguage.length > 0
-    ) {
-      if (
-        this.props.general.brandLanguage.filter(
-          (a) => a.culturecode === i18n.language
-        ).length <= 0
-      ) {
-        if (
-          this.props.general.brandLanguage.filter((a) => {
-            return a.culturecode === i18n.language;
-          })
-        ) {
-          i18n.changeLanguage(this.props.general.brandLanguage[0].culturecode);
-
-          window.location.reload();
-        }
-      } else {
-        if (
-          this.props.general.brandLanguage.filter(
-            (a) => a.culturecode === i18n.language
-          )
-        ) {
-          if (
-            window.location.pathname.split("/")[1] !== i18n.language ||
-            window.location.pathname.split("/").length > 3
-          ) {
-            i18n.changeLanguage(i18n.language);
-          }
-        }
-      }
+    // UM
+    if (preProps.general.isMaintenance !== this.props.general.isMaintenance) {
+      this.handleUm();
     }
 
+    // language changed
+    if (preProps.general.brandLanguage !== this.props.general.brandLanguage) {
+      this.handleLanguageChanged();
+    }
+
+    // register is not completed
     if (
       preProps.account.registercompleted !==
       this.props.account.registercompleted
     ) {
-      if (
-        this.props.account.registercompleted === false &&
-        config.features.Register_ShowPhone &&
-        config.features.ForcedVerification
-      ) {
-        this.props.history.push({
-          pathname: "/profile/phone",
-          state: { forced: true },
-        });
-      }
+      this.handleRegister();
     }
   }
 
   handleNavigate = (page) => {
-    if (
+    const isAccessiblePage =
       page.indexOf("/promotion") > -1 ||
       page.indexOf("/customer-service") > -1 ||
       page.indexOf("/main/home") > -1 ||
-      page.indexOf("/slot") > -1
-    ) {
-      page = page;
-    } else {
-      if (this.props.account.token == null) {
-        page = "/";
-      } else {
-        page = page;
-      }
+      page.indexOf("/slot") > -1;
+
+    const isTokenAvailable = this.props.account.token != null;
+
+    if (!isAccessiblePage && !isTokenAvailable) {
+      page = "/";
     }
 
     AppHistory.push(page);
@@ -446,30 +412,6 @@ class SubIndex extends Component {
         action: action,
       };
     });
-  };
-
-  handleClosePopupAlert = () => {
-    this.setState({ ...this.state, open: false });
-  };
-
-  // Popup
-  handleOpenPopup = (url) => {
-    this.setState({
-      ...this.state,
-      popupUrl: url,
-      openPopup: true,
-    });
-  };
-  handleClosePopup = () => {
-    this.setState({
-      ...this.state,
-      openPopup: false,
-    });
-  };
-
-  handleClickUrl = () => {
-    this.handleClosePopup();
-    window.open(this.state.popupUrl, "_blank");
   };
 
   handleCloseAudio = () => {
@@ -492,7 +434,6 @@ class SubIndex extends Component {
   };
 
   render() {
-    const scale = this.props.screenWidth / 750;
     const matchingpath =
       window.location.pathname === "/" ||
       window.location.pathname === "/main/home";
@@ -628,28 +569,20 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateScreenSize: (width, height) => {
-      dispatch({ type: UPDATING_SCREEN_SIZE, width, height });
-    },
     showLogin: (payload) => {
       dispatch({ type: SHOW_LOGIN, payload });
     },
 
     getAccountProfile: (showVip) =>
       dispatch(accountAction.getAccountProfile(showVip)),
-    // checkGame: () => dispatch(accountAction.checkGame()),
     getMobilePrefix: () => dispatch(generalAction.getMobilePrefix()),
     checkTokenIsValid: () => dispatch(accountAction.checkTokenIsValid()),
     getMarquee: (language) => dispatch(uiAction.getMarquee(language)),
     getAnnouncement: (language) => dispatch(uiAction.getAnnouncement(language)),
     getBankCardList: () => dispatch(walletAction.getBankCardList()),
     getBrand: () => dispatch(generalAction.getBrand()),
-    // getBanner: () => dispatch(uiAction.getBanner()),
-    // getBankList: () => dispatch(walletAction.getBankList()),
-    // getDepositChannel: () => dispatch(walletAction.getDepositChannel()),
     getBalanceList: (token) => dispatch(walletAction.getBalanceList()),
     getGameBalance: (gpcode) => dispatch(walletAction.getGameBalance(gpcode)),
-    // getIDCardNo: () => dispatch(accountAction.getIDCardNo()),
     getHomePageGameList: () => dispatch(gameAction.getHomePageGameList()),
     getSiteToken: () => dispatch(generalAction.getSiteToken()),
     getMessageList: (language, pages, limit) =>
