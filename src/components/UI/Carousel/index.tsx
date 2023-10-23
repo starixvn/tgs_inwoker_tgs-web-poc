@@ -1,7 +1,7 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 import CarouselArrow from "@/assets/images/dialog/carousel-arrow.svg";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 import styled from "styled-components";
 
 const NextArrowContainer = styled.div`
