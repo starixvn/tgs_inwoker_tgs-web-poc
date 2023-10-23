@@ -64,7 +64,7 @@ const Interceptor = {
           response.config.url.toUpperCase().indexOf("/API/PLAYER/LOGIN") >= 0
         ) {
           localStorage.setItem(
-            "token" + (isMobileOnly ? "1" : "1"),
+            "token" + (isMobileOnly ? "1" : "0"),
             response.data.token
           );
         }
