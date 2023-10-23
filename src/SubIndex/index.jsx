@@ -75,23 +75,23 @@ class SubIndex extends Component {
 
   // =========================
   saveUrlInfoToLocalStorage() {
-    const urlpath = window.location.pathname.split("/");
+    const urlPath = window.location.pathname.split("/");
 
-    if (urlpath.length !== 3) {
+    if (urlPath.length !== 3) {
       localStorage.setItem("invitationtype", "");
       localStorage.setItem("upper", ""); //reset
       localStorage.setItem("promotionId", ""); //reset
       return;
     }
 
-    if (urlpath[1] === "a") {
-      localStorage.setItem("promotionId", urlpath[2] || "");
+    if (urlPath[1] === "a") {
+      localStorage.setItem("promotionId", urlPath[2] || "");
       localStorage.setItem("upper", ""); //reset
       localStorage.setItem("invitationtype", "a");
     }
 
-    if (urlpath[1] === "p") {
-      localStorage.setItem("upper", urlpath[2] || "");
+    if (urlPath[1] === "p") {
+      localStorage.setItem("upper", urlPath[2] || "");
       localStorage.setItem("promotionId", ""); //reset
       localStorage.setItem("invitationtype", "p");
     }
@@ -205,33 +205,11 @@ class SubIndex extends Component {
     this.props.getPromotionRouletteCount();
   }
 
-  async componentDidMount() {
-    Common.loadScript("/js/config.js", () => {
-      Common.loadScript("/js/iovation.js", () => {});
-    });
-
-    this.saveUrlInfoToLocalStorage();
-
-    await this.handleSiteDataFetching();
-
-    this.handleGoto();
-    this.handleTo();
-    await this.handleAccountDataFetching();
-
-    this.setState({ ...this.state, loading: false });
-    //}
-    window.addEventListener("focus", this.onFocus);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("focus", this.onFocus);
-  }
-
-  onFocus = () => {
+  onFocus() {
     if (!this.props.account.token) return;
 
     this.props.getBalanceList();
-  };
+  }
 
   handleLoginTokenChanged() {
     // if token became empty
@@ -320,6 +298,72 @@ class SubIndex extends Component {
     }
   }
 
+  handleNavigate(page) {
+    const isAccessiblePage =
+      page.indexOf("/promotion") > -1 ||
+      page.indexOf("/customer-service") > -1 ||
+      page.indexOf("/main/home") > -1 ||
+      page.indexOf("/slot") > -1;
+
+    const isTokenAvailable = this.props.account.token != null;
+
+    if (!isAccessiblePage && !isTokenAvailable) {
+      page = "/";
+    }
+
+    AppHistory.push(page);
+  }
+
+  // PopupAlert
+  handleOpenPopupAlert(title, message, action) {
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        title: title,
+        message: message,
+        open: true,
+        action: action,
+      };
+    });
+  }
+
+  handleCloseAudio() {
+    if (document.getElementById("audio") != null)
+      document.getElementById("audio").play();
+  }
+
+  handleCloseAnnouncement() {
+    this.setState({
+      ...this.state,
+      openAnnouncement: false,
+      showPromotion: true,
+    });
+    this.handleCloseAudio();
+  }
+
+  handleClosePromotion() {
+    this.setState({ ...this.state, showPromotion: false });
+    this.handleCloseAudio();
+  }
+
+  async componentDidMount() {
+    Common.loadScript("/js/config.js", () => {
+      Common.loadScript("/js/iovation.js", () => {});
+    });
+    this.saveUrlInfoToLocalStorage();
+    await this.handleSiteDataFetching();
+    this.handleGoto();
+    this.handleTo();
+    await this.handleAccountDataFetching();
+    this.setState({ ...this.state, loading: false });
+
+    window.addEventListener("focus", () => this.onFocus());
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("focus", () => this.onFocus());
+  }
+
   componentDidUpdate(preProps) {
     // popup announcement logic
     const isInHomePage =
@@ -385,56 +429,8 @@ class SubIndex extends Component {
     }
   }
 
-  handleNavigate = (page) => {
-    const isAccessiblePage =
-      page.indexOf("/promotion") > -1 ||
-      page.indexOf("/customer-service") > -1 ||
-      page.indexOf("/main/home") > -1 ||
-      page.indexOf("/slot") > -1;
-
-    const isTokenAvailable = this.props.account.token != null;
-
-    if (!isAccessiblePage && !isTokenAvailable) {
-      page = "/";
-    }
-
-    AppHistory.push(page);
-  };
-
-  // PopupAlert
-  handleOpenPopupAlert = (title, message, action) => {
-    this.setState((prevState) => {
-      return {
-        ...prevState,
-        title: title,
-        message: message,
-        open: true,
-        action: action,
-      };
-    });
-  };
-
-  handleCloseAudio = () => {
-    if (document.getElementById("audio") != null)
-      document.getElementById("audio").play();
-  };
-
-  handleCloseAnnouncement = () => {
-    this.setState({
-      ...this.state,
-      openAnnouncement: false,
-      showPromotion: true,
-    });
-    this.handleCloseAudio();
-  };
-
-  handleClosePromotion = () => {
-    this.setState({ ...this.state, showPromotion: false });
-    this.handleCloseAudio();
-  };
-
   render() {
-    const matchingpath =
+    const matchingPath =
       window.location.pathname === "/" ||
       window.location.pathname === "/main/home";
 
@@ -442,7 +438,7 @@ class SubIndex extends Component {
       config.features.PopupAnnouncement &&
       this.props.ui.mains &&
       this.props.ui.mains.length > 0 &&
-      matchingpath;
+      matchingPath;
 
     const showPopupPromotion =
       config.features.PopupPromotion &&
@@ -521,7 +517,7 @@ class SubIndex extends Component {
                         <>
                           <ForcedVerification
                             forcedverify={true}
-                            alert={this.handleOpenPopupAlert}
+                            alert={() => this.handleOpenPopupAlert()}
                           />
                         </>
                       )}
@@ -529,13 +525,13 @@ class SubIndex extends Component {
                     {showPopupAnnouncement && (
                       <PopupAnnouncement
                         open={this.state.openAnnouncement}
-                        onClose={this.handleCloseAnnouncement}
+                        onClose={() => this.handleCloseAnnouncement()}
                       />
                     )}
                     {showPopupPromotion && (
                       <PopupPromotion
                         open={this.state.showPromotion}
-                        onClose={this.handleClosePromotion}
+                        onClose={() => this.handleClosePromotion()}
                       />
                     )}
 

@@ -8,7 +8,7 @@ export class MemberInfo {
   identityformid: string | null = null;
   identityformstatus: number = 0;
   autotransfertogame: boolean = true;
-  registercompleted: boolean = true;
+  registercompleted: boolean | string = "";
   issetpaypassword: boolean = true;
   line: string | null = null;
   phone: string | null = null;
