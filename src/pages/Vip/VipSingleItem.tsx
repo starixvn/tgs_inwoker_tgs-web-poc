@@ -223,13 +223,8 @@ const VipSingleItem = ({
   useEffect(() => {
     if (!isCurrentLevel) return;
 
-    if (!(currentItemRef.current && "scrollIntoView" in currentItemRef.current))
+    if (!(currentItemRef.current))
       return;
-
-    currentItemRef.current.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
   }, [currentItemRef.current, isCurrentLevel]);
 
   return (

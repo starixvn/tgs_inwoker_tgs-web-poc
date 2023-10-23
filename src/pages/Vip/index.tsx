@@ -16,9 +16,6 @@ const VipScrollableContainer = styled.div`
   background-color: ${(props) => props.theme.primaryDark};
   color: ${(props) => props.theme.white};
   box-sizing: border-box;
-  /* 對外層的高度修正 */
-  margin-top: unset;
-  margin-bottom: unset;
 
    ${media.sm} {
     max-width: 870px;
