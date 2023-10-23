@@ -84,7 +84,7 @@ type Props = {
   handleClick: (brandsSupport: BrandsSupport) => void;
 };
 const SupportCard = ({ brandsSupport, handleClick }: Props) => {
-  const { appid, phone, qrcodeurl, type } = brandsSupport;
+  const { type } = brandsSupport;
 
   const handleClickCard = useCallback(() => {
     handleClick(brandsSupport);
@@ -92,7 +92,7 @@ const SupportCard = ({ brandsSupport, handleClick }: Props) => {
 
   return (
     <SupportCardContainer onClick={handleClickCard}>
-      <IconContainer icon={brandsSupport.type}>
+      <IconContainer>
         <Icon
           iconUrl={`${
             process.env.PUBLIC_URL
