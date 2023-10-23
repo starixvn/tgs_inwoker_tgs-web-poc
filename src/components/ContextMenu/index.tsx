@@ -50,14 +50,14 @@ const ContextMenu = () => {
         iconUrl:
           process.env.PUBLIC_URL +
           `/assets/images/mobile/contextMenu/icon_service_support.svg`,
-        routePath: "/main/support", // TODO: handle support
+        routePath: "/main/support",
       },
       {
         label: i18n.t("wap.main.account.signout"),
         iconUrl:
           process.env.PUBLIC_URL +
           `/assets/images/mobile/contextMenu/icon_logout.svg`,
-        routePath: "/logout", // TODO: handle logout
+        routePath: "/logout",
       },
     ];
   }, []);

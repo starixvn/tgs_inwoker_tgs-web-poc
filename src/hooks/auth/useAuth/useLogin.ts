@@ -50,14 +50,15 @@ export function useLogin() {
       }
     } catch (error) {
       handleLoginError(error);
+      throw error;
     }
   };
 
   const handleLoginFailure = (code: number | undefined) => {
     if (code === 210) {
-      handleLoginError(new Error("banned"));
+      throw new Error("banned");
     } else {
-      handleLoginError(new Error(i18n.t("common.msgInvalidUsername")));
+      throw new Error(i18n.t("common.msgInvalidUsername"));
     }
   };
 

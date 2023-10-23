@@ -6,6 +6,7 @@ import RedirectToLoginHint from "@/domain/authentication/RegisterForm/RedirectTo
 import { useRegisterForm } from "@/hooks/auth/useAuthForm/useRegisterForm";
 import FormikForm from "@/components/FormikForm";
 import { media } from "@/theme/breakpoints";
+import Loading from "@/components/UI/Loading";
 
 const RegisterFormContainer = styled.div`
   display: flex;
@@ -83,6 +84,8 @@ const RegisterForm = () => {
       </FormikForm>
 
       <RedirectToLoginHint />
+
+      <Loading show={isLoading} noShrink={true} />
     </RegisterFormContainer>
   );
 };

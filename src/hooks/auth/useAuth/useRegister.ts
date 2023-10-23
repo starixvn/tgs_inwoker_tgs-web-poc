@@ -65,8 +65,6 @@ export function useRegister() {
       });
       history.push("/");
     } catch (error: any) {
-      console.log(error);
-
       setRegisterState({
         isLoading: false,
         data: null,
@@ -76,6 +74,8 @@ export function useRegister() {
       if (error.message === "banned") {
         history.push("/banned");
       }
+
+      throw error;
     }
   }, []);
 
