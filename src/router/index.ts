@@ -365,7 +365,6 @@ const routes: Route[] = [
     path: "/maintenance",
     component: Maintenance,
     category: RouteCategoryEnum.HOME,
-    layout: DefaultLayout,
     isAnonymousAllowed: true,
   },
 

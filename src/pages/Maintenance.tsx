@@ -70,11 +70,13 @@ const Button = styled.button`
   font-weight: 500;
 `;
 const CSButton = styled(Button)`
+  cursor: pointer;
   background: linear-gradient(0deg, #e7415a, #e7415a),
     linear-gradient(0deg, rgba(231, 65, 90, 0.6), rgba(231, 65, 90, 0.6));
 `;
 const IMButton = styled(Button)`
   background: #6152dd;
+  cursor: pointer;
 `;
 
 const DefaultMaintenance = () => {
@@ -98,9 +100,9 @@ const Maintenance = () => {
   const [content, setContent] = useState("");
   const [isFailed, setFailed] = useState(false);
 
+  const newURL = livechat.setting?.url.replace("{lang}", i18n.language);
   const handleCSClick = () => {
-    const newURL = livechat.setting.url.replace("{lang}", i18n.language);
-    if (newURL.length) {
+    if (newURL?.length) {
       Common.PopupCenter(newURL, "", 785, 750);
     }
   };
@@ -145,7 +147,8 @@ const Maintenance = () => {
     fetchGetMaintenance();
   }, []);
 
-  const showImButton = brandsSupport.length > 0;
+  const showContactButton = !!newURL?.length;
+  const showImButton = !!brandsSupport.length;
   return (
     <MaintenanceContainer>
       <MaintenanceBg />
@@ -168,7 +171,9 @@ const Maintenance = () => {
           )}
         </TextContainer>
         <ButtonGroupContainer>
-          <CSButton onClick={handleCSClick}>Contact Customer</CSButton>
+          {showContactButton && (
+            <CSButton onClick={handleCSClick}>Contact Customer</CSButton>
+          )}
           {showImButton && (
             <IMButton onClick={handleIMClick}>Instant Messaging</IMButton>
           )}
