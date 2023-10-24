@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TextField as MuiTextField } from "@mui/material";
+import { TextField as MuiTextField, TextFieldProps } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 
 export const TextField = muiStyled(MuiTextField)(({ theme }) => ({
@@ -12,15 +12,38 @@ export const TextField = muiStyled(MuiTextField)(({ theme }) => ({
     fontSize: "1.125rem",
     fontWeight: 400,
     border: "none",
+
+    "&:-webkit-autofill": {
+      WebkitTextFillColor: `${theme.palette.common.white} !important`,
+    },
   },
-  "& input::placeholder": {
-    color: theme.palette.tertiary.light,
+  label: {
+    color: "rgba(255,255,255,0.3)",
+    alignItems: "center",
     fontSize: "1.125rem",
     fontWeight: 400,
   },
-  label: {
-    color: theme.palette.common.white,
+  placeholder: {
+    color: "red",
   },
+
+  "& input::placeholder": {
+    color: "rgba(255,255,255,0.6)",
+    fontSize: "1.125rem",
+    fontWeight: 400,
+  },
+  [theme.breakpoints.up("sm")]: {
+    input: {
+      fontSize: "0.937rem",
+    },
+    label: {
+      fontSize: "0.937rem",
+    },
+    "& input::placeholder": {
+      fontSize: "0.937rem",
+    },
+  },
+
   "& .MuiInput-underline:after": {
     borderBottom: "none",
   },
@@ -37,7 +60,34 @@ export const TextField = muiStyled(MuiTextField)(({ theme }) => ({
   },
 }));
 
+// export const TextField = (props: TextFieldProps) => {
+//   return (
+//     <MuiTextField
+//       fullWidth={true}
+//       {...props}
+//       sx={{
+//         overflow: "visible",
+//       }}
+//       inputProps={{
+//         sx: {
+//           fontSize: "1.125rem",
+//           color: theme.palette.common.white,
+//         },
+//       }}
+//       InputLabelProps={{
+//         sx: {
+//           fontSize: "1.125rem",
+//         },
+//       }}
+//     />
+//   );
+// };
+
+export default MuiTextField;
 export const GrayInputWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
   border-radius: 5px;
   border: none;
   background: ${({ theme }) => theme.tertiaryDark};

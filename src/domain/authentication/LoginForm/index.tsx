@@ -128,7 +128,7 @@ const LoginForm = (props: Props) => {
 
       <RedirectToRegisterHint />
 
-      <Loading show={isLoading} />
+      <Loading show={isLoading} noShrink={true} />
     </LoginFormContainer>
   );
 };

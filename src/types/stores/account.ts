@@ -13,7 +13,7 @@ export interface InboxMessage {
 export interface AccountState {
   pending: boolean;
   updateCardResult: null | any;
-  registercompleted: boolean;
+  registercompleted: boolean | string;
   info: {
     balance: number;
     member_card_no: string | null;

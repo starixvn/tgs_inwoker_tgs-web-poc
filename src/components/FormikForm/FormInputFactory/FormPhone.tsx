@@ -28,7 +28,7 @@ const FormPhone = ({ formInput, formik, showErrorOn }: Props) => {
       >
         <Select
           type={"string"}
-          label={formik.values["areaCode"]}
+          placeholder={formik.values["areaCode"]}
           variant={"outlined"}
           fullWidth
           name={"areaCode"}

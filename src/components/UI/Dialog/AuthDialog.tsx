@@ -1,8 +1,7 @@
 import { UpTransition } from "@/components/UI/Dialog/Transition";
-import { Dialog as MuiDialog } from "@mui/material";
+import { Dialog as MuiDialog, DialogProps } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
-import { Close as CloseIcon } from "@mui/icons-material";
 import { useRwd } from "@/hooks/useRwd";
 import AuthDialogImage from "@/domain/authentication/components/AuthDialogImage";
 
@@ -21,6 +20,10 @@ const ChildContainer = styled.div`
   width: 50%;
   //max-height: 80vh;
   overflow: scroll;
+
+  //& * {
+  //  font-size: 0.937rem !important;
+  //}
 `;
 
 type Props = {
@@ -29,14 +32,20 @@ type Props = {
   children: React.ReactElement;
   dialogHeaderTitle?: string;
 };
-const AuthDialog = ({ isOpen, handleCloseDialog, children }: Props) => {
+const AuthDialog = ({
+  isOpen,
+  handleCloseDialog,
+  children,
+  ...others
+}: Props & DialogProps) => {
   const { isDesktopSize } = useRwd();
 
   if (!isDesktopSize) return null;
 
   return (
     <DialogContainer
-      fullScreen={!isDesktopSize}
+      // fullScreen={!isDesktopSize}
+      fullWidth={true}
       open={isOpen}
       TransitionComponent={UpTransition}
       onClose={handleCloseDialog}

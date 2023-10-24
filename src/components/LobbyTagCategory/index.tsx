@@ -2,6 +2,7 @@ import { GameService } from "@/api-services/services/GameService";
 import ButtonText from "@/components/ButtonText";
 import CategoryLabel from "@/components/CategoryLabel";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
+import { useRwd } from "@/hooks/useRwd";
 import Common from "@/utils/Common";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
@@ -89,6 +90,7 @@ const LobbyTagCategory = ({
   const [filteredGameList, setFilteredGameList] = useState<any[]>([]);
   const [visibleGameCount, setVisibleGameCount] = useState(showDataLength);
   const [isLoading, setIsLoading] = useState(false);
+  const { isMobileSize, isDesktopSize } = useRwd();
 
   const statusMap = groupBy_gameType.reduce((accumulator, group) => {
     group.forEach((item) => {
@@ -185,7 +187,17 @@ const LobbyTagCategory = ({
         </CategoryContent>
       )}
 
-      {visibleGameCount < filteredGameList.length && gameTag === "Hot" && (
+      {isMobileSize && visibleGameCount < filteredGameList.length && gameTag === "Hot" && (
+        <ButtonContainer>
+          <ButtonText
+            size="large"
+            text={"Load more"}
+            onClick={handleLoadMoreClick}
+          />
+        </ButtonContainer>
+      )}
+
+      {isDesktopSize && visibleGameCount < filteredGameList.length && (gameTag === "Hot" || gameTag === "New" || gameTag === "Recommend") && (
         <ButtonContainer>
           <ButtonText
             size="large"

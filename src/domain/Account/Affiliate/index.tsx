@@ -19,7 +19,7 @@ const AffiliateContainer = styled.div`
   align-items: center;
   padding: 20px 9px;
 
-  ${media.sm} {
+  ${media.lg} {
     flex-direction: row;
     gap: 19px;
     align-items: flex-start;

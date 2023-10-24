@@ -1,11 +1,12 @@
-import config from "../../../../config/config";
-import { themeList } from "../../../../theme";
-import { isMobileOnly } from "react-device-detect";
-var muiThemeMode = isMobileOnly
-  ? themeList[config.brand] || themeList[config.theme]
-  : themeList[config.theme];
+import React from "react";
+import { theme } from "@/theme";
 
-const Smartsupp = ({ smartsuppkey, xPosition, yPosition }) => {
+type SmartsuppProps = {
+  smartsuppkey: string;
+  xPosition?: number;
+  yPosition?: number;
+};
+const Smartsupp = ({ smartsuppkey, xPosition, yPosition }: SmartsuppProps) => {
   const offsetX = xPosition || 50;
   const offsetY = yPosition || 50;
   const script = document.createElement("script");
@@ -14,7 +15,7 @@ const Smartsupp = ({ smartsuppkey, xPosition, yPosition }) => {
         _smartsupp.key = "` +
     smartsuppkey +
     `"; _smartsupp.color ="` +
-    muiThemeMode.primary +
+    theme.primary +
     `";
     _smartsupp.offsetX="` +
     offsetX +

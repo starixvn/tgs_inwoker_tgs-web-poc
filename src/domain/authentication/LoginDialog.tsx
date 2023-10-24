@@ -20,4 +20,4 @@ const LoginDialog = ({}: Props) => {
   );
 };
 
-export default LoginDialog;
+export default React.memo(LoginDialog);

@@ -3,7 +3,6 @@ import { FormikValues } from "formik";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useGenerateRegisterFormik } from "@/hooks/auth/useAuthForm/hooks/useGenerateRegisterFormik";
 import { usePromotionCode } from "@/hooks/auth/useAuthForm/hooks/usePromotionCode";
-import { useSnackbar } from "notistack";
 import i18n from "@/utils/i18n";
 import { useConfirmAdult } from "@/hooks/auth/useAuthForm/hooks/useConfirmAdult";
 import { useRwd } from "@/hooks/useRwd";
@@ -17,17 +16,16 @@ export function useRegisterForm() {
   const { registerState, handleRegister } = useAuth();
   const { promotionData } = usePromotionCode();
   const { isConfirmedAdult, handleClickConfirmAdult } = useConfirmAdult();
-  const { enqueueSnackbar } = useSnackbar();
   const { handleToggleRegisterDialog } = useAuthDialog();
   const { isDesktopSize } = useRwd();
+
+  const [otherError, setOtherError] = useState<Error | null>(null);
 
   // ===== handle click register =====
   const handleClickRegister = useCallback(
     async (values: FormikValues) => {
       if (!isConfirmedAdult) {
-        enqueueSnackbar(i18n.t("common.msgRegisterTermAndCondition"), {
-          variant: "warning",
-        });
+        setOtherError(new Error(i18n.t("common.msgRegisterTermAndCondition")));
         return;
       }
 
@@ -45,11 +43,11 @@ export function useRegisterForm() {
         if (isDesktopSize) {
           handleToggleRegisterDialog(false);
         }
+        setOtherError(null);
       } catch (error: any) {
         console.error(error);
-        enqueueSnackbar(error.message, {
-          variant: "warning",
-        });
+
+        setOtherError(error.message);
       }
     },
     [promotionData.promoId, isConfirmedAdult]
@@ -63,7 +61,7 @@ export function useRegisterForm() {
     formInputConfigList,
     formik,
     isLoading: registerState.isLoading,
-    registerError: registerState.error,
+    registerError: registerState.error || otherError,
     isConfirmedAdult,
     handleClickConfirmAdult,
   };

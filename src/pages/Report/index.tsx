@@ -32,7 +32,7 @@ const ReportPage = (props: Props) => {
     <ReportContainer>
       {isDesktopSize && <UserWalletInfo />}
       <AccountPaper pageName={i18n.t("affiliate.report")} iconUrl={iconReport}>
-        <Report alert={alert} history={history} />;
+        <Report alert={alert} history={history} />
       </AccountPaper>
     </ReportContainer>
   );

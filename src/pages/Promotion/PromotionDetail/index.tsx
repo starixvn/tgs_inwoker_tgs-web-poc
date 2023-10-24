@@ -1,17 +1,23 @@
-import styled from "styled-components";
+import BannerImage from "@/components/Promotion/BannerImage";
+import JoinPromotionButton from "@/components/Promotion/JoinPromotionButton";
+import { NOT_SHOW_JOIN_BUTTON_KEY_LIST } from "@/constants/promotion";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { Promotion } from "@/models/dto/general/GetPromotionListResDto";
-import JoinPromotionButton from "@/components/Promotion/JoinPromotionButton";
-import BannerImage from "@/components/Promotion/BannerImage";
-import i18n from "@/utils/i18n";
-import { NOT_SHOW_JOIN_BUTTON_KEY_LIST } from "@/constants/promotion";
 import { media } from "@/theme/breakpoints";
+import i18n from "@/utils/i18n";
+import styled from "styled-components";
 const moment = require("moment");
 
 const PromotionDetailContainer = styled.div`
   width: 100%;
-  padding: 22px;
+  padding: 22px 22px 80px 22px;
   color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+  flex-shrink: 0;
+
   ${media.sm} {
     max-width: 870px;
     margin: 0 auto;
@@ -26,16 +32,22 @@ const BannerWrapper = styled.div`
   }
 `;
 const ContentContainer = styled.div`
-  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  align-self: stretch;
 `;
 const TextArea = styled.div`
   line-height: 1rem;
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
 `;
 const Title = styled.h2`
   color: ${({ theme }) => theme.yellow};
   font-size: 1.125rem;
   font-weight: 700;
+  margin-bottom: 10px;
+
   ${media.sm} {
     font-size: 2rem;
     line-height: 2rem;
@@ -57,7 +69,7 @@ const JoinPromotionButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px 0;
+  padding: 10px 22px;
   background: ${({ theme }) => theme.primaryLight};
   ${media.sm} {
     position: relative;

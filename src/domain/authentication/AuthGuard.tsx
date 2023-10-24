@@ -4,6 +4,7 @@ import { Route } from "@/router";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useHistory } from "react-router-dom";
 import Loading from "@/components/UI/Loading";
+import { useRwd } from "@/hooks/useRwd";
 
 interface AuthGuard {
   children: React.ReactNode;

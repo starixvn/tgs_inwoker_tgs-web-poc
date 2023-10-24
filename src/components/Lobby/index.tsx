@@ -1,6 +1,7 @@
 import { GameTypeEnum } from "@/api-services/utils/Enum";
 import LobbyCategory from "@/components/LobbyCategory";
 import LobbyTagCategory from "@/components/LobbyTagCategory";
+import { useRwd } from "@/hooks/useRwd";
 import styled from "styled-components";
 import { gameTypeList, lobbyCategoryList } from "../../constants/tab";
 import { GroupByGameItem } from "../LobbyTagCategory";
@@ -18,6 +19,23 @@ type Props = {
 };
 
 const Lobby = ({ handleGameTypeClick, groupBy_gameType }: Props) => {
+  const { isMobileSize, isDesktopSize } = useRwd();
+
+  const showCategoryAmount = (tag: string, isLobbyType: boolean) => {
+    if (isMobileSize) {
+      if (isLobbyType) {
+        return 3;
+      } else {
+        if (tag === "Hot") {
+          return 9;
+        }
+      } return 6;
+    }
+    if (isDesktopSize) {
+      return 6;
+    }
+  }
+
   return (
     <LobbyContainer>
       {Object.values(lobbyCategoryList).map((category) => {
@@ -36,7 +54,7 @@ const Lobby = ({ handleGameTypeClick, groupBy_gameType }: Props) => {
               text={category.text}
               gameType={category.gameType}
               gameTag={category.text}
-              showDataLength={category.text === "Hot" ? 9 : 6}
+              showDataLength={showCategoryAmount(category.text, false)!}
               handleViewAllClick={() => {
                 handleGameTypeClick(category.gameType);
               }}
@@ -55,7 +73,7 @@ const Lobby = ({ handleGameTypeClick, groupBy_gameType }: Props) => {
               iconUrl={category.iconUrl}
               text={category.text}
               gameType={category.gameType}
-              showDataLength={3}
+              showDataLength={showCategoryAmount(category.text, true)!}
               handleViewAllClick={() => {
                 handleGameTypeClick(category.gameType);
               }}

@@ -1,5 +1,4 @@
 import React, { createContext, useCallback, useState } from "react";
-import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
 
 export const initialState: {
@@ -31,45 +30,42 @@ export const AuthDialogContextProvider = ({ children }: ProviderProps) => {
   const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
   const [isForgetPasswordDialogOpen, setIsForgetPasswordDialogOpen] =
     useState(false);
-  const location = useLocation();
   const history = useHistory();
 
   const handleToggleLoginDialog = useCallback((isOpen?: boolean) => {
     if (typeof isOpen !== "undefined") {
       setIsLoginDialogOpen(isOpen);
-      return;
+    } else {
+      setIsLoginDialogOpen((prevState) => !prevState);
     }
 
-    setIsLoginDialogOpen((prevState) => !prevState);
-
-    // if (location.pathname === "/login") {
-    //   history.push("/");
-    // }
+    if (location.pathname === "/login" && !isOpen) {
+      history.push("/");
+    }
   }, []);
+
   const handleToggleRegisterDialog = useCallback((isOpen?: boolean) => {
     if (typeof isOpen !== "undefined") {
       setIsRegisterDialogOpen(isOpen);
-      return;
+    } else {
+      setIsRegisterDialogOpen((prevState) => !prevState);
     }
 
-    setIsRegisterDialogOpen((prevState) => !prevState);
-
-    // if (location.pathname === "/register") {
-    //   history.push("/");
-    // }
+    if (location.pathname === "/register" && !isOpen) {
+      history.push("/");
+    }
   }, []);
 
   const handleToggleForgetPasswordDialog = useCallback((isOpen?: boolean) => {
     if (typeof isOpen !== "undefined") {
       setIsForgetPasswordDialogOpen(isOpen);
-      return;
+    } else {
+      setIsForgetPasswordDialogOpen((prevState) => !prevState);
     }
 
-    setIsForgetPasswordDialogOpen((prevState) => !prevState);
-
-    // if (location.pathname === "/register") {
-    //   history.push("/");
-    // }
+    if (location.pathname === "/forgot-password" && !isOpen) {
+      history.push("/");
+    }
   }, []);
 
   return (

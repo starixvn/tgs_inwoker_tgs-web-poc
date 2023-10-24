@@ -14,6 +14,7 @@ import {
 import { useAuth } from "@/hooks/auth/useAuth";
 import i18n from "@/utils/i18n";
 import { media } from "@/theme/breakpoints";
+import Loading from "@/components/UI/Loading";
 
 const AccountNavsContainer = styled.div`
   & > div {
@@ -37,7 +38,7 @@ type Props = {};
 const AccountNavigations = (props: Props) => {
   const history = useHistory();
   const { navCardItemList } = useAccountNavigations();
-  const { handleLogout } = useAuth();
+  const { handleLogout, logoutState } = useAuth();
 
   const handleClickNav = useCallback((navCardItem: NavCardItem) => {
     history.push(navCardItem.routePath);
@@ -82,6 +83,8 @@ const AccountNavigations = (props: Props) => {
           {i18n.t("web.header.logout")}
         </Button>
       </AccountNavsContainer>
+
+      {/*<Loading show={logoutState.isLoading} />*/}
     </>
   );
 };

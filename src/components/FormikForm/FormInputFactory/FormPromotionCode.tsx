@@ -38,7 +38,7 @@ const FormPromotionCode = ({ formInput, formik, showErrorOn }: Props) => {
       <GrayInputWrapper key={name}>
         <TextField
           type={getFormInputType(type)}
-          label={label}
+          placeholder={label}
           variant={"outlined"}
           fullWidth
           name={name}

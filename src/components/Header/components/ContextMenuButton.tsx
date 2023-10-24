@@ -6,6 +6,8 @@ import SvgIcon from "@/components/UI/SvgIcon";
 import Modal from "@/components/UI/Modal";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { media } from "@/theme/breakpoints";
+import Loading from "@/components/UI/Loading";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 const ContextMenuButtonContainer = styled.div`
   height: 40px;
@@ -50,6 +52,7 @@ const ArrowContainer = styled.div<{
 
 const ContextMenuButton = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { logoutState } = useAuth();
   const { account } = useAccountStore();
 
   const handleClick = () => {
@@ -72,6 +75,8 @@ const ContextMenuButton = () => {
       <Modal open={isOpen} onClose={handleClick}>
         <ContextMenu />
       </Modal>
+
+      <Loading show={logoutState.isLoading} noShrink={true} />
     </>
   );
 };

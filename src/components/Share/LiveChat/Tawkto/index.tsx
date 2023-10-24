@@ -1,4 +1,9 @@
-const Tawkto = ({ license }) => {
+import React from "react";
+
+type TawktoProps = {
+  license: string;
+};
+const Tawkto = ({ license }: TawktoProps) => {
   const script = document.createElement("script");
   script.innerHTML =
     ` var Tawk_API = Tawk_API||{}, Tawk_LoadStart=new Date();

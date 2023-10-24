@@ -195,7 +195,7 @@ Let's consider a scenario where we have a `<Deposit/>` component that contains a
 const Deposit = (props: Props) => {
   return (
     <DepositContainer>
-      <DepositPrev />; // this is a comonent contains lots of stuff we can't refactor
+      <DepositPrev /> // this is a comonent contains lots of stuff we can't refactor
     </DepositContainer>
   );
 };
@@ -229,7 +229,7 @@ const Deposit = (props: Props) => {
   const { appHistory, alert } = usePageProps(); // contains all the props the prev class component needed
   return (
     <DepositContainer> 
-      <DepositPrev appHistory={appHistory} alert={alert} />; // pass them into children
+      <DepositPrev appHistory={appHistory} alert={alert} /> // pass them into children
     </DepositContainer>
   );
 };
@@ -253,7 +253,7 @@ const Deposit = (props: Props) => {
   const { alert } = useNotifications();
   return (
     <DepositContainer>
-      <DepositPrev appHistory={history} alert={alert} />;
+      <DepositPrev appHistory={history} alert={alert} />
     </DepositContainer>
   );
 };
