@@ -422,7 +422,7 @@ const routes: Route[] = [
     category: RouteCategoryEnum.HOME,
   },
   {
-    path: "/joinlobbygame/:type/:params",
+    path: "/joinlobbygame/:gameType/:gpCode",
     component: JoinLobbyGame,
     category: RouteCategoryEnum.HOME,
   },

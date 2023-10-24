@@ -1,41 +1,38 @@
 import React, { useEffect, useState } from "react";
 import Loading from "@/components/UI/Loading";
-import { GameTypeEnum } from "@/api-services/utils/Enum";
 import Maintenance from "@/pages/Maintenance";
 import { useParams } from "react-router-dom";
 import { GameService } from "@/services/GameService";
 
-type JoinGameProps = {};
-
-const JoinGame = ({}: JoinGameProps) => {
+const JoinGame = () => {
   const { gameId, gpCode } = useParams();
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [isMaintenance, setIsMaintenance] = useState(false);
 
   useEffect(() => {
     const joinGame = async () => {
-      const getGameUrlRes = await GameService.JoinGame(gameId, gpCode);
+      const joinGameRes = await GameService.JoinGame(gameId, gpCode);
 
-      if (getGameUrlRes.IsSuccess) {
-        window.location.href = getGameUrlRes.data.url;
+      if (joinGameRes.IsSuccess) {
+        window.location.href = joinGameRes.data.url;
       } else {
-        handleJoinGameMaintenance(getGameUrlRes);
+        handleJoinGameMaintenance();
       }
     };
 
     joinGame();
-  }, [gpCode]);
+  }, [gpCode, gameId]);
 
-  const handleJoinGameMaintenance = (response: any) => {
+  const handleJoinGameMaintenance = () => {
     setIsMaintenance(true);
-    setLoading(false);
+    setIsLoading(false);
   };
 
-  return isMaintenance ? (
-    <Maintenance isGameMaintenance={true} />
-  ) : (
-    <Loading show={loading} noShrink={true} opacity={1} />
-  );
+  if (isMaintenance) {
+    return <Maintenance isGameMaintenance={true} />;
+  }
+
+  return <Loading show={isLoading} noShrink={true} opacity={1} />;
 };
 
 export default JoinGame;

@@ -6,6 +6,7 @@ import { GameService as PrevGameService } from "@/api-services/services/GameServ
 export const GameService = {
   ...PrevGameService,
   JoinGame,
+  JoinLobbyGame,
 };
 
 const languageFromLocalStorage = localStorage.getItem("i18nextLng");
@@ -21,5 +22,16 @@ function JoinGame(gid: number, gpcode: string) {
     extends: {
       lobbyurl: window.location.protocol + "//" + window.location.hostname,
     },
-  }) as unknown as Promise<GetGameUrlResDto>;
+  }) as unknown as Promise<JoinGameResDto>;
+}
+
+function JoinLobbyGame(gtype, gpcode) {
+  return ApiService.post(`Game/lobby/geturl`, {
+    gpcode: gpcode,
+    gtype: parseInt(gtype),
+    language: detectLanguage,
+    extends: {
+      lobbyurl: window.location.protocol + "//" + window.location.hostname,
+    },
+  }) as unknown as Promise<JoinLobbyGameResDto>;
 }

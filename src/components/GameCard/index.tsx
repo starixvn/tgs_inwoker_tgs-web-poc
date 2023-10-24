@@ -22,6 +22,7 @@ const CardHoverBg = styled.div`
   border-radius: 10px;
   display: none;
   text-align: center;
+  cursor: pointer;
 `;
 
 const GameCardWrapper = styled.div`

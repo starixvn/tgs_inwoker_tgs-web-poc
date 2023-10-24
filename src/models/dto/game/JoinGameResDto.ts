@@ -1,4 +1,4 @@
-interface GetGameUrlResDto {
+interface JoinGameResDto {
   IsSuccess: boolean;
   code: number;
   data: {

@@ -12,6 +12,7 @@ import CardVendor from "../CardVender";
 const Wrapper = styled.div`
   width: 100%;
   margin: 15px 0;
+  cursor: pointer;
 `;
 
 const CategoryTitle = styled.div`
@@ -103,30 +104,14 @@ const LobbyTagCategory = ({
     setVisibleGameCount(visibleGameCount + showDataLength);
   };
 
-  const launchGame = (id: number, gpcode: string) => {
+  const launchGame = (gameId: number, gpcode: string) => {
     if (!account.token) {
       history.push("/login");
-    } else {
-      Common.closePreviousPopup();
-      Common.PopupCenter(`/joingame/${id}/${gpcode}`, "gamewindow");
-
-      const gameWindow = window.open("", "gamewindow");
-
-      if (gameWindow) {
-        gameWindow.document.open();
-        gameWindow.document.write("Loading");
-        gameWindow.document.close();
-
-        GameService.JoinGame(id, gpcode).then((response) => {
-          if (response?.IsSuccess) {
-            gameWindow.location.href = response?.data?.url;
-          } else {
-            console.log(response?.info);
-            gameWindow.close();
-          }
-        });
-      }
+      return;
     }
+
+    Common.closePreviousPopup();
+    Common.PopupCenter(`/joingame/${gameId}/${gpcode}`, "gamewindow");
   };
 
   useEffect(() => {
@@ -191,25 +176,29 @@ const LobbyTagCategory = ({
         </CategoryContent>
       )}
 
-      {isMobileSize && visibleGameCount < filteredGameList.length && gameTag === "Hot" && (
-        <ButtonContainer>
-          <ButtonText
-            size="large"
-            text={"Load more"}
-            onClick={handleLoadMoreClick}
-          />
-        </ButtonContainer>
-      )}
+      {isMobileSize &&
+        visibleGameCount < filteredGameList.length &&
+        gameTag === "Hot" && (
+          <ButtonContainer>
+            <ButtonText
+              size="large"
+              text={"Load more"}
+              onClick={handleLoadMoreClick}
+            />
+          </ButtonContainer>
+        )}
 
-      {isDesktopSize && visibleGameCount < filteredGameList.length && (gameTag === "Hot" || gameTag === "New" || gameTag === "Recommend") && (
-        <ButtonContainer>
-          <ButtonText
-            size="large"
-            text={"Load more"}
-            onClick={handleLoadMoreClick}
-          />
-        </ButtonContainer>
-      )}
+      {isDesktopSize &&
+        visibleGameCount < filteredGameList.length &&
+        (gameTag === "Hot" || gameTag === "New" || gameTag === "Recommend") && (
+          <ButtonContainer>
+            <ButtonText
+              size="large"
+              text={"Load more"}
+              onClick={handleLoadMoreClick}
+            />
+          </ButtonContainer>
+        )}
     </Wrapper>
   );
 };
