@@ -3,7 +3,6 @@ import { FormikValues } from "formik";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useGenerateRegisterFormik } from "@/hooks/auth/useAuthForm/hooks/useGenerateRegisterFormik";
 import { usePromotionCode } from "@/hooks/auth/useAuthForm/hooks/usePromotionCode";
-import { useSnackbar } from "notistack";
 import i18n from "@/utils/i18n";
 import { useConfirmAdult } from "@/hooks/auth/useAuthForm/hooks/useConfirmAdult";
 import { useRwd } from "@/hooks/useRwd";
@@ -17,7 +16,6 @@ export function useRegisterForm() {
   const { registerState, handleRegister } = useAuth();
   const { promotionData } = usePromotionCode();
   const { isConfirmedAdult, handleClickConfirmAdult } = useConfirmAdult();
-  const { enqueueSnackbar } = useSnackbar();
   const { handleToggleRegisterDialog } = useAuthDialog();
   const { isDesktopSize } = useRwd();
 

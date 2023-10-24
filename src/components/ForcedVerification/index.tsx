@@ -5,6 +5,7 @@ import i18n from "@/utils/i18n";
 import config from "@/config/config";
 import { AccountService } from "@/api-services/services/AccountService";
 import { Textfit } from "react-textfit";
+import { useNotifications } from "@/hooks/pageProps/useNotifications";
 
 const Wrapper = styled.div`
   padding: 20px 10px;
@@ -18,7 +19,7 @@ const CustomDialog = styled(Dialog)`
 `;
 
 const Title = styled.div`
-  font-size: 3.5rem
+  font-size: 3.5rem;
   width: 100%;
   text-align: center;
   padding: 10px 10px 20px 10px;
@@ -35,7 +36,6 @@ const InputRow = styled.div`
 const AnotherRow = styled.div`
   padding: 5px 30px;
   display: grid;
-
   gap: 5px;
   grid-template-columns: 70% 30%;
 `;
@@ -81,7 +81,7 @@ const CustomButton = styled.div`
   flex: 1;
   font-size: 1.8rem;
 
-  ${({ theme }) => {
+  ${({ theme }: { theme: { primaryGradient: string; primary: string } }) => {
     return (
       "background-image: linear-gradient(to top, " +
       theme.primaryGradient +
@@ -91,24 +91,26 @@ const CustomButton = styled.div`
     );
   }}
 
-  ${({ disabled }) => {
+  ${({ disabled }: { disabled: boolean }) => {
     return disabled && `filter: grayscale(01);pointer-events: none;`;
   }}
 
   color: #ffffff;
-`;
+}`;
 
-const ForcedVerification = ({ forcedverify, alert }) => {
-  useEffect(() => {
-    setOpen(forcedverify);
-  }, []);
+type ForcedVerificationProps = {
+  forceVerify: boolean;
+};
 
-  const [open, setOpen] = useState(forcedverify);
+const ForcedVerification = ({ forceVerify }: ForcedVerificationProps) => {
+  const { alert } = useNotifications();
+  const [open, setOpen] = useState(forceVerify);
   const [areaCode, setAreacode] = useState(config.features.PhonePrefix);
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
   const [countdown, setCountdown] = useState(0);
-  const [securityKey, setSecurityKey] = React.useState("");
+  const [securityKey, setSecurityKey] = useState<string>("");
+
   const handleGetCodeClick = async () => {
     if (countdown <= 0) {
       var expr = new RegExp(
@@ -142,7 +144,7 @@ const ForcedVerification = ({ forcedverify, alert }) => {
     }
   };
 
-  function smsVerification(securityKey, code) {
+  function smsVerification(securityKey: string, code: string) {
     AccountService.NewRegister("InitPhone", {
       input: "Valid",
       data: {
@@ -210,15 +212,7 @@ const ForcedVerification = ({ forcedverify, alert }) => {
     <CustomDialog open={open} maxWidth="" fullWidth="xs">
       <Wrapper>
         <Title>{i18n.t("web.register.activation")}</Title>
-        {
-          //     <CloseButton
-          //     onClick={() => {
-          //       setOpen(false);
-          //     }}
-          //   >
-          //     ×
-          //   </CloseButton>
-        }
+
         <InputRow>
           <CustomSelect>
             <option>{areaCode}</option>

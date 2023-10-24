@@ -1,4 +1,9 @@
-const Zendesk = ({ license }) => {
+import React from "react";
+
+type ZendestProps = {
+  license: string;
+};
+const Zendesk = ({ license }: ZendestProps) => {
   const script = document.createElement("script");
   script.innerHTML =
     `

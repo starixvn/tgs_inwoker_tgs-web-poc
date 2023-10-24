@@ -2,10 +2,8 @@ import { useCallback, useState } from "react";
 import { useHistory } from "react-router";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { RegisterReqDto } from "@/models/dto/player/RegisterReqDto";
-import { useSnackbar } from "notistack";
 import ErrorSwitcher from "@/utils/ErrorSwitcher";
 import i18n from "@/utils/i18n";
-import config from "@/config/config";
 
 export type RegisterState = {
   data: any | null;

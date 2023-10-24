@@ -1,4 +1,5 @@
 import featureList from "./features";
+import { isMobileOnly } from "react-device-detect";
 
 const config = {
   baseUrl:
@@ -22,5 +23,8 @@ const config = {
   affiliateId: window?.env?.affiliateId || "",
   features: featureList["default"],
 };
+
+config.from = isMobileOnly ? "h5" : "h5";
+config.isPC = isMobileOnly ? 1 : 0;
 
 export default config;
