@@ -52,24 +52,6 @@ const App: React.FC = () => {
   const { isInitSiteLoading } = useInitSite();
   const { loginState, logoutState, registerState } = useAuth();
 
-  // PopupAlert
-  const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [message, setMessage] = useState("");
-  const [action, setAction] = useState("");
-  const handleOpenPopupAlert = (
-    title: string,
-    message: string,
-    action: string
-  ) => {
-    setTitle(title);
-    setMessage(message);
-    setOpen(true);
-    setAction(action);
-  };
-
-  // componentDidUpdate
-
   const isAuthLoading =
     loginState.isLoading || logoutState.isLoading || registerState.isLoading;
   const isLoading =
@@ -129,12 +111,7 @@ const App: React.FC = () => {
                 {config.features.SMSVerification &&
                   account.registercompleted === false &&
                   config.features.ForcedVerification && (
-                    <>
-                      <ForcedVerification
-                        forcedverify={true}
-                        alert={handleOpenPopupAlert}
-                      />
-                    </>
+                    <ForcedVerification forceVerify={true} />
                   )}
 
                 {showPopupAnnouncement && (
