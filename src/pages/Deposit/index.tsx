@@ -9,7 +9,6 @@ import { useRwd } from "@/hooks/useRwd";
 import UserWalletInfo from "@/components/Account/UserWalletInfo";
 import iconDeposit from "@/assets/images/account/badge/icon-deposit.svg";
 import i18n from "@/utils/i18n";
-import PageBadge from "@/components/PageBadge";
 import AccountPaper from "@/components/AccountPaper";
 
 const DepositContainer = styled.div`
