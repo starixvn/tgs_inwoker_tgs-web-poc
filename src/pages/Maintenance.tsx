@@ -41,7 +41,7 @@ const ContentContainer = styled.div`
   ${media.sm} {
     left: 26.4%;
     top: 5.6%;
-    width: 419px;
+    width: 25.2%;
   }
 `;
 const TextContainer = styled.div`
