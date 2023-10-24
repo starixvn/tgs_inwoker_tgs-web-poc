@@ -20,7 +20,6 @@ import RegisterDialog from "@/domain/authentication/RegisterDialog";
 import { HeaderContextProvider } from "@/contexts/headerContext";
 import { AuthDialogContextProvider } from "@/contexts/authDialogContext";
 import ForgetPasswordDialog from "@/domain/authentication/ForgetPasswordDialog";
-import { useUiStore } from "@/hooks/stores/useUiStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useLanguageChange } from "@/hooks/app/useLanguageChange";
@@ -32,7 +31,6 @@ import { useInitSite } from "@/hooks/app/useInitSite";
 import { useAuth } from "@/hooks/auth/useAuth";
 
 const App: React.FC = () => {
-  const { ui } = useUiStore();
   const { general } = useGeneralStore();
   const { account } = useAccountStore();
 
@@ -137,7 +135,7 @@ const App: React.FC = () => {
           </PageNameContextProvider>
         </AuthContextProvider>
       </Router>
-      <Loading show={isLoading} opacity={1} noShrink={true} />;
+      <Loading show={isLoading} opacity={1} noShrink={true} />
     </>
   );
 };

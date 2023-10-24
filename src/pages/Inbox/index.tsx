@@ -33,7 +33,7 @@ const InboxPage = (props: Props) => {
       {isDesktopSize && <UserWalletInfo />}
 
       <AccountPaper pageName={i18n.t("inbox.title")} iconUrl={iconInbox}>
-        <Inbox alert={alert} history={history} />;
+        <Inbox alert={alert} history={history} />
       </AccountPaper>
     </InboxContainer>
   );

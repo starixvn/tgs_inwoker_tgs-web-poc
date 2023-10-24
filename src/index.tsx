@@ -29,6 +29,7 @@ import { useLanguage } from "@/hooks/useLanguage";
 import Config from "@/config/config";
 import StyledSnakeBarProvider from "@/components/UI/StyledSnakeBarProvider";
 import Loading from "@/components/UI/Loading";
+import { useTokenVerify } from "@/hooks/app/useTokenVerify";
 
 require("es6-promise").polyfill();
 
@@ -51,9 +52,10 @@ document
 
 const AppWrapper = () => {
   const { isLanguageReady } = useLanguage();
+  const { isTokenVerified } = useTokenVerify();
 
-  if (!isLanguageReady) {
-    return <Loading show={true} noShrink={true} />;
+  if (!isLanguageReady || !isTokenVerified) {
+    return <Loading show={true} opacity={1} noShrink={true} />;
   }
 
   return (

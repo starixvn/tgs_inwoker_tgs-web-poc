@@ -31,7 +31,7 @@ const AffiliatePage = (props: Props) => {
         pageName={i18n.t("affiliate.title")}
         iconUrl={iconAffiliate}
       >
-        <Affiliate />;
+        <Affiliate />
       </AccountPaper>
     </AffiliateContainer>
   );

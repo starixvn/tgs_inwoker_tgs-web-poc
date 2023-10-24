@@ -29,7 +29,7 @@ const AddCard = (props: Props) => {
         pageName={i18n.t("common.withdrawal")}
         iconUrl={iconWithdrawal}
       >
-        <AddCardPrev appHistory={history} alert={alert} />;
+        <AddCardPrev appHistory={history} alert={alert} />
       </AccountPaper>
     </CardContainer>
   );

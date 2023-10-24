@@ -31,7 +31,7 @@ const Withdrawal = (props: Props) => {
         pageName={i18n.t("common.withdrawal")}
         iconUrl={iconWithdrawal}
       >
-        <WithdrawalPrev appHistory={history} alert={alert} />;
+        <WithdrawalPrev appHistory={history} alert={alert} />
       </AccountPaper>
     </WithdrawalContainer>
   );

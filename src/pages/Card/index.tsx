@@ -31,7 +31,7 @@ const Card = (props: Props) => {
         pageName={i18n.t("common.withdrawal")}
         iconUrl={iconWithdrawal}
       >
-        <CardPrev appHistory={history} alert={alert} navigate={navigate} />;
+        <CardPrev appHistory={history} alert={alert} navigate={navigate} />
       </AccountPaper>
     </CardContainer>
   );
