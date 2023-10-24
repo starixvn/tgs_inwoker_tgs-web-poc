@@ -17,7 +17,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { ThemeProvider as StyleComponentThemeProvider } from "styled-components";
 import rootReducer from "@/api-services/reducers/rootReducer";
 import i18n from "@/utils/i18n";
-import Main from "@/SubIndex/subIndexNew";
+import App from "@/App";
 import { NotificationContextProvider } from "@/contexts/notificationContext";
 import AudioPlayer from "./components/Share/audioplayer";
 import FeatureGetter from "./components/Share/feature-getter";
@@ -28,6 +28,7 @@ import { muiTheme } from "@/theme/mui";
 import { useLanguage } from "@/hooks/useLanguage";
 import Config from "@/config/config";
 import StyledSnakeBarProvider from "@/components/UI/StyledSnakeBarProvider";
+import Loading from "@/components/UI/Loading";
 
 require("es6-promise").polyfill();
 
@@ -48,37 +49,39 @@ document
     i18n.t("common.title").replace(/{brand}/g, Config.brandName)
   );
 
-const App = () => {
+const AppWrapper = () => {
   const { isLanguageReady } = useLanguage();
 
-  if (isLanguageReady) {
-    return (
-      <Provider store={store}>
-        <NotificationContextProvider>
-          <FeatureGetter />
-          {Config.features.BackgroundMusic && <AudioPlayer />}
-
-          <StylesProvider injectFirst>
-            <MuiThemeProvider theme={muiTheme as any}>
-              <StyleComponentThemeProvider theme={theme}>
-                <GlobalStyles />
-                <StyledSnakeBarProvider>
-                  <Main />
-                </StyledSnakeBarProvider>
-              </StyleComponentThemeProvider>
-            </MuiThemeProvider>
-          </StylesProvider>
-        </NotificationContextProvider>
-      </Provider>
-    );
-  } else {
-    return null;
+  if (!isLanguageReady) {
+    return <Loading show={true} noShrink={true} />;
   }
+
+  return (
+    <NotificationContextProvider>
+      <FeatureGetter />
+      {Config.features.BackgroundMusic && <AudioPlayer />}
+
+      <StylesProvider injectFirst>
+        <MuiThemeProvider theme={muiTheme as any}>
+          <StyleComponentThemeProvider theme={theme}>
+            <GlobalStyles />
+            <StyledSnakeBarProvider>
+              <App />
+            </StyledSnakeBarProvider>
+          </StyleComponentThemeProvider>
+        </MuiThemeProvider>
+      </StylesProvider>
+    </NotificationContextProvider>
+  );
 };
 
 const container = document.getElementById("root");
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
-root.render(<App />);
+root.render(
+  <Provider store={store}>
+    <AppWrapper />
+  </Provider>
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

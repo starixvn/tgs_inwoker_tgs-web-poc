@@ -2,8 +2,8 @@ import React, { Suspense, useState } from "react";
 import { Redirect, Route, Router, Switch } from "react-router";
 import { AppHistory } from "@/history/History";
 import config from "@/config/config";
-import ForcedVerification from "../components/ForcedVerification";
-import LiveChat from "../components/Share/live-chat";
+import ForcedVerification from "./components/ForcedVerification";
+import LiveChat from "./components/Share/LiveChat";
 import { routes } from "@/router";
 import PopupAlertModal from "@/components/Popup/PopupAlertDialog";
 import PopupAnnouncement from "@/components/Popup/PopupAnnouncement";
@@ -31,7 +31,7 @@ import { usePopupInHomePage } from "@/hooks/app/usePopupInHomePage";
 import { useInitSite } from "@/hooks/app/useInitSite";
 import { useAuth } from "@/hooks/auth/useAuth";
 
-const SubIndex: React.FC = () => {
+const App: React.FC = () => {
   const { ui } = useUiStore();
   const { general } = useGeneralStore();
   const { account } = useAccountStore();
@@ -52,12 +52,11 @@ const SubIndex: React.FC = () => {
   const { isInitSiteLoading } = useInitSite();
   const { loginState, logoutState, registerState } = useAuth();
 
+  // PopupAlert
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [action, setAction] = useState("");
-
-  // PopupAlert
   const handleOpenPopupAlert = (
     title: string,
     message: string,
@@ -117,24 +116,15 @@ const SubIndex: React.FC = () => {
                   <Redirect to="/" />
                 </Switch>
 
-                {(() => {
-                  if (
-                    config.features.LiveChatVendor.brand &&
-                    config.features.LiveChatVendor.license
-                  ) {
-                    return (
-                      <LiveChat
-                        license={config.features.LiveChatVendor.license}
-                        vendor={config.features.LiveChatVendor.brand}
-                        group={
-                          config.features.LiveChatVendor.group
-                            ? config.features.LiveChatVendor.group
-                            : 0
-                        }
-                      />
-                    );
+                <LiveChat
+                  license={config.features.LiveChatVendor.license}
+                  vendor={config.features.LiveChatVendor.brand}
+                  group={
+                    config.features.LiveChatVendor.group
+                      ? config.features.LiveChatVendor.group
+                      : "0"
                   }
-                })()}
+                />
 
                 {config.features.SMSVerification &&
                   account.registercompleted === false &&
@@ -175,4 +165,4 @@ const SubIndex: React.FC = () => {
   );
 };
 
-export default SubIndex;
+export default App;
