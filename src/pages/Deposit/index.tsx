@@ -32,7 +32,7 @@ const DepositPage = (props: Props) => {
 
       {!isDesktopSize && <TransferTabs />}
       <AccountPaper pageName={i18n.t("common.deposit")} iconUrl={iconDeposit}>
-        <DepositPrev appHistory={history} alert={alert} order={order} />;
+        <DepositPrev appHistory={history} alert={alert} order={order} />
       </AccountPaper>
     </DepositContainer>
   );

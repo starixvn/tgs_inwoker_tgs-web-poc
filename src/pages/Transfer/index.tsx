@@ -32,7 +32,7 @@ const Transfer = (props: Props) => {
     <TransferContainer>
       {isDesktopSize && <UserWalletInfo />}
       <AccountPaper pageName={i18n.t("common.transfer")} iconUrl={iconTransfer}>
-        <TransferPrev alert={alert} history={history} />;
+        <TransferPrev alert={alert} history={history} />
       </AccountPaper>
     </TransferContainer>
   );

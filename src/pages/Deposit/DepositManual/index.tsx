@@ -28,7 +28,7 @@ const DepositManual = (props: Props) => {
 
       {!isDesktopSize && <TransferTabs />}
       <AccountPaper pageName={i18n.t("common.deposit")} iconUrl={iconDeposit}>
-        <Manual appHistory={history} alert={alert} />;
+        <Manual appHistory={history} alert={alert} />
       </AccountPaper>
     </DepositContainer>
   );

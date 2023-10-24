@@ -135,7 +135,7 @@ const App: React.FC = () => {
           </PageNameContextProvider>
         </AuthContextProvider>
       </Router>
-      <Loading show={isLoading} opacity={1} noShrink={true} />;
+      <Loading show={isLoading} opacity={1} noShrink={true} />
     </>
   );
 };
