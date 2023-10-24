@@ -38,7 +38,7 @@ export function useInitSite() {
   const { getMessages } = useInboxStore();
   const { getHomePageGameList } = useGameStore();
 
-  const [loading, setLoading] = useState(true);
+  const [isInitSiteLoading, setIsInitSiteLoading] = useState(true);
 
   const saveUrlInfoToLocalStorage = () => {
     const urlPath = window.location.pathname.split("/");
@@ -140,7 +140,7 @@ export function useInitSite() {
     let isRegisterCompleted = getMemberInfoRes.data.registercompleted;
 
     if (config.features.ForceRedirectAddCard && !bankInfoAuthentication) {
-      setLoading(false);
+      setIsInitSiteLoading(false);
       if (isPhoneNull) {
         AppHistory.push({
           pathname: "/profile/phone",
@@ -187,7 +187,7 @@ export function useInitSite() {
     handleGoto();
     handleTo();
     await handleAccountInfoFetching();
-    setLoading(false);
+    setIsInitSiteLoading(false);
   };
 
   useEffect(() => {
@@ -236,6 +236,6 @@ export function useInitSite() {
   }, [general.token]);
 
   return {
-    loading,
+    isInitSiteLoading,
   };
 }

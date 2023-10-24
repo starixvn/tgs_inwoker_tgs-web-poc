@@ -41,12 +41,12 @@ export function useLogin() {
       if (!result?.IsSuccess) {
         handleLoginFailure(result?.code);
       } else {
+        await handleLoginSuccess(username, needToRemember);
         setLoginState({
           isLoading: false,
           data: result,
           error: null,
         });
-        await handleLoginSuccess(username, needToRemember);
       }
     } catch (error) {
       handleLoginError(error);

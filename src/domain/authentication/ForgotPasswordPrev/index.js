@@ -8,7 +8,6 @@ import i18n from "@/utils/i18n";
 import TextFieldWithButton from "@/components/UI/TextFieldWithButton";
 import { Button } from "@/components/UI/Button";
 import { GrayInputWrapper, TextField } from "@/components/UI/TextField";
-import { FormControl } from "@/styles/forms";
 import { Select } from "@/components/UI/Select";
 import { media } from "@/theme/breakpoints";
 
@@ -27,6 +26,7 @@ const PhoneContainer = styled.div`
   gap: 8px;
   align-items: stretch;
   margin-bottom: 21px;
+  overflow: visible;
 `;
 
 class ForgotPasswordPrev extends Component {
@@ -166,7 +166,7 @@ class ForgotPasswordPrev extends Component {
             return config.features.SMSVerification ? (
               <>
                 <PhoneContainer>
-                  <GrayInputWrapper style={{ width: "30%" }}>
+                  <GrayInputWrapper style={{ width: "20%" }}>
                     <Select
                       style={{ width: "100%" }}
                       native
@@ -185,11 +185,11 @@ class ForgotPasswordPrev extends Component {
                     </Select>
                   </GrayInputWrapper>
 
-                  <GrayInputWrapper style={{ width: "70%" }}>
+                  <GrayInputWrapper style={{ width: "80%" }}>
                     <TextField
                       value={this.state.phone}
                       onChange={this.handlePhoneChange}
-                      placeholder={i18n.t("common.msgEnterPhone")}
+                      label={i18n.t("common.msgEnterPhone")}
                       type={"text"}
                     />
                   </GrayInputWrapper>
@@ -213,7 +213,7 @@ class ForgotPasswordPrev extends Component {
                   <TextField
                     value={this.state.email}
                     onChange={this.handleEmailChange}
-                    placeholder={i18n.t("common.msgEnterEmail")}
+                    label={i18n.t("common.msgEnterEmail")}
                     type={"text"}
                     // label={i18n.t("common.emailAddress")}
                   />
@@ -225,8 +225,8 @@ class ForgotPasswordPrev extends Component {
                     style={{ margin: "20px auto 20px auto" }}
                     value={this.state.code}
                     onChange={this.handleCodeChange}
-                    placeholder={i18n.t("common.msgEnterCodeEmail")}
-                    label={i18n.t("common.token")}
+                    label={i18n.t("common.msgEnterCodeEmail")}
+                    // label={i18n.t("common.token")}
                     onClick={this.handleGetCodeClick}
                     type={"text"}
                   />
@@ -239,7 +239,7 @@ class ForgotPasswordPrev extends Component {
                 <GrayInputWrapper>
                   <TextField
                     onChange={this.handlePasswordChange}
-                    placeholder={i18n.t("wap.register.password")}
+                    label={i18n.t("wap.register.password")}
                     type={"password"}
                     label={i18n.t("common.NewPass")}
                   />
@@ -249,9 +249,9 @@ class ForgotPasswordPrev extends Component {
                   <TextField
                     value={this.state.password2}
                     onChange={this.handlePassword2Change}
-                    placeholder={i18n.t("common.msgEnterConfirmPass")}
+                    label={i18n.t("common.msgEnterConfirmPass")}
                     type={"password"}
-                    label={i18n.t("common.ConfirmPass")}
+                    // label={i18n.t("common.ConfirmPass")}
                   />
                 </GrayInputWrapper>
               </React.Fragment>

@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import Avatar from "@/components/Avatar";
 import { useMemo } from "react";
 import i18n from "@/utils/i18n";
+import Loading from "@/components/UI/Loading";
 
 const ContextMenuContainer = styled.div`
   width: 272px;
@@ -79,25 +80,27 @@ const ContextMenu = () => {
   };
 
   return (
-    <ContextMenuContainer>
-      <AvatarLevelWrapper>
-        <Avatar />
-      </AvatarLevelWrapper>
-      <ContextMenuItemWrapper>
-        {contextMenuList.map((contextMenuItem) => {
-          const { label, iconUrl, routePath } = contextMenuItem;
-          return (
-            <ContextMenuItem
-              key={label}
-              label={label}
-              iconUrl={iconUrl}
-              onClick={() => handleClick(routePath)}
-            />
-          );
-        })}
-      </ContextMenuItemWrapper>
-      <VersionTagContainer>V1.1.3795703</VersionTagContainer>
-    </ContextMenuContainer>
+    <>
+      <ContextMenuContainer>
+        <AvatarLevelWrapper>
+          <Avatar />
+        </AvatarLevelWrapper>
+        <ContextMenuItemWrapper>
+          {contextMenuList.map((contextMenuItem) => {
+            const { label, iconUrl, routePath } = contextMenuItem;
+            return (
+              <ContextMenuItem
+                key={label}
+                label={label}
+                iconUrl={iconUrl}
+                onClick={() => handleClick(routePath)}
+              />
+            );
+          })}
+        </ContextMenuItemWrapper>
+        <VersionTagContainer>V1.1.3795703</VersionTagContainer>
+      </ContextMenuContainer>
+    </>
   );
 };
 

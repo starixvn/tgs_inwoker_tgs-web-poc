@@ -22,7 +22,6 @@ export function useRegister() {
 
   const history = useHistory();
   const accountStore = useAccountStore();
-  const { enqueueSnackbar } = useSnackbar();
 
   const handleRegister = useCallback(async (registerReqDto: RegisterReqDto) => {
     try {
@@ -31,15 +30,11 @@ export function useRegister() {
       const registerResDto = await accountStore.registerAccount(registerReqDto);
 
       if (!registerResDto.IsSuccess) {
-        enqueueSnackbar(ErrorSwitcher.getTranslation(registerResDto.info), {
-          variant: "warning",
-        });
+        throw new Error(ErrorSwitcher.getTranslation(registerResDto.info));
       }
 
       if (!registerResDto.data.isnew) {
-        enqueueSnackbar(i18n.t("common.msgAlreadyExist"), {
-          variant: "warning",
-        });
+        throw new Error(i18n.t("common.msgAlreadyExist"));
       }
 
       //TODO: register workflow

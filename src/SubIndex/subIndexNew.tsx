@@ -1,14 +1,6 @@
 import React, { Suspense, useState } from "react";
-import { connect } from "react-redux";
 import { Redirect, Route, Router, Switch } from "react-router";
 import { AppHistory } from "@/history/History";
-import { SHOW_LOGIN } from "@/api-services/constant/actionType";
-import { uiAction } from "@/api-services/actions/uiAction";
-import { gameAction } from "@/api-services/actions/gameAction";
-import { generalAction } from "@/api-services/actions/generalAction";
-import { walletAction } from "@/api-services/actions/walletAction";
-import { accountAction } from "@/api-services/actions/accountAction";
-import { inboxAction } from "@/api-services/actions/inboxAction";
 import config from "@/config/config";
 import ForcedVerification from "../components/ForcedVerification";
 import LiveChat from "../components/Share/live-chat";
@@ -37,6 +29,7 @@ import { useUpdateProviderBalance } from "@/hooks/app/useUpdateProviderBalance";
 import { useCheckRegisterProcess } from "@/hooks/app/useCheckRegisterProcess";
 import { usePopupInHomePage } from "@/hooks/app/usePopupInHomePage";
 import { useInitSite } from "@/hooks/app/useInitSite";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 const SubIndex: React.FC = () => {
   const { ui } = useUiStore();
@@ -56,7 +49,8 @@ const SubIndex: React.FC = () => {
     handleClosePromotion,
   } = usePopupInHomePage();
 
-  const { loading } = useInitSite();
+  const { isInitSiteLoading } = useInitSite();
+  const { loginState, logoutState, registerState } = useAuth();
 
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -77,108 +71,108 @@ const SubIndex: React.FC = () => {
 
   // componentDidUpdate
 
-  if (
-    (loading || general.token === "" || general.token === null) &&
-    !general.isMaintenance
-  ) {
-    return <Loading show={loading} opacity={1} />;
-  } else {
-    return (
-      <>
-        <Router history={AppHistory}>
-          <AuthContextProvider>
-            <PageNameContextProvider>
-              <HeaderContextProvider>
-                <AuthDialogContextProvider>
-                  <ScrollToTop />
-                  <Switch>
-                    {routes.map((route, index) => {
-                      return (
-                        <Route
-                          exact
-                          key={index}
-                          path={route.path}
-                          render={(props) => {
-                            return (
-                              <AuthGuard route={route}>
-                                <LayoutProvider route={route}>
-                                  <Suspense
-                                    fallback={
-                                      <Loading
-                                        show={true}
-                                        opacity={1}
-                                        noShrink={true}
-                                      />
-                                    }
-                                  >
-                                    <route.component />
-                                  </Suspense>
-                                </LayoutProvider>
-                              </AuthGuard>
-                            );
-                          }}
-                        />
-                      );
-                    })}
-                    <Redirect to="/" />
-                  </Switch>
+  const isAuthLoading =
+    loginState.isLoading || logoutState.isLoading || registerState.isLoading;
+  const isLoading =
+    (isInitSiteLoading || !general.token || isAuthLoading) &&
+    !general.isMaintenance;
 
-                  {(() => {
-                    if (
-                      config.features.LiveChatVendor.brand &&
-                      config.features.LiveChatVendor.license
-                    ) {
-                      return (
-                        <LiveChat
-                          license={config.features.LiveChatVendor.license}
-                          vendor={config.features.LiveChatVendor.brand}
-                          group={
-                            config.features.LiveChatVendor.group
-                              ? config.features.LiveChatVendor.group
-                              : 0
-                          }
-                        />
-                      );
-                    }
-                  })()}
+  return (
+    <>
+      <Router history={AppHistory}>
+        <AuthContextProvider>
+          <PageNameContextProvider>
+            <HeaderContextProvider>
+              <AuthDialogContextProvider>
+                <ScrollToTop />
+                <Switch>
+                  {routes.map((route, index) => {
+                    return (
+                      <Route
+                        exact
+                        key={index}
+                        path={route.path}
+                        render={(props) => {
+                          return (
+                            <AuthGuard route={route}>
+                              <LayoutProvider route={route}>
+                                <Suspense
+                                  fallback={
+                                    <Loading
+                                      show={true}
+                                      opacity={1}
+                                      noShrink={true}
+                                    />
+                                  }
+                                >
+                                  <route.component />
+                                </Suspense>
+                              </LayoutProvider>
+                            </AuthGuard>
+                          );
+                        }}
+                      />
+                    );
+                  })}
+                  <Redirect to="/" />
+                </Switch>
 
-                  {config.features.SMSVerification &&
-                    account.registercompleted === false &&
-                    config.features.ForcedVerification && (
-                      <>
-                        <ForcedVerification
-                          forcedverify={true}
-                          alert={handleOpenPopupAlert}
-                        />
-                      </>
-                    )}
+                {(() => {
+                  if (
+                    config.features.LiveChatVendor.brand &&
+                    config.features.LiveChatVendor.license
+                  ) {
+                    return (
+                      <LiveChat
+                        license={config.features.LiveChatVendor.license}
+                        vendor={config.features.LiveChatVendor.brand}
+                        group={
+                          config.features.LiveChatVendor.group
+                            ? config.features.LiveChatVendor.group
+                            : 0
+                        }
+                      />
+                    );
+                  }
+                })()}
 
-                  {showPopupAnnouncement && (
-                    <PopupAnnouncement
-                      open={openAnnouncement}
-                      onClose={handleCloseAnnouncement}
-                    />
-                  )}
-                  {showPopupPromotion && (
-                    <PopupPromotion
-                      open={showPromotion}
-                      onClose={handleClosePromotion}
-                    />
+                {config.features.SMSVerification &&
+                  account.registercompleted === false &&
+                  config.features.ForcedVerification && (
+                    <>
+                      <ForcedVerification
+                        forcedverify={true}
+                        alert={handleOpenPopupAlert}
+                      />
+                    </>
                   )}
 
-                  <PopupAlertModal />
-                  <FloatingToolIcons />
-                  <LoginDialog />
-                  <RegisterDialog />
-                  <ForgetPasswordDialog />
-                </AuthDialogContextProvider>
-              </HeaderContextProvider>
-            </PageNameContextProvider>
-          </AuthContextProvider>
-        </Router>
-      </>
-    );
-  }
+                {showPopupAnnouncement && (
+                  <PopupAnnouncement
+                    open={openAnnouncement}
+                    onClose={handleCloseAnnouncement}
+                  />
+                )}
+                {showPopupPromotion && (
+                  <PopupPromotion
+                    open={showPromotion}
+                    onClose={handleClosePromotion}
+                  />
+                )}
+
+                <PopupAlertModal />
+                <FloatingToolIcons />
+                <LoginDialog />
+                <RegisterDialog />
+                <ForgetPasswordDialog />
+              </AuthDialogContextProvider>
+            </HeaderContextProvider>
+          </PageNameContextProvider>
+        </AuthContextProvider>
+      </Router>
+      <Loading show={isLoading} opacity={1} noShrink={true} />;
+    </>
+  );
 };
 
 export default SubIndex;

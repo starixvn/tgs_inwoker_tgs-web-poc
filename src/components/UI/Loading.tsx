@@ -26,7 +26,7 @@ const LoadingContainer = styled.div<LoadingContainer>`
   );
   ${({ $open }) =>
     $open ? "opacity:1;height: 100%;" : "opacity:0;height:0px;"};
-  z-index: 3;
+  z-index: 9999;
 `;
 const Inner = styled.div`
   margin: 0;

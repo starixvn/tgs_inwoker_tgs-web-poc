@@ -5,8 +5,11 @@ import { Button } from "@/components/UI/Button";
 import { InputAdornment, TextFieldProps } from "@mui/material";
 
 const CustomText = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  overflow: visible;
   & .MuiInputAdornment-root {
     overflow: visible;
     border-radius: 5px;
@@ -39,7 +42,7 @@ const TextFieldWithButton = (
         value={props.value}
         onChange={props.onChange}
         disabled={props.disabled || false}
-        placeholder={props.placeholder}
+        label={props.placeholder}
         maxLength={props.maxLength || 50}
         // endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
       />

@@ -151,7 +151,7 @@ class DepositPrev extends Component {
             if (config.features.Deposit_UploadRequired) {
               this.props.doUploadDepositProof(
                 response.data,
-                this.state.files[0]
+                this.state.files?.[0]
               );
               this.setState({
                 ...this.state,
@@ -162,7 +162,7 @@ class DepositPrev extends Component {
                 if (this.state.files.length > 0) {
                   this.props.doUploadDepositProof(
                     response.data,
-                    this.state.files[0]
+                    this.state.files?.[0]
                   );
                 }
               }
