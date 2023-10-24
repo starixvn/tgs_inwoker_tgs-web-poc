@@ -48,7 +48,7 @@ const AuthDialogLayout = ({ children }: Props) => {
       return history.push("/account");
     }
 
-    history.goBack();
+    history.push("/");
   }, [pathname]);
 
   if (isDesktopSize) {
