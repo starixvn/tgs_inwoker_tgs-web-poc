@@ -34,7 +34,7 @@ const BannerImage = ({ promotionData }: { promotionData: Promotion }) => {
       alt={promotionData.name}
       width={"100%"}
       height={"100%"}
-      style={{ objectFit: "cover" }}
+      style={{ objectFit: "contain" }}
     />
   );
 };
