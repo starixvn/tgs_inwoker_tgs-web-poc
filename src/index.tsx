@@ -2,7 +2,6 @@ import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 import React from "react";
 import "./index.css";
-import { isMobileOnly } from "react-device-detect";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./utils/serviceWorker";
 import {
@@ -12,18 +11,11 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import InterceptorService from "@/services/InterceptorService";
-import { makeStyles, StylesProvider } from "@mui/styles";
+import { StylesProvider } from "@mui/styles";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-import { ClassNameMap, CombinedClassKey, SnackbarProvider } from "notistack";
 import { composeWithDevTools } from "redux-devtools-extension";
-import styled, {
-  ThemeProvider as StyleComponentThemeProvider,
-} from "styled-components";
-import InfoPNG from "@/assets/images/info.png";
-import SuccessPNG from "@/assets/images/success.png";
-import DangerPNG from "@/assets/images/warning.png";
+import { ThemeProvider as StyleComponentThemeProvider } from "styled-components";
 import rootReducer from "@/api-services/reducers/rootReducer";
-import Config from "@/config/config";
 import i18n from "@/utils/i18n";
 import Main from "@/SubIndex/subIndexNew";
 import { NotificationContextProvider } from "@/contexts/notificationContext";
@@ -34,8 +26,8 @@ import { theme } from "./theme";
 import { createRoot } from "react-dom/client";
 import { muiTheme } from "@/theme/mui";
 import { useLanguage } from "@/hooks/useLanguage";
-import { RootState } from "@/types/stores/root";
-import { Theme } from "@mui/system";
+import Config from "@/config/config";
+import StyledSnakeBarProvider from "@/components/UI/StyledSnakeBarProvider";
 
 require("es6-promise").polyfill();
 
@@ -43,35 +35,8 @@ require("es6-promise").polyfill();
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
-) as Store<RootState, ClassNameMap<CombinedClassKey>>;
+) as Store<any>;
 InterceptorService.setupInterceptors(store);
-const notistackRef = React.createRef();
-const onClickDismiss = (key) => () => {
-  notistackRef.current.closeSnackbar(key);
-};
-
-const useStyles = makeStyles((theme) => ({
-  success: { backgroundColor: "#fff", color: "#000" },
-  error: { backgroundColor: "#fff", color: "#000" },
-  warning: { backgroundColor: "#fff", color: "#000" },
-  info: { backgroundColor: "#fff", color: "#000" },
-}));
-
-const Dismiss = styled.a`
-  margin-right: 12px;
-  font-weight: bold;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const Icon = styled.img`
-  width: 24px;
-  margin-right: 12px;
-`;
-
-Config.from = isMobileOnly ? "h5" : "h5";
-Config.isPC = isMobileOnly ? 1 : 0;
 
 document.getElementById("title").innerHTML = i18n
   .t("common.title")
@@ -84,7 +49,6 @@ document
   );
 
 const App = () => {
-  const classes = useStyles();
   const { isLanguageReady } = useLanguage();
 
   if (isLanguageReady) {
@@ -93,38 +57,14 @@ const App = () => {
         <NotificationContextProvider>
           <FeatureGetter />
           {Config.features.BackgroundMusic && <AudioPlayer />}
+
           <StylesProvider injectFirst>
             <MuiThemeProvider theme={muiTheme as any}>
               <StyleComponentThemeProvider theme={theme}>
                 <GlobalStyles />
-                <SnackbarProvider
-                  classes={
-                    {
-                      variantSuccess: classes.success,
-                      variantError: classes.error,
-                      variantWarning: classes.warning,
-                      variantInfo: classes.info,
-                    } as Partial<ClassNameMap<CombinedClassKey>>
-                  }
-                  iconVariant={{
-                    success: <Icon src={SuccessPNG}></Icon>,
-                    error: <Icon src={DangerPNG}></Icon>,
-                    warning: <Icon src={DangerPNG}></Icon>,
-                    info: <Icon src={InfoPNG}></Icon>,
-                  }}
-                  action={(key) => (
-                    <Dismiss onClick={onClickDismiss(key)}>x</Dismiss>
-                  )}
-                  maxSnack={3}
-                  autoHideDuration={3000}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "center",
-                  }}
-                  ref={notistackRef}
-                >
+                <StyledSnakeBarProvider>
                   <Main />
-                </SnackbarProvider>
+                </StyledSnakeBarProvider>
               </StyleComponentThemeProvider>
             </MuiThemeProvider>
           </StylesProvider>
