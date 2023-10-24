@@ -1,16 +1,20 @@
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
-import React, { useEffect } from "react";
+import React from "react";
 import "./index.css";
 import { isMobileOnly } from "react-device-detect";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./utils/serviceWorker";
-import { applyMiddleware, createStore } from "redux";
+import {
+  applyMiddleware,
+  legacy_createStore as createStore,
+  Store,
+} from "redux";
 import thunk from "redux-thunk";
 import InterceptorService from "@/services/InterceptorService";
 import { makeStyles, StylesProvider } from "@mui/styles";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-import { SnackbarProvider } from "notistack";
+import { ClassNameMap, CombinedClassKey, SnackbarProvider } from "notistack";
 import { composeWithDevTools } from "redux-devtools-extension";
 import styled, {
   ThemeProvider as StyleComponentThemeProvider,
@@ -20,7 +24,6 @@ import SuccessPNG from "@/assets/images/success.png";
 import DangerPNG from "@/assets/images/warning.png";
 import rootReducer from "@/api-services/reducers/rootReducer";
 import Config from "@/config/config";
-import config from "@/config/config";
 import i18n from "@/utils/i18n";
 import Main from "@/SubIndex/subIndexNew";
 import { NotificationContextProvider } from "@/contexts/notificationContext";
@@ -30,6 +33,9 @@ import { GlobalStyles } from "./global";
 import { theme } from "./theme";
 import { createRoot } from "react-dom/client";
 import { muiTheme } from "@/theme/mui";
+import { useLanguage } from "@/hooks/useLanguage";
+import { RootState } from "@/types/stores/root";
+import { Theme } from "@mui/system";
 
 require("es6-promise").polyfill();
 
@@ -37,7 +43,7 @@ require("es6-promise").polyfill();
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
-);
+) as Store<RootState, ClassNameMap<CombinedClassKey>>;
 InterceptorService.setupInterceptors(store);
 const notistackRef = React.createRef();
 const onClickDismiss = (key) => () => {
@@ -76,83 +82,30 @@ document
     "content",
     i18n.t("common.title").replace(/{brand}/g, Config.brandName)
   );
-// if (
-//   process.env.REACT_APP_CUSTOM_NODE_ENV !== "development" &&
-//   (process.env.REACT_APP_CUSTOM_NODE_ENV !== "qa" || Config.baseUrl === "") &&
-//   (process.env.REACT_APP_CUSTOM_NODE_ENV !== "staging" || Config.baseUrl === "")
-// ) {
-//   let url = window.location.hostname;
-//   let new_sub = "service";
-//   let baseUrl = "";
-//   if (url.split(/[\/\.]+/).length >= 3) {
-//     baseUrl = url.replace(url.split(/[\/\.]+/)[0], new_sub);
-//   } else {
-//     baseUrl = new_sub + "." + url;
-//   }
-//   baseUrl = window.location.protocol + "//" + baseUrl + "/";
-//   Config.baseUrl = baseUrl;
-// }
 
 const App = () => {
   const classes = useStyles();
-  const languageDetector =
-    i18n.language ||
-    localStorage.getItem("i18nextLng") ||
-    config.defaultLanguage;
-  const [isReady, setIsReady] = React.useState(false);
+  const { isLanguageReady } = useLanguage();
 
-  useEffect(() => {
-    i18n.on("languageChanged", (lng) => {
-      document.getElementById("title").innerHTML = i18n
-        .t("common.title")
-        .replace(/{brand}/g, Config.brandName);
-      document
-        .getElementById("description")
-        .setAttribute(
-          "content",
-          i18n.t("common.title").replace(/{brand}/g, Config.brandName)
-        );
-    });
-
-    i18n.on("loaded", function (options) {
-      setIsReady(true);
-    });
-  }, []);
-
-  useEffect(() => {
-    var languages = "zh-CN|zh-TW|en-US|id-ID|th-TH|vi-VN".split("|");
-    var pathname = window.location.pathname;
-    var isfoundLanguage = "";
-    for (var i = 0; i < languages.length; i++) {
-      if (pathname.indexOf(languages[i]) >= 0) {
-        isfoundLanguage = languages[i];
-        break;
-      }
-    }
-    if (isfoundLanguage != "") {
-      pathname = pathname.replace("/" + isfoundLanguage, "/");
-      pathname = pathname.replace("//", "/");
-      window.location.href = pathname + window.location.search;
-    }
-  }, []);
-
-  if (isReady) {
+  if (isLanguageReady) {
     return (
       <Provider store={store}>
         <NotificationContextProvider>
           <FeatureGetter />
           {Config.features.BackgroundMusic && <AudioPlayer />}
           <StylesProvider injectFirst>
-            <MuiThemeProvider theme={muiTheme}>
+            <MuiThemeProvider theme={muiTheme as any}>
               <StyleComponentThemeProvider theme={theme}>
                 <GlobalStyles />
                 <SnackbarProvider
-                  classes={{
-                    variantSuccess: classes.success,
-                    variantError: classes.error,
-                    variantWarning: classes.warning,
-                    variantInfo: classes.info,
-                  }}
+                  classes={
+                    {
+                      variantSuccess: classes.success,
+                      variantError: classes.error,
+                      variantWarning: classes.warning,
+                      variantInfo: classes.info,
+                    } as Partial<ClassNameMap<CombinedClassKey>>
+                  }
                   iconVariant={{
                     success: <Icon src={SuccessPNG}></Icon>,
                     error: <Icon src={DangerPNG}></Icon>,
