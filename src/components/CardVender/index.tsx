@@ -48,6 +48,7 @@ const CardVendorBg = styled.div`
     width: calc(16.67% - 14px);
     min-width: 118px;
     padding-bottom: calc((16.67% - 14px) * 1.34);
+    border-radius: 10px;
 
     &:hover ${CardHoverBg} {
       z-index: 1;

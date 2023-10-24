@@ -114,6 +114,13 @@ const GameCardContainer = styled.div`
   margin: 15px 0;
 `;
 
+const VendorIconContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const VendorIcon = styled.div`
   width: 392px;
   height: 296px;
@@ -370,7 +377,7 @@ const Main = (props: Props) => {
       {isLoading && <div>Loading...</div>}
       <TabPanel />
       <SocialMedia />
-      <VendorIcon />
+      <VendorIconContainer><VendorIcon /></VendorIconContainer>
     </MainWrapper>
   );
 };
