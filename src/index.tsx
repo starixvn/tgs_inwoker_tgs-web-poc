@@ -54,9 +54,7 @@ const AppWrapper = () => {
   const { isLanguageReady } = useLanguage();
   const { isTokenVerified } = useTokenVerify();
 
-  if (!isLanguageReady || !isTokenVerified) {
-    return <Loading show={true} opacity={1} noShrink={true} />;
-  }
+  const isReady = isLanguageReady && isTokenVerified;
 
   return (
     <NotificationContextProvider>
@@ -68,7 +66,11 @@ const AppWrapper = () => {
           <StyleComponentThemeProvider theme={theme}>
             <GlobalStyles />
             <StyledSnakeBarProvider>
-              <App />
+              {isReady ? (
+                <App />
+              ) : (
+                <Loading show={true} opacity={1} noShrink={true} />
+              )}
             </StyledSnakeBarProvider>
           </StyleComponentThemeProvider>
         </MuiThemeProvider>

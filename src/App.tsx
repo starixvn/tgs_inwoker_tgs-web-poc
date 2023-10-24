@@ -56,6 +56,9 @@ const App: React.FC = () => {
     (isInitSiteLoading || !general.token || isAuthLoading) &&
     !general.isMaintenance;
 
+  if (isLoading) {
+    return <Loading show={true} opacity={1} noShrink={true} />;
+  }
   return (
     <>
       <Router history={AppHistory}>
@@ -135,7 +138,8 @@ const App: React.FC = () => {
           </PageNameContextProvider>
         </AuthContextProvider>
       </Router>
-      <Loading show={isLoading} opacity={1} noShrink={true} />
+
+      <Loading show={isAuthLoading} noShrink={true} />
     </>
   );
 };
