@@ -137,7 +137,10 @@ const PromotionDetail = () => {
             <Title>Terms & Conditions</Title>
             <Description
               dangerouslySetInnerHTML={{
-                __html: "<div>" + termsToDisplay + "</div>",
+                __html:
+                  '<div style="padding-left: 30px;">' +
+                  termsToDisplay +
+                  "</div>",
               }}
             />
           </TextArea>
