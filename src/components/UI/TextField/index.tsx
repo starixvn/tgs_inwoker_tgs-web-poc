@@ -14,12 +14,12 @@ export const TextField = muiStyled(MuiTextField)(({ theme }) => ({
     border: "none",
   },
   "& input::placeholder": {
-    color: theme.palette.tertiary.light,
+    // color: theme.palette.tertiary.light,
     fontSize: "1.125rem",
     fontWeight: 400,
   },
   label: {
-    color: theme.palette.common.white,
+    color: "rgba(255,255,255,0.3)",
   },
   "& .MuiInput-underline:after": {
     borderBottom: "none",
@@ -38,6 +38,9 @@ export const TextField = muiStyled(MuiTextField)(({ theme }) => ({
 }));
 
 export const GrayInputWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
   border-radius: 5px;
   border: none;
   background: ${({ theme }) => theme.tertiaryDark};

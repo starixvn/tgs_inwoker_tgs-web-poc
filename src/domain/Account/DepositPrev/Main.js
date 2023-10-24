@@ -685,7 +685,7 @@ class Main extends Component {
                 return Object.keys(this.props.exchangeRate[key]).map((key2) => {
                   if (key2 === "HKD") {
                     return (
-                      <ExchangeRateContainer>
+                      <ExchangeRateContainer key={`${key}-${key2}`}>
                         <LimitLabel>
                           {i18n.t("deposit.exchangeRate")}:{" "}
                         </LimitLabel>

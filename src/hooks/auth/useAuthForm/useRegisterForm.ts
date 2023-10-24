@@ -21,13 +21,13 @@ export function useRegisterForm() {
   const { handleToggleRegisterDialog } = useAuthDialog();
   const { isDesktopSize } = useRwd();
 
+  const [otherError, setOtherError] = useState<Error | null>(null);
+
   // ===== handle click register =====
   const handleClickRegister = useCallback(
     async (values: FormikValues) => {
       if (!isConfirmedAdult) {
-        enqueueSnackbar(i18n.t("common.msgRegisterTermAndCondition"), {
-          variant: "warning",
-        });
+        setOtherError(new Error(i18n.t("common.msgRegisterTermAndCondition")));
         return;
       }
 
@@ -45,11 +45,11 @@ export function useRegisterForm() {
         if (isDesktopSize) {
           handleToggleRegisterDialog(false);
         }
+        setOtherError(null);
       } catch (error: any) {
         console.error(error);
-        enqueueSnackbar(error.message, {
-          variant: "warning",
-        });
+
+        setOtherError(error.message);
       }
     },
     [promotionData.promoId, isConfirmedAdult]
@@ -63,7 +63,7 @@ export function useRegisterForm() {
     formInputConfigList,
     formik,
     isLoading: registerState.isLoading,
-    registerError: registerState.error,
+    registerError: registerState.error || otherError,
     isConfirmedAdult,
     handleClickConfirmAdult,
   };

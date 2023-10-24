@@ -17,6 +17,7 @@ const FormText = ({ formInput, formik, showErrorOn }: Props) => {
       <TextField
         type={getFormInputType(type)}
         label={label}
+        // placeHolder={label}
         variant={"outlined"}
         fullWidth
         name={name}

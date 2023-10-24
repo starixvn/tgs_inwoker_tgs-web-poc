@@ -19,6 +19,8 @@ const TitleContainer = styled.div`
   margin: 56px 42px 0;
 `;
 
+const AuthDialogWrapper = styled.div``;
+
 type Props = {};
 const ForgetPasswordDialog = ({}: Props) => {
   const { isForgetPasswordDialogOpen, handleToggleForgetPasswordDialog } =
@@ -30,6 +32,10 @@ const ForgetPasswordDialog = ({}: Props) => {
     <AuthDialog
       isOpen={isForgetPasswordDialogOpen}
       handleCloseDialog={() => handleToggleForgetPasswordDialog(false)}
+      maxWidth={"lg"}
+      style={{
+        fontSize: "0.937rem !important",
+      }}
     >
       <>
         <TitleContainer>{i18n.t("forgotPassword.title")}</TitleContainer>

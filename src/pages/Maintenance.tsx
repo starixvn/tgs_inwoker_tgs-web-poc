@@ -77,7 +77,7 @@ const Maintenance = () => {
   const history = useHistory();
   const { GetMaintenance } = UiService;
   const {
-    general: { livechat, brandsSupport },
+    general: { livechat, brandsSupport, isMaintenance },
   } = useGeneralStore();
 
   const [beginTime, setBeginTime] = useState("");
@@ -99,25 +99,36 @@ const Maintenance = () => {
   };
 
   useEffect(() => {
+    // NOTE: while GeneralService.GetSiteToken encounter error,
+    // then general.isMaintenance will set to false
+    if (!isMaintenance) {
+      history.push("/");
+      return;
+    }
+
     const fetchGetMaintenance = async () => {
-      await GetMaintenance().then((result) => {
-        if (result.IsSuccess) {
-          if (result.data) {
-            if (result.data.beginTime) {
-              setBeginTime(result.data.beginTime);
-            }
-            if (result.data.beginTime) {
-              setEndTime(result.data.endTime);
-            }
-            if (result.data.content) {
-              setContent(result.data.content);
-            }
-          }
-        } else {
-          setFailed(true);
-        }
-      });
+      const result = await GetMaintenance();
+
+      if (!result.IsSuccess) {
+        setFailed(true);
+        return;
+      }
+
+      if (!result.data) {
+        return;
+      }
+
+      if (result.data.beginTime) {
+        setBeginTime(result.data.beginTime);
+      }
+      if (result.data.beginTime) {
+        setEndTime(result.data.endTime);
+      }
+      if (result.data.content) {
+        setContent(result.data.content);
+      }
     };
+
     fetchGetMaintenance();
   }, []);
 
