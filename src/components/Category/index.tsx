@@ -53,19 +53,20 @@ const Category = ({
         // 以後SM01不會開,多新增AWC_COCKFIGHT(缺對應api)
         if (gpcode === "SM01") {
           const gameWindow = window.open("", "Cockfight");
-          if (gameWindow) {
-            GameService.GetCockfight()
-              .then((res) => {
+          GameService.GetCockfight()
+            .then((res) => {
+              // 將加載頁面內容替換成遊戲
+              if (gameWindow) {
                 gameWindow.document.write(res?.data);
                 gameWindow.document.close();
                 gameWindow.focus();
-              })
-              .catch(() => {
-                gameWindow.close();
-              });
-          }
-        }
-        else {
+              }
+            })
+            .catch(() => {
+              if (gameWindow) gameWindow.close();
+            });
+
+        } else {
           Common.closePreviousPopup();
           Common.PopupCenter(
             "/joinlobbygame/" + GameTypeEnum.SPORTS + "/" + gpcode,
@@ -73,21 +74,20 @@ const Category = ({
           );
         }
       } else {
-        Common.closePreviousPopup();
-        Common.PopupCenter("/joinlobbygame/" + gameType, "gamewindow");
+        // Common.closePreviousPopup();
+        // Common.PopupCenter("/joinlobbygame/" + gameType, "gamewindow");
 
         const gameWindow = window.open("", "gamewindow");
-
-        if (gameWindow) {
-          GameService.JoinLobbyGame(gameType, gpcode).then((response) => {
-            if (response?.IsSuccess) {
-              gameWindow.location.href = response?.data?.url;
-            } else {
-              console.log(response?.info);
-              gameWindow.close();
+        GameService.JoinLobbyGame(gameType, gpcode).then((response) => {
+          if (response?.IsSuccess) {
+            if (gameWindow) {
+              gameWindow.location.href = response?.data?.url
             }
-          });
-        }
+          } else {
+            console.log(response?.info);
+            if (gameWindow) gameWindow.close();
+          }
+        });
       }
     }
   };

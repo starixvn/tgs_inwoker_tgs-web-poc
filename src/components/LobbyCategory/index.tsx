@@ -80,19 +80,29 @@ const LobbyCategory = ({
           );
         }
       } else {
-        Common.closePreviousPopup();
-        Common.PopupCenter("/joinlobbygame/" + gameType, "gamewindow");
+        const audioElement = document.getElementById("audio") as HTMLAudioElement | null;
+        if (audioElement) {
+          audioElement.volume = 0;
+        }
+        // Common.closePreviousPopup();
+        // Common.PopupCenter("/joinlobbygame/" + gameType, "gamewindow");
 
         const gameWindow = window.open("", "gamewindow");
-
         if (gameWindow) {
+          gameWindow.document.open();
+          gameWindow.document.write("Loading");
+          gameWindow.document.close();
+
           GameService.JoinLobbyGame(gameType, gpcode).then((response) => {
             if (response?.IsSuccess) {
-              gameWindow.location.href = response?.data?.url;
+              gameWindow.location.href = response?.data?.url
             } else {
-              console.log(response?.info);
+              console.log(response.data?.info);
               gameWindow.close();
             }
+          }).catch((error) => {
+            console.log(error);
+            gameWindow.close();
           });
         }
       }

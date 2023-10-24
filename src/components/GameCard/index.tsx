@@ -182,6 +182,10 @@ const GameCard = ({
       const gameWindow = window.open("", "gamewindow");
 
       if (gameWindow) {
+        gameWindow.document.open();
+        gameWindow.document.write("Loading");
+        gameWindow.document.close();
+
         GameService.JoinGame(gameItem.id, gameItem.gpcode).then((response) => {
           if (response?.IsSuccess) {
             gameWindow.location.href = response?.data?.url;

@@ -113,6 +113,10 @@ const LobbyTagCategory = ({
       const gameWindow = window.open("", "gamewindow");
 
       if (gameWindow) {
+        gameWindow.document.open();
+        gameWindow.document.write("Loading");
+        gameWindow.document.close();
+
         GameService.JoinGame(id, gpcode).then((response) => {
           if (response?.IsSuccess) {
             gameWindow.location.href = response?.data?.url;
