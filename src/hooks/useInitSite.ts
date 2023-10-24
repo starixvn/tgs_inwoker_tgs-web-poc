@@ -109,12 +109,14 @@ export function useInitSite() {
         case "login_auth":
         case "register_auth":
           localStorage.removeItem("token1");
+          localStorage.removeItem("token0");
           break;
         case "login_token":
           const decryptedToken = BlowFishEncryption.Decrypt(
             urlParams.get("token")
           );
 
+          localStorage.setItem("token0", `${decryptedToken}`);
           localStorage.setItem("token1", `${decryptedToken}`);
           AppHistory.replace("/");
           break;
@@ -125,7 +127,8 @@ export function useInitSite() {
 
     // =============================================
 
-    const localStorageToken = localStorage.getItem("token1");
+    const localStorageToken =
+      localStorage.getItem("token1") || localStorage.getItem("token0");
 
     const NEED_TO_REFRESH_TOKEN =
       localStorageToken != null &&

@@ -15,12 +15,11 @@ const Interceptor = {
           config.headers["Authorization"] = "bearer " + client;
         }
 
-        const token = localStorage.getItem(
-          "token" + (isMobileOnly ? "1" : "0")
-        );
-        const logintime = localStorage.getItem(
-          "logintime" + (isMobileOnly ? "1" : "0")
-        );
+        const token =
+          localStorage.getItem("token1") || localStorage.getItem("token0");
+        const logintime =
+          localStorage.getItem("logintime1") ||
+          localStorage.getItem("logintime0");
 
         if (token != null && token !== "") {
           if (logintime != null && logintime !== "") {
@@ -81,14 +80,10 @@ const Interceptor = {
           response.config.url &&
           response.config.url.toUpperCase().includes("/API/PLAYER/LOGIN")
         ) {
-          localStorage.setItem(
-            "token" + (isMobileOnly ? "1" : "0"),
-            response.data.token
-          );
-          localStorage.setItem(
-            "logintime" + (isMobileOnly ? "1" : "0"),
-            response.data.logintime
-          );
+          localStorage.setItem("token0", response.data.token);
+          localStorage.setItem("token1", response.data.token);
+          localStorage.setItem("logintime0", response.data.logintime);
+          localStorage.setItem("logintime1", response.data.logintime);
         }
 
         // after call logout api, delete token saved in localStorage

@@ -40,6 +40,27 @@ export function useInitSite() {
 
   const [isInitSiteLoading, setIsInitSiteLoading] = useState(true);
 
+  useEffect(() => {
+    init();
+    window.addEventListener("focus", onFocus);
+    return () => {
+      window.removeEventListener("focus", onFocus);
+    };
+  }, []);
+
+  const init = async () => {
+    // Common.loadScript("/js/config.js", () => {
+    //   Common.loadScript("/js/iovation.js", () => {});
+    // });
+
+    saveUrlInfoToLocalStorage();
+    await handleSiteDataFetching();
+    handleGoto();
+    handleTo();
+    await handleAccountInfoFetching();
+    setIsInitSiteLoading(false);
+  };
+
   const saveUrlInfoToLocalStorage = () => {
     const urlPath = window.location.pathname.split("/");
 
@@ -124,14 +145,11 @@ export function useInitSite() {
 
   const handleAccountInfoFetching = async () => {
     const localStorageToken =
-      localStorage.getItem("token0") || localStorage.getItem("token1");
+      localStorage.getItem("token1") || localStorage.getItem("token0");
 
     const isNeedToRestoreAccountData =
       !!localStorageToken && !account.token && !account.info.token;
     if (!isNeedToRestoreAccountData) return;
-
-    const responseToken = await checkTokenIsValid();
-    if (!responseToken.IsSuccess) return;
 
     const getMemberInfoRes = await getAccountProfile(true);
     let bankInfoAuthentication = getMemberInfoRes.data.bankinfoauthentication;
@@ -178,26 +196,14 @@ export function useInitSite() {
     getBalanceList();
   };
 
-  const init = async () => {
-    Common.loadScript("/js/config.js", () => {
-      Common.loadScript("/js/iovation.js", () => {});
-    });
-    saveUrlInfoToLocalStorage();
-    await handleSiteDataFetching();
-    handleGoto();
-    handleTo();
-    await handleAccountInfoFetching();
-    setIsInitSiteLoading(false);
-  };
-
+  const isMounted = useRef(false);
   useEffect(() => {
-    init();
-
-    window.addEventListener("focus", onFocus);
-    return () => {
-      window.removeEventListener("focus", onFocus);
-    };
-  }, []);
+    if (isMounted.current) {
+      handleLoginTokenChanged();
+    } else {
+      isMounted.current = true;
+    }
+  }, [general.token]);
 
   const handleLoginTokenChanged = async () => {
     if (!general.token) {
@@ -225,15 +231,6 @@ export function useInitSite() {
     getPromotion();
     getAffiliateStatus();
   };
-
-  const isMounted = useRef(false);
-  useEffect(() => {
-    if (isMounted.current) {
-      handleLoginTokenChanged();
-    } else {
-      isMounted.current = true;
-    }
-  }, [general.token]);
 
   return {
     isInitSiteLoading,

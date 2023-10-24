@@ -43,6 +43,7 @@ export const AuthDialogContextProvider = ({ children }: ProviderProps) => {
       history.push("/");
     }
   }, []);
+
   const handleToggleRegisterDialog = useCallback((isOpen?: boolean) => {
     if (typeof isOpen !== "undefined") {
       setIsRegisterDialogOpen(isOpen);

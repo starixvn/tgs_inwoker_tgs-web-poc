@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-
-import { isMobileOnly } from "react-device-detect";
 import { GameService } from "@/api-services/services/GameService";
 import Loading from "@/components/UI/Loading";
 import Maintenance from "@/pages/Maintenance";
@@ -16,11 +14,6 @@ class JoinLobbyGame extends Component {
     maintenance: false,
   };
   componentDidMount() {
-    if (isMobileOnly) {
-      document
-        .getElementById("viewport")
-        .setAttribute("content", "width=750, user-scalable=no");
-    }
     const gameType = this.props.match.params.type;
 
     const gameCode = this.props.match.params.params.trim();
