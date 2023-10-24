@@ -44,7 +44,7 @@ const FormPhone = ({ formInput, formik, showErrorOn }: Props) => {
       <GrayInputWrapper key={name} style={{ marginBottom: "21px", flex: 1 }}>
         <TextField
           type={"text"}
-          label={label}
+          placeholder={label}
           variant={"outlined"}
           fullWidth
           name={name}

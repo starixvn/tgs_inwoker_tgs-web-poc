@@ -42,7 +42,7 @@ const TextFieldWithButton = (
         value={props.value}
         onChange={props.onChange}
         disabled={props.disabled || false}
-        label={props.placeholder}
+        placeholder={props.placeholder}
         maxLength={props.maxLength || 50}
         // endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
       />

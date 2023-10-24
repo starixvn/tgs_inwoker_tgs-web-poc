@@ -164,7 +164,7 @@ class NameVerification extends Component {
           onChange={this.handlePasswordChange}
           type={"password"}
           placeholder={i18n.t("card.passSetting.withdrawalPassPlaceholder")}
-          label={i18n.t("card.passSetting.withdrawalPass")}
+          // label={i18n.t("card.passSetting.withdrawalPass")}
         />
         <TextField
           style={{ margin: "20px auto 20px auto" }}
@@ -172,7 +172,7 @@ class NameVerification extends Component {
           onChange={this.handleConfirmPasswordChange}
           type={"password"}
           placeholder={i18n.t("card.passSetting.confirmWithdrawalPass")}
-          label={i18n.t("card.passSetting.reEnterWithdrawalPass")}
+          // label={i18n.t("card.passSetting.reEnterWithdrawalPass")}
         ></TextField>
         <BottomInfo>{i18n.t("card.passSetting.withdrawalPassDesc")}</BottomInfo>
         <Button onClick={this.handleConfirmClick}>
