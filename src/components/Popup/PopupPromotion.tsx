@@ -1,17 +1,17 @@
-import { useState } from "react";
-import styled from "styled-components";
-import usePromotion from "@/hooks/usePromotion";
-import NotShowAgainHint from "@/components/Popup/NotShowAgainHint";
-import TagBg from "@/assets/images/promotion/tag_bg.svg";
-import Carousel from "@/components/UI/Carousel";
-import { Promotion } from "@/models/dto/general/GetPromotionListResDto";
-import { Dialog as MuiDialog } from "@mui/material";
-import { UpTransition } from "@/components/UI/Dialog/Transition";
 import IconCloseButton from "@/assets/images/promotion/close_icon.svg";
-import { useHistory } from "react-router-dom";
+import TagBg from "@/assets/images/promotion/tag_bg.svg";
+import NotShowAgainHint from "@/components/Popup/NotShowAgainHint";
 import BannerImage from "@/components/Promotion/BannerImage";
-import { media } from "@/theme/breakpoints";
+import Carousel from "@/components/UI/Carousel";
+import { UpTransition } from "@/components/UI/Dialog/Transition";
+import usePromotion from "@/hooks/usePromotion";
 import { useRwd } from "@/hooks/useRwd";
+import { Promotion } from "@/models/dto/general/GetPromotionListResDto";
+import { media } from "@/theme/breakpoints";
+import { Dialog as MuiDialog } from "@mui/material";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 
 const doNotShowPromotionDialogKey = "doNotShowPromotionDialog";
 

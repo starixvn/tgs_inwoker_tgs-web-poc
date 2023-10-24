@@ -1,18 +1,19 @@
-import styled from "styled-components";
-import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
-import { useSnackbar } from "notistack";
+import Loading from "@/components/UI/Loading";
+import { REDIRECT_PROMOTION_TYPE } from "@/constants/promotion";
 import { AppHistory } from "@/history/History";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import { useHistory } from "react-router-dom";
-import { REDIRECT_PROMOTION_TYPE } from "@/constants/promotion";
-import { useState } from "react";
-import Loading from "@/components/UI/Loading";
-import i18n from "@/utils/i18n";
+import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { media } from "@/theme/breakpoints";
+import i18n from "@/utils/i18n";
+import { useSnackbar } from "notistack";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 
 const Button = styled.button<{ $disabled: boolean }>`
-  width: 384px;
-  height: 53px;
+  border: none;
+  width: 100%;
+  height: 100%;
   padding: 12px 20px 12px 20px;
   border-radius: 12px;
   gap: 10px;

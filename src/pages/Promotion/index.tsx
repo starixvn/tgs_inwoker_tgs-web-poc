@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import EmptyPage from "@/components/Promotion/EmptyPage";
 import PromotionCard from "@/components/Promotion/PromotionCard";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { Promotion as TypePromotion } from "@/models/dto/general/GetPromotionListResDto";
-import EmptyPage from "@/components/Promotion/EmptyPage";
 import { media } from "@/theme/breakpoints";
+import styled from "styled-components";
 
 const PromotionContainer = styled.div`
   padding: 22px 20px;
