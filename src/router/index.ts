@@ -44,6 +44,8 @@ import ForgotPasswordPage from "@/pages/ForgetPassword";
 import DialogLayout from "@/layouts/DialogLayout";
 import { ProfilePathEnum } from "@/components/Account/Profile/profilePageDictionary";
 import AuthDialogLayout from "@/layouts/AuthDialogLayout";
+import JoinLobbyGame from "@/pages/JoinLobbyGame";
+import JoinGame from "@/pages/JoinGame";
 
 const Mine = React.lazy(() => import("@/pages/Account/Mine"));
 
@@ -413,6 +415,16 @@ const routes: Route[] = [
     category: RouteCategoryEnum.MINE,
     layout: DialogLayout,
     isAnonymousAllowed: true,
+  },
+  {
+    path: "/joingame/:gameId/:gpCode",
+    component: JoinGame,
+    category: RouteCategoryEnum.HOME,
+  },
+  {
+    path: "/joinlobbygame/:gameType/:gpCode",
+    component: JoinLobbyGame,
+    category: RouteCategoryEnum.HOME,
   },
 ];
 

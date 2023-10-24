@@ -4,7 +4,7 @@ import { isMobileOnly } from "react-device-detect";
 const config = {
   baseUrl:
     window?.env?.apiUrl ||
-    (window?.env ? "/api/" : "https://dev-t1.rpgp.cc/api/"),
+    (window?.env ? "/api/" : "https://stg-t1.rpgp.cc/api/"),
   client:
     window?.env?.client ||
     "I7nKiimrZQOqnJ6ryjUw74c0Hi64KC6Myunhob4cHh8VOUIuZh4p63czefxyyzbZ",

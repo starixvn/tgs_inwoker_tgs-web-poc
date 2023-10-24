@@ -22,6 +22,7 @@ const CardHoverBg = styled.div`
   border-radius: 10px;
   display: none;
   text-align: center;
+  cursor: pointer;
 `;
 
 const GameCardWrapper = styled.div`
@@ -179,29 +180,26 @@ const GameCard = ({
         "gamewindow"
       );
 
-      const gameWindow = window.open("", "gamewindow");
-
-      if (gameWindow) {
-        gameWindow.document.open();
-        gameWindow.document.write("Loading");
-        gameWindow.document.close();
-
-        GameService.JoinGame(gameItem.id, gameItem.gpcode).then((response) => {
-          if (response?.IsSuccess) {
-            gameWindow.location.href = response?.data?.url;
-          } else {
-            console.log(response?.info);
-            gameWindow.close();
-          }
-        });
-      }
+      // const gameWindow = window.open("", "gamewindow");
+      //
+      // if (gameWindow) {
+      //   // gameWindow.document.open();
+      //   // gameWindow.document.write("Loading");
+      //   // gameWindow.document.close();
+      //
+      //   GameService.JoinGame(gameItem.id, gameItem.gpcode).then((response) => {
+      //     if (response?.IsSuccess) {
+      //       gameWindow.location.href = response?.data?.url;
+      //     } else {
+      //       console.log(response?.info);
+      //       gameWindow.close();
+      //     }
+      //   });
+      // }
     }
   };
 
-  const handleToggleFavorite = async (
-    event: MouseEvent,
-    gameId: number
-  ) => {
+  const handleToggleFavorite = async (event: MouseEvent, gameId: number) => {
     event.stopPropagation();
     if (!account.token) {
       history.push("/login");
@@ -220,19 +218,21 @@ const GameCard = ({
     <>
       <GameCardWrapper onClick={launchGame}>
         <GameImage
-          src={`${config.sourceUrl
-            }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${gameItem.code
-            }.jpg`}
+          src={`${
+            config.sourceUrl
+          }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
+            gameItem.code
+          }.jpg`}
           alt={gameItem.name}
         />
 
-        {isMobileSize &&
+        {isMobileSize && (
           <Favorite
             isFavorite={isFavorite}
             handleToggleFavorite={handleToggleFavorite}
             gameItemId={gameItem.id}
           />
-        }
+        )}
 
         {gameItem.tag.hot && gameItem.tag.new && selectedTag === "All" && (
           <>
@@ -258,13 +258,13 @@ const GameCard = ({
         )}
 
         <CardHoverBg>
-          {isDesktopSize &&
+          {isDesktopSize && (
             <Favorite
               isFavorite={isFavorite}
               handleToggleFavorite={handleToggleFavorite}
               gameItemId={gameItem.id}
             />
-          }
+          )}
           {gameItem.name && <HoverGameName>{gameItem.name}</HoverGameName>}
           <img src={playIcon} alt={"play"} />
         </CardHoverBg>
