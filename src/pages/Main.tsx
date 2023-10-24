@@ -75,7 +75,6 @@ const MainWrapper = styled.div<{ theme: Theme }>`
   align-items: flex-start;
   background-color: ${({ theme }: { theme: Theme }) => theme.primaryDark};
   color: ${({ theme }: { theme: Theme }) => theme.white};
-  margin-bottom: 82px;
 
   ${media.sm} {
     max-width: 870px;
@@ -376,8 +375,8 @@ const Main = (props: Props) => {
       )}
       {isLoading && <div>Loading...</div>}
       <TabPanel />
-      <SocialMedia />
-      <VendorIconContainer><VendorIcon /></VendorIconContainer>
+      {isMobileSize && <SocialMedia />}
+      {isMobileSize && <VendorIconContainer><VendorIcon /></VendorIconContainer>}
     </MainWrapper>
   );
 };
