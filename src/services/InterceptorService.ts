@@ -91,8 +91,10 @@ const Interceptor = {
           response.config.url &&
           response.config.url.toUpperCase().includes("/API/PLAYER/LOGOUT")
         ) {
-          localStorage.removeItem("token" + (isMobileOnly ? "1" : "0"));
-          localStorage.removeItem("logintime" + (isMobileOnly ? "1" : "0"));
+          localStorage.removeItem("token0");
+          localStorage.removeItem("token1");
+          localStorage.removeItem("logintime0");
+          localStorage.removeItem("logintime1");
         }
         if (
           response.config.url &&
@@ -107,8 +109,10 @@ const Interceptor = {
           newResponse.code === 101 ||
           newResponse.code === 210
         ) {
-          localStorage.removeItem("token" + (isMobileOnly ? "1" : "0"));
-          localStorage.removeItem("logintime" + (isMobileOnly ? "1" : "0"));
+          localStorage.removeItem("token0");
+          localStorage.removeItem("token1");
+          localStorage.removeItem("logintime0");
+          localStorage.removeItem("logintime1");
           store.dispatch({ type: UNAUTHORIZE });
 
           if (newResponse.code === 210) {
@@ -134,8 +138,10 @@ const Interceptor = {
               error.response.config.url.indexOf("player/password") < 0 &&
               error.response.config.url.indexOf("player/init-phone") < 0
             ) {
-              localStorage.removeItem("token" + (isMobileOnly ? "1" : "0"));
-              localStorage.removeItem("logintime" + (isMobileOnly ? "1" : "0"));
+              localStorage.removeItem("token0");
+              localStorage.removeItem("token1");
+              localStorage.removeItem("logintime0");
+              localStorage.removeItem("logintime1");
               store.dispatch({ type: UNAUTHORIZE });
               if (error.response.data.err == 210) {
                 AppHistory.replace("/" + i18n.language + "/banned");

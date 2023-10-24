@@ -1,19 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { Dialog } from "@mui/material";
-import { styled as muiStyled } from "@mui/material/styles";
 import { useHistory } from "react-router-dom"; // Import useHistory
-import i18n from "../../utils/i18n";
-
-const StyledDialog = muiStyled(Dialog)(({ theme }) => ({
-  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-  "& .MuiPaper-root": {
-    backgroundColor: "transparent",
-  },
-}));
+import i18n from "@/utils/i18n";
+import { Button } from "@/components/UI/Button";
 
 const Container = styled.div`
-  width: 80vw;
   background: ${({ theme }) => theme.primaryLight};
   color: white;
   background-attachment: fixed;
@@ -84,7 +76,7 @@ type Props = {
   text?: string;
 };
 
-const PopupAnnouncement = ({
+const DepositPopupAnnouncement = ({
   open,
   onClose,
   header,
@@ -100,10 +92,11 @@ const PopupAnnouncement = ({
   };
 
   return (
-    <StyledDialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth={"xs"}>
       <Container>
-        <div className="clear"></div>
+        <div className="clear" />
         <TitleContainer>{header}</TitleContainer>
+
         {type === "promo" && content ? (
           <ContentContainer>
             {content
@@ -122,7 +115,7 @@ const PopupAnnouncement = ({
                     onClick={() => {
                       handlePromotionClick(data.id);
                     }}
-                  ></ImageBanner>
+                  />
                 );
               })}
           </ContentContainer>
@@ -131,12 +124,15 @@ const PopupAnnouncement = ({
             dangerouslySetInnerHTML={{
               __html: text?.replace(/\n/g, "<br />") || "",
             }}
-          ></FormContainer>
+          />
         )}
-        <CloseButton onClick={onClose}>{i18n.t("common.confirm")}</CloseButton>
+
+        <Button fullWidth onClick={onClose}>
+          {i18n.t("common.confirm")}
+        </Button>
       </Container>
-    </StyledDialog>
+    </Dialog>
   );
 };
 
-export default PopupAnnouncement;
+export default DepositPopupAnnouncement;
