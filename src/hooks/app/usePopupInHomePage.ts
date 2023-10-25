@@ -11,33 +11,42 @@ export function usePopupInHomePage() {
     general: { promotionList },
   } = useGeneralStore();
 
-  const [openAnnouncement, setOpenAnnouncement] = useState(false);
-  const [showPromotion, setShowPromotion] = useState(false);
+  const [isOpenAnnouncement, setIsOpenAnnouncement] = useState(false);
+  const [isShowPromotion, setIsShowPromotion] = useState(false);
+
+  const isInHomePage = mains && mains.length > 0;
 
   useEffect(() => {
-    // popup announcement logic
-    const isInHomePage = mains && mains.length > 0;
-
-    if (config.features.PopupAnnouncement) {
-      if (isInHomePage) {
-        setOpenAnnouncement(true);
-        // setShowPromotion(false);
-      }
-    }
+    handleOpenAnnouncement();
   }, [JSON.stringify(mains)]);
 
-  useEffect(() => {
-    const isInHomePage = mains && mains.length > 0;
-
-    // popup promotion logic
-    if (config.features.PopupPromotion) {
-      if (isInHomePage && promotionList.items.length > 0) {
-        if (!openAnnouncement) {
-          setShowPromotion(true);
-        }
-      }
+  const handleOpenAnnouncement = () => {
+    if (!config.features.PopupAnnouncement) {
+      return;
     }
-  }, [JSON.stringify(promotionList.items)]);
+    if (!isInHomePage) {
+      return;
+    }
+
+    if (isOpenAnnouncement) return;
+
+    setIsOpenAnnouncement(true);
+  };
+
+  const handleOpenPromotion = () => {
+    if (!config.features.PopupPromotion) {
+      return;
+    }
+
+    if (!isInHomePage || !promotionList.items.length) {
+      return;
+    }
+    if (isShowPromotion) {
+      return;
+    }
+
+    setIsShowPromotion(true);
+  };
 
   const handleCloseAudio = () => {
     if (document.getElementById("audio") != null)
@@ -45,13 +54,13 @@ export function usePopupInHomePage() {
   };
 
   const handleCloseAnnouncement = () => {
-    setOpenAnnouncement(false);
-    setShowPromotion(true);
+    setIsOpenAnnouncement(false);
+    handleOpenPromotion();
     handleCloseAudio();
   };
 
   const handleClosePromotion = () => {
-    setShowPromotion(false);
+    setIsShowPromotion(false);
     handleCloseAudio();
   };
 
@@ -59,21 +68,21 @@ export function usePopupInHomePage() {
     window.location.pathname === "/" ||
     window.location.pathname === "/main/home";
 
-  const showPopupAnnouncement =
+  const needToShowPopupAnnouncement =
     config.features.PopupAnnouncement &&
     mains &&
     mains.length > 0 &&
     matchingPath;
 
-  const showPopupPromotion =
+  const needToShowPopupPromotion =
     config.features.PopupPromotion && promotionList.items.length > 0;
 
   return {
-    openAnnouncement,
-    showPromotion,
+    isOpenAnnouncement,
+    isShowPromotion,
     handleCloseAnnouncement,
     handleClosePromotion,
-    showPopupAnnouncement,
-    showPopupPromotion,
+    needToShowPopupAnnouncement,
+    needToShowPopupPromotion,
   };
 }

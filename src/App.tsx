@@ -39,10 +39,10 @@ const App: React.FC = () => {
   useUpdateProviderBalance();
   useCheckRegisterProcess();
   const {
-    showPopupAnnouncement,
-    showPopupPromotion,
-    openAnnouncement,
-    showPromotion,
+    needToShowPopupAnnouncement,
+    needToShowPopupPromotion,
+    isOpenAnnouncement,
+    isShowPromotion,
     handleCloseAnnouncement,
     handleClosePromotion,
   } = usePopupInHomePage();
@@ -116,15 +116,15 @@ const App: React.FC = () => {
                     <ForcedVerification forceVerify={true} />
                   )}
 
-                {showPopupAnnouncement && (
+                {needToShowPopupAnnouncement && (
                   <PopupAnnouncement
-                    open={openAnnouncement}
+                    open={isOpenAnnouncement}
                     onClose={handleCloseAnnouncement}
                   />
                 )}
-                {showPopupPromotion && (
+                {needToShowPopupPromotion && (
                   <PopupPromotion
-                    open={showPromotion}
+                    open={isShowPromotion}
                     onClose={handleClosePromotion}
                   />
                 )}
