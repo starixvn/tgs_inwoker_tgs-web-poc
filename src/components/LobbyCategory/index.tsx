@@ -14,6 +14,7 @@ import CardVendor from "../CardVender";
 const Wrapper = styled.div`
   width: 100%;
   margin: 15px 0;
+  cursor: pointer;
 `;
 
 const CategoryTitle = styled.div`
@@ -56,46 +57,40 @@ const LobbyCategory = ({
   const launchLobbyGame = (gpcode: string) => {
     if (!account.token) {
       history.push("/login");
-    } else {
-      if (gameType === GameTypeEnum.COCKFIGHT) {
-        // 以後SM01不會開,多新增AWC_COCKFIGHT(缺對應api)
-        if (gpcode === "SM01") {
-          const gameWindow = window.open("", "Cockfight");
-          if (gameWindow) {
-            GameService.GetCockfight()
-              .then((res) => {
-                gameWindow.document.write(res?.data);
-                gameWindow.document.close();
-                gameWindow.focus();
-              })
-              .catch(() => {
-                gameWindow.close();
-              });
-          }
-        } else {
-          Common.closePreviousPopup();
-          Common.PopupCenter(
-            "/joinlobbygame/" + GameTypeEnum.SPORTS + "/" + gpcode,
-            "gamewindow"
-          );
+      return;
+    }
+
+    if (gameType === GameTypeEnum.COCKFIGHT) {
+      // 以後SM01不會開,多新增AWC_COCKFIGHT(缺對應api)
+      if (gpcode === "SM01") {
+        const gameWindow = window.open("", "Cockfight");
+        if (gameWindow) {
+          GameService.GetCockfight()
+            .then((res) => {
+              gameWindow.document.write(res?.data);
+              gameWindow.document.close();
+              gameWindow.focus();
+            })
+            .catch(() => {
+              gameWindow.close();
+            });
         }
       } else {
         Common.closePreviousPopup();
-        Common.PopupCenter("/joinlobbygame/" + gameType, "gamewindow");
-
-        const gameWindow = window.open("", "gamewindow");
-
-        if (gameWindow) {
-          GameService.JoinLobbyGame(gameType, gpcode).then((response) => {
-            if (response?.IsSuccess) {
-              gameWindow.location.href = response?.data?.url;
-            } else {
-              console.log(response?.info);
-              gameWindow.close();
-            }
-          });
-        }
+        Common.PopupCenter(
+          `/joinlobbygame/${GameTypeEnum.SPORTS}/${gpcode}`,
+          "gamewindow"
+        );
       }
+    } else {
+      const audioElement = document.getElementById(
+        "audio"
+      ) as HTMLAudioElement | null;
+      if (audioElement) {
+        audioElement.volume = 0;
+      }
+      Common.closePreviousPopup();
+      Common.PopupCenter(`/joinlobbygame/${gameType}/${gpcode}`, "gamewindow");
     }
   };
 

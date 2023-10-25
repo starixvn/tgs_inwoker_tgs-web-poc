@@ -815,7 +815,7 @@ class Main extends Component {
               value={this.props.playerNote}
               onChange={this.props.handlePlayerNoteChange}
               placeholder={i18n.t("deposit.plsEnterPlayerNote")}
-              label={i18n.t("deposit.playerNote")}
+              // label={i18n.t("deposit.playerNote")}
             />
           )}
         <ResultPopupDialog

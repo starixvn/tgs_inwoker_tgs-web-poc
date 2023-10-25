@@ -32,7 +32,7 @@ const HoverVenderName = styled.div`
   font-size: 1rem;
   text-transform: uppercase;
   margin-bottom: 16px;
-  word-wrap:break-word;
+  word-wrap: break-word;
 `;
 
 const CardVendorBg = styled.div`
@@ -43,11 +43,13 @@ const CardVendorBg = styled.div`
   background-size: cover;
   box-sizing: border-box;
   position: relative;
+  cursor: pointer;
 
   ${media.sm} {
     width: calc(16.67% - 14px);
     min-width: 118px;
     padding-bottom: calc((16.67% - 14px) * 1.34);
+    border-radius: 10px;
 
     &:hover ${CardHoverBg} {
       z-index: 1;
@@ -56,9 +58,9 @@ const CardVendorBg = styled.div`
       justify-content: center;
       align-items: center;
     }
-    
+
     &:hover ${HoverVenderName} {
-      word-wrap:break-word;
+      word-wrap: break-word;
     }
   }
 `;
@@ -165,7 +167,7 @@ const CardVendor = ({
   venderLogoUrl,
   launchGame,
   status,
-  hoverVenderName
+  hoverVenderName,
 }: Props) => {
   return (
     <CardVendorBg onClick={launchGame}>
@@ -190,7 +192,9 @@ const CardVendor = ({
       )}
       <CardHoverBg>
         {gameName && <HoverGameName>{gameName}</HoverGameName>}
-        {hoverVenderName && <HoverVenderName>{hoverVenderName}</HoverVenderName>}
+        {hoverVenderName && (
+          <HoverVenderName>{hoverVenderName}</HoverVenderName>
+        )}
         <img src={playIcon} alt={"play"} />
       </CardHoverBg>
     </CardVendorBg>

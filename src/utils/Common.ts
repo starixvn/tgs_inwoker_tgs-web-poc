@@ -1,76 +1,83 @@
-import { GameTypeEnum, SlotGameParentId } from "../api-services/utils/Enum";
-import PromoImage1 from "../assets/images/promotion/promo-1.jpg";
-import PromoImage2 from "../assets/images/promotion/promo-2.jpg";
-import PromoImage3 from "../assets/images/promotion/promo-3.jpg";
-import Provider1PNG from "../assets/images/provider1.png";
-import Provider10PNG from "../assets/images/provider10.png";
-import Provider2PNG from "../assets/images/provider2.png";
-import Provider3PNG from "../assets/images/provider3.png";
-import Provider4PNG from "../assets/images/provider4.png";
-import Provider5PNG from "../assets/images/provider5.png";
-import Provider6PNG from "../assets/images/provider6.png";
-import Provider7PNG from "../assets/images/provider7.png";
-import Provider8PNG from "../assets/images/provider8.png";
-import Provider9PNG from "../assets/images/provider9.png";
-import ABCPNG from "../assets/images/wap/bank/abc.png";
-import BCMPNG from "../assets/images/wap/bank/bcm.png";
-import BOBPNG from "../assets/images/wap/bank/bob.png";
-import BOCPNG from "../assets/images/wap/bank/boc.png";
-import BOSPNG from "../assets/images/wap/bank/bos.png";
-import CCBPNG from "../assets/images/wap/bank/ccb.png";
-import CEBPNG from "../assets/images/wap/bank/ceb.png";
-import CGDPNG from "../assets/images/wap/bank/cgd.png";
-import CIBPNG from "../assets/images/wap/bank/cib.png";
-import CMBPNG from "../assets/images/wap/bank/cmb.png";
-import CMBCPNG from "../assets/images/wap/bank/cmbc.png";
-import DefaultPNG from "../assets/images/wap/bank/default.png";
-import ECITICPNG from "../assets/images/wap/bank/ecitic.png";
-import GFPNG from "../assets/images/wap/bank/gf.png";
-import HXBPNG from "../assets/images/wap/bank/hxb.png";
-import ICBCPNG from "../assets/images/wap/bank/icbc.png";
-import PABPNG from "../assets/images/wap/bank/pab.png";
-import PSBCPNG from "../assets/images/wap/bank/psbc.png";
-import SPDBPNG from "../assets/images/wap/bank/spdb.png";
-import i18n from "./i18n";
+import { GameTypeEnum, SlotGameParentId } from "@/api-services/utils/Enum";
+import PromoImage1 from "@/assets/images/promotion/promo-1.jpg";
+import PromoImage2 from "@/assets/images/promotion/promo-2.jpg";
+import PromoImage3 from "@/assets/images/promotion/promo-3.jpg";
+import Provider1PNG from "@/assets/images/provider1.png";
+import Provider10PNG from "@/assets/images/provider10.png";
+import Provider2PNG from "@/assets/images/provider2.png";
+import Provider3PNG from "@/assets/images/provider3.png";
+import Provider4PNG from "@/assets/images/provider4.png";
+import Provider5PNG from "@/assets/images/provider5.png";
+import Provider6PNG from "@/assets/images/provider6.png";
+import Provider7PNG from "@/assets/images/provider7.png";
+import Provider8PNG from "@/assets/images/provider8.png";
+import Provider9PNG from "@/assets/images/provider9.png";
+import ABCPNG from "@/assets/images/wap/bank/abc.png";
+import BCMPNG from "@/assets/images/wap/bank/bcm.png";
+import BOBPNG from "@/assets/images/wap/bank/bob.png";
+import BOCPNG from "@/assets/images/wap/bank/boc.png";
+import BOSPNG from "@/assets/images/wap/bank/bos.png";
+import CCBPNG from "@/assets/images/wap/bank/ccb.png";
+import CEBPNG from "@/assets/images/wap/bank/ceb.png";
+import CGDPNG from "@/assets/images/wap/bank/cgd.png";
+import CIBPNG from "@/assets/images/wap/bank/cib.png";
+import CMBPNG from "@/assets/images/wap/bank/cmb.png";
+import CMBCPNG from "@/assets/images/wap/bank/cmbc.png";
+import DefaultPNG from "@/assets/images/wap/bank/default.png";
+import ECITICPNG from "@/assets/images/wap/bank/ecitic.png";
+import GFPNG from "@/assets/images/wap/bank/gf.png";
+import HXBPNG from "@/assets/images/wap/bank/hxb.png";
+import ICBCPNG from "@/assets/images/wap/bank/icbc.png";
+import PABPNG from "@/assets/images/wap/bank/pab.png";
+import PSBCPNG from "@/assets/images/wap/bank/psbc.png";
+import SPDBPNG from "@/assets/images/wap/bank/spdb.png";
+import i18n from "@/utils/i18n";
 
-var newWindow;
-function getCDNLanguagePrefix() {
-  var prefix = "en-US";
-  var arr = [
+let newWindow: Window | undefined;
+
+function getCDNLanguagePrefix(): string {
+  let prefix = "en-US";
+  const arr = [
     { lang: ["zh-CN", "zh-TW"], prefix: "zh-CN" },
     { lang: ["en-US"], prefix: "en-US" },
   ];
-  for (var i = 0; i < arr.length; i++) {
+
+  for (let i = 0; i < arr.length; i++) {
     if (arr[i].lang.indexOf(i18n.language) >= 0) {
       prefix = arr[i].prefix;
       break;
     }
   }
+
   return prefix;
 }
-function getLanguagePrefixFolder() {
-  var prefix = "en-US";
-  var arr = [
+
+function getLanguagePrefixFolder(): string {
+  let prefix = "en-US";
+  const arr = [
     { lang: ["zh-CN"], prefix: "zh-CN" },
     { lang: ["zh-TW"], prefix: "zh-TW" },
     { lang: ["en-US"], prefix: "en-US" },
   ];
-  for (var i = 0; i < arr.length; i++) {
+
+  for (let i = 0; i < arr.length; i++) {
     if (arr[i].lang.indexOf(i18n.language) >= 0) {
       prefix = arr[i].prefix;
       break;
     }
   }
+
   return prefix;
 }
-function readFileDataAsBinary(e) {
+
+function readFileDataAsBinary(e: { files: FileList }): Promise<ArrayBuffer> {
   const file = e.files[0];
 
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
     reader.onload = (event) => {
-      resolve(event.target.result);
+      resolve(event.target?.result as ArrayBuffer);
     };
 
     reader.onerror = (err) => {
@@ -81,19 +88,20 @@ function readFileDataAsBinary(e) {
   });
 }
 
-function ConvertSlotGameParentIdToString(id) {
+function ConvertSlotGameParentIdToString(id: number): string | undefined {
   for (let key in SlotGameParentId) {
     if (SlotGameParentId[key] === id) {
       return key;
     }
   }
 }
-function GetBankImageByTitle(title) {
+
+function GetBankImageByTitle(title: string): string {
   let bank = null;
 
-  for (let k in this.bankImageMapping) {
-    if (this.bankImageMapping[k.toLowerCase()].title === title) {
-      bank = this.bankImageMapping[k.toLowerCase()];
+  for (let k in bankImageMapping) {
+    if (bankImageMapping[k.toLowerCase()].title === title) {
+      bank = bankImageMapping[k.toLowerCase()];
       break;
     }
   }
@@ -103,7 +111,8 @@ function GetBankImageByTitle(title) {
     return DefaultPNG;
   }
 }
-function ConvertGameTypeToText(gameType) {
+
+function ConvertGameTypeToText(gameType: GameTypeEnum): string {
   switch (gameType) {
     case GameTypeEnum.LIVE:
       return "真人";
@@ -117,13 +126,13 @@ function ConvertGameTypeToText(gameType) {
       return "电子";
     case GameTypeEnum.FISH:
       return "捕鱼";
-    case GameTypeEnum.TIGERSLOT:
     default:
       return "老虎";
   }
 }
-function GetBankImageByCode(code) {
-  let mapp = this.bankImageMapping[code.toLowerCase()];
+
+function GetBankImageByCode(code: string): any {
+  let mapp = bankImageMapping[code.toLowerCase()];
   if (mapp) {
     return mapp;
   } else {
@@ -134,11 +143,12 @@ function GetBankImageByCode(code) {
     };
   }
 }
+
 /**
  * @deprecated don't use this function
  * use utils/getDisplayGameType.ts instead
  */
-function GetDisplayGameType() {
+function GetDisplayGameType(): GameTypeEnum[] {
   return [
     GameTypeEnum.SPORTS,
     // GameTypeEnum.RNGSPORTS,
@@ -152,6 +162,7 @@ function GetDisplayGameType() {
     GameTypeEnum.COCKFIGHT,
   ];
 }
+
 GetDisplayGameType();
 
 const gameImageMapping = [
@@ -167,7 +178,7 @@ const gameImageMapping = [
   { gcode: "SBO", img: Provider10PNG },
 ];
 
-const bankImageMapping = {
+const bankImageMapping: { [key: string]: any } = {
   ab: {
     id: 0,
     title: "农业银行",
@@ -290,8 +301,15 @@ const bankImageMapping = {
     image: GFPNG,
   },
 };
-var popup = {};
-function PopupCenter(url, title, w, h) {
+
+const popup: { [key: string]: Window } = {};
+
+function PopupCenter(
+  url: string,
+  title: string,
+  w = 0,
+  h = 0
+): Window | undefined {
   if (popup[title]) {
     if (!popup[title].closed) {
       popup[title].focus();
@@ -299,25 +317,25 @@ function PopupCenter(url, title, w, h) {
     }
   }
 
-  var dualScreenLeft =
+  const dualScreenLeft =
     window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-  var dualScreenTop =
+  const dualScreenTop =
     window.screenTop !== undefined ? window.screenTop : window.screenY;
 
-  var width = window.innerWidth
+  const width = window.innerWidth
     ? window.innerWidth
     : document.documentElement.clientWidth
-      ? document.documentElement.clientWidth
-      : window.screen.width;
-  var height = window.innerHeight
+    ? document.documentElement.clientWidth
+    : window.screen.width;
+  const height = window.innerHeight
     ? window.innerHeight
     : document.documentElement.clientHeight
-      ? document.documentElement.clientHeight
-      : window.screen.height;
+    ? document.documentElement.clientHeight
+    : window.screen.height;
 
-  var systemZoom = 1;
-  var left = (width - w) / 2 / systemZoom + dualScreenLeft;
-  var top = (height - h) / 2 / systemZoom + dualScreenTop;
+  const systemZoom = 1;
+  let left = (width - w) / 2 / systemZoom + dualScreenLeft;
+  let top = (height - h) / 2 / systemZoom + dualScreenTop;
   top = top < 0 ? 0 : top;
   left = left < 0 ? 0 : left;
   // closePreviousPopup();
@@ -325,13 +343,13 @@ function PopupCenter(url, title, w, h) {
     url,
     "gamewindow",
     "scrollbars=yes, width=" +
-    w / systemZoom +
-    ", height=" +
-    h / systemZoom +
-    ", top=" +
-    top +
-    ", left=" +
-    left
+      w / systemZoom +
+      ", height=" +
+      h / systemZoom +
+      ", top=" +
+      top +
+      ", left=" +
+      left
   );
 
   if (
@@ -339,7 +357,7 @@ function PopupCenter(url, title, w, h) {
     newWindow.closed ||
     typeof newWindow.closed == "undefined"
   ) {
-    //POPUP BLOCKED
+    // POPUP BLOCKED
   } else {
     // Puts focus on the newWindow
     if (window.focus) newWindow.focus();
@@ -347,10 +365,12 @@ function PopupCenter(url, title, w, h) {
   popup[title] = newWindow;
   return newWindow;
 }
+
 function closePreviousPopup() {
   if (newWindow !== undefined) newWindow.close();
 }
-function GetBonusCategory(type_id) {
+
+function GetBonusCategory(type_id: number): string {
   switch (type_id) {
     case 1:
       return "身份验证";
@@ -384,61 +404,48 @@ function GetBonusCategory(type_id) {
       return "";
   }
 }
-function formatNumberWithCommas(x) {
-  if (isNaN(x)) return x;
+
+function formatNumberWithCommas(x: number | string): string {
+  if (typeof x === "number") return x.toString();
+
   return parseFloat(x)
     .toFixed(2)
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
-function formatNumberWithThousand(x) {
-  if (isNaN(x)) return x;
+
+function formatNumberWithThousand(x: number): string {
+  if (isNaN(x)) return x.toString();
   return x.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
-function formatNumberWithCommasNoRounding(x) {
-  if (isNaN(x)) return x;
+
+function formatNumberWithCommasNoRounding(x: number | string): string {
+  if (typeof x === "number") return x.toString();
+
   return parseFloat(x)
     .toFixed(6)
     .slice(0, -4)
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
-function loadScript(url, cb) {
-  var scr = document.createElement("script");
-  scr.type = "text/javascript";
 
-  if (scr.readyState) {
-    // IE
-    scr.onreadystatechange = function () {
-      if (scr.readyState === "loaded" || scr.readyState === "complete") {
-        scr.onreadystatechange = null;
-        cb();
-      }
-    };
-  } else {
-    // Others
-    scr.onload = cb;
-  }
-
-  scr.src = url;
-  document.getElementsByTagName("head")[0].appendChild(scr);
-}
 const promoImgMap = [PromoImage1, PromoImage2, PromoImage3];
-function GetPromoImg(index) {
+
+function GetPromoImg(index: number): string {
   return promoImgMap[index % 3];
 }
 
 const baseRouteUrl = `/:locale(en-US|zh-CN|zh-TW|th-TH|id-ID|vi-VN)`;
 
-function addComma(x) {
+function addComma(x: number): string {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function arrayValidator(array) {
+function arrayValidator(array: any[]): boolean {
   return array && Array.isArray(array) && array.length > 0;
 }
 
-function truncateString(str, n) {
-  return (str.length > n) ? str.slice(0, n) + '…' : str;
-};
+function truncateString(str: string, n: number): string {
+  return str.length > n ? str.slice(0, n) + "…" : str;
+}
 
 const Common = {
   baseRouteUrl,
@@ -452,7 +459,6 @@ const Common = {
   bankImageMapping,
   GetBankImageByTitle,
   GetBankImageByCode,
-  loadScript,
   ConvertGameTypeToText,
   readFileDataAsBinary,
   GetDisplayGameType,
@@ -464,4 +470,5 @@ const Common = {
   arrayValidator,
   truncateString,
 };
+
 export default Common;
