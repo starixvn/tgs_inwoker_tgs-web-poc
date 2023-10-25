@@ -8,6 +8,7 @@ import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { media } from "@/theme/breakpoints";
 import Loading from "@/components/UI/Loading";
 import { useAuth } from "@/hooks/auth/useAuth";
+import arrowImg from "@/assets/images/header/contextMenu/icon_arrow.svg";
 
 const ContextMenuButtonContainer = styled.div`
   height: 40px;
@@ -69,7 +70,7 @@ const ContextMenuButton = () => {
         <UsernameContainer>{username}</UsernameContainer>
 
         <ArrowContainer open={isOpen}>
-          <SvgIcon pathname="contextMenu/icon_arrow.svg" />
+          <SvgIcon pathname={arrowImg} />
         </ArrowContainer>
       </ContextMenuButtonContainer>
       <Modal open={isOpen} onClose={handleClick}>
