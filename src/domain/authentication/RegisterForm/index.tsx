@@ -11,7 +11,7 @@ import Loading from "@/components/UI/Loading";
 const RegisterFormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 56px 15px;
+  padding: 66px 15px;
 
   ${media.sm} {
     padding: 42px 42px;

@@ -14,7 +14,7 @@ import { useAuthDialog } from "@/hooks/auth/useAuthDialog";
 const LoginFormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 56px 15px;
+  padding: 66px 15px;
 
   ${media.sm} {
     padding: 42px 42px;
