@@ -123,17 +123,17 @@ const LobbyTagCategory = ({
             case "Hot":
               setIsLoading(false);
               return setFilteredGameList(
-                res.data.filter((item: GameItem) => item.tag.hot)
+                res.data?.filter((item: GameItem) => item.tag.hot)
               );
             case "New":
               setIsLoading(false);
               return setFilteredGameList(
-                res.data.filter((item: GameItem) => item.tag.new)
+                res.data?.filter((item: GameItem) => item.tag.new)
               );
             case "Recommend":
               setIsLoading(false);
               return setFilteredGameList(
-                res.data.filter((item: GameItem) => item.tag.recommend)
+                res.data?.filter((item: GameItem) => item.tag.recommend)
               );
             default:
               setIsLoading(false);
