@@ -7,6 +7,7 @@ import { Dialog as MuiDialog } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import { UpTransition } from "@/components/UI/Dialog/Transition";
 import { media } from "@/theme/breakpoints";
+import { useRwd } from "@/hooks/useRwd";
 
 const mobileBgUrl =
   process.env.PUBLIC_URL + "/assets/images/announcement/mobile_bg.png";
@@ -124,6 +125,7 @@ const PopupAnnouncement = ({
 
   const [isCheck, setIsCheck] = useState(false);
 
+  const { isMobileSize } = useRwd();
   const { ui } = useUiStore();
   const { mains: announcementList } = ui;
 
@@ -163,7 +165,13 @@ const PopupAnnouncement = ({
             })}
         </Carousel>
         <Button onClick={handleCloseDialog}>Got It!</Button>
-        <NotShowAgainHint onClick={handleClickCheckbox} isCheck={isCheck} />
+        <NotShowAgainHint
+          style={{
+            top: isMobileSize ? "calc(50% + 140px)" : "calc(50% + 195px)",
+          }}
+          onClick={handleClickCheckbox}
+          isCheck={isCheck}
+        />
       </ChildContainer>
       <CloseIconContainer>
         <CloseIcon

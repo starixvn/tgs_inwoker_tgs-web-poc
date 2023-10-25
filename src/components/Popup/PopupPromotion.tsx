@@ -18,17 +18,20 @@ const doNotShowPromotionDialogKey = "doNotShowPromotionDialog";
 const DialogPopup = styled(MuiDialog)`
   & .MuiPaper-root {
     width: 370px;
-    height: 177px;
+    height: auto;
     background: ${({ theme }) => theme.primaryLight};
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+    margin: 0;
+    overflow: visible;
 
     ${media.sm} {
-      width: 688px;
-      height: 429px;
+      max-width: 688px;
+      width: 100%;
+      height: auto;
     }
   }
 `;
@@ -43,7 +46,7 @@ const PromotionTag = styled.div`
   height: 43px;
   background: url(${TagBg}) no-repeat center center;
   position: absolute;
-  top: 0;
+  top: -10px;
   left: 50%;
   transform: translateX(-50%);
   color: #ffffff;
@@ -57,30 +60,26 @@ const PromotionTag = styled.div`
 const CloseBtn = styled.div`
   position: fixed;
   z-index: 99;
-  top: calc(50% + 150px);
   left: 50%;
   transform: translateX(-50%);
   width: 36px;
   height: 36px;
   cursor: pointer;
-
-  ${media.sm} {
-    top: calc(50% + 280px);
-  }
+  margin-top: 60px;
 `;
 
 const PromotionBannerWrapper = styled.div`
   width: 370px;
-  height: 177px;
+  height: auto;
   & > img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: contain;
   }
 
   ${media.sm} {
     width: 688px;
-    height: 429px;
+    height: auto;
   }
 `;
 const PromotionBanner = ({
@@ -147,13 +146,7 @@ const PopupPromotion = ({
             ))}
           </Carousel>
           <PromotionTag>PROMOTIONS</PromotionTag>
-          <NotShowAgainHint
-            onClick={handleClickCheckbox}
-            isCheck={isCheck}
-            style={{
-              top: isMobileSize ? "calc(50% + 100px)" : "calc(50% + 230px)",
-            }}
-          />
+          <NotShowAgainHint onClick={handleClickCheckbox} isCheck={isCheck} />
           <CloseBtn onClick={handleCloseDialog}>
             <img src={IconCloseButton} />
           </CloseBtn>
