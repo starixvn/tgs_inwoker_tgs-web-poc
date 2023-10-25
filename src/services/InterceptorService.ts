@@ -116,10 +116,11 @@ const Interceptor = {
           store.dispatch({ type: UNAUTHORIZE });
 
           if (newResponse.code === 210) {
-            AppHistory.replace("/" + i18n.language + "/banned");
-          } else {
-            AppHistory.replace("/" + i18n.language + "/");
+            AppHistory.replace(`/banned`);
           }
+          // else {
+          //   AppHistory.replace(`/`);
+          // }
         }
 
         return newResponse;
@@ -143,11 +144,13 @@ const Interceptor = {
               localStorage.removeItem("logintime0");
               localStorage.removeItem("logintime1");
               store.dispatch({ type: UNAUTHORIZE });
+
               if (error.response.data.err == 210) {
-                AppHistory.replace("/" + i18n.language + "/banned");
-              } else {
-                AppHistory.replace("/" + i18n.language + "/");
+                AppHistory.replace(`/banned`);
               }
+              // else {
+              //   AppHistory.replace(`/`);
+              // }
             }
           }
 
