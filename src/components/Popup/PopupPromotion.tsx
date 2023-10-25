@@ -17,8 +17,10 @@ const doNotShowPromotionDialogKey = "doNotShowPromotionDialog";
 
 const DialogPopup = styled(MuiDialog)`
   & .MuiPaper-root {
-    width: 370px;
+    max-width: 370px;
+    width: 100%;
     height: auto;
+    min-height: 100px;
     background: ${({ theme }) => theme.primaryLight};
     display: flex;
     flex-direction: column;
@@ -26,7 +28,8 @@ const DialogPopup = styled(MuiDialog)`
     justify-content: center;
     border-radius: 10px;
     margin: 0;
-    overflow: visible;
+    overflow: hidden;
+    position: relative;
 
     ${media.sm} {
       max-width: 688px;
@@ -46,7 +49,7 @@ const PromotionTag = styled.div`
   height: 43px;
   background: url(${TagBg}) no-repeat center center;
   position: absolute;
-  top: -10px;
+  top: -10px; // TODO: will hide by parent div: MuiPaper-root
   left: 50%;
   transform: translateX(-50%);
   color: #ffffff;
@@ -70,10 +73,13 @@ const CloseBtn = styled.div`
 
 const PromotionBannerWrapper = styled.div`
   width: 370px;
-  height: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
   & > img {
     width: 100%;
     height: auto;
+    min-height: 100px;
     object-fit: contain;
   }
 
@@ -116,7 +122,6 @@ const PopupPromotion = ({
   const [isCheck, setIsCheck] = useState(false);
 
   const { displayPromotionList } = usePromotion();
-  const { isMobileSize } = useRwd();
 
   const handleClickCheckbox = () => {
     setIsCheck((prevIsCheck) => !prevIsCheck);
