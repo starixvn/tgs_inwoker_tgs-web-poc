@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
 import Loading from "@/components/UI/Loading";
-import { GameService } from "@/services/GameService";
 import Maintenance from "@/pages/Maintenance";
+import { GameService } from "@/services/GameService";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const JoinLobbyGame = () => {
-  const { gameType, gpCode } = useParams();
+  const { gameType, gpCode } = useParams<{ gameType: string; gpCode: string }>();
   const [isLoading, setIsLoading] = useState(true);
   const [isMaintenance, setIsMaintenance] = useState(false);
 
