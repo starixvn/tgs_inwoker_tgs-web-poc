@@ -17,7 +17,6 @@ export function useInitSite() {
   const {
     general,
     getSiteToken,
-    getBrandLanguage,
     getBanner,
     getBrand,
     getBrandCommunication,
@@ -90,7 +89,6 @@ export function useInitSite() {
       return;
     }
 
-    getBrandLanguage();
     getMarquee(i18n.language);
     getAnnouncement(i18n.language);
     getBanner();
@@ -221,7 +219,6 @@ export function useInitSite() {
     });
 
     getHomePageGameList();
-    getBrandLanguage();
     getMarquee(i18n.language);
     getAnnouncement(i18n.language);
     getBanner();

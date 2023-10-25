@@ -1,28 +1,11 @@
 import React, { useEffect } from "react";
 import i18n from "@/utils/i18n";
 import Config from "@/config/config";
+import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 
-export function useLanguage() {
+export function useInitLanguage() {
   const [isLanguageReady, setIsLanguageReady] = React.useState(false);
-
-  useEffect(() => {
-    const languages = "zh-CN|zh-TW|en-US|id-ID|th-TH|vi-VN".split("|");
-    var pathname = window.location.pathname;
-    let isFoundLanguage = "";
-
-    for (let i = 0; i < languages.length; i++) {
-      if (pathname.indexOf(languages[i]) >= 0) {
-        isFoundLanguage = languages[i];
-        break;
-      }
-    }
-
-    if (isFoundLanguage != "") {
-      pathname = pathname.replace("/" + isFoundLanguage, "/");
-      pathname = pathname.replace("//", "/");
-      window.location.href = pathname + window.location.search;
-    }
-  }, []);
+  const { getBrandLanguage } = useGeneralStore();
 
   useEffect(() => {
     i18n.on("languageChanged", (lng) => {
@@ -37,7 +20,8 @@ export function useLanguage() {
         );
     });
 
-    i18n.on("loaded", function (options) {
+    i18n.on("loaded", async (options) => {
+      await getBrandLanguage();
       setIsLanguageReady(true);
     });
   }, []);

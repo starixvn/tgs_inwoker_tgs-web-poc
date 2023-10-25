@@ -5,7 +5,9 @@ import { useHistory } from "react-router-dom";
 import Avatar from "@/components/Avatar";
 import { useMemo } from "react";
 import i18n from "@/utils/i18n";
-import Loading from "@/components/UI/Loading";
+import accountImg from "@/assets/images/header/contextMenu/icon_my_account.svg";
+import supportImg from "@/assets/images/header/contextMenu/icon_service_support.svg";
+import logoutImg from "@/assets/images/header/contextMenu/icon_logout.svg";
 
 const ContextMenuContainer = styled.div`
   width: 272px;
@@ -41,23 +43,17 @@ const ContextMenu = () => {
     return [
       {
         label: i18n.t("wap.main.my"),
-        iconUrl:
-          process.env.PUBLIC_URL +
-          `/assets/images/mobile/contextMenu/icon_my_account.svg`,
+        iconUrl: accountImg,
         routePath: "/account",
       },
       {
         label: i18n.t("support.online"),
-        iconUrl:
-          process.env.PUBLIC_URL +
-          `/assets/images/mobile/contextMenu/icon_service_support.svg`,
+        iconUrl: supportImg,
         routePath: "/main/support",
       },
       {
         label: i18n.t("wap.main.account.signout"),
-        iconUrl:
-          process.env.PUBLIC_URL +
-          `/assets/images/mobile/contextMenu/icon_logout.svg`,
+        iconUrl: logoutImg,
         routePath: "/logout",
       },
     ];

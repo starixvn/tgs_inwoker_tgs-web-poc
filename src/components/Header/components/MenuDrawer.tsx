@@ -16,6 +16,7 @@ import iconPromotion from "@/assets/images/header/promotion.svg";
 import iconDownload from "@/assets/images/header/app_download.svg";
 import Icon from "@/components/Icon";
 import i18n from "@/utils/i18n";
+import { useHeader } from "@/hooks/useHeader";
 
 const CustomDrawer = styled(Drawer)`
   //height: calc(100% - 70px);
@@ -64,16 +65,13 @@ const DrawerImageCard = styled(DrawerCard)`
   }
 `;
 
-type Props = {
-  isOpen: boolean;
-  handleClose: () => void;
-};
-const MenuDrawer = ({ isOpen, handleClose }: Props) => {
-  const { isDesktopSize, isMobileSize } = useRwd();
+const MenuDrawer = () => {
+  const { isMenuOpen, handleToggleMenu } = useHeader();
+  const { isDesktopSize } = useRwd();
 
   const handleDrawerClose = () => {
     if (isDesktopSize) return;
-    handleClose();
+    handleToggleMenu(false);
   };
 
   const handleClickHome = () => {
@@ -101,8 +99,8 @@ const MenuDrawer = ({ isOpen, handleClose }: Props) => {
       // variant={"persistent"}
       variant={isDesktopSize ? "persistent" : "temporary"}
       anchor={"left"}
-      open={isOpen}
-      onClose={handleClose}
+      open={isMenuOpen}
+      onClose={() => handleToggleMenu(false)}
       sx={{
         flexShrink: 0,
         "& .MuiDrawer-paper": {
