@@ -25,7 +25,7 @@ import { GlobalStyles } from "./global";
 import { theme } from "./theme";
 import { createRoot } from "react-dom/client";
 import { muiTheme } from "@/theme/mui";
-import { useLanguage } from "@/hooks/useLanguage";
+import { useInitLanguage } from "@/hooks/useInitLanguage";
 import Config from "@/config/config";
 import StyledSnakeBarProvider from "@/components/UI/StyledSnakeBarProvider";
 import Loading from "@/components/UI/Loading";
@@ -51,7 +51,7 @@ document
   );
 
 const AppWrapper = () => {
-  const { isLanguageReady } = useLanguage();
+  const { isLanguageReady } = useInitLanguage();
   const { isTokenVerified } = useTokenVerify();
 
   const isReady = isLanguageReady && isTokenVerified;

@@ -22,7 +22,7 @@ import { AuthDialogContextProvider } from "@/contexts/authDialogContext";
 import ForgetPasswordDialog from "@/domain/authentication/ForgetPasswordDialog";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import { useLanguageChange } from "@/hooks/app/useLanguageChange";
+import { useLanguageDetect } from "@/hooks/app/useLanguageDetect";
 import { useHandleMaintenance } from "@/hooks/app/useHandleMaintenance";
 import { useUpdateProviderBalance } from "@/hooks/app/useUpdateProviderBalance";
 import { useCheckRegisterProcess } from "@/hooks/app/useCheckRegisterProcess";
@@ -34,7 +34,7 @@ const App: React.FC = () => {
   const { general } = useGeneralStore();
   const { account } = useAccountStore();
 
-  useLanguageChange();
+  useLanguageDetect();
   useHandleMaintenance();
   useUpdateProviderBalance();
   useCheckRegisterProcess();
