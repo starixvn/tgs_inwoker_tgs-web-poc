@@ -11,17 +11,13 @@ const NotShowAgainHintContainer = styled.div`
   align-items: center;
   justify-content: center;
   position: fixed;
-  top: calc(50% + 149px);
   z-index: 99;
   color: #ffffff;
   border-radius: 50px;
   text-align: center;
   left: 50%;
   transform: translateX(-50%);
-
-  ${media.sm} {
-    top: calc(50% + 208px);
-  }
+  margin-top: 13px;
 `;
 
 type CheckBoxProps = {

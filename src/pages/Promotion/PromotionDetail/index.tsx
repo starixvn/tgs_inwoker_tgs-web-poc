@@ -24,6 +24,7 @@ const PromotionDetailContainer = styled.div`
     padding: 22px 22px 100px 22px;
   }
 `;
+
 const BannerWrapper = styled.div`
   width: 100%;
   height: calc((100vw - 44px) * 0.4);
@@ -32,6 +33,7 @@ const BannerWrapper = styled.div`
     border-radius: 12px;
   }
 `;
+
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,9 +41,11 @@ const ContentContainer = styled.div`
   gap: 40px;
   align-self: stretch;
 `;
+
 const TextArea = styled.div`
   /* margin-bottom: 40px; */
 `;
+
 const Title = styled.h2`
   color: ${({ theme }) => theme.yellow};
   font-size: 1.125rem;
@@ -52,6 +56,7 @@ const Title = styled.h2`
     font-size: 2rem;
   }
 `;
+
 const Description = styled.p`
   color: #ffffff;
   font-size: 0.875rem;
@@ -62,9 +67,13 @@ const Description = styled.p`
 `;
 
 const TermsAndConditions = styled(Description)`
-  padding-left: 16px;
+  ol {
+    padding-left: 16px;
+  }
   ${media.sm} {
-    padding-left: 30px;
+    ol {
+      padding-left: 30px;
+    }
   }
 `;
 
