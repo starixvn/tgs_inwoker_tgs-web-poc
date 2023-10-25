@@ -1,4 +1,4 @@
-import React from "react";
+import backIcon from "@/assets/images/promotion/back.png";
 import { Close as CloseIcon } from "@mui/icons-material";
 import styled from "styled-components";
 
@@ -29,6 +29,16 @@ const CloseIconContainer = styled.div`
   cursor: pointer;
 `;
 
+const BackIconContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
 type Props = {
   handleClose: () => void;
   dialogHeaderTitle: string;
@@ -37,16 +47,21 @@ type Props = {
 const DialogHeader = ({ dialogHeaderTitle, handleClose }: Props) => {
   return (
     <DialogHeaderContainer>
-      {dialogHeaderTitle}
+      {dialogHeaderTitle === "Promotion" ?
+        <BackIconContainer onClick={handleClose}>
+          <img src={backIcon} alt="back" />
+        </BackIconContainer>
+        : <CloseIconContainer onClick={handleClose}>
+          <CloseIcon
+            style={{
+              color: "white",
+              transform: "scale(1.6)",
+            }}
+          />
+        </CloseIconContainer>
+      }
 
-      <CloseIconContainer onClick={handleClose}>
-        <CloseIcon
-          style={{
-            color: "white",
-            transform: "scale(1.6)",
-          }}
-        />
-      </CloseIconContainer>
+      {dialogHeaderTitle}
     </DialogHeaderContainer>
   );
 };
