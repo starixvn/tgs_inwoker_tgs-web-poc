@@ -310,14 +310,6 @@ const Main = (props: Props) => {
           activeGameTypeTab={activeGameTypeTab}
           handleGameTypeClick={handleGameTypeClick}
         />
-        {isDesktopSize && <InputContainer>
-          <Input
-            placeholder={i18n.t("slot.search")}
-            imageUrl={searchIcon}
-            handleChange={handleSearch}
-            value={searchString}
-          />
-        </InputContainer>}
       </TabSearchContainer>
 
       {!activeGameTypeTab && (
