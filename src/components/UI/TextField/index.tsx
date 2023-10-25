@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { TextField as MuiTextField, TextFieldProps } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 
-export const TextField = muiStyled(MuiTextField)(({ theme }) => ({
+const StyledTextField = muiStyled(MuiTextField)(({ theme }) => ({
   color: theme.palette.common.white,
   overflow: "visible",
   input: {
@@ -60,28 +60,16 @@ export const TextField = muiStyled(MuiTextField)(({ theme }) => ({
   },
 }));
 
-// export const TextField = (props: TextFieldProps) => {
-//   return (
-//     <MuiTextField
-//       fullWidth={true}
-//       {...props}
-//       sx={{
-//         overflow: "visible",
-//       }}
-//       inputProps={{
-//         sx: {
-//           fontSize: "1.125rem",
-//           color: theme.palette.common.white,
-//         },
-//       }}
-//       InputLabelProps={{
-//         sx: {
-//           fontSize: "1.125rem",
-//         },
-//       }}
-//     />
-//   );
-// };
+export const TextField = (props: TextFieldProps) => {
+  return (
+    <StyledTextField
+      {...props}
+      fullWidth={
+        typeof props.fullWidth !== "undefined" ? props.fullWidth : true
+      }
+    />
+  );
+};
 
 export default MuiTextField;
 export const GrayInputWrapper = styled.div`

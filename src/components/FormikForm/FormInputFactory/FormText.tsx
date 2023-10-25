@@ -31,6 +31,9 @@ const FormText = ({ formInput, formik, showErrorOn }: Props) => {
           !!formik.touched[name] &&
           !!formik.errors[name]
         }
+        inputProps={{
+          autoComplete: "off",
+        }}
       />
     </GrayInputWrapper>
   );

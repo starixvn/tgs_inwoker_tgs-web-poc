@@ -14,7 +14,7 @@ import { media } from "@/theme/breakpoints";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 56px 15px;
+  padding: 0 15px;
 
   ${media.sm} {
     padding: 42px 42px;
@@ -33,7 +33,6 @@ class ForgotPasswordPrev extends Component {
   state = {
     email: "",
     code: "",
-    step: 1,
     countdownToken: 0,
     loading: false,
     password: "",
@@ -104,38 +103,21 @@ class ForgotPasswordPrev extends Component {
     }
   };
   handleNextClick = () => {
-    if (this.state.step === 1) {
-      if (config.features.SMSVerification) {
-        if (this.state.phone.length < 8 || this.state.phone.length > 10) {
-          this.props.alert(
-            "",
-            i18n
-              .t("common.noReachMin")
-              .replace(/{maxlength}/g, config.features.MAX_PHONE_LENGTH || 10)
-          );
-          return;
-        }
-      }
-      if (this.state.code.length === 6) {
-        this.setState({ ...this.state, step: 2 });
-      }
+    if (this.state.password !== this.state.password2) {
+      this.props.alert("", i18n.t("forgotPassword.invalidConfirmPass"));
     } else {
-      if (this.state.password !== this.state.password2) {
-        this.props.alert("", i18n.t("forgotPassword.invalidConfirmPass"));
-      } else {
-        AccountService.ResetPassword(
-          this.state.securityKey,
-          this.state.code,
-          this.state.password
-        ).then((response) => {
-          if (response.IsSuccess) {
-            this.props.alert("", i18n.t("forgotPassword.updateSuccess"));
-            this.props.appHistory.replace("/login");
-          } else {
-            this.props.alert("", response.info);
-          }
-        });
-      }
+      AccountService.ResetPassword(
+        this.state.securityKey,
+        this.state.code,
+        this.state.password
+      ).then((response) => {
+        if (response.IsSuccess) {
+          this.props.alert("", i18n.t("forgotPassword.updateSuccess"));
+          this.props.appHistory.replace("/login");
+        } else {
+          this.props.alert("", response.info);
+        }
+      });
     }
   };
   checkCountdown = () => {
@@ -150,130 +132,122 @@ class ForgotPasswordPrev extends Component {
     }
   };
 
-  handleBackClick = () => {
-    if (this.state.step === 2) {
-      this.setState({ ...this.state, step: 1 });
-    } else {
-      this.props.appHistory.goBack();
-    }
-  };
-
   render() {
     return (
       <Wrapper>
-        {(() => {
-          if (this.state.step === 1) {
-            return config.features.SMSVerification ? (
-              <>
-                <PhoneContainer>
-                  <GrayInputWrapper style={{ width: "20%" }}>
-                    <Select
-                      style={{ width: "100%" }}
-                      native
-                      value={this.state.areaCode}
-                      onChange={(e) => {
-                        this.setState({
-                          ...this.state,
-                          areaCode: e.target.value,
-                        });
-                      }}
-                      disabled={this.state.currentStep === 1}
-                    >
-                      <option value={config.features.PhonePrefix}>
-                        {config.features.PhonePrefix}
-                      </option>
-                    </Select>
-                  </GrayInputWrapper>
+        {config.features.SMSVerification ? (
+          <>
+            {/* 手機驗證 */}
+            <PhoneContainer>
+              <GrayInputWrapper style={{ width: "20%" }}>
+                <Select
+                  style={{ width: "100%" }}
+                  native
+                  value={this.state.areaCode}
+                  onChange={(e) => {
+                    this.setState({
+                      ...this.state,
+                      areaCode: e.target.value,
+                    });
+                  }}
+                  disabled={this.state.currentStep === 1}
+                >
+                  <option value={config.features.PhonePrefix}>
+                    {config.features.PhonePrefix}
+                  </option>
+                </Select>
+              </GrayInputWrapper>
 
-                  <GrayInputWrapper style={{ width: "80%" }}>
-                    <TextField
-                      value={this.state.phone}
-                      onChange={this.handlePhoneChange}
-                      placeholder={i18n.t("common.msgEnterPhone")}
-                      type={"text"}
-                    />
-                  </GrayInputWrapper>
-                </PhoneContainer>
-                {/* 發送驗證碼 */}
-                <GrayInputWrapper style={{ marginBottom: "20px" }}>
-                  <TextFieldWithButton
-                    buttonlabel={i18n.t("common.msgSendToken")}
-                    value={this.state.code}
-                    onChange={this.handleCodeChange}
-                    placeholder={i18n.t("common.msgEnterCode")}
-                    // label={i18n.t("common.token")}
-                    onClick={this.handleGetCodeClick}
-                    type={"text"}
-                  />
-                </GrayInputWrapper>
-              </>
-            ) : (
-              <>
-                <GrayInputWrapper style={{ marginBottom: "20px" }}>
-                  <TextField
-                    value={this.state.email}
-                    onChange={this.handleEmailChange}
-                    // label={i18n.t("common.msgEnterEmail")}
-                    type={"text"}
-                    placeholder={i18n.t("common.emailAddress")}
-                  />
-                </GrayInputWrapper>
+              <GrayInputWrapper style={{ width: "80%" }}>
+                <TextField
+                  value={this.state.phone}
+                  onChange={this.handlePhoneChange}
+                  fullWidth
+                  placeholder={i18n.t("common.msgEnterPhone")}
+                  type={"text"}
+                />
+              </GrayInputWrapper>
+            </PhoneContainer>
+            {/* 發送驗證碼 */}
+            <GrayInputWrapper style={{ marginBottom: "20px" }}>
+              <TextFieldWithButton
+                buttonlabel={i18n.t("common.msgSendToken")}
+                value={this.state.code}
+                onChange={this.handleCodeChange}
+                placeholder={i18n.t("common.msgEnterCode")}
+                // label={i18n.t("common.token")}
+                onClick={this.handleGetCodeClick}
+                type={"text"}
+              />
+            </GrayInputWrapper>
+          </>
+        ) : (
+          <>
+            {/* email驗證 */}
+            <GrayInputWrapper style={{ marginBottom: "20px" }}>
+              <TextField
+                value={this.state.email}
+                onChange={this.handleEmailChange}
+                // label={i18n.t("common.msgEnterEmail")}
+                fullWidth
+                type={"text"}
+                placeholder={i18n.t("common.emailAddress")}
+              />
+            </GrayInputWrapper>
 
-                <GrayInputWrapper style={{ marginBottom: "20px" }}>
-                  <TextFieldWithButton
-                    buttonlabel={i18n.t("common.msgSendToken")}
-                    style={{ margin: "20px auto 20px auto" }}
-                    value={this.state.code}
-                    onChange={this.handleCodeChange}
-                    // label={i18n.t("common.msgEnterCodeEmail")}
-                    placeholder={i18n.t("common.token")}
-                    onClick={this.handleGetCodeClick}
-                    type={"text"}
-                  />
-                </GrayInputWrapper>
-              </>
-            );
-          } else if (this.state.step === 2) {
-            return (
-              <React.Fragment>
-                <GrayInputWrapper>
-                  <TextField
-                    onChange={this.handlePasswordChange}
-                    // label={i18n.t("wap.register.password")}
-                    type={"password"}
-                    placeholder={i18n.t("common.NewPass")}
-                  />
-                </GrayInputWrapper>
+            <GrayInputWrapper style={{ marginBottom: "20px" }}>
+              <TextFieldWithButton
+                buttonlabel={i18n.t("common.msgSendToken")}
+                style={{ margin: "20px auto 20px auto" }}
+                value={this.state.code}
+                onChange={this.handleCodeChange}
+                // label={i18n.t("common.msgEnterCodeEmail")}
+                placeholder={i18n.t("common.token")}
+                onClick={this.handleGetCodeClick}
+                type={"text"}
+              />
+            </GrayInputWrapper>
+          </>
+        )}
 
-                <GrayInputWrapper>
-                  <TextField
-                    value={this.state.password2}
-                    onChange={this.handlePassword2Change}
-                    // label={i18n.t("common.msgEnterConfirmPass")}
-                    type={"password"}
-                    placeholder={i18n.t("common.ConfirmPass")}
-                  />
-                </GrayInputWrapper>
-              </React.Fragment>
-            );
-          }
-        })()}
+        <GrayInputWrapper style={{ marginBottom: "20px" }}>
+          <TextField
+            onChange={this.handlePasswordChange}
+            // label={i18n.t("wap.register.password")}
+            type={"password"}
+            placeholder={i18n.t("common.NewPass")}
+            fullWidth
+            inputProps={{
+              autoComplete: "new-password",
+            }}
+          />
+        </GrayInputWrapper>
+
+        <GrayInputWrapper style={{ marginBottom: "20px" }}>
+          <TextField
+            value={this.state.password2}
+            onChange={this.handlePassword2Change}
+            // label={i18n.t("common.msgEnterConfirmPass")}
+            type={"password"}
+            fullWidth
+            placeholder={i18n.t("common.ConfirmPass")}
+            autoComplete="no"
+          />
+        </GrayInputWrapper>
 
         <Button
           fullWidth
           disabled={
-            this.state.step === 1
-              ? (config.features.SMSVerification
-                  ? this.state.phone.length < 1
-                  : this.state.email.length < 1) || this.state.code.length < 6
-              : this.state.password.length < 6 ||
-                this.state.password2.length < 6
+            (config.features.SMSVerification
+              ? this.state.phone.length < 1
+              : this.state.email.length < 1) ||
+            this.state.code.length < 6 ||
+            this.state.password.length < 6 ||
+            this.state.password2.length < 6
           }
           onClick={this.handleNextClick}
         >
-          {this.state.step === 1
-            ? i18n.t("common.nextStep")
-            : i18n.t("common.confirm")}
+          {i18n.t("common.confirm")}
         </Button>
       </Wrapper>
     );

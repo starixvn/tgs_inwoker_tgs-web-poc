@@ -61,6 +61,9 @@ const FormPhone = ({ formInput, formik, showErrorOn }: Props) => {
             !!formik.touched[name] &&
             !!formik.errors[name]
           }
+          inputProps={{
+            autoComplete: "off",
+          }}
         />
       </GrayInputWrapper>
     </PhoneContainer>
