@@ -60,18 +60,15 @@ type Props = {
   children: ReactElement;
 };
 const DefaultLayout = ({ children }: Props) => {
-  const { isDesktopSize, isMobileSize } = useRwd();
   const { isMenuOpen, handleToggleMenu } = useHeader();
+  const { isDesktopSize, isMobileSize } = useRwd();
 
   return (
     <DefaultLayoutContainer>
       <Header />
 
       <DashboardContainer>
-        <MenuDrawer
-          isOpen={isMenuOpen}
-          handleClose={() => handleToggleMenu(false)}
-        />
+        <MenuDrawer />
 
         <ContentWrapper $isOpen={isDesktopSize && isMenuOpen}>
           <>
