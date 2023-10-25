@@ -21,6 +21,7 @@ const PromotionDetailContainer = styled.div`
   ${media.sm} {
     max-width: 870px;
     margin: 0 auto;
+    padding: 22px 22px 100px 22px;
   }
 `;
 const BannerWrapper = styled.div`
@@ -39,7 +40,6 @@ const ContentContainer = styled.div`
   align-self: stretch;
 `;
 const TextArea = styled.div`
-  line-height: 1rem;
   /* margin-bottom: 40px; */
 `;
 const Title = styled.h2`
@@ -50,7 +50,6 @@ const Title = styled.h2`
 
   ${media.sm} {
     font-size: 2rem;
-    line-height: 2rem;
   }
 `;
 const Description = styled.p`
@@ -59,9 +58,16 @@ const Description = styled.p`
   font-weight: 500;
   ${media.sm} {
     font-size: 1.5rem;
-    line-height: 1.5rem;
   }
 `;
+
+const TermsAndConditions = styled(Description)`
+  padding-left: 16px;
+  ${media.sm} {
+    padding-left: 30px;
+  }
+`;
+
 const JoinPromotionButtonWrapper = styled.div`
   position: fixed;
   bottom: 82px;
@@ -135,9 +141,9 @@ const PromotionDetail = () => {
           </TextArea>
           <TextArea>
             <Title>Terms & Conditions</Title>
-            <Description
+            <TermsAndConditions
               dangerouslySetInnerHTML={{
-                __html: "<div>" + termsToDisplay + "</div>",
+                __html: termsToDisplay,
               }}
             />
           </TextArea>

@@ -42,23 +42,24 @@ const PromotionTextContainer = styled.div`
   }
 `;
 const TitleWrapper = styled.h1`
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: ${({ theme }) => theme.tertiaryLight};
   ${media.sm} {
+    font-size: 1rem;
     color: ${({ theme }) => theme.yellow};
   }
 `;
 const DescriptionWrapper = styled.p`
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 400;
   color: ${({ theme }) => theme.white}};
-  line-height: 16px;
   height: 32px;
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
-  ${media.sm} {
+  ${media.sm} { 
+    font-size: 0.875rem;
     color: ${({ theme }) => theme.tertiaryLight};
   }
 `;

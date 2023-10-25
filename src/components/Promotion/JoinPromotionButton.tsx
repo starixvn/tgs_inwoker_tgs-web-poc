@@ -32,6 +32,7 @@ const Button = styled.button<{ $disabled: boolean }>`
   ${media.sm} {
     height: 75px;
     font-size: 2rem;
+    max-width: 870px;
   }
 `;
 
