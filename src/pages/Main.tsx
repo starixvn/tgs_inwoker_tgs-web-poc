@@ -89,12 +89,6 @@ const TabSearchContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
-  
-  ${media.sm} {
-    height: 40px;
-    background: ${(props) => props.theme.primaryLight};
-    margin-bottom: 20px;
-  }
 `;
 
 const InputContainer = styled.div`

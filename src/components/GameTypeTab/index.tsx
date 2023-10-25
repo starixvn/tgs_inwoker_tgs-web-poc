@@ -1,14 +1,9 @@
-import { media } from "@/theme/breakpoints";
-import React, { useRef, useState } from "react";
-import styled from "styled-components";
 import { gameTypeList } from "@/constants/tab";
+import { media } from "@/theme/breakpoints";
+import styled from "styled-components";
 import Tab from "./Tab";
-import { useDomDragging } from "@/hooks/main/useDomDragging";
 
-type TabContainerProps = {
-  $isDragging: boolean;
-};
-const TabContainer = styled.div<TabContainerProps>`
+const TabContainer = styled.div`
   margin-bottom: 15px;
   overflow-x: auto;
   white-space: nowrap;
@@ -18,12 +13,26 @@ const TabContainer = styled.div<TabContainerProps>`
   /* Enable smooth scrolling on iOS */
 
   ${media.sm} {
-    overflow-x: hidden;
-    width: calc(100% - 189px);
     margin-bottom: unset;
-    transition: scroll-left 0.2s ease-in-out;
-    cursor: ${({ $isDragging }: TabContainerProps) =>
-      $isDragging ? "grabbing" : "grab"};
+    padding-bottom: 5px;
+
+    &::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+      background: ${(props) => props.theme.tertiaryDark};
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      background-color: #53535375;
+    }
+
+    &::-webkit-scrollbar-track-piece {
+      background: transparent;
+    }
   }
 `;
 
@@ -33,21 +42,8 @@ type Props = {
 };
 
 const GameTypeTab = ({ activeGameTypeTab, handleGameTypeClick }: Props) => {
-  const {
-    isDragging,
-    domRef,
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
-  } = useDomDragging();
-
   return (
     <TabContainer
-      ref={domRef}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      $isDragging={isDragging} // Add isDragging prop here
     >
       {gameTypeList.map((gameTypeItem) => {
         const { key, iconUrl, text, gameType, fontSize } = gameTypeItem;
@@ -60,7 +56,6 @@ const GameTypeTab = ({ activeGameTypeTab, handleGameTypeClick }: Props) => {
             isActive={gameType === activeGameTypeTab}
             fontSize={fontSize}
             onClick={() => handleGameTypeClick(gameType)}
-            isDraggable={isDragging}
           />
         );
       })}
