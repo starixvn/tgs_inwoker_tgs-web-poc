@@ -55,6 +55,9 @@ const FormPromotionCode = ({ formInput, formik, showErrorOn }: Props) => {
             !!formik.touched[name] &&
             !!formik.errors[name]
           }
+          inputProps={{
+            autoComplete: "off",
+          }}
         />
 
         <DropdownContainer>

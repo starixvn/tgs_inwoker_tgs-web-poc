@@ -1,8 +1,6 @@
 import React from "react";
-import LoginForm from "@/domain/authentication/LoginForm";
 import { useAuthDialog } from "@/hooks/auth/useAuthDialog";
 import AuthDialog from "@/components/UI/Dialog/AuthDialog";
-import AuthSwitchButtons from "@/domain/authentication/components/AuthSwitchButtons";
 import ForgotPasswordPrev from "@/domain/authentication/ForgotPasswordPrev";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useHistory } from "react-router-dom";
@@ -17,6 +15,7 @@ const TitleContainer = styled.div`
   color: white;
   white-space: nowrap;
   margin: 56px 42px 0;
+  overflow: visible;
 `;
 
 const AuthDialogWrapper = styled.div``;

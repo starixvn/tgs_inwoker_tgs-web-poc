@@ -15,9 +15,9 @@ const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 41px;
-  margin-top: 15.76%;
+  margin: 66px 0 41px;
   white-space: nowrap;
+  overflow: visible;
 
   & > .bottom-border {
     width: 68px;
@@ -27,7 +27,7 @@ const TitleContainer = styled.div`
 `;
 
 type Props = {};
-const ForgetPasswordPage = (props: Props) => {
+const ForgotPasswordPage = (props: Props) => {
   const { updatePageName } = usePageName();
 
   useEffect(() => {
@@ -49,4 +49,4 @@ const ForgetPasswordPage = (props: Props) => {
   );
 };
 
-export default ForgetPasswordPage;
+export default ForgotPasswordPage;

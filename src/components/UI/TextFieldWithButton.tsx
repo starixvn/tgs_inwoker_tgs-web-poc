@@ -42,8 +42,13 @@ const TextFieldWithButton = (
         value={props.value}
         onChange={props.onChange}
         disabled={props.disabled || false}
-        placeholder={props.placeholder}
+        placeholder={props.placeholder || ""}
         maxLength={props.maxLength || 50}
+        fullWidth={false}
+        inputProps={{
+          autoComplete: "off",
+        }}
+
         // endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
       />
 

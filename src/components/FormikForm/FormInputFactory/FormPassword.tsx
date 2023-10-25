@@ -45,6 +45,7 @@ const FormPassword = ({ formInput, formik, showErrorOn }: Props) => {
           !!formik.errors[name]
         }
         InputProps={{
+          autoComplete: "new-password",
           endAdornment: (
             <InputAdornment position="end" style={{ height: "20px" }}>
               <IconButton

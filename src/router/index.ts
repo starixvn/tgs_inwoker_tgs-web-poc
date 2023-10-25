@@ -40,7 +40,7 @@ import config from "@/config/config";
 import React from "react";
 import PromotionDetail from "@/pages/Promotion/PromotionDetail";
 import DefaultLayout from "@/layouts/DefaultLayout";
-import ForgotPasswordPage from "@/pages/ForgetPassword";
+import ForgotPasswordPage from "@/pages/ForgotPassword";
 import DialogLayout from "@/layouts/DialogLayout";
 import { ProfilePathEnum } from "@/components/Account/Profile/profilePageDictionary";
 import AuthDialogLayout from "@/layouts/AuthDialogLayout";
