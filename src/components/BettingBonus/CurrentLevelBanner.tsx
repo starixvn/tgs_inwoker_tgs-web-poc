@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Arrow from "@/assets/images/bettingBonus/icon_arrow.svg";
 import LevelIcon from "@/components/UI/LevelIcon";
 import { TypeProductRebateByLevel } from "@/pages/BettingBonus";
+import { media } from "@/theme/breakpoints";
 
 const CurrentLevelBannerContainer = styled.div`
   width: 100%;
@@ -20,10 +21,13 @@ const CurrentLevelBannerContainer = styled.div`
 const LevelIconContainer = styled.div`
   position: absolute;
   top: 120px;
-  left: 10%; // TODO: 調整位置
+  left: 4%;
   transform: translateY(-50%);
   width: 100px;
   height: 100px;
+  ${media.sm} {
+    left: 10%;
+  }
 `;
 const TableContainer = styled.div`
   width: 68%;

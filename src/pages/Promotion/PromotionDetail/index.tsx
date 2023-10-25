@@ -60,6 +60,14 @@ const Description = styled.p`
     font-size: 1.5rem;
   }
 `;
+
+const TermsAndConditions = styled(Description)`
+  padding-left: 16px;
+  ${media.sm} {
+    padding-left: 30px;
+  }
+`;
+
 const JoinPromotionButtonWrapper = styled.div`
   position: fixed;
   bottom: 82px;
@@ -133,12 +141,9 @@ const PromotionDetail = () => {
           </TextArea>
           <TextArea>
             <Title>Terms & Conditions</Title>
-            <Description
+            <TermsAndConditions
               dangerouslySetInnerHTML={{
-                __html:
-                  '<div style="padding-left: 30px;">' +
-                  termsToDisplay +
-                  "</div>",
+                __html: termsToDisplay,
               }}
             />
           </TextArea>
