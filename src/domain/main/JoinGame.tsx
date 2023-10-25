@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
 import Loading from "@/components/UI/Loading";
 import Maintenance from "@/pages/Maintenance";
-import { useParams } from "react-router-dom";
 import { GameService } from "@/services/GameService";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const JoinGame = () => {
-  const { gameId, gpCode } = useParams();
+  const { gameId, gpCode } = useParams<{ gameId: string; gpCode: string }>();
   const [isLoading, setIsLoading] = useState(true);
   const [isMaintenance, setIsMaintenance] = useState(false);
 
   useEffect(() => {
     const joinGame = async () => {
-      const joinGameRes = await GameService.JoinGame(gameId, gpCode);
+      const joinGameRes = await GameService.JoinGame(parseInt(gameId), gpCode);
 
       if (joinGameRes.IsSuccess) {
         window.location.href = joinGameRes.data.url;

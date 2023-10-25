@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import { useEffect, useState } from "react";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
-import i18n from "@/utils/i18n";
-import Common from "@/utils/Common";
-import { useHistory } from "react-router-dom";
 import { UiService } from "@/services/UiService";
 import { media } from "@/theme/breakpoints";
+import Common from "@/utils/Common";
+import i18n from "@/utils/i18n";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 
 const MaintenanceContainer = styled.div`
   display: flex;
@@ -21,13 +21,13 @@ const MaintenanceBg = styled.div`
   width: 100%;
   height: 100%;
   background: url(${process.env
-      .PUBLIC_URL}/assets/images/maintenance/maintenance_bg.png)
+    .PUBLIC_URL}/assets/images/maintenance/maintenance_bg.png)
     no-repeat;
   background-size: cover;
 
   ${media.sm} {
     background: url(${process.env
-        .PUBLIC_URL}/assets/images/maintenance/maintenance_desktop_bg.png)
+    .PUBLIC_URL}/assets/images/maintenance/maintenance_desktop_bg.png)
       no-repeat;
   }
 `;
@@ -88,7 +88,11 @@ const DefaultMaintenance = () => {
   );
 };
 
-const Maintenance = () => {
+type Props = {
+  isGameMaintenance: boolean;
+};
+
+const Maintenance = (props: Props) => {
   const history = useHistory();
   const { GetMaintenance } = UiService;
   const {
@@ -101,6 +105,7 @@ const Maintenance = () => {
   const [isFailed, setFailed] = useState(false);
 
   const newURL = livechat.setting?.url.replace("{lang}", i18n.language);
+
   const handleCSClick = () => {
     if (newURL?.length) {
       Common.PopupCenter(newURL, "", 785, 750);
@@ -116,7 +121,7 @@ const Maintenance = () => {
   useEffect(() => {
     // NOTE: while GeneralService.GetSiteToken encounter error,
     // then general.isMaintenance will set to false
-    if (!isMaintenance) {
+    if (!isMaintenance && !props.isGameMaintenance) {
       history.push("/");
       return;
     }
