@@ -6,6 +6,7 @@ import { Button as MuiButton } from "@mui/material";
 import { media } from "@/theme/breakpoints";
 import { useRwd } from "@/hooks/useRwd";
 import { useAuthDialog } from "@/hooks/auth/useAuthDialog";
+import i18n from "@/utils/i18n";
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -20,10 +21,11 @@ const ButtonContainer = styled.div`
 export const HeaderButton = muiStyled(MuiButton)(({ theme }) => ({
   whiteSpace: "nowrap",
   padding: "12px 20px",
-  fontSize: "1.125rem",
   lineHeight: "1.318rem",
   fontWeight: 500,
   borderRadius: "12px",
+  color: "white",
+  fontSize: "1rem",
   "&:disabled": {
     background: theme.palette.tertiary.dark,
     color: theme.palette.common.white,
@@ -67,11 +69,9 @@ const AnonymousHeaderContent = (props: Props) => {
         onClick={toggleLoginDialog}
         style={{
           background: "#5D50E0",
-          color: "white",
-          fontSize: "1rem",
         }}
       >
-        Login
+        {i18n.t("common.login")}
       </HeaderButton>
 
       <HeaderButton
@@ -79,7 +79,7 @@ const AnonymousHeaderContent = (props: Props) => {
         onClick={toggleRegisterDialog}
         style={{ background: "#E7415A", color: "white", fontSize: "1rem" }}
       >
-        Register
+        {i18n.t("common.register")}
       </HeaderButton>
     </ButtonContainer>
   );
