@@ -1,51 +1,35 @@
-import Card from "@/pages/Card";
-import AddCard from "@/pages/Card/AddCard";
+import { ProfilePathEnum } from "@/components/Account/Profile/profilePageDictionary";
+import config from "@/config/config";
+import AuthDialogLayout from "@/layouts/AuthDialogLayout";
+import DefaultLayout from "@/layouts/DefaultLayout";
+import DialogLayout from "@/layouts/DialogLayout";
+import PromotionLayout from "@/layouts/PromotionLayout";
 import Affiliate from "@/pages/Affiliate";
 import BettingBonus from "@/pages/BettingBonus";
+import Card from "@/pages/Card";
+import AddCard from "@/pages/Card/AddCard";
 import ContactUsPage from "@/pages/ContactUs";
 import DepositPage from "@/pages/Deposit";
 import DepositDetails from "@/pages/Deposit/DepositDetails";
 import DepositManual from "@/pages/Deposit/DepositManual";
 import DepositPayment from "@/pages/Deposit/DepositPayment";
+import ForgotPasswordPage from "@/pages/ForgotPassword";
 import Inbox from "@/pages/Inbox";
+import JoinGame from "@/pages/JoinGame";
+import JoinLobbyGame from "@/pages/JoinLobbyGame";
 import LoginPage from "@/pages/Login";
 import Main from "@/pages/Main";
 import Maintenance from "@/pages/Maintenance";
 import ProfilePage from "@/pages/Profile";
-import ProfileBirthDatePage from "@/components/Account/Profile/ProfileBirthDate";
-import ProfileChangeEmail from "@/components/Account/Profile/ProfileChangeEmail";
-import ProfileChangePasswordPage from "@/components/Account/Profile/ProfileChangePassword";
-import ProfileChangePhonePage from "@/components/Account/Profile/ProfileChangePhone";
-import ProfileChangeWithdrawalPasswordPage from "@/components/Account/Profile/ProfileChangeWithdrawalPassword";
-import ProfileEmailPage from "@/components/Account/Profile/ProfileEmail";
-import ProfileFacebookMessengerPage from "@/components/Account/Profile/ProfileFacebookMessenger";
-import ProfileLinePage from "@/components/Account/Profile/ProfileLine";
-import ProfileNamePage from "@/components/Account/Profile/ProfileName";
-import ProfilePhonePage from "@/components/Account/Profile/ProfilePhone";
-import ProfileQQPage from "@/components/Account/Profile/ProfileQQ";
-import ProfileResetWithdrawalPasswordPage from "@/components/Account/Profile/ProfileResetWithdrawalPassword";
-import ProfileTelegramPage from "@/components/Account/Profile/ProfileTelegram";
-import ProfileViberPage from "@/components/Account/Profile/ProfileViber";
-import ProfileWithdrawalPasswordPage from "@/components/Account/Profile/ProfileWIthdrawalPassword";
-import ProfileWeChatPage from "@/components/Account/Profile/ProfileWeChat";
-import ProfileWhatsappPage from "@/components/Account/Profile/ProfileWhatsapp";
 import Promotion from "@/pages/Promotion";
+import PromotionDetail from "@/pages/Promotion/PromotionDetail";
 import RegisterPage from "@/pages/Register";
 import Report from "@/pages/Report";
 import Transfer from "@/pages/Transfer";
 import VIP from "@/pages/Vip";
 import Withdrawal from "@/pages/Withdrawal";
 import WithdrawalDetails from "@/pages/Withdrawal/WithdrawalDetails";
-import config from "@/config/config";
 import React from "react";
-import PromotionDetail from "@/pages/Promotion/PromotionDetail";
-import DefaultLayout from "@/layouts/DefaultLayout";
-import ForgotPasswordPage from "@/pages/ForgotPassword";
-import DialogLayout from "@/layouts/DialogLayout";
-import { ProfilePathEnum } from "@/components/Account/Profile/profilePageDictionary";
-import AuthDialogLayout from "@/layouts/AuthDialogLayout";
-import JoinLobbyGame from "@/pages/JoinLobbyGame";
-import JoinGame from "@/pages/JoinGame";
 
 const Mine = React.lazy(() => import("@/pages/Account/Mine"));
 
@@ -288,7 +272,7 @@ const routes: Route[] = [
     path: "/promotion/:id?",
     component: PromotionDetail,
     category: RouteCategoryEnum.PROMOTION,
-    layout: DefaultLayout,
+    layout: PromotionLayout,
     isAnonymousAllowed: true,
   },
   //
@@ -437,3 +421,4 @@ if (!config.features.NewTransferUI) {
 }
 
 export { routes };
+
