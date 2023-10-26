@@ -1,16 +1,17 @@
-import hot from "@/assets/t18/images/home/mobile/hot.svg";
-import newIcon from "@/assets/t18/images/home/mobile/new.svg";
-import recommend from "@/assets/t18/images/home/mobile/recommend.svg";
-import cardgame from "@/assets/t18/images/home/mobile/tab/card_game.svg";
-import egame from "@/assets/t18/images/home/mobile/tab/egame.svg";
-import esports from "@/assets/t18/images/home/mobile/tab/esports.svg";
-import fishing from "@/assets/t18/images/home/mobile/tab/fishing.svg";
-import live from "@/assets/t18/images/home/mobile/tab/live_casino.svg";
-import lobby from "@/assets/t18/images/home/mobile/tab/lobby.svg";
-import lottery from "@/assets/t18/images/home/mobile/tab/lottery.svg";
-import sabong from "@/assets/t18/images/home/mobile/tab/sabong.svg";
-import slot from "@/assets/t18/images/home/mobile/tab/slot.svg";
-import sports from "@/assets/t18/images/home/mobile/tab/sports.svg";
+import hot from "@/assets/images/home/mobile/hot.svg";
+import newIcon from "@/assets/images/home/mobile/new.svg";
+import recommend from "@/assets/images/home/mobile/recommend.svg";
+import cardgame from "@/assets/images/home/mobile/tab/card_game.svg";
+import egame from "@/assets/images/home/mobile/tab/egame.svg";
+import esports from "@/assets/images/home/mobile/tab/esports.svg";
+import fishing from "@/assets/images/home/mobile/tab/fishing.svg";
+import live from "@/assets/images/home/mobile/tab/live_casino.svg";
+import lobby from "@/assets/images/home/mobile/tab/lobby.svg";
+import lottery from "@/assets/images/home/mobile/tab/lottery.svg";
+import sabong from "@/assets/images/home/mobile/tab/sabong.svg";
+import slot from "@/assets/images/home/mobile/tab/slot.svg";
+import sports from "@/assets/images/home/mobile/tab/sports.svg";
+import i18n from "@/utils/i18n";
 import { GameTypeEnum } from "../api-services/utils/Enum";
 // Note : Horse belongs to SPORTS: 1,
 
@@ -33,70 +34,70 @@ export const gameTypeList: TabIcon[] = [
   {
     key: "lobby",
     iconUrl: lobby,
-    text: "Lobby",
+    text: i18n.t("common.home"),
     fontSize: "small",
     gameType: 0,
   },
   {
     key: "slots",
     iconUrl: slot,
-    text: "Slots",
+    text: i18n.t("common.slot"),
     fontSize: "small",
     gameType: GameTypeEnum.SLOT,
   },
   {
     key: "liveCasino",
     iconUrl: live,
-    text: "Live Casino",
+    text: i18n.t("common.live"),
     fontSize: "smaller",
     gameType: GameTypeEnum.LIVELOBBY,
   },
   {
     key: "lottery",
     iconUrl: lottery,
-    text: "Lottery",
+    text: i18n.t("common.lottery"),
     fontSize: "small",
     gameType: GameTypeEnum.LOTTERYLOBBY,
   },
   {
     key: "fishing",
     iconUrl: fishing,
-    text: "Fishing",
+    text: i18n.t("common.fish"),
     fontSize: "small",
     gameType: GameTypeEnum.FISH,
   },
   {
     key: "sports",
     iconUrl: sports,
-    text: "Sports",
+    text: i18n.t("common.sports"),
     fontSize: "small",
     gameType: GameTypeEnum.SPORTS,
   },
   {
     key: "sabong",
     iconUrl: sabong,
-    text: "Sabong",
+    text: i18n.t("common.cockfight"),
     fontSize: "small",
     gameType: GameTypeEnum.COCKFIGHT,
   },
   {
     key: "egame",
     iconUrl: egame,
-    text: "Egame",
+    text: i18n.t("common.eGame"),
     fontSize: "small",
     gameType: GameTypeEnum.TABLEGAME,
   },
   {
     key: "cardGame",
     iconUrl: cardgame,
-    text: "Card Game",
+    text: i18n.t("common.cardGame"),
     fontSize: "smaller",
     gameType: GameTypeEnum.QIPAILOBBY,
   },
   {
     key: "esports",
     iconUrl: esports,
-    text: "Esports",
+    text: i18n.t("common.esports"),
     fontSize: "smaller",
     gameType: GameTypeEnum.ESPORTS,
   },
@@ -106,67 +107,67 @@ export const lobbyCategoryList: { [key: string]: LobbyCategoryIcon } = {
   slotsHot: {
     key: "slotsHot",
     iconUrl: hot,
-    text: "Hot",
+    text: i18n.t("common.slot.hotGame"),
     gameType: GameTypeEnum.SLOT,
   },
   slotsNew: {
     key: "slotsNew",
     iconUrl: newIcon,
-    text: "New",
+    text: i18n.t("common.slot.newGame"),
     gameType: GameTypeEnum.SLOT,
   },
   slotsRecommend: {
     key: "slotsRecommend",
     iconUrl: recommend,
-    text: "Recommend",
+    text: i18n.t("common.slot.recommendGame"),
     gameType: GameTypeEnum.SLOT,
   },
   liveCasino: {
     key: "liveCasino",
     iconUrl: live,
-    text: "Live Casino",
+    text: i18n.t("common.live"),
     gameType: GameTypeEnum.LIVELOBBY,
   },
   lottery: {
     key: "lottery",
     iconUrl: lottery,
-    text: "Lottery",
+    text: i18n.t("common.lottery"),
     gameType: GameTypeEnum.LOTTERYLOBBY,
   },
   fishing: {
     key: "fishing",
     iconUrl: fishing,
-    text: "Fishing",
+    text: i18n.t("common.fish"),
     gameType: GameTypeEnum.FISH,
   },
   sports: {
     key: "sports",
     iconUrl: sports,
-    text: "Sports",
+    text: i18n.t("common.sports"),
     gameType: GameTypeEnum.SPORTS,
   },
   sabong: {
     key: "sabong",
     iconUrl: sabong,
-    text: "Sabong",
+    text: i18n.t("common.cockfight"),
     gameType: GameTypeEnum.COCKFIGHT,
   },
   egame: {
     key: "egame",
     iconUrl: egame,
-    text: "Egame",
+    text: i18n.t("common.eGame"),
     gameType: GameTypeEnum.TABLEGAME,
   },
   cardGame: {
     key: "cardGame",
     iconUrl: cardgame,
-    text: "Card Game",
+    text: i18n.t("common.cardGame"),
     gameType: GameTypeEnum.QIPAILOBBY,
   },
   esports: {
     key: "esports",
     iconUrl: esports,
-    text: "Esports",
+    text: i18n.t("common.esports"),
     gameType: GameTypeEnum.ESPORTS,
   },
 };

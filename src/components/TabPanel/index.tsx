@@ -1,14 +1,10 @@
-import React, { useState } from "react";
-import ranking_1 from "@/assets/t18/images/home/mobile/ranking_1.svg";
-import rubyIcon from "@/assets/t18/images/home/mobile/ruby.svg";
-import styled from "styled-components";
-import { rankingTabList } from "../../constants/tab";
-import TabButton from "./TabButton";
-import WinningRankingTable from "@/components/Ranking/WinningRankingTable";
 import LatestRecordTable from "@/components/Ranking/LatestRecordTable";
+import WinningRankingTable from "@/components/Ranking/WinningRankingTable";
 import { useBettingHistory } from "@/components/Ranking/hooks/useBettingHistory";
-import { RankItem } from "@/components/Ranking/components/RankItemRow";
-import { v4 as uuidv4 } from "uuid";
+import { rankingTabList } from "@/constants/gameType";
+import { useState } from "react";
+import styled from "styled-components";
+import TabButton from "./TabButton";
 
 type Props = {
   text: string;
