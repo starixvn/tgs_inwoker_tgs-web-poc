@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
 import { UPDATE_INFO } from "@/api-services/constant/actionType";
-import { Button } from "@/components/UI/Button";
 import BottomNote from "@/components/UI/BottomNote";
 import Loading from "@/components/UI/Loading";
+import { SubmitButton } from "@/styles/forms";
 
 const Container = styled.div`
   width: 100%;
@@ -83,14 +83,14 @@ class BaseProfile extends Component {
       <Container>
         {body}
         {this.state.message}
-        <Button
+        <SubmitButton
           fullWidth
           disabled={this.checkButtonState() || this.state.disableButton}
           onClick={this.handleSubmitClicked}
           style={{ marginBottom: "20px" }}
         >
           {buttonTitle}
-        </Button>
+        </SubmitButton>
         {bottomNode || <BottomNote />}
         <Loading show={this.state.loading} />
       </Container>
