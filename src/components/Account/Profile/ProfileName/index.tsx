@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { usePageName } from "@/hooks/usePageName";
+import { usePageName } from "@/hooks/usePageName/usePageName";
 import i18n from "@/utils/i18n";
 import NameVerify from "@/domain/Account/Profile/NameVerify";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";

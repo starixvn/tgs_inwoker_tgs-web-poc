@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback } from "react";
 import BottomAppBar from "@/components/BottomAppBar";
 import styled from "styled-components";
-import { usePageName } from "@/hooks/usePageName";
+import { usePageName } from "@/hooks/usePageName/usePageName";
 import { useHistory } from "react-router-dom";
 import { useRwd } from "@/hooks/useRwd";
 import DefaultLayout from "@/layouts/DefaultLayout";

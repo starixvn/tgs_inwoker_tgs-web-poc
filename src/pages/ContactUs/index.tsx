@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { usePageName } from "@/hooks/usePageName";
+import { usePageName } from "@/hooks/usePageName/usePageName";
 import i18n from "@/utils/i18n";
 import Support from "@/domain/Account/Support";
 import styled from "styled-components";

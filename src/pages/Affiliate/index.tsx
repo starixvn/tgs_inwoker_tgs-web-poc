@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import i18n from "@/utils/i18n";
 import Affiliate from "@/domain/Account/Affiliate";
-import { usePageName } from "@/hooks/usePageName";
+import { usePageName } from "@/hooks/usePageName/usePageName";
 import styled from "styled-components";
 import { useRwd } from "@/hooks/useRwd";
 import UserWalletInfo from "@/components/Account/UserWalletInfo";
