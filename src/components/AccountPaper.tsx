@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PageBadge from "@/components/PageBadge";
-import iconDeposit from "@/assets/images/account/badge/icon-deposit.svg";
+import iconDeposit from "@/assets/t18/images/account/badge/icon-deposit.svg";
 import i18n from "@/utils/i18n";
 import { media } from "@/theme/breakpoints";
 import { useRwd } from "@/hooks/useRwd";

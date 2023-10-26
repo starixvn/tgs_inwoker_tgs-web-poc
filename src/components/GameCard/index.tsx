@@ -1,5 +1,5 @@
 import { GameService } from "@/api-services/services/GameService";
-import playIcon from "@/assets/images/home/mobile/play.svg";
+import playIcon from "@/assets/t18/images/home/mobile/play.svg";
 import config from "@/config/config";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";

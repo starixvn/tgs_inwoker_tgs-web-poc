@@ -1,8 +1,8 @@
-import logoCompatibleImg from "@/assets/images/account/download/logo_compatible.svg";
-import logoConvenientImg from "@/assets/images/account/download/logo_convenient.svg";
-import logoExtensiveImg from "@/assets/images/account/download/logo_extensive.svg";
-import logoSecureImg from "@/assets/images/account/download/logo_secure.svg";
-import downloadGirlImg from "@/assets/images/account/girl/download.png";
+import logoCompatibleImg from "@/assets/t18/images/account/download/logo_compatible.svg";
+import logoConvenientImg from "@/assets/t18/images/account/download/logo_convenient.svg";
+import logoExtensiveImg from "@/assets/t18/images/account/download/logo_extensive.svg";
+import logoSecureImg from "@/assets/t18/images/account/download/logo_secure.svg";
+import downloadGirlImg from "@/assets/t18/images/account/girl/download.png";
 import DownloadButtonGroup from "@/domain/Account/DownloadApp/DownloadButtonGroup";
 import InfoCard, { InfoCardItem } from "@/domain/Account/DownloadApp/InfoCard";
 import styled from "styled-components";

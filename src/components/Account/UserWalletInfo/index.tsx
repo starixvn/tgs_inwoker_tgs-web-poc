@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import styled, { keyframes, DefaultTheme } from "styled-components";
 import DynamicFont from "react-dynamic-font";
-import IconRefreshPNG from "@/assets/images/account/icon-refresh.png";
+import IconRefreshPNG from "@/assets/t18/images/account/icon-refresh.png";
 import i18n from "@/utils/i18n";
 import Common from "@/utils/Common";
 import config from "@/config/config";

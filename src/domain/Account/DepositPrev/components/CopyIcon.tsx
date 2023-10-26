@@ -3,7 +3,7 @@ import i18n from "@/utils/i18n";
 import { utility } from "@/utils/utility";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import Icon from "@/components/Icon";
-import copyImg from "@/assets/images/deposit/copy.png";
+import copyImg from "@/assets/t18/images/deposit/copy.png";
 import styled from "styled-components";
 
 const CopyIconContainer = styled.div`

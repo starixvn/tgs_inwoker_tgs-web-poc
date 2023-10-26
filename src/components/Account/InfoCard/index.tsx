@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
-import phoneImg from "@/assets/images/account/icon_phone.png";
-import emailImg from "@/assets/images/account/icon_email.png";
-import birthImg from "@/assets/images/account/icon_birth.png";
+import phoneImg from "@/assets/t18/images/account/icon_phone.png";
+import emailImg from "@/assets/t18/images/account/icon_email.png";
+import birthImg from "@/assets/t18/images/account/icon_birth.png";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import Avatar from "@/components/Avatar";
 import i18n from "@/utils/i18n";

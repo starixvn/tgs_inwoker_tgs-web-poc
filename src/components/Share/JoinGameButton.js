@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import JoinButton from "../../assets/images/btn-join.png";
-import JoinButtonHover from "../../assets/images/btn-join-hover.png";
+import JoinButton from "../../assets/t18/images/btn-join.png";
+import JoinButtonHover from "../../assets/t18/images/btn-join-hover.png";
 import i18n from "../../utils/i18n";
 
 const JoinGameBtn = styled.div`

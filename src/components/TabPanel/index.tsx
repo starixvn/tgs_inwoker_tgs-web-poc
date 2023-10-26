@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ranking_1 from "@/assets/images/home/mobile/ranking_1.svg";
-import rubyIcon from "@/assets/images/home/mobile/ruby.svg";
+import ranking_1 from "@/assets/t18/images/home/mobile/ranking_1.svg";
+import rubyIcon from "@/assets/t18/images/home/mobile/ruby.svg";
 import styled from "styled-components";
 import { rankingTabList } from "../../constants/tab";
 import TabButton from "./TabButton";

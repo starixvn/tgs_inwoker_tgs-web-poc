@@ -1,7 +1,7 @@
 import React from "react";
 import { Menu, MenuItem } from "@mui/material";
 import i18n from "@/utils/i18n";
-import ArrowDown from "@/assets/images/arrowdown.svg";
+import ArrowDown from "@/assets/t18/images/arrowdown.svg";
 import styled from "styled-components";
 
 const ArrowDownImg = styled.img`

@@ -1,4 +1,4 @@
-import IconCheckBox from "@/assets/images/checkbox.svg";
+import IconCheckBox from "@/assets/t18/images/checkbox.svg";
 import styled from "styled-components";
 import { media } from "@/theme/breakpoints";
 

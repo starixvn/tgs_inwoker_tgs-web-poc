@@ -1,5 +1,5 @@
-import IconCloseButton from "@/assets/images/promotion/close_icon.svg";
-import TagBg from "@/assets/images/promotion/tag_bg.svg";
+import IconCloseButton from "@/assets/t18/images/promotion/close_icon.svg";
+import TagBg from "@/assets/t18/images/promotion/tag_bg.svg";
 import NotShowAgainHint from "@/components/Popup/NotShowAgainHint";
 import BannerImage from "@/components/Promotion/BannerImage";
 import Carousel from "@/components/UI/Carousel";

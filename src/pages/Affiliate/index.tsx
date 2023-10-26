@@ -5,7 +5,7 @@ import { usePageName } from "@/hooks/usePageName";
 import styled from "styled-components";
 import { useRwd } from "@/hooks/useRwd";
 import UserWalletInfo from "@/components/Account/UserWalletInfo";
-import iconAffiliate from "@/assets/images/account/badge/icon-affiliate.svg";
+import iconAffiliate from "@/assets/t18/images/account/badge/icon-affiliate.svg";
 import AccountPaper from "@/components/AccountPaper";
 
 const AffiliateContainer = styled.div`

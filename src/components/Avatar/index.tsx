@@ -1,5 +1,5 @@
 import React from "react";
-import avatarImg from "@/assets/images/account/avatar.png";
+import avatarImg from "@/assets/t18/images/account/avatar.png";
 import styled from "styled-components";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 

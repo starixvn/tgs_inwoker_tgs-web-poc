@@ -7,7 +7,7 @@ import { useLocation } from "react-router";
 import UserWalletInfo from "@/components/Account/UserWalletInfo";
 import TransferTabs from "@/domain/Account/DepositPrev/components/TransferTabs";
 import i18n from "@/utils/i18n";
-import iconWithdrawal from "@/assets/images/account/badge/icon-withdrawal.svg";
+import iconWithdrawal from "@/assets/t18/images/account/badge/icon-withdrawal.svg";
 import { useRwd } from "@/hooks/useRwd";
 import AccountPaper from "@/components/AccountPaper";
 
