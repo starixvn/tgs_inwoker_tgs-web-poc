@@ -7,8 +7,12 @@ import { accountAction } from "@/api-services/actions/accountAction";
 import { RESET_ACCOUNTRESULT } from "@/api-services/constant/actionType";
 import config from "@/config/config";
 import { TextField } from "@/components/UI/TextField";
-import { FormControl, LabelContainer, ItemContainer } from "@/styles/forms";
-import { Button } from "@mui/material";
+import {
+  FormControl,
+  ItemContainer,
+  LabelContainer,
+  UploadFileButton,
+} from "@/styles/forms";
 
 class Default extends BaseProfile {
   constructor(props) {
@@ -72,20 +76,14 @@ class Default extends BaseProfile {
           <ItemContainer>
             <LabelContainer>{i18n.t("common.upload")}</LabelContainer>
 
-            <Button
+            <UploadFileButton
               variant={"outlined"}
-              style={{
-                height: "58px",
-                borderRadius: "5px",
-                color: "white",
-                borderColor: "white",
-              }}
               onClick={() => {
                 document.getElementById("getFile").click();
               }}
             >
               {i18n.t("common.upload")}
-            </Button>
+            </UploadFileButton>
 
             <input
               type="file"
