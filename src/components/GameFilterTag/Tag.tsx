@@ -9,7 +9,6 @@ type Props = {
   isShowIcon: boolean;
   fontSize?: "small" | "smaller";
   onClick: () => void;
-  isDraggable: boolean;
 };
 
 const Wrapper = styled.div<{
@@ -35,11 +34,12 @@ const Wrapper = styled.div<{
   }
 
   ${media.sm} {
+    cursor: pointer;
     & :hover {
     color: ${({ theme }) => theme.white};
    }
     width: auto;
-    min-width: ${({ $isShowIcon }) => ($isShowIcon ? "87px" : "60px")};
+    min-width: ${({ $isShowIcon }) => ($isShowIcon ? "90px" : "60px")};
     padding: 4px;
     gap: ${({ $isShowIcon }) => ($isShowIcon ? "4px" : "10px")};
     align-self: stretch;
@@ -54,7 +54,7 @@ const Text = styled.div<{ $isActive: boolean }>`
   line-height: 0.875rem;
 `;
 
-const Tag = ({ text, isActive, isShowIcon, onClick, isDraggable }: Props) => {
+const Tag = ({ text, isActive, isShowIcon, onClick }: Props) => {
   const { isMobileSize } = useRwd();
 
   const transferIcon = () => {
@@ -63,18 +63,12 @@ const Tag = ({ text, isActive, isShowIcon, onClick, isDraggable }: Props) => {
   };
   const imageUrl = transferIcon();
 
-  const handleClick = () => {
-    if (!isDraggable) {
-      onClick(); // 只有非拖動時才能觸發onClick
-    }
-  };
-
   return (
     <Wrapper
       $isActive={isActive}
       $text={text}
       $isShowIcon={isShowIcon}
-      onClick={handleClick}
+      onClick={onClick}
     >
       {imageUrl && <img src={imageUrl} alt={text} />}
       {isMobileSize ? (imageUrl ? null : <Text $isActive={isActive}>{text}</Text>) : <Text $isActive={isActive}>{text}</Text>}
