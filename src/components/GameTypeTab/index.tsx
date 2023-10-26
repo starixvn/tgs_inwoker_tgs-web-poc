@@ -1,4 +1,4 @@
-import { gameTypeList } from "@/constants/tab";
+import { gameTypeList } from "@/constants/gameType";
 import { media } from "@/theme/breakpoints";
 import styled from "styled-components";
 import Tab from "./Tab";

@@ -1,9 +1,9 @@
 import { GameTypeEnum } from "@/api-services/utils/Enum";
 import LobbyCategory from "@/components/LobbyCategory";
 import LobbyTagCategory from "@/components/LobbyTagCategory";
+import { gameTypeList, lobbyCategoryList } from "@/constants/gameType";
 import { useRwd } from "@/hooks/useRwd";
 import styled from "styled-components";
-import { gameTypeList, lobbyCategoryList } from "../../constants/tab";
 import { GroupByGameItem } from "../LobbyTagCategory";
 
 const LobbyContainer = styled.div`

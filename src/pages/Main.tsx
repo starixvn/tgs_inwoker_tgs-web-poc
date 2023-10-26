@@ -11,6 +11,7 @@ import Lobby from "@/components/Lobby";
 import Slider from "@/components/Slider";
 import SocialMedia from "@/components/SocialMedia";
 import TabPanel from "@/components/TabPanel";
+import { gameTypeList, isNotEnterLobby } from "@/constants/gameType";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
@@ -26,7 +27,6 @@ import React, {
   useState
 } from "react";
 import styled from "styled-components";
-import { gameTypeList, isNotEnterLobby } from "../constants/tab";
 
 type Props = {
   imageUrl: string;
