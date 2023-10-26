@@ -1,5 +1,5 @@
 import React from "react";
-import menuIcon from "@/assets/images/header/icon_menu.png";
+import menuIcon from "@/assets/t18/images/header/icon_menu.png";
 import styled from "styled-components";
 import { useHeader } from "@/hooks/useHeader";
 import Icon from "@/components/Icon";

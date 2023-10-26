@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import deleteIcon from "@/assets/images/card/delete.svg";
+import deleteIcon from "@/assets/t18/images/card/delete.svg";
 
 const InputContainer = styled.div`
   padding: 13px 20px;

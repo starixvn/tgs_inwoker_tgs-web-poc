@@ -5,7 +5,7 @@ import styled from "styled-components";
 import i18n from "@/utils/i18n";
 import { useMediaQuery, useTheme } from "@mui/material";
 import { media } from "@/theme/breakpoints";
-import depositIcon from "@/assets/images/header/deposit_icon.svg";
+import depositIcon from "@/assets/t18/images/header/deposit_icon.svg";
 import Icon from "@/components/Icon";
 import { useRwd } from "@/hooks/useRwd";
 

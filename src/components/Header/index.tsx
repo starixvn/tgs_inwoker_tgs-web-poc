@@ -7,7 +7,7 @@ import AnonymousHeaderContent from "@/components/Header/components/AnonymousHead
 import AccountHeaderContent from "@/components/Header/components/AccountHeaderContent";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { media } from "@/theme/breakpoints";
-import HeaderBg from "@/assets/images/header/background.png";
+import HeaderBg from "@/assets/t18/images/header/background.png";
 import ContactButton from "@/components/Header/components/ContactButton";
 
 const HeaderContainer = styled.div`

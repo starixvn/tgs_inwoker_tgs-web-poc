@@ -1,7 +1,7 @@
-import bdcakeIcon from "@/assets/images/vip/bdcake.svg";
-import calendarIcon from "@/assets/images/vip/calendar.svg";
-import rocketIcon from "@/assets/images/vip/rocket.svg";
-import uncompletedIcon from "@/assets/images/vip/uncompleted.svg";
+import bdcakeIcon from "@/assets/t18/images/vip/bdcake.svg";
+import calendarIcon from "@/assets/t18/images/vip/calendar.svg";
+import rocketIcon from "@/assets/t18/images/vip/rocket.svg";
+import uncompletedIcon from "@/assets/t18/images/vip/uncompleted.svg";
 import VipBonusStampGrid from "@/components/VipBonusStampGrid";
 import { media } from "@/theme/breakpoints";
 import formatAmount from "@/utils/getFormatAmount";
@@ -120,17 +120,17 @@ type VipBadgeProps = {
   $badgeImage: string;
 };
 const VipBadge = styled.div<VipBadgeProps>`
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 98px;
-    min-height: 91px;
-    background-image: url(${(props: VipBadgeProps) =>
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 98px;
+  min-height: 91px;
+  background-image: url(${(props: VipBadgeProps) =>
     process.env.PUBLIC_URL + "/assets/images/vip/mobile" + props.$badgeImage});
-    background-size: contain;
-    background-repeat: no-repeat;
+  background-size: contain;
+  background-repeat: no-repeat;
 `;
 
 type VipPrivilegeTextProps = {
@@ -223,8 +223,7 @@ const VipSingleItem = ({
   useEffect(() => {
     if (!isCurrentLevel) return;
 
-    if (!(currentItemRef.current))
-      return;
+    if (!currentItemRef.current) return;
   }, [currentItemRef.current, isCurrentLevel]);
 
   return (

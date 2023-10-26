@@ -1,8 +1,8 @@
 import React from "react";
 import { ClassNameMap, CombinedClassKey, SnackbarProvider } from "notistack";
-import SuccessPNG from "@/assets/images/success.png";
-import DangerPNG from "@/assets/images/warning.png";
-import InfoPNG from "@/assets/images/info.png";
+import SuccessPNG from "@/assets/t18/images/success.png";
+import DangerPNG from "@/assets/t18/images/warning.png";
+import InfoPNG from "@/assets/t18/images/info.png";
 import styled from "styled-components";
 import { makeStyles } from "@mui/styles";
 

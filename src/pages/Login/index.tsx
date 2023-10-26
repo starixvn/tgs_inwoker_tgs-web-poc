@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import LoginForm from "@/domain/authentication/LoginForm";
-import { usePageName } from "@/hooks/usePageName";
+import { usePageName } from "@/hooks/usePageName/usePageName";
 import i18n from "@/utils/i18n";
 import { useRwd } from "@/hooks/useRwd";
 import { useHistory } from "react-router-dom";

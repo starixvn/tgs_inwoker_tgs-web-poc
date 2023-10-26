@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Birthdate from "@/domain/Account/Profile/BirthDate";
-import { usePageName } from "@/hooks/usePageName";
+import { usePageName } from "@/hooks/usePageName/usePageName";
 import i18n from "@/utils/i18n";
 
 type Props = {};

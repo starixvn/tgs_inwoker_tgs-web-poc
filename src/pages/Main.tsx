@@ -1,6 +1,6 @@
 import { GameService } from "@/api-services/services/GameService";
-import searchIcon from "@/assets/images/home/mobile/search.svg";
-import vendorsIcon from "@/assets/images/home/mobile/vendors.png";
+import searchIcon from "@/assets/t18/images/home/mobile/search.svg";
+import vendorsIcon from "@/assets/t18/images/home/mobile/vendors.png";
 import CardPrompt from "@/components/CardPrompt";
 import Category from "@/components/Category";
 import GameCard from "@/components/GameCard";
@@ -23,7 +23,7 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  useState
+  useState,
 } from "react";
 import styled from "styled-components";
 import { gameTypeList, isNotEnterLobby } from "../constants/tab";
@@ -189,7 +189,7 @@ const Main = (props: Props) => {
       { name: "Recommend" },
       ...filteredTags,
     ];
-    return additionalTags.filter(tag => tag !== null);
+    return additionalTags.filter((tag) => tag !== null);
   }, [groupByProvider, account.token]);
 
   const filterAndGroupGames = (gameList: any[]) => {
@@ -229,9 +229,9 @@ const Main = (props: Props) => {
           const filteredGameListWithFavorites =
             favoriteList.length > 0
               ? res.data.map((item: GameItem) => ({
-                ...item,
-                isFavorite: favoriteList.includes(item.id),
-              }))
+                  ...item,
+                  isFavorite: favoriteList.includes(item.id),
+                }))
               : res.data;
 
           switch (selectedTag) {
@@ -328,19 +328,19 @@ const Main = (props: Props) => {
       {!isEnterLobby && !!activeGameTypeTab && !isLoading && (
         <>
           <GameFilterTag
-            tagList={tagList.filter(tag => tag !== null) || []}
+            tagList={tagList.filter((tag) => tag !== null) || []}
             selectedTag={selectedTag}
             setSelectedTag={setSelectedTag}
           />
 
-          {isMobileSize &&
+          {isMobileSize && (
             <Input
               placeholder={i18n.t("slot.search")}
               imageUrl={searchIcon}
               handleChange={handleSearch}
               value={searchString}
             />
-          }
+          )}
 
           <GameCardContainer>
             {filteredMatchGames &&
@@ -362,7 +362,11 @@ const Main = (props: Props) => {
       {isLoading && <div>Loading...</div>}
       <TabPanel />
       {isMobileSize && <SocialMedia />}
-      {isMobileSize && <VendorIconContainer><VendorIcon /></VendorIconContainer>}
+      {isMobileSize && (
+        <VendorIconContainer>
+          <VendorIcon />
+        </VendorIconContainer>
+      )}
     </MainWrapper>
   );
 };

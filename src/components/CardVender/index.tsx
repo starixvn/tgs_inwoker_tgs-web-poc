@@ -1,5 +1,5 @@
-import playIcon from "@/assets/images/home/mobile/play.svg";
-import bg from "@/assets/images/home/mobile/vender_card_bg.png";
+import playIcon from "@/assets/t18/images/home/mobile/play.svg";
+import bg from "@/assets/t18/images/home/mobile/vender_card_bg.png";
 import { media } from "@/theme/breakpoints";
 import styled from "styled-components";
 import { providerStatus } from "../../constants/games";

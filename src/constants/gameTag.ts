@@ -1,12 +1,12 @@
-import favorite from "@/assets/images/home/mobile/favorite.svg";
-import hot from "@/assets/images/home/mobile/hot.svg";
-import newIcon from "@/assets/images/home/mobile/new.svg";
-import recommend from "@/assets/images/home/mobile/recommend.svg";
+import favorite from "@/assets/t18/images/home/mobile/favorite.svg";
+import hot from "@/assets/t18/images/home/mobile/hot.svg";
+import newIcon from "@/assets/t18/images/home/mobile/new.svg";
+import recommend from "@/assets/t18/images/home/mobile/recommend.svg";
 
 type TagIcon = {
   text: string;
   iconUrl: string;
-}
+};
 
 export const gameTagList: TagIcon[] = [
   {
@@ -25,4 +25,4 @@ export const gameTagList: TagIcon[] = [
     text: "Recommend",
     iconUrl: recommend,
   },
-]
+];

@@ -1,8 +1,8 @@
 import React, { forwardRef } from "react";
 import { RankTableCol, RankTableRow } from "@/components/Ranking/styles";
-import ranking_1 from "@/assets/images/home/mobile/ranking_1.svg";
-import ranking_2 from "@/assets/images/home/mobile/ranking_2.svg";
-import ranking_3 from "@/assets/images/home/mobile/ranking_3.svg";
+import ranking_1 from "@/assets/t18/images/home/mobile/ranking_1.svg";
+import ranking_2 from "@/assets/t18/images/home/mobile/ranking_2.svg";
+import ranking_3 from "@/assets/t18/images/home/mobile/ranking_3.svg";
 import styled from "styled-components";
 import MaskPlayerName from "@/components/Ranking/components/MaskPlayerName";
 

@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Report from "@/domain/Account/Report";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
-import { usePageName } from "@/hooks/usePageName";
+import { usePageName } from "@/hooks/usePageName/usePageName";
 import i18n from "@/utils/i18n";
 import styled from "styled-components";
 import UserWalletInfo from "@/components/Account/UserWalletInfo";
-import iconReport from "@/assets/images/account/badge/icon-report.svg";
+import iconReport from "@/assets/t18/images/account/badge/icon-report.svg";
 import { useRwd } from "@/hooks/useRwd";
 import AccountPaper from "@/components/AccountPaper";
 

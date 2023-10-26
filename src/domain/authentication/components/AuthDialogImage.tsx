@@ -1,5 +1,5 @@
 import React from "react";
-import authImage from "@/assets/images/auth/auth-image.png";
+import authImage from "@/assets/t18/images/auth/auth-image.png";
 import styled from "styled-components";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 

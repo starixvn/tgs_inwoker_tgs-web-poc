@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Dialog from "@/components/UI/Dialog/Dialog";
 import ForgotPasswordPrev from "@/domain/authentication/ForgotPasswordPrev";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
-import { usePageName } from "@/hooks/usePageName";
+import { usePageName } from "@/hooks/usePageName/usePageName";
 
 const TitleContainer = styled.div`
   font-size: 2.5rem !important;

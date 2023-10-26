@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import ContextMenu from "@/components/ContextMenu";
-import avatarImg from "@/assets/images/account/avatar.png";
+import avatarImg from "@/assets/t18/images/account/avatar.png";
 import SvgIcon from "@/components/UI/SvgIcon";
 import Modal from "@/components/UI/Modal";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { media } from "@/theme/breakpoints";
 import Loading from "@/components/UI/Loading";
 import { useAuth } from "@/hooks/auth/useAuth";
-import arrowImg from "@/assets/images/header/contextMenu/icon_arrow.svg";
+import arrowImg from "@/assets/t18/images/header/contextMenu/icon_arrow.svg";
 
 const ContextMenuButtonContainer = styled.div`
   height: 40px;

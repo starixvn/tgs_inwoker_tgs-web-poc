@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import bgImg from "@/assets/images/account/account_level_bg.svg";
+import bgImg from "@/assets/t18/images/account/account_level_bg.svg";
 import styled from "styled-components";
 import {
   Table as MuiTable,

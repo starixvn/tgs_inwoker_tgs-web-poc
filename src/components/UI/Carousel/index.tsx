@@ -1,4 +1,4 @@
-import CarouselArrow from "@/assets/images/dialog/carousel-arrow.svg";
+import CarouselArrow from "@/assets/t18/images/dialog/carousel-arrow.svg";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
