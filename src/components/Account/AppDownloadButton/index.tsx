@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { NavCardItem } from "@/hooks/account/useAccountNavigations";
+import { NavItem } from "@/hooks/account/useAccountNavigations";
 import { media } from "@/theme/breakpoints";
 
 const AppDownloadButtonContainer = styled.button`
@@ -31,14 +31,14 @@ const LogoContainer = styled.span`
 `;
 
 type Props = {
-  navCardItem: NavCardItem;
-  handleClick: (navCardItem: NavCardItem) => void;
+  navItem: NavItem;
+  handleClick: (navItem: NavItem) => void;
 };
 
-const AppDownloadButton = ({ navCardItem, handleClick }: Props) => {
-  const { label, iconUrl } = navCardItem;
+const AppDownloadButton = ({ navItem, handleClick }: Props) => {
+  const { label, iconUrl } = navItem;
   return (
-    <AppDownloadButtonContainer onClick={() => handleClick(navCardItem)}>
+    <AppDownloadButtonContainer onClick={() => handleClick(navItem)}>
       <LogoContainer>
         <img src={iconUrl} alt={label} />
       </LogoContainer>

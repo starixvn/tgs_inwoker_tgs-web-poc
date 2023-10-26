@@ -28,7 +28,7 @@ export enum NavCardKey {
   APP_DOWNLOAD,
 }
 
-export interface NavCardItem {
+export interface NavItem {
   key: NavCardKey;
   label: string;
   iconUrl: string;
@@ -36,7 +36,7 @@ export interface NavCardItem {
 }
 
 export function useAccountNavigations() {
-  const navCardItemList: NavCardItem[] = useMemo(() => {
+  const navItemList: NavItem[] = useMemo(() => {
     return [
       {
         key: NavCardKey.PROFILE,
@@ -96,16 +96,16 @@ export function useAccountNavigations() {
   }, []);
 
   const navCardDictionary = useMemo(() => {
-    const dictionary: { [key in string]: NavCardItem } = {};
-    navCardItemList.forEach((navCardItem) => {
-      dictionary[navCardItem.key] = navCardItem;
+    const dictionary: { [key in string]: NavItem } = {};
+    navItemList.forEach((navItem) => {
+      dictionary[navItem.key] = navItem;
     });
 
     return dictionary;
   }, []);
 
   return {
-    navCardItemList,
+    navItemList,
     navCardDictionary,
   };
 }

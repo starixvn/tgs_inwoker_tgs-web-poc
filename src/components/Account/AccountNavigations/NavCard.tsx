@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { NavCardItem } from "@/hooks/account/useAccountNavigations";
+import { NavItem } from "@/hooks/account/useAccountNavigations";
 import { media } from "@/theme/breakpoints";
 
 const NavCardContainer = styled.div`
@@ -38,13 +38,13 @@ const LogoContainer = styled.div`
 `;
 
 type Props = {
-  navCardItem: NavCardItem;
-  handleClick: (navCardItem: NavCardItem) => void;
+  navItem: NavItem;
+  handleClick: (navItem: NavItem) => void;
 };
-const NavCard = ({ navCardItem, handleClick }: Props) => {
-  const { label, iconUrl } = navCardItem;
+const NavCard = ({ navItem, handleClick }: Props) => {
+  const { label, iconUrl } = navItem;
   return (
-    <NavCardContainer onClick={() => handleClick(navCardItem)}>
+    <NavCardContainer onClick={() => handleClick(navItem)}>
       <LogoContainer>
         <img src={iconUrl} alt={label} />
       </LogoContainer>
