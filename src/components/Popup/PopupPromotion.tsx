@@ -28,7 +28,7 @@ const DialogPopup = styled(MuiDialog)`
     justify-content: center;
     border-radius: 10px;
     margin: 0;
-    overflow: hidden;
+    overflow: visible;
     position: relative;
 
     ${media.sm} {
@@ -42,6 +42,8 @@ const DialogPopup = styled(MuiDialog)`
 const ChildContainer = styled.div`
   width: 100%;
   height: auto;
+  overflow: hidden;
+  border-radius: 10px;
 `;
 
 const PromotionTag = styled.div`
