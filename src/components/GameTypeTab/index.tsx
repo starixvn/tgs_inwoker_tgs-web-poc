@@ -1,4 +1,4 @@
-import { gameTypeList } from "@/constants/gameType";
+import useGameTypeList from "@/hooks/home/useGameTypeList";
 import { media } from "@/theme/breakpoints";
 import styled from "styled-components";
 import Tab from "./Tab";
@@ -42,6 +42,8 @@ type Props = {
 };
 
 const GameTypeTab = ({ activeGameTypeTab, handleGameTypeClick }: Props) => {
+  const gameTypeList = useGameTypeList();
+
   return (
     <TabContainer
     >
