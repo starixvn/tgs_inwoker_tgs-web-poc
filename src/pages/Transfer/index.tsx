@@ -22,7 +22,7 @@ const Transfer = (props: Props) => {
   const { isDesktopSize } = useRwd();
 
   useEffect(() => {
-    updatePageName(i18n.t("report.title"));
+    updatePageName(i18n.t("transfer.title"));
   }, []);
 
   const { alert } = useNotifications();
