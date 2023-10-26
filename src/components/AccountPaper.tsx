@@ -4,6 +4,7 @@ import PageBadge from "@/components/PageBadge";
 import iconDeposit from "@/assets/images/account/badge/icon-deposit.svg";
 import i18n from "@/utils/i18n";
 import { media } from "@/theme/breakpoints";
+import { useRwd } from "@/hooks/useRwd";
 
 const AccountPaperContainer = styled.div`
   padding: 20px 0;
@@ -21,15 +22,19 @@ type Props = {
   children: React.ReactElement | React.ReactElement[];
 };
 const AccountPaper = ({ pageName, iconUrl, children }: Props) => {
+  const { isDesktopSize } = useRwd();
+
   return (
     <AccountPaperContainer>
-      <PageBadge
-        iconUrl={iconUrl}
-        text={pageName}
-        style={{
-          marginBottom: "31px",
-        }}
-      />
+      {isDesktopSize && (
+        <PageBadge
+          iconUrl={iconUrl}
+          text={pageName}
+          style={{
+            marginBottom: "31px",
+          }}
+        />
+      )}
       {children}
     </AccountPaperContainer>
   );

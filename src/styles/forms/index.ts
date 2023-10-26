@@ -1,6 +1,10 @@
 import styled from "styled-components";
-import { Button, FormControl as MuiFormControl } from "@mui/material";
+import {
+  Button as MuiButton,
+  FormControl as MuiFormControl,
+} from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
+import { Button } from "@/components/UI/Button";
 
 export const Remark = styled.div`
   font-size: 0.937rem;
@@ -41,9 +45,11 @@ export const InfoContainer = styled.div`
   align-items: center;
 `;
 
-export const UploadFileButton = muiStyled(Button)(({ theme }) => ({
+export const UploadFileButton = muiStyled(MuiButton)(({ theme }) => ({
   height: "58px",
   borderRadius: "5px",
   color: "white",
   borderColor: "white",
 }));
+
+export const SubmitButton = muiStyled(Button)(({ theme }) => ({}));
