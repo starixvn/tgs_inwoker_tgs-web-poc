@@ -14,14 +14,12 @@ const PromotionDetailContainer = styled.div`
   color: #ffffff;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 22px;
-  flex-shrink: 0;
 
   ${media.sm} {
     max-width: 870px;
     margin: 0 auto;
-    padding: 22px 22px 100px 22px;
   }
 `;
 
@@ -43,7 +41,7 @@ const ContentContainer = styled.div`
 `;
 
 const TextArea = styled.div`
-  /* margin-bottom: 40px; */
+  position: relative;
 `;
 
 const Title = styled.h2`
@@ -88,6 +86,7 @@ const JoinPromotionButtonWrapper = styled.div`
   background: ${({ theme }) => theme.primaryLight};
   ${media.sm} {
     position: relative;
+    bottom: 0px;
     background: transparent;
   }
 `;
@@ -157,15 +156,15 @@ const PromotionDetail = () => {
             />
           </TextArea>
         </ContentContainer>
+        {showJoinButton && (
+          <JoinPromotionButtonWrapper>
+            <JoinPromotionButton
+              id={promotionData.id}
+              promotionType={promotionData.promotionType}
+            />
+          </JoinPromotionButtonWrapper>
+        )}
       </PromotionDetailContainer>
-      {showJoinButton && (
-        <JoinPromotionButtonWrapper>
-          <JoinPromotionButton
-            id={promotionData.id}
-            promotionType={promotionData.promotionType}
-          />
-        </JoinPromotionButtonWrapper>
-      )}
     </>
   );
 };

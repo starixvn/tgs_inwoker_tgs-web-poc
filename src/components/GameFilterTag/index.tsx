@@ -1,18 +1,13 @@
 import { media } from "@/theme/breakpoints";
-import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { gameTagList } from "../../constants/gameTag";
 import Tag from "./Tag";
-import { useDomDragging } from "@/hooks/main/useDomDragging";
 
-type TagContainerProps = {
-  $isDragging: boolean;
-};
-
-const TagContainer = styled.div<TagContainerProps>`
+const TagContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  width: 100%;
   margin-bottom: 8px;
   overflow-x: auto;
   white-space: nowrap;
@@ -20,12 +15,29 @@ const TagContainer = styled.div<TagContainerProps>`
   -webkit-overflow-scrolling: touch;
 
   ${media.sm} {
-    overflow-x: hidden;
-    transition: scroll-left 0.2s ease-in-out;
-    cursor: ${({ $isDragging }: TagContainerProps) =>
-      $isDragging ? "grabbing" : "grab"};
+    margin-top: 20px;
+    padding-bottom: 5px;
+
+    &::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+      background: ${(props) => props.theme.tertiaryDark};
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      background-color: #53535375;
+    }
+
+    &::-webkit-scrollbar-track-piece {
+      background: transparent;
+    }
   }
 `;
+
 type Tag = { name: string };
 
 type Props = {
@@ -52,21 +64,8 @@ type GameItem = {
 };
 
 const GameFilterTag = ({ tagList, selectedTag, setSelectedTag }: Props) => {
-  const {
-    isDragging,
-    domRef,
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
-  } = useDomDragging();
-
   return (
     <TagContainer
-      ref={domRef}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      $isDragging={isDragging}
     >
       {tagList
         .filter((item): item is GameItem => item !== null)

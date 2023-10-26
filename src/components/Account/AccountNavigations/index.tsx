@@ -7,7 +7,7 @@ import NavCard from "@/components/Account/AccountNavigations/NavCard";
 import AppDownloadButton from "@/components/Account/AppDownloadButton";
 import { useHistory } from "react-router-dom";
 import {
-  NavCardItem,
+  NavItem,
   NavCardKey,
   useAccountNavigations,
 } from "@/hooks/account/useAccountNavigations";
@@ -37,11 +37,11 @@ const AccountNavCardsContainer = styled.div`
 type Props = {};
 const AccountNavigations = (props: Props) => {
   const history = useHistory();
-  const { navCardItemList } = useAccountNavigations();
+  const { navItemList } = useAccountNavigations();
   const { handleLogout, logoutState } = useAuth();
 
-  const handleClickNav = useCallback((navCardItem: NavCardItem) => {
-    history.push(navCardItem.routePath);
+  const handleClickNav = useCallback((navItem: NavItem) => {
+    history.push(navItem.routePath);
   }, []);
 
   return (
@@ -51,12 +51,12 @@ const AccountNavigations = (props: Props) => {
 
         <AccountNavCardsContainer>
           {/* Cards */}
-          {navCardItemList.map((navCardItem) => {
-            if (navCardItem.key === NavCardKey.APP_DOWNLOAD) {
+          {navItemList.map((navItem) => {
+            if (navItem.key === NavCardKey.APP_DOWNLOAD) {
               return (
                 <AppDownloadButton
-                  key={navCardItem.key}
-                  navCardItem={navCardItem}
+                  key={navItem.key}
+                  navItem={navItem}
                   handleClick={handleClickNav}
                 />
               );
@@ -64,8 +64,8 @@ const AccountNavigations = (props: Props) => {
 
             return (
               <NavCard
-                key={navCardItem.key}
-                navCardItem={navCardItem}
+                key={navItem.key}
+                navItem={navItem}
                 handleClick={handleClickNav}
               />
             );

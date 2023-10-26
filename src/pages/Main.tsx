@@ -89,12 +89,6 @@ const TabSearchContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
-  
-  ${media.sm} {
-    height: 40px;
-    background: ${(props) => props.theme.primaryLight};
-    margin-bottom: 20px;
-  }
 `;
 
 const InputContainer = styled.div`
@@ -310,14 +304,6 @@ const Main = (props: Props) => {
           activeGameTypeTab={activeGameTypeTab}
           handleGameTypeClick={handleGameTypeClick}
         />
-        {isDesktopSize && <InputContainer>
-          <Input
-            placeholder={i18n.t("slot.search")}
-            imageUrl={searchIcon}
-            handleChange={handleSearch}
-            value={searchString}
-          />
-        </InputContainer>}
       </TabSearchContainer>
 
       {!activeGameTypeTab && (

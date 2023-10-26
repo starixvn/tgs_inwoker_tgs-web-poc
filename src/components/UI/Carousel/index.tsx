@@ -38,6 +38,7 @@ const settings = {
   slidesToShow: 1,
   speed: 500,
   autoplay: true,
+  adaptiveHeight: true,
   nextArrow: (
     <SampleNextArrow
       onClick={function (): void {
