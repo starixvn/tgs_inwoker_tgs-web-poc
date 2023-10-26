@@ -112,25 +112,6 @@ function GetBankImageByTitle(title: string): string {
   }
 }
 
-function ConvertGameTypeToText(gameType: GameTypeEnum): string {
-  switch (gameType) {
-    case GameTypeEnum.LIVE:
-      return "真人";
-    case GameTypeEnum.QIPAI:
-      return "棋牌";
-    case GameTypeEnum.SPORTS:
-      return "体育";
-    case GameTypeEnum.LOTTERY:
-      return "彩票";
-    case GameTypeEnum.SLOT:
-      return "电子";
-    case GameTypeEnum.FISH:
-      return "捕鱼";
-    default:
-      return "老虎";
-  }
-}
-
 function GetBankImageByCode(code: string): any {
   let mapp = bankImageMapping[code.toLowerCase()];
   if (mapp) {
@@ -325,13 +306,13 @@ function PopupCenter(
   const width = window.innerWidth
     ? window.innerWidth
     : document.documentElement.clientWidth
-    ? document.documentElement.clientWidth
-    : window.screen.width;
+      ? document.documentElement.clientWidth
+      : window.screen.width;
   const height = window.innerHeight
     ? window.innerHeight
     : document.documentElement.clientHeight
-    ? document.documentElement.clientHeight
-    : window.screen.height;
+      ? document.documentElement.clientHeight
+      : window.screen.height;
 
   const systemZoom = 1;
   let left = (width - w) / 2 / systemZoom + dualScreenLeft;
@@ -343,13 +324,13 @@ function PopupCenter(
     url,
     "gamewindow",
     "scrollbars=yes, width=" +
-      w / systemZoom +
-      ", height=" +
-      h / systemZoom +
-      ", top=" +
-      top +
-      ", left=" +
-      left
+    w / systemZoom +
+    ", height=" +
+    h / systemZoom +
+    ", top=" +
+    top +
+    ", left=" +
+    left
   );
 
   if (
@@ -459,7 +440,6 @@ const Common = {
   bankImageMapping,
   GetBankImageByTitle,
   GetBankImageByCode,
-  ConvertGameTypeToText,
   readFileDataAsBinary,
   GetDisplayGameType,
   gameImageMapping,
