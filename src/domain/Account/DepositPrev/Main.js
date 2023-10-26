@@ -9,10 +9,11 @@ import { utility } from "@/utils/utility";
 import ResultPopupDialog from "@/domain/Account/DepositPrev/components/ResultPopupDialog";
 import {
   FormControl,
-  LabelContainer,
-  ItemContainer,
-  Remark,
   InfoContainer,
+  ItemContainer,
+  LabelContainer,
+  Remark,
+  UploadFileButton,
 } from "@/styles/forms";
 import { Button } from "@/components/UI/Button";
 import { Select } from "@/components/UI/Select";
@@ -763,20 +764,14 @@ class Main extends Component {
                     {i18n.t("deposit.uploadReceipt")}
                   </LabelContainer>
 
-                  <Button
+                  <UploadFileButton
                     onClick={() => {
                       document.getElementById("getFile").click();
                     }}
                     variant={"outlined"}
-                    style={{
-                      height: "58px",
-                      borderRadius: "5px",
-                      color: "white",
-                      borderColor: "white",
-                    }}
                   >
                     {i18n.t("common.upload")}
-                  </Button>
+                  </UploadFileButton>
 
                   <input
                     type="file"
