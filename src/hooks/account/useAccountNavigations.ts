@@ -95,7 +95,7 @@ export function useAccountNavigations() {
     ];
   }, []);
 
-  const navCardDictionary = useMemo(() => {
+  const navItemDictionary = useMemo(() => {
     const dictionary: { [key in string]: NavItem } = {};
     navItemList.forEach((navItem) => {
       dictionary[navItem.key] = navItem;
@@ -106,6 +106,6 @@ export function useAccountNavigations() {
 
   return {
     navItemList,
-    navCardDictionary,
+    navItemDictionary,
   };
 }
