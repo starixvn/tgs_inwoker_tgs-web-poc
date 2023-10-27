@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import i18n from "@/utils/i18n";
 import config from "@/config/config";
@@ -8,8 +8,12 @@ import Loading from "@/components/UI/Loading";
 import BottomNote from "@/components/UI/BottomNote";
 import { AccountService } from "@/services/AccountService";
 import { TextField } from "@/components/UI/TextField";
-import { FormControl, LabelContainer, ItemContainer } from "@/styles/forms";
-import { Button } from "@/components/UI/Button";
+import {
+  FormControl,
+  ItemContainer,
+  LabelContainer,
+  SubmitButton,
+} from "@/styles/forms";
 
 const WeChat = () => {
   const { account, getAccountProfile } = useAccountStore();
@@ -116,14 +120,14 @@ const WeChat = () => {
         </div>
       ) : (
         <div>
-          <Button
+          <SubmitButton
             fullWidth
             disabled={isDisableButton() || isLoading}
             onClick={handleSubmitClicked}
             style={{ marginBottom: "20px" }}
           >
             {i18n.t("common.submit")}
-          </Button>
+          </SubmitButton>
 
           <BottomNote
             text1={i18n.t("profile.wechat.toEdit")}

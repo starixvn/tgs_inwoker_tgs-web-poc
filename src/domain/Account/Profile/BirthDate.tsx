@@ -1,62 +1,26 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
-import { useHistory } from "react-router-dom";
 import BottomNote from "@/components/UI/BottomNote";
 import Loading from "@/components/UI/Loading";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import config from "@/config/config";
 import { AccountService } from "@/services/AccountService";
-import zhLocale from "date-fns/locale/zh-CN";
-import enLocale from "date-fns/locale/en-US";
-import thLocale from "date-fns/locale/th";
 import { ItemContainer, LabelContainer } from "@/styles/forms";
-import { Button } from "@/components/UI/Button";
+import { SubmitButton } from "@/styles/forms";
 import DatePicker from "@/components/UI/DatePicker";
 
 const moment = require("moment");
-const localeMap: { [key in string]: Locale } = {
-  zh: zhLocale,
-  en: enLocale,
-  th: thLocale,
-};
 
 const Container = styled.div`
   width: 100%;
   overflow: hidden;
 `;
 
-type CustomDatepickerProps = {
-  disabled: boolean;
-  brand: string;
-};
-const CustomDatepicker = styled.div<CustomDatepickerProps>`
-  ${({ disabled }: CustomDatepickerProps) => {
-    return disabled && `pointer-events: none;`;
-  }}
-  background: none;
-  border-radius: 5px;
-  margin-top: 10px;
-  border: 1px solid ${({ theme }) => theme.tertiary};
-
-  .MuiInputBase-input {
-    background: none;
-    color: ${({ theme }) => theme.white};
-  }
-
-  .MuiInput-underline:before,
-  .MuiInput-underline:after {
-    border-bottom: 0px;
-  }
-`;
-
 const Birthdate = () => {
   const { alert } = useNotifications();
   const { account, getAccountProfile } = useAccountStore();
-
-  const history = useHistory();
 
   const [birthdate, setBirthdate] = useState<string>(
     moment(
@@ -125,17 +89,13 @@ const Birthdate = () => {
     <Container>
       <ItemContainer>
         <LabelContainer>{i18n.t("profile.birthdate.title")}</LabelContainer>
-        <CustomDatepicker
-          brand={config.brand}
+        <DatePicker
           disabled={isConfigured && config.features.Profile_SetUpBirthdateOnce}
-        >
-          <DatePicker
-            invalidDateMessage={false}
-            format="yyyy/MM/dd"
-            value={new Date(birthdate)}
-            onChange={(e) => handleChangeNumber(e)}
-          />
-        </CustomDatepicker>
+          invalidDateMessage={false}
+          format="yyyy/MM/dd"
+          value={new Date(birthdate)}
+          onChange={(e) => handleChangeNumber(e)}
+        />
       </ItemContainer>
 
       <ItemContainer>
@@ -157,13 +117,13 @@ const Birthdate = () => {
         {message}
       </ItemContainer>
 
-      <Button
+      <SubmitButton
         fullWidth
         disabled={isDisableButton() || isLoading}
         onClick={handleSubmitClicked}
       >
         {i18n.t("common.submit")}
-      </Button>
+      </SubmitButton>
 
       <Loading show={isLoading} />
     </Container>

@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  DatePickerProps,
   LocalizationProvider,
   MobileDatePicker,
   MobileDatePickerProps,
@@ -12,6 +13,7 @@ import zhLocale from "date-fns/locale/zh-CN";
 import enLocale from "date-fns/locale/en-US";
 import thLocale from "date-fns/locale/th";
 import { ThemeOptions } from "@mui/system";
+import styled from "styled-components";
 
 const localeMap = {
   zh: zhLocale,
@@ -40,7 +42,7 @@ const muiTheme = createTheme({
   },
 });
 
-const DatePicker = (props: MobileDatePickerProps<any>) => {
+const StyledDatePicker = (props: MobileDatePickerProps<any>) => {
   return (
     <LocalizationProvider
       dateAdapter={AdapterDateFns}
@@ -71,6 +73,41 @@ const DatePicker = (props: MobileDatePickerProps<any>) => {
         />
       </ThemeProvider>
     </LocalizationProvider>
+  );
+};
+
+type CustomDatepickerProps = {
+  $disabled?: boolean;
+};
+
+const DatePickerContainer = styled.div<CustomDatepickerProps>`
+  ${({ $disabled }: CustomDatepickerProps) => {
+    return $disabled && `pointer-events: none;`;
+  }}
+  background: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  border: 1px solid ${({ theme }) => theme.tertiary};
+
+  .MuiInputBase-input {
+    background: none;
+    color: ${({ theme }) => theme.white};
+  }
+
+  .MuiInput-underline:before,
+  .MuiInput-underline:after {
+    border-bottom: 0px;
+  }
+`;
+
+type Props = {
+  disabled?: boolean;
+} & DatePickerProps<any>;
+const DatePicker = ({ disabled, ...others }: Props) => {
+  return (
+    <DatePickerContainer $disabled={!!disabled}>
+      <StyledDatePicker {...others} />
+    </DatePickerContainer>
   );
 };
 
