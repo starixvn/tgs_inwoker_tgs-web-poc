@@ -11,23 +11,60 @@ type Props = {
   onClick: () => void;
 };
 
-const Wrapper = styled.div<{
-  $text: string;
+const TextTag = styled.div<{
   $isActive: boolean;
-  $isShowIcon: boolean;
 }>`
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  padding: 4px;
+  margin-right: 6px;
   white-space: nowrap;
-  min-width: ${({ $isShowIcon }) => ($isShowIcon ? "40px" : "85px")};
-  padding: 4px 8px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 50px;
+  box-sizing: border-box;
   border-radius: 50px;
   background-color: ${({ $isActive, theme }) =>
     $isActive ? theme.primary : theme.tertiaryDark};
-  margin-right: 6px;
   user-select: none;
-  
+  width: auto;
+  min-width: 60px;
+  max-width: none;
+`;
+
+const Text = styled.div<{ $isActive: boolean }>`
+ color: ${({ $isActive, theme }) =>
+    $isActive ? theme.white : theme.tertiary};
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 0.875rem;
+`;
+
+const IconTag = styled.div<{
+  $text: string;
+  $isActive: boolean;
+}>`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 4px;
+  margin-right: 6px;
+  white-space: nowrap;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 50px;
+  box-sizing: border-box;
+  border-radius: 50px;
+  background-color: ${({ $isActive, theme }) =>
+    $isActive ? theme.primary : theme.tertiaryDark};
+  user-select: none;
+  width: auto;
+  min-width: 40px;
+  max-width: none;
+
   & > img {
     width: 24px;
     height: 24px;
@@ -38,24 +75,12 @@ const Wrapper = styled.div<{
     & :hover {
     color: ${({ theme }) => theme.white};
    }
-    width: auto;
-    min-width: ${({ $isShowIcon }) => ($isShowIcon ? "90px" : "60px")};
-    padding: 4px;
-    gap: ${({ $isShowIcon }) => ($isShowIcon ? "4px" : "10px")};
     align-self: stretch;
   }
 `;
 
-const Text = styled.div<{ $isActive: boolean }>`
-  color: ${({ $isActive, theme }) =>
-    $isActive ? theme.white : theme.tertiary};
-  font-size: 0.875rem;
-  font-weight: 700;
-  line-height: 0.875rem;
-`;
-
 const Tag = ({ text, isActive, isShowIcon, onClick }: Props) => {
-  const { isMobileSize } = useRwd();
+  const { isDesktopSize } = useRwd();
 
   const transferIcon = () => {
     const tag = gameTagList.find((tag) => tag.text === text);
@@ -64,15 +89,21 @@ const Tag = ({ text, isActive, isShowIcon, onClick }: Props) => {
   const imageUrl = transferIcon();
 
   return (
-    <Wrapper
-      $isActive={isActive}
-      $text={text}
-      $isShowIcon={isShowIcon}
-      onClick={onClick}
-    >
-      {imageUrl && <img src={imageUrl} alt={text} />}
-      {isMobileSize ? (imageUrl ? null : <Text $isActive={isActive}>{text}</Text>) : <Text $isActive={isActive}>{text}</Text>}
-    </Wrapper>
+    <>
+      {isShowIcon
+        ? <IconTag
+          $isActive={isActive}
+          $text={text}
+          onClick={onClick}
+        >
+          {imageUrl && <img src={imageUrl} alt={text} />}
+          {isDesktopSize && <Text $isActive={isActive}>{text}</Text>}
+        </IconTag>
+        : <TextTag $isActive={isActive}>
+          <Text $isActive={isActive}>{text}</Text>
+        </TextTag>
+      }
+    </>
   );
 };
 

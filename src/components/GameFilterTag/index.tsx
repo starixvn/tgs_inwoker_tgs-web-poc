@@ -1,13 +1,12 @@
+import { gameTagList } from "@/constants/gameTag";
 import { media } from "@/theme/breakpoints";
 import styled from "styled-components";
-import { gameTagList } from "../../constants/gameTag";
 import Tag from "./Tag";
 
 const TagContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
   width: 100%;
+  height: 40px;
+  padding: 4px 0px;
   margin-bottom: 8px;
   overflow-x: auto;
   white-space: nowrap;
