@@ -8,8 +8,12 @@ import { useNotifications } from "@/hooks/pageProps/useNotifications";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import Loading from "@/components/UI/Loading";
 import { TextField } from "@/components/UI/TextField";
-import { FormControl, LabelContainer, ItemContainer } from "@/styles/forms";
-import { Button } from "@/components/UI/Button";
+import {
+  FormControl,
+  LabelContainer,
+  ItemContainer,
+  SubmitButton,
+} from "@/styles/forms";
 
 const QQ = () => {
   const { account, getAccountProfile } = useAccountStore();
@@ -116,14 +120,14 @@ const QQ = () => {
         </>
       ) : (
         <>
-          <Button
+          <SubmitButton
             fullWidth
             onClick={handleSubmitClicked}
             disabled={checkButtonState() || isLoading}
             style={{ marginBottom: "20px" }}
           >
             {i18n.t("common.submit")}
-          </Button>
+          </SubmitButton>
 
           <BottomNote
             text1={i18n.t("profile.qq.toEdit")}
