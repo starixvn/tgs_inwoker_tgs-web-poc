@@ -5,9 +5,6 @@ import Tag from "./Tag";
 
 const TagContainer = styled.div`
   width: 100%;
-  height: 40px;
-  padding: 4px 0px;
-  margin-bottom: 8px;
   overflow-x: auto;
   white-space: nowrap;
   scroll-behavior: smooth;
@@ -45,38 +42,24 @@ type Props = {
   setSelectedTag: (selectedTag: string) => void;
 };
 
-type GameItem = {
-  key: string;
-  code: string;
-  description: string;
-  gpcode: string;
-  id: number;
-  isactive: boolean;
-  name: string;
-  tag: {
-    hot: boolean;
-    new: boolean;
-    recommend: boolean;
-  };
-  type: number;
-  isFavorite: boolean;
-};
-
 const GameFilterTag = ({ tagList, selectedTag, setSelectedTag }: Props) => {
   return (
     <TagContainer
     >
       {tagList
-        .filter((item): item is GameItem => item !== null)
-        .map((item: GameItem) => (
-          <Tag
-            key={item?.name}
-            text={item?.name}
-            isActive={item?.name === selectedTag && !!item.name}
-            isShowIcon={gameTagList.some((tag) => tag.text === item.name)}
-            onClick={() => setSelectedTag(item.name)}
-          />
-        ))}
+        .map(gameTagItem => {
+          const name = gameTagItem?.name ?? "";
+
+          return (
+            <Tag
+              key={name}
+              text={name}
+              isActive={name === selectedTag && !!name}
+              isShowIcon={gameTagList.some((tag) => tag.text === name)}
+              onClick={() => setSelectedTag(name)}
+            />
+          );
+        })}
     </TagContainer>
   );
 };

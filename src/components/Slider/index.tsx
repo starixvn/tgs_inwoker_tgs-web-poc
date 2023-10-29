@@ -10,7 +10,6 @@ const SlickWrapper = styled.div`
   width: 100%;
   border-radius: 12px;
   overflow: hidden;
-  margin-bottom: 15px;
 `;
 
 const SlickImage = styled.img`

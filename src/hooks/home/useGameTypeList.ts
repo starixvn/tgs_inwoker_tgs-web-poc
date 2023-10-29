@@ -12,7 +12,7 @@ import sports from "@/assets/t18/images/home/mobile/tab/sports.svg";
 import i18n from "@/utils/i18n";
 import { useEffect, useState } from "react";
 
-type TabIcon = {
+type GameTypeItem = {
   key: string;
   iconUrl: string;
   text: string;
@@ -24,7 +24,7 @@ export const useGameTypeList = () => {
   const [translatedGameTypeList, setTranslatedGameTypeList] = useState([]);
 
   useEffect(() => {
-    const gameTypeList: TabIcon[] = [
+    const gameTypeList: GameTypeItem[] = [
       {
         key: "lobby",
         iconUrl: lobby,
@@ -71,20 +71,20 @@ export const useGameTypeList = () => {
         key: "sabong",
         iconUrl: sabong,
         text: i18n.t("common.cockfight"),
-        fontSize: "small",
+        fontSize: "smaller",
         gameType: GameTypeEnum.COCKFIGHT,
       },
       {
         key: "egame",
         iconUrl: egame,
-        text: i18n.t("common.eGame"),
+        text: i18n.t("common.egame"),
         fontSize: "small",
         gameType: GameTypeEnum.TABLEGAME,
       },
       {
         key: "cardGame",
         iconUrl: cardgame,
-        text: i18n.t("common.cardGame"),
+        text: i18n.t("common.chess"),
         fontSize: "smaller",
         gameType: GameTypeEnum.QIPAILOBBY,
       },

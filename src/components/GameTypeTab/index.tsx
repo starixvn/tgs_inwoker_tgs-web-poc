@@ -4,11 +4,10 @@ import styled from "styled-components";
 import Tab from "./Tab";
 
 const TabContainer = styled.div`
-  margin-bottom: 15px;
+  width: 100%;
   overflow-x: auto;
   white-space: nowrap;
   scroll-behavior: smooth;
-  width: 100%;
   -webkit-overflow-scrolling: touch;
   /* Enable smooth scrolling on iOS */
 

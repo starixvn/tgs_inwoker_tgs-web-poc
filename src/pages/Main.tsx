@@ -75,7 +75,8 @@ const MainWrapper = styled.div<{ theme: Theme }>`
   align-items: flex-start;
   background-color: ${({ theme }: { theme: Theme }) => theme.primaryDark};
   color: ${({ theme }: { theme: Theme }) => theme.white};
-
+  gap: 15px;
+  
   ${media.sm} {
     max-width: 870px;
     margin: 0 auto;
@@ -130,11 +131,11 @@ const Main = (props: Props) => {
   const [isEnterLobby, setIsEnterLobby] = useState(false);
   const [selectedTag, setSelectedTag] = useState("All");
   const [filteredGameList, setFilteredGameList] = useState<any[]>([]);
-  const [groupBy_gameProvider, setGroupByProvider] = useState<any>({});
+  const [groupByGameProvider, setGroupByGameProvider] = useState<any>({});
   const [favoriteList, setFavoriteList] = useState<number[]>([]);
   const [filteredMatchGames, setFilteredMatchGames] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { isDesktopSize, isMobileSize } = useRwd();
+  const { isMobileSize } = useRwd();
 
   const handleGameTypeClick = (gameType: number) => {
     setActiveGameTypeTab(gameType);
@@ -178,7 +179,7 @@ const Main = (props: Props) => {
 
   const tagList: (Tag | null)[] = useMemo(() => {
 
-    const gpCodeBy_gameProvider = Object.keys(groupBy_gameProvider);
+    const gpCodeBy_gameProvider = Object.keys(groupByGameProvider);
 
     const filteredTags = gpCodeBy_gameProvider
       .filter((key) => typeof key === "string")
@@ -197,10 +198,10 @@ const Main = (props: Props) => {
       ...filteredTags,
     ];
     return additionalTags.filter((tag) => tag !== null);
-  }, [groupBy_gameProvider, account.token]);
+  }, [groupByGameProvider, account.token]);
 
   const filterAndGroupGames = (gameList: any[]) => {
-    const groupByGpcode = gameList.reduce((accumulator, game) => {
+    const groupBy_gpCode = gameList?.reduce((accumulator, game) => {
       const { gpcode, ...rest } = game;
       if (!accumulator[gpcode]) {
         accumulator[gpcode] = [];
@@ -211,7 +212,7 @@ const Main = (props: Props) => {
       return accumulator;
     }, {});
 
-    return groupByGpcode;
+    return groupBy_gpCode;
   };
 
   const fetchFavoriteList = useCallback(async () => {
@@ -232,7 +233,7 @@ const Main = (props: Props) => {
         if (res && res.data) {
           // groupBy_gameProvider: key為GPcode, value為該GPcode的遊戲
           const groupBy_gameProvider = filterAndGroupGames(res.data);
-          setGroupByProvider(groupBy_gameProvider);
+          setGroupByGameProvider(groupBy_gameProvider);
 
           const filteredGameListWithFavorites =
             favoriteList.length > 0
@@ -308,12 +309,10 @@ const Main = (props: Props) => {
 
       <CardPrompt />
 
-      <TabSearchContainer>
-        <GameTypeTab
-          activeGameTypeTab={activeGameTypeTab}
-          handleGameTypeClick={handleGameTypeClick}
-        />
-      </TabSearchContainer>
+      <GameTypeTab
+        activeGameTypeTab={activeGameTypeTab}
+        handleGameTypeClick={handleGameTypeClick}
+      />
 
       {!activeGameTypeTab && (
         <Lobby
