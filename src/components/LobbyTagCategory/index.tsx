@@ -3,6 +3,7 @@ import ButtonText from "@/components/ButtonText";
 import CategoryLabel from "@/components/CategoryLabel";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useRwd } from "@/hooks/useRwd";
+import { media } from "@/theme/breakpoints";
 import Common from "@/utils/Common";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
@@ -26,9 +27,15 @@ const CategoryContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  gap: 15px;
   width: 100%;
   margin-bottom: 30px;
+  row-gap: 18px;
+  column-gap: 15px;
+  align-self: stretch;
+
+  ${media.sm} {
+    column-gap: 24.4px;
+  }
 `;
 
 const ButtonContainer = styled.div`

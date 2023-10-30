@@ -1,18 +1,18 @@
 import { GameTypeEnum } from "@/api-services/utils/Enum";
-import cardgame from "@/assets/images/home/mobile/tab/card_game.svg";
-import egame from "@/assets/images/home/mobile/tab/egame.svg";
-import esports from "@/assets/images/home/mobile/tab/esports.svg";
-import fishing from "@/assets/images/home/mobile/tab/fishing.svg";
-import live from "@/assets/images/home/mobile/tab/live_casino.svg";
-import lobby from "@/assets/images/home/mobile/tab/lobby.svg";
-import lottery from "@/assets/images/home/mobile/tab/lottery.svg";
-import sabong from "@/assets/images/home/mobile/tab/sabong.svg";
-import slot from "@/assets/images/home/mobile/tab/slot.svg";
-import sports from "@/assets/images/home/mobile/tab/sports.svg";
+import cardgame from "@/assets/t18/images/home/mobile/tab/card_game.svg";
+import egame from "@/assets/t18/images/home/mobile/tab/egame.svg";
+import esports from "@/assets/t18/images/home/mobile/tab/esports.svg";
+import fishing from "@/assets/t18/images/home/mobile/tab/fishing.svg";
+import live from "@/assets/t18/images/home/mobile/tab/live_casino.svg";
+import lobby from "@/assets/t18/images/home/mobile/tab/lobby.svg";
+import lottery from "@/assets/t18/images/home/mobile/tab/lottery.svg";
+import sabong from "@/assets/t18/images/home/mobile/tab/sabong.svg";
+import slot from "@/assets/t18/images/home/mobile/tab/slot.svg";
+import sports from "@/assets/t18/images/home/mobile/tab/sports.svg";
 import i18n from "@/utils/i18n";
 import { useEffect, useState } from "react";
 
-type TabIcon = {
+type GameTypeItem = {
   key: string;
   iconUrl: string;
   text: string;
@@ -24,7 +24,7 @@ export const useGameTypeList = () => {
   const [translatedGameTypeList, setTranslatedGameTypeList] = useState([]);
 
   useEffect(() => {
-    const gameTypeList: TabIcon[] = [
+    const gameTypeList: GameTypeItem[] = [
       {
         key: "lobby",
         iconUrl: lobby,
@@ -71,20 +71,20 @@ export const useGameTypeList = () => {
         key: "sabong",
         iconUrl: sabong,
         text: i18n.t("common.cockfight"),
-        fontSize: "small",
+        fontSize: "smaller",
         gameType: GameTypeEnum.COCKFIGHT,
       },
       {
         key: "egame",
         iconUrl: egame,
-        text: i18n.t("common.eGame"),
+        text: i18n.t("common.egame"),
         fontSize: "small",
         gameType: GameTypeEnum.TABLEGAME,
       },
       {
         key: "cardGame",
         iconUrl: cardgame,
-        text: i18n.t("common.cardGame"),
+        text: i18n.t("common.chess"),
         fontSize: "smaller",
         gameType: GameTypeEnum.QIPAILOBBY,
       },

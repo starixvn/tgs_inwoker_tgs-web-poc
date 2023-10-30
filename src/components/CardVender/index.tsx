@@ -1,8 +1,11 @@
 import playIcon from "@/assets/t18/images/home/mobile/play.svg";
 import bg from "@/assets/t18/images/home/mobile/vender_card_bg.png";
+import { providerStatus } from "@/constants/games";
+import useDynamicFontSize from "@/hooks/useDynamicFontSize";
+import { useRwd } from "@/hooks/useRwd";
 import { media } from "@/theme/breakpoints";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
-import { providerStatus } from "../../constants/games";
 
 type Props = {
   imageUrl: string;
@@ -11,9 +14,10 @@ type Props = {
   venderLogoUrl?: string;
   launchGame: () => void;
   status: number;
-  hoverVenderName?: string;
+  lobbyVenderName?: string;
 };
 
+// -------- hover effect for desktop--------------
 const CardHoverBg = styled.div`
   position: absolute;
   width: 100%;
@@ -22,52 +26,16 @@ const CardHoverBg = styled.div`
   top: 0;
   background: rgb(0 0 0 / 80%);
   border-radius: 10px;
+  padding: 0 5px;
   display: none;
-  text-align: center;
-`;
-
-const HoverVenderName = styled.div`
-  color: ${(props) => props.theme.white};
-  text-align: center;
-  font-size: 1rem;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  word-wrap: break-word;
-`;
-
-const CardVendorBg = styled.div`
-  width: calc(33.33% - 10px);
-  height: 158px; //to-do : dynamic heigh
-  bottom: 0;
-  background-image: url(${bg});
-  background-size: cover;
-  box-sizing: border-box;
-  position: relative;
-  cursor: pointer;
-
-  ${media.sm} {
-    width: calc(16.67% - 14px);
-    min-width: 118px;
-    padding-bottom: calc((16.67% - 14px) * 1.34);
-    border-radius: 10px;
-
-    &:hover ${CardHoverBg} {
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    &:hover ${HoverVenderName} {
-      word-wrap: break-word;
-    }
-  }
 `;
 
 const GameIcon = styled.div<{ $imageUrl: string }>`
+  position: absolute;
   width: 100%;
   padding-top: 91.5%;
+  left: 0;
+  top: 0;
   background-image: url(${({ $imageUrl }) => $imageUrl});
   background-size: cover;
   border-radius: 10px 10px 0 0;
@@ -89,34 +57,68 @@ const GradientBg = styled.div`
 
 const CardContent = styled.div`
   width: 100%;
-  height: 100%;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
-const GameName = styled.div`
+const HoverGameOrVenderName = styled(CardContent)`
+  color: ${(props) => props.theme.white};
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 16px;
+`;
+
+const PlayIcon = styled.img`
+  width: 65px;
+  height: 65px;
+`;
+
+const CardVendorBg = styled.div`
+  width: calc(33.33% - 10px);
+  background-image: url(${bg});
+  background-size: cover;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+
+    &::before {
+    content: '';
+    display: block;
+    padding-top: calc(158 / 118 * 100%);
+    width: 100%;
+  }
+
+  ${media.sm} {
+    width: calc(16.67% - 24.4px);
+    min-width: 118px;
+
+    &:hover {
+      ${CardHoverBg} {
+        z-index: 1;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+`;
+
+const GameName = styled(CardContent)`
   color: ${(props) => props.theme.white};
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-size: min(max(1.5vw, 1.2rem), 1.5rem);
+  font-size: 1rem;
   font-weight: 900;
   margin-bottom: 4px;
   text-align: center;
 `;
 
-const HoverGameName = styled.div`
-  color: ${(props) => props.theme.white};
-  text-align: center;
-  font-size: 1rem;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-`;
-
-const VenderName = styled.div`
+const VenderName = styled(CardContent)`
   color: ${(props) => props.theme.white};
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-size: min(max(1.5vw, 0.625rem), 0.75rem);
+  font-size: 0.625rem;
   font-weight: 400;
   text-align: center;
 `;
@@ -167,16 +169,34 @@ const CardVendor = ({
   venderLogoUrl,
   launchGame,
   status,
-  hoverVenderName,
+  lobbyVenderName,
 }: Props) => {
+  const { isDesktopSize, isMobileSize } = useRwd();
+  const gameNameRef = useRef<HTMLDivElement | null>(null);
+  const venderNameRef = useRef<HTMLDivElement | null>(null);
+  const lobbyVenderNameRef = useRef<HTMLDivElement | null>(null);
+  const { resizeText } = useDynamicFontSize();
+
+  useEffect(() => {
+    if (gameNameRef.current) {
+      resizeText({ container: gameNameRef.current, text: gameNameRef.current });
+    }
+    if (venderNameRef.current) {
+      resizeText({ container: venderNameRef.current, text: venderNameRef.current });
+    }
+    if (lobbyVenderNameRef.current) {
+      resizeText({ container: lobbyVenderNameRef.current, text: lobbyVenderNameRef.current });
+    }
+  }, [resizeText, gameNameRef.current, venderNameRef.current, lobbyVenderNameRef.current]);
+
   return (
     <CardVendorBg onClick={launchGame}>
       <>
         <GameIcon $imageUrl={imageUrl}></GameIcon>
         <GradientBg>
           <CardContent>
-            {gameName && <GameName>{gameName}</GameName>}
-            {venderName && <VenderName>{venderName}</VenderName>}
+            {gameName && <GameName ref={gameNameRef}>{gameName}</GameName>}
+            {venderName && <VenderName ref={venderNameRef}>{venderName}</VenderName>}
             {venderLogoUrl && (
               <VenderLogo $venderLogoUrl={venderLogoUrl}></VenderLogo>
             )}
@@ -190,13 +210,14 @@ const CardVendor = ({
           </MaintenanceContent>
         </MaintenanceBg>
       )}
-      <CardHoverBg>
-        {gameName && <HoverGameName>{gameName}</HoverGameName>}
-        {hoverVenderName && (
-          <HoverVenderName>{hoverVenderName}</HoverVenderName>
+
+      {isDesktopSize && <CardHoverBg>
+        {gameName && <HoverGameOrVenderName ref={lobbyVenderNameRef}>{gameName}</HoverGameOrVenderName>}
+        {lobbyVenderName && (
+          <HoverGameOrVenderName ref={lobbyVenderNameRef}>{lobbyVenderName}</HoverGameOrVenderName>
         )}
-        <img src={playIcon} alt={"play"} />
-      </CardHoverBg>
+        <PlayIcon src={playIcon} alt={"play"} />
+      </CardHoverBg>}
     </CardVendorBg>
   );
 };

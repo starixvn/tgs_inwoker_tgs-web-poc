@@ -1,4 +1,3 @@
-import { GameService } from "@/api-services/services/GameService";
 import playIcon from "@/assets/t18/images/home/mobile/play.svg";
 import config from "@/config/config";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
@@ -179,23 +178,6 @@ const GameCard = ({
         `/joingame/${gameItem.id}/${gameItem.gpcode}`,
         "gamewindow"
       );
-
-      // const gameWindow = window.open("", "gamewindow");
-      //
-      // if (gameWindow) {
-      //   // gameWindow.document.open();
-      //   // gameWindow.document.write("Loading");
-      //   // gameWindow.document.close();
-      //
-      //   GameService.JoinGame(gameItem.id, gameItem.gpcode).then((response) => {
-      //     if (response?.IsSuccess) {
-      //       gameWindow.location.href = response?.data?.url;
-      //     } else {
-      //       console.log(response?.info);
-      //       gameWindow.close();
-      //     }
-      //   });
-      // }
     }
   };
 
@@ -218,11 +200,9 @@ const GameCard = ({
     <>
       <GameCardWrapper onClick={launchGame}>
         <GameImage
-          src={`${
-            config.sourceUrl
-          }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
-            gameItem.code
-          }.jpg`}
+          src={`${config.sourceUrl
+            }${gameItem.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${gameItem.code
+            }.jpg`}
           alt={gameItem.name}
         />
 
