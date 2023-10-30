@@ -28,6 +28,8 @@ const CardHoverBg = styled.div`
   border-radius: 10px;
   padding: 0 5px;
   display: none;
+  white-space: pre-line;
+  /* 畫面寬度改變才有換行 */
 `;
 
 const GameIcon = styled.div<{ $imageUrl: string }>`

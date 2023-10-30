@@ -1,34 +1,32 @@
-import React, { Suspense } from "react";
-import { Redirect, Route, Router, Switch } from "react-router";
-import { AppHistory } from "@/history/History";
-import config from "@/config/config";
-import ForcedVerification from "./components/ForcedVerification";
-import LiveChat from "./components/Share/LiveChat";
-import { routes } from "@/router";
-import PopupAlertModal from "@/components/Popup/PopupAlertDialog";
-import PopupAnnouncement from "@/components/Popup/PopupAnnouncement";
-import PopupPromotion from "@/components/Popup/PopupPromotion";
-import { AuthContextProvider } from "@/contexts/authContext";
-import LayoutProvider from "@/layouts/LayoutProvider";
-import { AuthGuard } from "@/domain/authentication/AuthGuard";
 import FloatingToolIcons from "@/components/FloatingToolIcons";
-import { PageNameContextProvider } from "@/contexts/pageNameContext";
+import PopupAlertModal from "@/components/Popup/PopupAlertDialog";
 import Loading from "@/components/UI/Loading";
-import ScrollToTop from "@/utils/ScrollToTop";
+import config from "@/config/config";
+import { AuthContextProvider } from "@/contexts/authContext";
+import { AuthDialogContextProvider } from "@/contexts/authDialogContext";
+import { HeaderContextProvider } from "@/contexts/headerContext";
+import { PageNameContextProvider } from "@/contexts/pageNameContext";
+import { AuthGuard } from "@/domain/authentication/AuthGuard";
+import ForgetPasswordDialog from "@/domain/authentication/ForgetPasswordDialog";
 import LoginDialog from "@/domain/authentication/LoginDialog";
 import RegisterDialog from "@/domain/authentication/RegisterDialog";
-import { HeaderContextProvider } from "@/contexts/headerContext";
-import { AuthDialogContextProvider } from "@/contexts/authDialogContext";
-import ForgetPasswordDialog from "@/domain/authentication/ForgetPasswordDialog";
-import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
-import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import { useLanguageDetect } from "@/hooks/app/useLanguageDetect";
-import { useHandleMaintenance } from "@/hooks/app/useHandleMaintenance";
-import { useUpdateProviderBalance } from "@/hooks/app/useUpdateProviderBalance";
+import { AppHistory } from "@/history/History";
 import { useCheckRegisterProcess } from "@/hooks/app/useCheckRegisterProcess";
-import { usePopupInHomePage } from "@/hooks/app/usePopupInHomePage";
+import { useHandleMaintenance } from "@/hooks/app/useHandleMaintenance";
 import { useInitSite } from "@/hooks/app/useInitSite";
+import { useLanguageDetect } from "@/hooks/app/useLanguageDetect";
+import { usePopupInHomePage } from "@/hooks/app/usePopupInHomePage";
+import { useUpdateProviderBalance } from "@/hooks/app/useUpdateProviderBalance";
 import { useAuth } from "@/hooks/auth/useAuth";
+import { useAccountStore } from "@/hooks/stores/useAccountStore";
+import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
+import LayoutProvider from "@/layouts/LayoutProvider";
+import { routes } from "@/router";
+import ScrollToTop from "@/utils/ScrollToTop";
+import React, { Suspense } from "react";
+import { Redirect, Route, Router, Switch } from "react-router";
+import ForcedVerification from "./components/ForcedVerification";
+import LiveChat from "./components/Share/LiveChat";
 
 const App: React.FC = () => {
   const { general } = useGeneralStore();
@@ -116,7 +114,7 @@ const App: React.FC = () => {
                     <ForcedVerification forceVerify={true} />
                   )}
 
-                {needToShowPopupAnnouncement && (
+                {/* {needToShowPopupAnnouncement && (
                   <PopupAnnouncement
                     open={isOpenAnnouncement}
                     onClose={handleCloseAnnouncement}
@@ -127,7 +125,7 @@ const App: React.FC = () => {
                     open={isShowPromotion}
                     onClose={handleClosePromotion}
                   />
-                )}
+                )} */}
 
                 <PopupAlertModal />
                 <FloatingToolIcons />
