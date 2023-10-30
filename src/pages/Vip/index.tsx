@@ -1,3 +1,4 @@
+import Loading from "@/components/UI/Loading";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import useVipStore from "@/hooks/useVipStore";
 import { media } from "@/theme/breakpoints";
@@ -44,8 +45,7 @@ const VIP = () => {
   const { vipData, isLoading } = useVipStore();
   const accountStore = useAccountStore();
   const [vipSortingData, setVipSortingData] = useState<VipCardItem[]>([]);
-  const accountLevel = 4;
-  // const accountLevel = accountStore.account.info.member_level_id;
+  const accountLevel = accountStore.account.info.member_level_id;
 
   useEffect(() => {
     if (!isLoading && levelItemStyleList) {
@@ -68,13 +68,14 @@ const VIP = () => {
   });
 
   // to-do: 多抽一層資料處理hooks/vip for useVipDataHandler.ts 把資料和UI切分乾淨
-  console.log("accountLevel", accountLevel)
+
+  if (isLoading) return <Loading show={true} />;
+
   return (
     <VipScrollableContainer>
       {updatedVipSortingData &&
         updatedVipSortingData.map((vipCardItem, index) => {
           const isCurrentLevel = index === accountLevel - 1;
-          console.log("vipCardItem", vipCardItem)
           return (
             <VipSingleItem
               key={vipCardItem.levelStyle.level}

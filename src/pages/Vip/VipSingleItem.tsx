@@ -1,7 +1,6 @@
 import bdcakeIcon from "@/assets/t18/images/vip/bdcake.svg";
 import calendarIcon from "@/assets/t18/images/vip/calendar.svg";
 import rocketIcon from "@/assets/t18/images/vip/rocket.svg";
-import uncompletedIcon from "@/assets/t18/images/vip/uncompleted.svg";
 import VipBonusStampGrid from "@/components/VipBonusStampGrid";
 import { media } from "@/theme/breakpoints";
 import formatAmount from "@/utils/getFormatAmount";
@@ -222,8 +221,20 @@ const VipSingleItem = ({
 
   useEffect(() => {
     if (!isCurrentLevel) return;
-
     if (!currentItemRef.current) return;
+
+    const container = currentItemRef.current.parentElement;
+
+    if (container) {
+      const scrollLeft = currentItemRef.current.offsetLeft - (container.clientWidth - currentItemRef.current.clientWidth) / 2;
+
+      container.scrollTo({
+        behavior: "smooth",
+        top: 60,
+        left: scrollLeft,
+      });
+    }
+
   }, [currentItemRef.current, isCurrentLevel]);
 
   return (
@@ -233,18 +244,13 @@ const VipSingleItem = ({
           <LevelText $levelColor={item.levelStyle.levelColor}>
             {item.levelStyle.level}
           </LevelText>
-          {isCurrentLevel ? (
+          {isCurrentLevel &&
             <CurrentLevelText
               $levelStatusColor={item.levelStyle.levelStatusColor}
             >
               Current level
             </CurrentLevelText>
-          ) : (
-            <LevelStatusTag>
-              <img src={uncompletedIcon} alt="uncompleted" />
-              Uncompleted
-            </LevelStatusTag>
-          )}
+          }
         </VipCardLevelText>
 
         <VipBadge $badgeImage={item.levelStyle.badgeImage} />
