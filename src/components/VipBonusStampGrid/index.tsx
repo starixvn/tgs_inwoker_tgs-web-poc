@@ -1,5 +1,4 @@
 import { media } from "@/theme/breakpoints";
-import formatAmount from "@/utils/getFormatAmount";
 import styled from "styled-components";
 
 type Props = {
@@ -119,8 +118,13 @@ type VipBonusStampNumberProps = {
 const VipBonusStampNumber = styled.div<VipBonusStampNumberProps>`
   color: ${(props: VipBonusStampNumberProps) => props.$bonusTextColor};
   font-weight: 700;
-  font-size: 1.125rem;
-  line-height: 1.125rem;
+  font-size: 1rem;
+  line-height: 1rem;
+
+  @media (max-width: 400px) {
+    font-size: 0.875rem;
+  line-height: 0.875rem;
+  }
 `;
 
 type BonusIconTypes = {
@@ -172,7 +176,7 @@ const VipBonusStampGrid = ({
               ></BonusIcon>
 
               <VipBonusStampNumber $bonusTextColor={bonusTextColor}>
-                {vipBonus && formatAmount(vipBonus[index])}
+                {vipBonus && (vipBonus[index]).toLocaleString()}
               </VipBonusStampNumber>
             </VipBonusStampAbove>
           </VipBonusStampContainer>
