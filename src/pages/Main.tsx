@@ -80,6 +80,7 @@ const MainWrapper = styled.div<{ theme: Theme }>`
   ${media.sm} {
     max-width: 870px;
     margin: 0 auto;
+    padding: 20px;
   }
 `;
 

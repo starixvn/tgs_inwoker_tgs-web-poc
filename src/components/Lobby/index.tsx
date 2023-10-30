@@ -10,7 +10,6 @@ import { GroupByGameItem } from "../LobbyTagCategory";
 const LobbyContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
   width: 100%;
 `;
 
