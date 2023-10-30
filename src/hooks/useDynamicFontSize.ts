@@ -1,11 +1,23 @@
 import { utility } from "@/utils/utility";
 import { useEffect, useRef } from "react";
 
+const exceptionName = (text: string | null) => {
+  switch (text) {
+    case "JUNGLEJUNGLE":
+      return text = "JUNGLE\nJUNGLE";
+    case "PRAGMATICPLAY":
+      return text = "PRAGMATIC\nPLAY";
+    default:
+      return text;
+  }
+}
+
 const adjustFontSize = (container: HTMLElement, text: HTMLElement) => {
   if (container && text) {
     // 替換下底線為空格
     if (text.textContent) {
       text.textContent = utility.replaceUnderscoresWithSpace(text.textContent);
+      text.textContent = exceptionName(text.textContent);
     }
 
     const containerWidth = container.clientWidth;
@@ -20,13 +32,13 @@ const adjustFontSize = (container: HTMLElement, text: HTMLElement) => {
     const fontSize = parseInt(computedStyles.fontSize);
 
     if (textWidth > containerWidth) {
-      const newFontSize = fontSize * (containerWidth / textWidth);
+      const newFontSize = fontSize * (containerWidth / textWidth) * 0.9;
       text.style.fontSize = newFontSize + "px";
     }
   }
 }
 
-const resizeText = (container: HTMLElement, text: HTMLElement) => {
+const resizeText = ({ container, text }: { container: HTMLElement; text: HTMLElement }) => {
   adjustFontSize(container, text);
 }
 
