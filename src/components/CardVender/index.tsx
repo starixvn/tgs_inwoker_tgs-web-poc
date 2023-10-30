@@ -30,35 +30,6 @@ const CardHoverBg = styled.div`
   display: none;
 `;
 
-const CardVendorBg = styled.div`
-  width: calc(33.33% - 10px);
-  background-image: url(${bg});
-  background-size: cover;
-  box-sizing: border-box;
-  position: relative;
-  cursor: pointer;
-
-    &::before {
-    content: '';
-    display: block;
-    padding-top: calc(158 / 118 * 100%);
-    width: 100%;
-  }
-
-  ${media.sm} {
-    width: calc(16.67% - 24.4px);
-    min-width: 118px;
-
-    &:hover ${CardHoverBg} {
-      z-index: 1;
-      display: inline-flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-`;
-
 const GameIcon = styled.div<{ $imageUrl: string }>`
   position: absolute;
   width: 100%;
@@ -92,6 +63,49 @@ const CardContent = styled.div`
   align-items: center;
 `;
 
+const HoverGameOrVenderName = styled(CardContent)`
+  color: ${(props) => props.theme.white};
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 16px;
+`;
+
+const PlayIcon = styled.img`
+  width: 65px;
+  height: 65px;
+`;
+
+const CardVendorBg = styled.div`
+  width: calc(33.33% - 10px);
+  background-image: url(${bg});
+  background-size: cover;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+
+    &::before {
+    content: '';
+    display: block;
+    padding-top: calc(158 / 118 * 100%);
+    width: 100%;
+  }
+
+  ${media.sm} {
+    width: calc(16.67% - 24.4px);
+    min-width: 118px;
+
+    &:hover {
+      ${CardHoverBg} {
+        z-index: 1;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+`;
+
 const GameName = styled(CardContent)`
   color: ${(props) => props.theme.white};
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -117,18 +131,6 @@ const VenderLogo = styled.div<{ $venderLogoUrl: string }>`
   background-image: url(${({ $venderLogoUrl }) => $venderLogoUrl});
   background-size: contain;
   background-repeat: no-repeat;
-`;
-
-const HoverGameOrVenderName = styled(CardContent)`
-  color: ${(props) => props.theme.white};
-  font-size: 1rem;
-  text-align: center;
-  margin-bottom: 16px;
-`;
-
-const PlayIcon = styled.img`
-  width: 65px;
-  height: 65px;
 `;
 
 const MaintenanceBg = styled.div`
@@ -170,16 +172,22 @@ const CardVendor = ({
   lobbyVenderName,
 }: Props) => {
   const { isDesktopSize, isMobileSize } = useRwd();
-  const contentRef = useRef<HTMLDivElement | null>(null);
+  const gameNameRef = useRef<HTMLDivElement | null>(null);
+  const venderNameRef = useRef<HTMLDivElement | null>(null);
+  const lobbyVenderNameRef = useRef<HTMLDivElement | null>(null);
   const { resizeText } = useDynamicFontSize();
 
   useEffect(() => {
-    if (contentRef.current) {
-      resizeText(contentRef.current, contentRef.current);
+    if (gameNameRef.current) {
+      resizeText({ container: gameNameRef.current, text: gameNameRef.current });
     }
-  }, [resizeText, contentRef]);
-
-  console.log(gameName, venderName, lobbyVenderName)
+    if (venderNameRef.current) {
+      resizeText({ container: venderNameRef.current, text: venderNameRef.current });
+    }
+    if (lobbyVenderNameRef.current) {
+      resizeText({ container: lobbyVenderNameRef.current, text: lobbyVenderNameRef.current });
+    }
+  }, [resizeText, gameNameRef.current, venderNameRef.current, lobbyVenderNameRef.current]);
 
   return (
     <CardVendorBg onClick={launchGame}>
@@ -187,8 +195,8 @@ const CardVendor = ({
         <GameIcon $imageUrl={imageUrl}></GameIcon>
         <GradientBg>
           <CardContent>
-            {gameName && <GameName ref={contentRef}>{gameName}</GameName>}
-            {venderName && <VenderName ref={contentRef}>{venderName}</VenderName>}
+            {gameName && <GameName ref={gameNameRef}>{gameName}</GameName>}
+            {venderName && <VenderName ref={venderNameRef}>{venderName}</VenderName>}
             {venderLogoUrl && (
               <VenderLogo $venderLogoUrl={venderLogoUrl}></VenderLogo>
             )}
@@ -204,9 +212,9 @@ const CardVendor = ({
       )}
 
       {isDesktopSize && <CardHoverBg>
-        {gameName && <HoverGameOrVenderName ref={contentRef}>{gameName}</HoverGameOrVenderName>}
+        {gameName && <HoverGameOrVenderName ref={lobbyVenderNameRef}>{gameName}</HoverGameOrVenderName>}
         {lobbyVenderName && (
-          <HoverGameOrVenderName ref={contentRef}>{lobbyVenderName}</HoverGameOrVenderName>
+          <HoverGameOrVenderName ref={lobbyVenderNameRef}>{lobbyVenderName}</HoverGameOrVenderName>
         )}
         <PlayIcon src={playIcon} alt={"play"} />
       </CardHoverBg>}
