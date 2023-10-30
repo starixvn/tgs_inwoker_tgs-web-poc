@@ -12,8 +12,6 @@ const VipScrollableContainer = styled.div`
   display: flex;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
-  padding: 20px;
-  margin: 0 20px;
   background-color: ${(props) => props.theme.primaryDark};
   color: ${(props) => props.theme.white};
   box-sizing: border-box;
