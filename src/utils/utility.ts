@@ -42,10 +42,16 @@ function removeSpace(str: string): string {
   return str && str.replace(/^\s+|\s+$/g, "");
 }
 
+function replaceUnderscoresWithSpace(str: string): string {
+  const resultString = str.replace(/_/g, ' ');
+  return resultString;
+}
+
 export const utility = {
   imagePathGenerator,
   copy,
   copyImage,
   downloadImage,
   removeSpace,
+  replaceUnderscoresWithSpace
 };

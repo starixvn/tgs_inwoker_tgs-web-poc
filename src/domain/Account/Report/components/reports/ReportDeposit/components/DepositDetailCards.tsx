@@ -62,9 +62,9 @@ const DepositDetailCards = ({ transferDetails }: Props) => {
                     </Button>
                   )}
                 </ReportCardCol>
-                <ReportCardRow>
-                  <ReportCardCol>{date}</ReportCardCol>
-                </ReportCardRow>
+              </ReportCardRow>
+              <ReportCardRow>
+                <ReportCardCol>{date}</ReportCardCol>
               </ReportCardRow>
             </ReportCard>
           );

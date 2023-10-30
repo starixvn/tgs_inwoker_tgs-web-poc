@@ -6,7 +6,7 @@ import Manual from "@/domain/Account/DepositPrev/Manual";
 import UserWalletInfo from "@/components/Account/UserWalletInfo";
 import TransferTabs from "@/domain/Account/DepositPrev/components/TransferTabs";
 import i18n from "@/utils/i18n";
-import iconDeposit from "@/assets/images/account/badge/icon-deposit.svg";
+import iconDeposit from "@/assets/t18/images/account/badge/icon-deposit.svg";
 import AccountPaper from "@/components/AccountPaper";
 import { useRwd } from "@/hooks/useRwd";
 

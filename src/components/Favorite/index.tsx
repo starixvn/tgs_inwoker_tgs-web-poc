@@ -1,5 +1,5 @@
-import dislikeIcon from "@/assets/images/home/mobile/dislike.png";
-import likeIcon from "@/assets/images/home/mobile/like.png";
+import dislikeIcon from "@/assets/t18/images/home/mobile/dislike.png";
+import likeIcon from "@/assets/t18/images/home/mobile/like.png";
 import styled from "styled-components";
 
 const LikeIcon = styled.div<{ $imageUrl: string }>`
@@ -17,11 +17,18 @@ const LikeIcon = styled.div<{ $imageUrl: string }>`
 
 type FavoriteProps = {
   isFavorite: boolean;
-  handleToggleFavorite: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, id: number) => void;
+  handleToggleFavorite: (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    id: number
+  ) => void;
   gameItemId: number;
-}
+};
 
-const Favorite = ({ isFavorite, handleToggleFavorite, gameItemId }: FavoriteProps) => {
+const Favorite = ({
+  isFavorite,
+  handleToggleFavorite,
+  gameItemId,
+}: FavoriteProps) => {
   return (
     <>
       {isFavorite ? (
@@ -37,6 +44,6 @@ const Favorite = ({ isFavorite, handleToggleFavorite, gameItemId }: FavoriteProp
       )}
     </>
   );
-}
+};
 
 export default Favorite;

@@ -12,42 +12,47 @@ type Props = {
 };
 
 const Wrapper = styled.div<{
-  $text: string;
   $isActive: boolean;
   $isShowIcon: boolean;
 }>`
+  vertical-align: middle;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  white-space: nowrap;
-  min-width: ${({ $isShowIcon }) => ($isShowIcon ? "40px" : "85px")};
-  padding: 4px 8px;
+  width: auto;
+  min-width: ${({ $isShowIcon }) =>
+    $isShowIcon ? "40px" : "60px"};
+  max-width: none;
+  height: 40px;
   border-radius: 50px;
-  background-color: ${({ $isActive, theme }) =>
-    $isActive ? theme.primary : theme.tertiaryDark};
+  padding: 4px 8px;
   margin-right: 6px;
+  box-sizing: border-box;
   user-select: none;
-  
-  & > img {
-    width: 24px;
-    height: 24px;
-  }
+  background-color: ${({ theme, $isActive }) =>
+    $isActive ? theme.primary : theme.primaryLight};
 
   ${media.sm} {
     cursor: pointer;
     & :hover {
     color: ${({ theme }) => theme.white};
    }
-    width: auto;
-    min-width: ${({ $isShowIcon }) => ($isShowIcon ? "90px" : "60px")};
-    padding: 4px;
-    gap: ${({ $isShowIcon }) => ($isShowIcon ? "4px" : "10px")};
-    align-self: stretch;
   }
 `;
 
-const Text = styled.div<{ $isActive: boolean }>`
-  color: ${({ $isActive, theme }) =>
+const TagIcon = styled.img`
+  width: 24px;
+  height: 24px;
+
+  ${media.sm} {
+    margin-right: 5px;
+  }
+`;
+
+const Text = styled.div<{
+  $isActive: boolean;
+}>`
+ color: ${({ $isActive, theme }) =>
     $isActive ? theme.white : theme.tertiary};
   font-size: 0.875rem;
   font-weight: 700;
@@ -66,11 +71,10 @@ const Tag = ({ text, isActive, isShowIcon, onClick }: Props) => {
   return (
     <Wrapper
       $isActive={isActive}
-      $text={text}
       $isShowIcon={isShowIcon}
       onClick={onClick}
     >
-      {imageUrl && <img src={imageUrl} alt={text} />}
+      {imageUrl && <TagIcon src={imageUrl} alt={text} />}
       {isMobileSize ? (imageUrl ? null : <Text $isActive={isActive}>{text}</Text>) : <Text $isActive={isActive}>{text}</Text>}
     </Wrapper>
   );

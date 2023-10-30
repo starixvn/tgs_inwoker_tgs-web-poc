@@ -1,15 +1,15 @@
 import { GameTypeEnum } from "@/api-services/utils/Enum";
 import LobbyCategory from "@/components/LobbyCategory";
 import LobbyTagCategory from "@/components/LobbyTagCategory";
+import useGameTypeList from "@/hooks/home/useGameTypeList";
+import useLobbyCategoryList from "@/hooks/home/useLobbyCategoryList";
 import { useRwd } from "@/hooks/useRwd";
 import styled from "styled-components";
-import { gameTypeList, lobbyCategoryList } from "../../constants/tab";
 import { GroupByGameItem } from "../LobbyTagCategory";
 
 const LobbyContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
   width: 100%;
 `;
 
@@ -20,6 +20,8 @@ type Props = {
 
 const Lobby = ({ handleGameTypeClick, groupBy_gameType }: Props) => {
   const { isMobileSize, isDesktopSize } = useRwd();
+  const gameTypeList = useGameTypeList();
+  const lobbyCategoryList = useLobbyCategoryList();
 
   const showCategoryAmount = (tag: string, isLobbyType: boolean) => {
     if (isMobileSize) {
@@ -39,27 +41,29 @@ const Lobby = ({ handleGameTypeClick, groupBy_gameType }: Props) => {
   return (
     <LobbyContainer>
       {Object.values(lobbyCategoryList).map((category) => {
+        const { key, iconUrl, text, gameType } = category;
+
         if (
           [
             GameTypeEnum.SLOT,
             GameTypeEnum.FISH,
             GameTypeEnum.TABLEGAME,
-          ].includes(category.gameType)
+          ].includes(gameType)
         ) {
           //  slots, fishing, and egame (with games)
           return (
             <LobbyTagCategory
-              key={category.key}
-              iconUrl={category.iconUrl}
-              text={category.text}
-              gameType={category.gameType}
-              gameTag={category.text}
-              showDataLength={showCategoryAmount(category.text, false)!}
+              key={key}
+              iconUrl={iconUrl}
+              text={text}
+              gameType={gameType}
+              gameTag={text}
+              showDataLength={showCategoryAmount(text, false)!}
               handleViewAllClick={() => {
-                handleGameTypeClick(category.gameType);
+                handleGameTypeClick(gameType);
               }}
               gameTypeName={
-                gameTypeList.find((item) => item.gameType === category.gameType)
+                gameTypeList.find((gameTypeItem) => gameTypeItem.gameType === gameType)
                   ?.key || ""
               }
               groupBy_gameType={Object.values(groupBy_gameType)}
@@ -69,16 +73,16 @@ const Lobby = ({ handleGameTypeClick, groupBy_gameType }: Props) => {
           //  others
           return (
             <LobbyCategory
-              key={category.key}
-              iconUrl={category.iconUrl}
-              text={category.text}
-              gameType={category.gameType}
-              showDataLength={showCategoryAmount(category.text, true)!}
+              key={key}
+              iconUrl={iconUrl}
+              text={text}
+              gameType={gameType}
+              showDataLength={showCategoryAmount(text, true)!}
               handleViewAllClick={() => {
-                handleGameTypeClick(category.gameType);
+                handleGameTypeClick(gameType);
               }}
               gameTypeName={
-                gameTypeList.find((item) => item.gameType === category.gameType)
+                gameTypeList.find((gameTypeItem) => gameTypeItem.gameType === gameType)
                   ?.key || ""
               }
             />

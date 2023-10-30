@@ -5,9 +5,9 @@ import { useHistory } from "react-router-dom";
 import Avatar from "@/components/Avatar";
 import { useMemo } from "react";
 import i18n from "@/utils/i18n";
-import accountImg from "@/assets/images/header/contextMenu/icon_my_account.svg";
-import supportImg from "@/assets/images/header/contextMenu/icon_service_support.svg";
-import logoutImg from "@/assets/images/header/contextMenu/icon_logout.svg";
+import accountImg from "@/assets/t18/images/header/contextMenu/icon_my_account.svg";
+import supportImg from "@/assets/t18/images/header/contextMenu/icon_service_support.svg";
+import logoutImg from "@/assets/t18/images/header/contextMenu/icon_logout.svg";
 
 const ContextMenuContainer = styled.div`
   width: 272px;

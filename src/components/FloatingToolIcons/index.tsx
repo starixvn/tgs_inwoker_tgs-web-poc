@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
-import supportImg from "@/assets/images/floatingToolIcon/service.svg";
-import downloadImg from "@/assets/images/floatingToolIcon/download.svg";
+import supportImg from "@/assets/t18/images/floatingToolIcon/service.svg";
+import downloadImg from "@/assets/t18/images/floatingToolIcon/download.svg";
 import ToolIcon from "@/components/FloatingToolIcons/ToolIcon";
 import { media } from "@/theme/breakpoints";
 

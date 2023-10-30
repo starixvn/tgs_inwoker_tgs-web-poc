@@ -1,6 +1,6 @@
 import { GameService } from "@/api-services/services/GameService";
-import searchIcon from "@/assets/images/home/mobile/search.svg";
-import vendorsIcon from "@/assets/images/home/mobile/vendors.png";
+import searchIcon from "@/assets/t18/images/home/mobile/search.svg";
+import vendorsIcon from "@/assets/t18/images/home/mobile/vendors.png";
 import CardPrompt from "@/components/CardPrompt";
 import Category from "@/components/Category";
 import GameCard from "@/components/GameCard";
@@ -11,6 +11,7 @@ import Lobby from "@/components/Lobby";
 import Slider from "@/components/Slider";
 import SocialMedia from "@/components/SocialMedia";
 import TabPanel from "@/components/TabPanel";
+import { gameTypeList, isNotEnterLobby } from "@/constants/gameType";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
@@ -23,10 +24,9 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  useState
+  useState,
 } from "react";
 import styled from "styled-components";
-import { gameTypeList, isNotEnterLobby } from "../constants/tab";
 
 type Props = {
   imageUrl: string;
@@ -75,10 +75,12 @@ const MainWrapper = styled.div<{ theme: Theme }>`
   align-items: flex-start;
   background-color: ${({ theme }: { theme: Theme }) => theme.primaryDark};
   color: ${({ theme }: { theme: Theme }) => theme.white};
-
+  gap: 15px;
+  
   ${media.sm} {
     max-width: 870px;
     margin: 0 auto;
+    padding: 20px;
   }
 `;
 
@@ -130,11 +132,11 @@ const Main = (props: Props) => {
   const [isEnterLobby, setIsEnterLobby] = useState(false);
   const [selectedTag, setSelectedTag] = useState("All");
   const [filteredGameList, setFilteredGameList] = useState<any[]>([]);
-  const [groupByProvider, setGroupByProvider] = useState<any>({});
+  const [groupByGameProvider, setGroupByGameProvider] = useState<any>({});
   const [favoriteList, setFavoriteList] = useState<number[]>([]);
   const [filteredMatchGames, setFilteredMatchGames] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { isDesktopSize, isMobileSize } = useRwd();
+  const { isMobileSize } = useRwd();
 
   const handleGameTypeClick = (gameType: number) => {
     setActiveGameTypeTab(gameType);
@@ -177,10 +179,17 @@ const Main = (props: Props) => {
   }, [game.homePageGameList]);
 
   const tagList: (Tag | null)[] = useMemo(() => {
-    const tags = Object.keys(groupByProvider);
-    const filteredTags = tags
+
+    const gpCodeBy_gameProvider = Object.keys(groupByGameProvider);
+
+    const filteredTags = gpCodeBy_gameProvider
       .filter((key) => typeof key === "string")
-      .map((provider) => ({ name: provider }));
+      .map((provider) => {
+        const matchedProviderName = groupBy_gameType[activeGameTypeTab].find(targetGames => targetGames.gpcode === provider);
+        return matchedProviderName ? { name: matchedProviderName.name } : null;
+      });
+    // provider:為provider的gpcode，需找對應的provider name
+
     const additionalTags = [
       { name: "All" },
       account.token ? { name: "Favorite" } : null,
@@ -189,11 +198,11 @@ const Main = (props: Props) => {
       { name: "Recommend" },
       ...filteredTags,
     ];
-    return additionalTags.filter(tag => tag !== null);
-  }, [groupByProvider, account.token]);
+    return additionalTags.filter((tag) => tag !== null);
+  }, [groupByGameProvider, account.token]);
 
   const filterAndGroupGames = (gameList: any[]) => {
-    const groupByGpcode = gameList.reduce((accumulator, game) => {
+    const groupBy_gpCode = gameList?.reduce((accumulator, game) => {
       const { gpcode, ...rest } = game;
       if (!accumulator[gpcode]) {
         accumulator[gpcode] = [];
@@ -204,7 +213,7 @@ const Main = (props: Props) => {
       return accumulator;
     }, {});
 
-    return groupByGpcode;
+    return groupBy_gpCode;
   };
 
   const fetchFavoriteList = useCallback(async () => {
@@ -223,8 +232,9 @@ const Main = (props: Props) => {
       GameService.GetGameList("", activeGameTypeTab).then((res) => {
         setIsLoading(true);
         if (res && res.data) {
-          const groupByProvider = filterAndGroupGames(res.data);
-          setGroupByProvider(groupByProvider);
+          // groupBy_gameProvider: key為GPcode, value為該GPcode的遊戲
+          const groupBy_gameProvider = filterAndGroupGames(res.data);
+          setGroupByGameProvider(groupBy_gameProvider);
 
           const filteredGameListWithFavorites =
             favoriteList.length > 0
@@ -268,7 +278,7 @@ const Main = (props: Props) => {
               );
             case selectedTag:
               setIsLoading(false);
-              return setFilteredGameList(groupByProvider[selectedTag]);
+              return setFilteredGameList(groupBy_gameProvider[selectedTag]);
             default:
               setIsLoading(false);
               return setFilteredGameList(filteredGameListWithFavorites);
@@ -293,18 +303,17 @@ const Main = (props: Props) => {
     }
   }, [searchString, filteredGameList]);
 
+
   return (
     <MainWrapper>
       {!!general.banner.length && <Slider />}
 
       <CardPrompt />
 
-      <TabSearchContainer>
-        <GameTypeTab
-          activeGameTypeTab={activeGameTypeTab}
-          handleGameTypeClick={handleGameTypeClick}
-        />
-      </TabSearchContainer>
+      <GameTypeTab
+        activeGameTypeTab={activeGameTypeTab}
+        handleGameTypeClick={handleGameTypeClick}
+      />
 
       {!activeGameTypeTab && (
         <Lobby
@@ -328,19 +337,19 @@ const Main = (props: Props) => {
       {!isEnterLobby && !!activeGameTypeTab && !isLoading && (
         <>
           <GameFilterTag
-            tagList={tagList.filter(tag => tag !== null) || []}
+            tagList={tagList.filter((tag) => tag !== null) || []}
             selectedTag={selectedTag}
             setSelectedTag={setSelectedTag}
           />
 
-          {isMobileSize &&
+          {isMobileSize && (
             <Input
               placeholder={i18n.t("slot.search")}
               imageUrl={searchIcon}
               handleChange={handleSearch}
               value={searchString}
             />
-          }
+          )}
 
           <GameCardContainer>
             {filteredMatchGames &&
@@ -362,7 +371,11 @@ const Main = (props: Props) => {
       {isLoading && <div>Loading...</div>}
       <TabPanel />
       {isMobileSize && <SocialMedia />}
-      {isMobileSize && <VendorIconContainer><VendorIcon /></VendorIconContainer>}
+      {isMobileSize && (
+        <VendorIconContainer>
+          <VendorIcon />
+        </VendorIconContainer>
+      )}
     </MainWrapper>
   );
 };

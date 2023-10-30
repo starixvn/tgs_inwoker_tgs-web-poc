@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
-import iconAccount from "@/assets/images/account/badge/icon-account.svg";
+import iconAccount from "@/assets/t18/images/account/badge/icon-account.svg";
 import { media } from "@/theme/breakpoints";
 import { useProfileMenu } from "@/hooks/account/useProfileMenu";
 import ProfileRowInDesktop from "@/components/Account/Profile/ProfileMenu/components/ProfileRowInDesktop";
 import PageBadge from "@/components/PageBadge";
-import iconDeposit from "@/assets/images/account/badge/icon-deposit.svg";
+import iconDeposit from "@/assets/t18/images/account/badge/icon-deposit.svg";
 import AccountPaper from "@/components/AccountPaper";
 
 const ProfileMenuContainer = styled.div`

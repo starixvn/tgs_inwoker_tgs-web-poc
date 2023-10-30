@@ -1,9 +1,8 @@
-import React from "react";
-import styled from "styled-components";
 import SocialMedia from "@/components/SocialMedia";
 import config from "@/config/config";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { media } from "@/theme/breakpoints";
+import styled from "styled-components";
 
 const FooterContainer = styled.div`
   display: none;
@@ -110,7 +109,7 @@ const Footer = (props: Props) => {
         </FooterGroup>
 
         <FooterGroup>
-          <GroupTitle>Parners</GroupTitle>
+          <GroupTitle>Partners</GroupTitle>
           <PartnersContainer>
             {PartnerList.map((partner) => {
               return <ParnterBadge key={partner}>{partner}</ParnterBadge>;

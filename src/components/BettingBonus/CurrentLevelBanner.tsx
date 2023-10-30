@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Arrow from "@/assets/images/bettingBonus/icon_arrow.svg";
+import Arrow from "@/assets/t18/images/bettingBonus/icon_arrow.svg";
 import LevelIcon from "@/components/UI/LevelIcon";
 import { TypeProductRebateByLevel } from "@/pages/BettingBonus";
 import { media } from "@/theme/breakpoints";

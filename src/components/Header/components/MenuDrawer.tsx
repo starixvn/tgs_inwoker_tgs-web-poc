@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import cardBonus from "@/assets/images/header/card_bonus.png";
-import cardVip from "@/assets/images/header/card_vip.png";
-import cardPromotions from "@/assets/images/header/card_promotions.png";
-import cardHome from "@/assets/images/header/card_home.png";
+import cardBonus from "@/assets/t18/images/header/card_bonus.png";
+import cardVip from "@/assets/t18/images/header/card_vip.png";
+import cardPromotions from "@/assets/t18/images/header/card_promotions.png";
+import cardHome from "@/assets/t18/images/header/card_home.png";
 import { AppHistory } from "@/history/History";
 import LanguageSwitch from "@/components/LanguageSwitch";
 import { Drawer } from "@mui/material";
@@ -11,9 +11,9 @@ import { DRAWER_WIDTH } from "@/contexts/headerContext";
 import { media } from "@/theme/breakpoints";
 import { useRwd } from "@/hooks/useRwd";
 
-import iconHome from "@/assets/images/header/home.svg";
-import iconPromotion from "@/assets/images/header/promotion.svg";
-import iconDownload from "@/assets/images/header/app_download.svg";
+import iconHome from "@/assets/t18/images/header/home.svg";
+import iconPromotion from "@/assets/t18/images/header/promotion.svg";
+import iconDownload from "@/assets/t18/images/header/app_download.svg";
 import Icon from "@/components/Icon";
 import i18n from "@/utils/i18n";
 import { useHeader } from "@/hooks/useHeader";

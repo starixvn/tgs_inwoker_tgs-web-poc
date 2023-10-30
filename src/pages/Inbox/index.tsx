@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
-import { usePageName } from "@/hooks/usePageName";
+import { usePageName } from "@/hooks/usePageName/usePageName";
 import i18n from "@/utils/i18n";
 import Inbox from "@/domain/Account/Inbox";
 import styled from "styled-components";
 import UserWalletInfo from "@/components/Account/UserWalletInfo";
-import iconInbox from "@/assets/images/account/badge/icon-inbox.svg";
+import iconInbox from "@/assets/t18/images/account/badge/icon-inbox.svg";
 import AccountPaper from "@/components/AccountPaper";
 import { useRwd } from "@/hooks/useRwd";
 

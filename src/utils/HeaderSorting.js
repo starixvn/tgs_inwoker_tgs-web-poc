@@ -1,35 +1,35 @@
 import { GameTypeEnum } from "../api-services/utils/Enum";
 import config from "../config/config";
 
-import TopMenuLivePNG_PB from "../assets/images/top-menu-live-pb.png";
-import TopMenuQipaiPNG_PB from "../assets/images/top-menu-qipai-pb.png";
-import TopMenuSportsPNG_PB from "../assets/images/top-menu-sports-pb.png";
-import TopMenuLotteryPNG_PB from "../assets/images/top-menu-lottery-pb.png";
-import TopMenueSportsPNG_PB from "../assets/images/top-menu-gun-pb.png";
-import TopMenuTigerPNG_PB from "../assets/images/top-menu-tiger-pb.png";
-import TopMenuFishPNG_PB from "../assets/images/top-menu-fish-pb.png";
-import TopMenuSlotPNG_PB from "../assets/images/top-menu-slot-pb.png";
-import TopMenuCockfightPNG_PB from "../assets/images/top-menu-cockfight-pb.png";
+import TopMenuLivePNG_PB from "../assets/t18/images/top-menu-live-pb.png";
+import TopMenuQipaiPNG_PB from "../assets/t18/images/top-menu-qipai-pb.png";
+import TopMenuSportsPNG_PB from "../assets/t18/images/top-menu-sports-pb.png";
+import TopMenuLotteryPNG_PB from "../assets/t18/images/top-menu-lottery-pb.png";
+import TopMenueSportsPNG_PB from "../assets/t18/images/top-menu-gun-pb.png";
+import TopMenuTigerPNG_PB from "../assets/t18/images/top-menu-tiger-pb.png";
+import TopMenuFishPNG_PB from "../assets/t18/images/top-menu-fish-pb.png";
+import TopMenuSlotPNG_PB from "../assets/t18/images/top-menu-slot-pb.png";
+import TopMenuCockfightPNG_PB from "../assets/t18/images/top-menu-cockfight-pb.png";
 
-import TopMenuLivePNG from "../assets/images/top-menu-live.png";
-import TopMenuQipaiPNG from "../assets/images/top-menu-qipai.png";
-import TopMenuSportsPNG from "../assets/images/top-menu-sports.png";
-import TopMenuLotteryPNG from "../assets/images/top-menu-lottery.png";
-import TopMenueSportsPNG from "../assets/images/top-menu-gun.png";
-import TopMenuTigerPNG from "../assets/images/top-menu-tiger.png";
-import TopMenuFishPNG from "../assets/images/top-menu-fish.png";
-import TopMenuSlotPNG from "../assets/images/top-menu-slot.png";
-import TopMenuCockfightPNG from "../assets/images/top-menu-cockfight.png";
+import TopMenuLivePNG from "../assets/t18/images/top-menu-live.png";
+import TopMenuQipaiPNG from "../assets/t18/images/top-menu-qipai.png";
+import TopMenuSportsPNG from "../assets/t18/images/top-menu-sports.png";
+import TopMenuLotteryPNG from "../assets/t18/images/top-menu-lottery.png";
+import TopMenueSportsPNG from "../assets/t18/images/top-menu-gun.png";
+import TopMenuTigerPNG from "../assets/t18/images/top-menu-tiger.png";
+import TopMenuFishPNG from "../assets/t18/images/top-menu-fish.png";
+import TopMenuSlotPNG from "../assets/t18/images/top-menu-slot.png";
+import TopMenuCockfightPNG from "../assets/t18/images/top-menu-cockfight.png";
 
-import TopMenuLiveHoverPNG from "../assets/images/top-menu-live-hover.png";
-import TopMenuQipaiHoverPNG from "../assets/images/top-menu-qipai-hover.png";
-import TopMenuSportsHoverPNG from "../assets/images/top-menu-sports-hover.png";
-import TopMenuLotteryHoverPNG from "../assets/images/top-menu-lottery-hover.png";
-import TopMenueSportsHoverPNG from "../assets/images/top-menu-gun-hover.png";
-import TopMenuTigerHoverPNG from "../assets/images/top-menu-tiger-hover.png";
-import TopMenuFishHoverPNG from "../assets/images/top-menu-fish-hover.png";
-import TopMenuSlotHoverPNG from "../assets/images/top-menu-slot-hover.png";
-import TopMenuCockfightHoverPNG from "../assets/images/top-menu-cockfight-hover.png";
+import TopMenuLiveHoverPNG from "../assets/t18/images/top-menu-live-hover.png";
+import TopMenuQipaiHoverPNG from "../assets/t18/images/top-menu-qipai-hover.png";
+import TopMenuSportsHoverPNG from "../assets/t18/images/top-menu-sports-hover.png";
+import TopMenuLotteryHoverPNG from "../assets/t18/images/top-menu-lottery-hover.png";
+import TopMenueSportsHoverPNG from "../assets/t18/images/top-menu-gun-hover.png";
+import TopMenuTigerHoverPNG from "../assets/t18/images/top-menu-tiger-hover.png";
+import TopMenuFishHoverPNG from "../assets/t18/images/top-menu-fish-hover.png";
+import TopMenuSlotHoverPNG from "../assets/t18/images/top-menu-slot-hover.png";
+import TopMenuCockfightHoverPNG from "../assets/t18/images/top-menu-cockfight-hover.png";
 
 const MenuItemList = [
   {

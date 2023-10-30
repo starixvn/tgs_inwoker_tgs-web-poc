@@ -21,7 +21,9 @@ const Wrapper = styled.div<{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 64px;
+  width: auto;
+  min-width: 64px;
+  max-width: none;
   height: 77px;
   border-radius: 12px;
   background-color: ${({ theme, $isActive }) =>

@@ -1,6 +1,6 @@
 import { useUiStore } from "@/hooks/stores/useUiStore";
 import styled from "styled-components";
-import notification from "@/assets/images/home/mobile/notifications.svg";
+import notification from "@/assets/t18/images/home/mobile/notifications.svg";
 
 const Container = styled.div`
   display: flex;

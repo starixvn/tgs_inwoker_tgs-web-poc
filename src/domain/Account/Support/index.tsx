@@ -4,7 +4,7 @@ import { BrandsSupport } from "@/types/stores/general";
 import styled from "styled-components";
 import SupportCard from "@/domain/Account/Support/SupportCard";
 import QrCodeDialog from "@/domain/Account/Support/QRCodeHolder";
-import contactGirlImg from "@/assets/images/account/girl/contact.png";
+import contactGirlImg from "@/assets/t18/images/account/girl/contact.png";
 import IMHandler from "@/domain/Account/Support/IMHandler";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { useContactCS } from "@/hooks/useContactCS";

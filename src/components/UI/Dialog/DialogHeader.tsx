@@ -1,4 +1,4 @@
-import backIcon from "@/assets/images/promotion/back.png";
+import backIcon from "@/assets/t18/images/promotion/back.png";
 import { Close as CloseIcon } from "@mui/icons-material";
 import styled from "styled-components";
 
@@ -47,11 +47,12 @@ type Props = {
 const DialogHeader = ({ dialogHeaderTitle, handleClose }: Props) => {
   return (
     <DialogHeaderContainer>
-      {dialogHeaderTitle === "Promotion" ?
+      {dialogHeaderTitle === "Promotion" ? (
         <BackIconContainer onClick={handleClose}>
           <img src={backIcon} alt="back" />
         </BackIconContainer>
-        : <CloseIconContainer onClick={handleClose}>
+      ) : (
+        <CloseIconContainer onClick={handleClose}>
           <CloseIcon
             style={{
               color: "white",
@@ -59,7 +60,7 @@ const DialogHeader = ({ dialogHeaderTitle, handleClose }: Props) => {
             }}
           />
         </CloseIconContainer>
-      }
+      )}
 
       {dialogHeaderTitle}
     </DialogHeaderContainer>

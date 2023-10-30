@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import i18n from "@/utils/i18n";
-import AddCardIcon from "@/assets/images/card/add-card.svg";
+import AddCardIcon from "@/assets/t18/images/card/add-card.svg";
 
 const InputContainer = styled.div`
   padding: 13px 20px;

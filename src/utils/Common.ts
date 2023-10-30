@@ -1,36 +1,36 @@
 import { GameTypeEnum, SlotGameParentId } from "@/api-services/utils/Enum";
-import PromoImage1 from "@/assets/images/promotion/promo-1.jpg";
-import PromoImage2 from "@/assets/images/promotion/promo-2.jpg";
-import PromoImage3 from "@/assets/images/promotion/promo-3.jpg";
-import Provider1PNG from "@/assets/images/provider1.png";
-import Provider10PNG from "@/assets/images/provider10.png";
-import Provider2PNG from "@/assets/images/provider2.png";
-import Provider3PNG from "@/assets/images/provider3.png";
-import Provider4PNG from "@/assets/images/provider4.png";
-import Provider5PNG from "@/assets/images/provider5.png";
-import Provider6PNG from "@/assets/images/provider6.png";
-import Provider7PNG from "@/assets/images/provider7.png";
-import Provider8PNG from "@/assets/images/provider8.png";
-import Provider9PNG from "@/assets/images/provider9.png";
-import ABCPNG from "@/assets/images/wap/bank/abc.png";
-import BCMPNG from "@/assets/images/wap/bank/bcm.png";
-import BOBPNG from "@/assets/images/wap/bank/bob.png";
-import BOCPNG from "@/assets/images/wap/bank/boc.png";
-import BOSPNG from "@/assets/images/wap/bank/bos.png";
-import CCBPNG from "@/assets/images/wap/bank/ccb.png";
-import CEBPNG from "@/assets/images/wap/bank/ceb.png";
-import CGDPNG from "@/assets/images/wap/bank/cgd.png";
-import CIBPNG from "@/assets/images/wap/bank/cib.png";
-import CMBPNG from "@/assets/images/wap/bank/cmb.png";
-import CMBCPNG from "@/assets/images/wap/bank/cmbc.png";
-import DefaultPNG from "@/assets/images/wap/bank/default.png";
-import ECITICPNG from "@/assets/images/wap/bank/ecitic.png";
-import GFPNG from "@/assets/images/wap/bank/gf.png";
-import HXBPNG from "@/assets/images/wap/bank/hxb.png";
-import ICBCPNG from "@/assets/images/wap/bank/icbc.png";
-import PABPNG from "@/assets/images/wap/bank/pab.png";
-import PSBCPNG from "@/assets/images/wap/bank/psbc.png";
-import SPDBPNG from "@/assets/images/wap/bank/spdb.png";
+import PromoImage1 from "@/assets/t18/images/promotion/promo-1.jpg";
+import PromoImage2 from "@/assets/t18/images/promotion/promo-2.jpg";
+import PromoImage3 from "@/assets/t18/images/promotion/promo-3.jpg";
+import Provider1PNG from "@/assets/t18/images/provider1.png";
+import Provider10PNG from "@/assets/t18/images/provider10.png";
+import Provider2PNG from "@/assets/t18/images/provider2.png";
+import Provider3PNG from "@/assets/t18/images/provider3.png";
+import Provider4PNG from "@/assets/t18/images/provider4.png";
+import Provider5PNG from "@/assets/t18/images/provider5.png";
+import Provider6PNG from "@/assets/t18/images/provider6.png";
+import Provider7PNG from "@/assets/t18/images/provider7.png";
+import Provider8PNG from "@/assets/t18/images/provider8.png";
+import Provider9PNG from "@/assets/t18/images/provider9.png";
+import ABCPNG from "@/assets/t18/images/wap/bank/abc.png";
+import BCMPNG from "@/assets/t18/images/wap/bank/bcm.png";
+import BOBPNG from "@/assets/t18/images/wap/bank/bob.png";
+import BOCPNG from "@/assets/t18/images/wap/bank/boc.png";
+import BOSPNG from "@/assets/t18/images/wap/bank/bos.png";
+import CCBPNG from "@/assets/t18/images/wap/bank/ccb.png";
+import CEBPNG from "@/assets/t18/images/wap/bank/ceb.png";
+import CGDPNG from "@/assets/t18/images/wap/bank/cgd.png";
+import CIBPNG from "@/assets/t18/images/wap/bank/cib.png";
+import CMBPNG from "@/assets/t18/images/wap/bank/cmb.png";
+import CMBCPNG from "@/assets/t18/images/wap/bank/cmbc.png";
+import DefaultPNG from "@/assets/t18/images/wap/bank/default.png";
+import ECITICPNG from "@/assets/t18/images/wap/bank/ecitic.png";
+import GFPNG from "@/assets/t18/images/wap/bank/gf.png";
+import HXBPNG from "@/assets/t18/images/wap/bank/hxb.png";
+import ICBCPNG from "@/assets/t18/images/wap/bank/icbc.png";
+import PABPNG from "@/assets/t18/images/wap/bank/pab.png";
+import PSBCPNG from "@/assets/t18/images/wap/bank/psbc.png";
+import SPDBPNG from "@/assets/t18/images/wap/bank/spdb.png";
 import i18n from "@/utils/i18n";
 
 let newWindow: Window | undefined;
@@ -109,25 +109,6 @@ function GetBankImageByTitle(title: string): string {
     return bank.image;
   } else {
     return DefaultPNG;
-  }
-}
-
-function ConvertGameTypeToText(gameType: GameTypeEnum): string {
-  switch (gameType) {
-    case GameTypeEnum.LIVE:
-      return "真人";
-    case GameTypeEnum.QIPAI:
-      return "棋牌";
-    case GameTypeEnum.SPORTS:
-      return "体育";
-    case GameTypeEnum.LOTTERY:
-      return "彩票";
-    case GameTypeEnum.SLOT:
-      return "电子";
-    case GameTypeEnum.FISH:
-      return "捕鱼";
-    default:
-      return "老虎";
   }
 }
 
@@ -325,13 +306,13 @@ function PopupCenter(
   const width = window.innerWidth
     ? window.innerWidth
     : document.documentElement.clientWidth
-    ? document.documentElement.clientWidth
-    : window.screen.width;
+      ? document.documentElement.clientWidth
+      : window.screen.width;
   const height = window.innerHeight
     ? window.innerHeight
     : document.documentElement.clientHeight
-    ? document.documentElement.clientHeight
-    : window.screen.height;
+      ? document.documentElement.clientHeight
+      : window.screen.height;
 
   const systemZoom = 1;
   let left = (width - w) / 2 / systemZoom + dualScreenLeft;
@@ -343,13 +324,13 @@ function PopupCenter(
     url,
     "gamewindow",
     "scrollbars=yes, width=" +
-      w / systemZoom +
-      ", height=" +
-      h / systemZoom +
-      ", top=" +
-      top +
-      ", left=" +
-      left
+    w / systemZoom +
+    ", height=" +
+    h / systemZoom +
+    ", top=" +
+    top +
+    ", left=" +
+    left
   );
 
   if (
@@ -459,7 +440,6 @@ const Common = {
   bankImageMapping,
   GetBankImageByTitle,
   GetBankImageByCode,
-  ConvertGameTypeToText,
   readFileDataAsBinary,
   GetDisplayGameType,
   gameImageMapping,

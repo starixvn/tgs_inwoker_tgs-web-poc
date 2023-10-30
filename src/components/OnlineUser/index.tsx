@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import member from "@/assets/images/home/mobile/member.svg";
+import member from "@/assets/t18/images/home/mobile/member.svg";
 import useOnlineUser from "@/hooks/useOnlineUser";
 
 const Wrapper = styled.div`

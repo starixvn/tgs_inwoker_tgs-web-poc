@@ -4,6 +4,7 @@ import ButtonText from "@/components/ButtonText";
 import CategoryLabel from "@/components/CategoryLabel";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
+import { media } from "@/theme/breakpoints";
 import Common from "@/utils/Common";
 import getDisplayGameType from "@/utils/getDisplayGameType";
 import { useMemo } from "react";
@@ -28,9 +29,15 @@ const CategoryContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  gap: 15px;
   width: 100%;
   margin-bottom: 30px;
+  row-gap: 18px;
+  column-gap: 15px;
+  align-self: stretch;
+
+  ${media.sm} {
+    column-gap: 24.4px;
+  }
 `;
 
 type Props = {
@@ -146,7 +153,7 @@ const LobbyCategory = ({
                 venderLogoUrl={`${process.env.PUBLIC_URL}/assets/images/home/provider_logo/${gameTypeName}/${game?.gpcode}.png`}
                 launchGame={() => launchLobbyGame(game?.gpcode)}
                 status={game?.status}
-                hoverVenderName={game?.name}
+                lobbyVenderName={game?.name}
               />
             );
           })}
