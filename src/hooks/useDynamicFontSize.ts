@@ -1,9 +1,20 @@
-import { useEffect, useRef } from 'react';
+import { utility } from "@/utils/utility";
+import { useEffect, useRef } from "react";
 
 const adjustFontSize = (container: HTMLElement, text: HTMLElement) => {
   if (container && text) {
+    // 替換下底線為空格
+    if (text.textContent) {
+      text.textContent = utility.replaceUnderscoresWithSpace(text.textContent);
+    }
+
     const containerWidth = container.clientWidth;
     const textWidth = text.scrollWidth;
+
+    // 先轉成大寫再計算字體大小
+    const originalText = text.textContent || '';
+    const upperCaseText = originalText.toUpperCase();
+    text.textContent = upperCaseText;
 
     const computedStyles = window.getComputedStyle(text);
     const fontSize = parseInt(computedStyles.fontSize);

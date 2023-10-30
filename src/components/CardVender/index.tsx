@@ -26,6 +26,7 @@ const CardHoverBg = styled.div`
   top: 0;
   background: rgb(0 0 0 / 80%);
   border-radius: 10px;
+  padding: 0 5px;
   display: none;
 `;
 
@@ -50,7 +51,7 @@ const CardVendorBg = styled.div`
 
     &:hover ${CardHoverBg} {
       z-index: 1;
-      display: flex;
+      display: inline-flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -85,8 +86,7 @@ const GradientBg = styled.div`
 
 const CardContent = styled.div`
   width: 100%;
-  height: 100%;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -95,7 +95,7 @@ const CardContent = styled.div`
 const GameName = styled(CardContent)`
   color: ${(props) => props.theme.white};
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-size: min(max(1.5vw, 1.2rem), 1.5rem);
+  font-size: 1rem;
   font-weight: 900;
   margin-bottom: 4px;
   text-align: center;
@@ -104,7 +104,7 @@ const GameName = styled(CardContent)`
 const VenderName = styled(CardContent)`
   color: ${(props) => props.theme.white};
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-size: min(max(1vw, 0.625rem), 0.75rem);
+  font-size: 0.625rem;
   font-weight: 400;
   text-align: center;
 `;
@@ -119,23 +119,11 @@ const VenderLogo = styled.div<{ $venderLogoUrl: string }>`
   background-repeat: no-repeat;
 `;
 
-const HoverGameName = styled.div`
-  color: ${(props) => props.theme.white};
-  text-align: center;
-  font-size: 1rem;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-`;
-
-const HoverVenderName = styled(CardContent)`
+const HoverGameOrVenderName = styled(CardContent)`
   color: ${(props) => props.theme.white};
   font-size: 1rem;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   text-align: center;
+  margin-bottom: 16px;
 `;
 
 const PlayIcon = styled.img`
@@ -181,15 +169,18 @@ const CardVendor = ({
   status,
   lobbyVenderName,
 }: Props) => {
-  const { isDesktopSize } = useRwd();
+  const { isDesktopSize, isMobileSize } = useRwd();
   const contentRef = useRef<HTMLDivElement | null>(null);
   const { resizeText } = useDynamicFontSize();
 
   useEffect(() => {
     if (contentRef.current) {
-      resizeText(contentRef.current, contentRef.current?.firstChild as HTMLElement);
+      resizeText(contentRef.current, contentRef.current);
     }
   }, [resizeText, contentRef]);
+
+  console.log(gameName, venderName, lobbyVenderName)
+
   return (
     <CardVendorBg onClick={launchGame}>
       <>
@@ -213,9 +204,9 @@ const CardVendor = ({
       )}
 
       {isDesktopSize && <CardHoverBg>
-        {gameName && <HoverGameName>{gameName}</HoverGameName>}
+        {gameName && <HoverGameOrVenderName ref={contentRef}>{gameName}</HoverGameOrVenderName>}
         {lobbyVenderName && (
-          <HoverVenderName ref={contentRef}>{lobbyVenderName}</HoverVenderName>
+          <HoverGameOrVenderName ref={contentRef}>{lobbyVenderName}</HoverGameOrVenderName>
         )}
         <PlayIcon src={playIcon} alt={"play"} />
       </CardHoverBg>}
