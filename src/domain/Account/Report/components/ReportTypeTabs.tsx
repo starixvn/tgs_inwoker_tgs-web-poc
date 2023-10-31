@@ -15,6 +15,9 @@ type TabButtonProps = {
 };
 
 const TabButton = styled.button<TabButtonProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   white-space: nowrap;
   cursor: pointer;
   background: ${({ $isSelected }: TabButtonProps) => {
@@ -25,17 +28,18 @@ const TabButton = styled.button<TabButtonProps>`
   color: ${({ $isSelected }: TabButtonProps) => {
     return $isSelected ? theme.white : theme.tertiaryLight;
   }};
-  padding: 13px 23px;
   border: ${({ $isSelected, theme }: TabButtonProps) => {
     return $isSelected ? "none" : `1px solid ${theme.tertiaryLight}`;
   }};
   border-radius: 5px;
   font-size: 0.937rem;
   width: calc((100% - 2 * 9px) / 3);
-  min-width: 125px;
+  min-width: 100px;
+  height: 45px;
 
   ${media.sm} {
     width: calc((100% - 5 * 9px) / 6);
+    min-width: 125px;
   }
 `;
 

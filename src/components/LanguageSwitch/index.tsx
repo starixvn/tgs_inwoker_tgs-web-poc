@@ -10,12 +10,17 @@ import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { BrandLanguage } from "@/types/stores/general";
 
 const imageMap = {
-  "zh-CN": process.env.PUBLIC_URL + `/assets/images/language/zh-CN.png`,
-  "zh-TW": process.env.PUBLIC_URL + `/assets/images/language/zh-TW.png`,
   "en-US": process.env.PUBLIC_URL + `/assets/images/language/en-US.png`,
+  "hi-IN": process.env.PUBLIC_URL + `/assets/images/language/hi-IN.png`,
+  "id-ID": process.env.PUBLIC_URL + `/assets/images/language/id-ID.png`,
+  "ja-JP": process.env.PUBLIC_URL + `/assets/images/language/ja-JP.png`,
+  "ko-KR": process.env.PUBLIC_URL + `/assets/images/language/ko-KR.png`,
+  "ta-IN": process.env.PUBLIC_URL + `/assets/images/language/ta-IN.png`,
+  "tgl-PH": process.env.PUBLIC_URL + `/assets/images/language/tgl-PH.png`,
   "th-TH": process.env.PUBLIC_URL + `/assets/images/language/th-TH.png`,
   "vi-VN": process.env.PUBLIC_URL + `/assets/images/language/vi-VN.png`,
-  "id-ID": process.env.PUBLIC_URL + `/assets/images/language/id-ID.png`,
+  "zh-CN": process.env.PUBLIC_URL + `/assets/images/language/zh-CN.png`,
+  "zh-TW": process.env.PUBLIC_URL + `/assets/images/language/zh-TW.png`,
 };
 
 const StyledFormControl = styled(MuiFormControl)`
