@@ -303,6 +303,13 @@ const Main = (props: Props) => {
     }
   }, [searchString, filteredGameList]);
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant',
+    });
+  }, [activeGameTypeTab]);
 
   return (
     <MainWrapper>
@@ -352,7 +359,7 @@ const Main = (props: Props) => {
           )}
 
           <GameCardContainer>
-            {filteredMatchGames &&
+            {filteredMatchGames.length &&
               filteredMatchGames.map((item: GameItem) => (
                 <GameCard
                   key={item.id}
