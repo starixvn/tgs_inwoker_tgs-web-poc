@@ -1,5 +1,9 @@
 import FloatingToolIcons from "@/components/FloatingToolIcons";
+import ForcedVerification from "@/components/ForcedVerification";
 import PopupAlertModal from "@/components/Popup/PopupAlertDialog";
+import PopupAnnouncement from "@/components/Popup/PopupAnnouncement";
+import PopupPromotion from "@/components/Popup/PopupPromotion";
+import LiveChat from "@/components/Share/LiveChat";
 import Loading from "@/components/UI/Loading";
 import config from "@/config/config";
 import { AuthContextProvider } from "@/contexts/authContext";
@@ -25,8 +29,6 @@ import { routes } from "@/router";
 import ScrollToTop from "@/utils/ScrollToTop";
 import React, { Suspense } from "react";
 import { Redirect, Route, Router, Switch } from "react-router";
-import ForcedVerification from "./components/ForcedVerification";
-import LiveChat from "./components/Share/LiveChat";
 
 const App: React.FC = () => {
   const { general } = useGeneralStore();
@@ -114,7 +116,7 @@ const App: React.FC = () => {
                     <ForcedVerification forceVerify={true} />
                   )}
 
-                {/* {needToShowPopupAnnouncement && (
+                {needToShowPopupAnnouncement && (
                   <PopupAnnouncement
                     open={isOpenAnnouncement}
                     onClose={handleCloseAnnouncement}
@@ -125,7 +127,7 @@ const App: React.FC = () => {
                     open={isShowPromotion}
                     onClose={handleClosePromotion}
                   />
-                )} */}
+                )}
 
                 <PopupAlertModal />
                 <FloatingToolIcons />
