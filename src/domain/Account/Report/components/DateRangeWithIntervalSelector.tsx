@@ -14,6 +14,9 @@ type DateRangSelectionTypes = {
   $isSelected: boolean;
 };
 const DateRangSelection = styled.div<DateRangSelectionTypes>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   cursor: pointer;
   width: 83px;
@@ -25,7 +28,6 @@ const DateRangSelection = styled.div<DateRangSelectionTypes>`
   color: ${({ $isSelected, theme }: DateRangSelectionTypes) => {
     return $isSelected ? theme.white : theme.tertiaryLight;
   }};
-  padding: 13px 23px;
   border: ${({ $isSelected, theme }: DateRangSelectionTypes) => {
     return $isSelected ? "none" : `1px solid ${theme.tertiaryLight}`;
   }};
