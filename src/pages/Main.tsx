@@ -359,7 +359,7 @@ const Main = (props: Props) => {
           )}
 
           <GameCardContainer>
-            {filteredMatchGames &&
+            {filteredMatchGames.length &&
               filteredMatchGames.map((item: GameItem) => (
                 <GameCard
                   key={item.id}
