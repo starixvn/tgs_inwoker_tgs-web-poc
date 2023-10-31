@@ -19,7 +19,6 @@ const DialogContainer = styled(MuiDialog)`
 const ChildContainer = styled.div`
   width: 50%;
   //max-height: 80vh;
-  overflow: scroll;
 
   //& * {
   //  font-size: 0.937rem !important;

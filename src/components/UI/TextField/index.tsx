@@ -12,10 +12,12 @@ const StyledTextField = muiStyled(MuiTextField)(({ theme }) => ({
     fontSize: "1.125rem",
     fontWeight: 400,
     border: "none",
-
     "&:-webkit-autofill": {
       WebkitTextFillColor: `${theme.palette.common.white} !important`,
     },
+    "&:disabled": {
+      WebkitTextFillColor: `${theme.palette.common.white}`,
+    }
   },
   label: {
     color: "rgba(255,255,255,0.3)",

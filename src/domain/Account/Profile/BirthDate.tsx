@@ -10,6 +10,7 @@ import { AccountService } from "@/services/AccountService";
 import { ItemContainer, LabelContainer } from "@/styles/forms";
 import { SubmitButton } from "@/styles/forms";
 import DatePicker from "@/components/UI/DatePicker";
+import { theme } from "@/theme";
 
 const moment = require("moment");
 
@@ -95,6 +96,10 @@ const Birthdate = () => {
           format="yyyy/MM/dd"
           value={new Date(birthdate)}
           onChange={(e) => handleChangeNumber(e)}
+          containerStyle={{
+            marginTop: "10px",
+            border: `1px solid ${theme.tertiary}`
+          }}
         />
       </ItemContainer>
 
