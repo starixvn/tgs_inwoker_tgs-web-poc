@@ -2,6 +2,7 @@ import bdcakeIcon from "@/assets/t18/images/vip/bdcake.svg";
 import calendarIcon from "@/assets/t18/images/vip/calendar.svg";
 import rocketIcon from "@/assets/t18/images/vip/rocket.svg";
 import VipBonusStampGrid from "@/components/VipBonusStampGrid";
+import { useRwd } from "@/hooks/useRwd";
 import { media } from "@/theme/breakpoints";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
@@ -216,6 +217,7 @@ const VipSingleItem = ({
   isCurrentLevel,
 }: SingleCardProps) => {
   const currentItemRef = useRef<HTMLDivElement | null>(null);
+  const { isDesktopSize } = useRwd();
   const {} = item;
 
   useEffect(() => {
@@ -225,12 +227,13 @@ const VipSingleItem = ({
     const container = currentItemRef.current.parentElement;
 
     if (container) {
+      console.log(currentItemRef.current.offsetLeft, container.clientWidth, currentItemRef.current.clientWidth)
       const scrollLeft = currentItemRef.current.offsetLeft - (container.clientWidth - currentItemRef.current.clientWidth) / 2;
 
       container.scrollTo({
         behavior: "smooth",
         top: 60,
-        left: scrollLeft,
+        left: isDesktopSize ? (scrollLeft - 108) : scrollLeft,
       });
     }
 
