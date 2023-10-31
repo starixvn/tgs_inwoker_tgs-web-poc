@@ -1,4 +1,3 @@
-import { GameService } from "@/api-services/services/GameService";
 import searchIcon from "@/assets/t18/images/home/mobile/search.svg";
 import vendorsIcon from "@/assets/t18/images/home/mobile/vendors.png";
 import CardPrompt from "@/components/CardPrompt";
@@ -12,19 +11,15 @@ import Slider from "@/components/Slider";
 import SocialMedia from "@/components/SocialMedia";
 import TabPanel from "@/components/TabPanel";
 import { gameTypeList, isNotEnterLobby } from "@/constants/gameType";
-import { useAccountStore } from "@/hooks/stores/useAccountStore";
-import { useGameStore } from "@/hooks/stores/useGameStore";
+import useGameApi from "@/hooks/home/useGameApi";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { useRwd } from "@/hooks/useRwd";
 import { media } from "@/theme/breakpoints";
-import getDisplayGameType from "@/utils/getDisplayGameType";
 import i18n from "@/utils/i18n";
 import React, {
   ChangeEvent,
-  useCallback,
   useEffect,
-  useMemo,
-  useState,
+  useState
 } from "react";
 import styled from "styled-components";
 
@@ -84,22 +79,6 @@ const MainWrapper = styled.div<{ theme: Theme }>`
   }
 `;
 
-const TabSearchContainer = styled.div`
-  width: 100%;
-  padding: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 10px;
-`;
-
-const InputContainer = styled.div`
-  ${media.sm} {
-    width: 189px;
-    height: 32px;
-  }
-`;
-
 const GameCardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -124,19 +103,25 @@ const VendorIcon = styled.div`
 `;
 
 const Main = (props: Props) => {
-  const { game, getFavoriteGame } = useGameStore();
   const { general } = useGeneralStore();
-  const { account } = useAccountStore();
   const [activeGameTypeTab, setActiveGameTypeTab] = useState(0);
   const [searchString, setSearchString] = useState("");
   const [isEnterLobby, setIsEnterLobby] = useState(false);
   const [selectedTag, setSelectedTag] = useState("All");
-  const [filteredGameList, setFilteredGameList] = useState<any[]>([]);
-  const [groupByGameProvider, setGroupByGameProvider] = useState<any>({});
-  const [favoriteList, setFavoriteList] = useState<number[]>([]);
-  const [filteredMatchGames, setFilteredMatchGames] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const { isMobileSize } = useRwd();
+  const {
+    isLoading,
+    filteredMatchGames,
+    favoriteList,
+    fetchFavoriteList,
+    tagList,
+    groupBy_gameType
+  } = useGameApi({
+    activeGameTypeTab,
+    selectedTag,
+    searchString,
+    isEnterLobby
+  });
 
   const handleGameTypeClick = (gameType: number) => {
     setActiveGameTypeTab(gameType);
@@ -149,159 +134,6 @@ const Main = (props: Props) => {
     const { value } = event.target;
     setSearchString(value);
   };
-
-  // groupBy_gameType : 除了Lobby之外的所有gameType
-  const groupBy_gameType = useMemo(() => {
-    const providedGameTypes: number[] = getDisplayGameType();
-    const providedGameTypesSet = new Set(providedGameTypes);
-
-    if (!game.homePageGameList || game.homePageGameList.length === 0) {
-      return {};
-    }
-
-    const groups = game.homePageGameList.reduce((accumulator, game) => {
-      const { type, ...rest } = game;
-      if (!accumulator[type]) {
-        accumulator[type] = [];
-      }
-      accumulator[type].push(rest);
-      return accumulator;
-    }, {});
-
-    const filteredGroups: { [key: number]: any[] } = {};
-    Object.keys(groups).forEach((key) => {
-      const gameType = parseInt(key, 10);
-      if (providedGameTypesSet.has(gameType)) {
-        filteredGroups[gameType] = groups[key];
-      }
-    });
-    return filteredGroups;
-  }, [game.homePageGameList]);
-
-  const tagList: (Tag | null)[] = useMemo(() => {
-
-    const gpCodeBy_gameProvider = Object.keys(groupByGameProvider);
-
-    const filteredTags = gpCodeBy_gameProvider
-      .filter((key) => typeof key === "string")
-      .map((provider) => {
-        const matchedProviderName = groupBy_gameType[activeGameTypeTab].find(targetGames => targetGames.gpcode === provider);
-        return matchedProviderName ? { name: matchedProviderName.name } : null;
-      });
-    // provider:為provider的gpcode，需找對應的provider name
-
-    const additionalTags = [
-      { name: "All" },
-      account.token ? { name: "Favorite" } : null,
-      { name: "Hot" },
-      { name: "New" },
-      { name: "Recommend" },
-      ...filteredTags,
-    ];
-    return additionalTags.filter((tag) => tag !== null);
-  }, [groupByGameProvider, account.token]);
-
-  const filterAndGroupGames = (gameList: any[]) => {
-    const groupBy_gpCode = gameList?.reduce((accumulator, game) => {
-      const { gpcode, ...rest } = game;
-      if (!accumulator[gpcode]) {
-        accumulator[gpcode] = [];
-      }
-      // Add gpcode to the rest object
-      const gameWithGpcode = { ...rest, gpcode };
-      accumulator[gpcode].push(gameWithGpcode);
-      return accumulator;
-    }, {});
-
-    return groupBy_gpCode;
-  };
-
-  const fetchFavoriteList = useCallback(async () => {
-    const getFavoriteResDto = await getFavoriteGame(activeGameTypeTab);
-    const favoriteList = getFavoriteResDto?.data || [];
-    setFavoriteList(favoriteList || []);
-  }, [activeGameTypeTab]);
-
-  useEffect(() => {
-    if (account.token && activeGameTypeTab && !isEnterLobby)
-      fetchFavoriteList();
-  }, [account.token, activeGameTypeTab, isEnterLobby]);
-
-  useEffect(() => {
-    if (activeGameTypeTab && !isEnterLobby) {
-      GameService.GetGameList("", activeGameTypeTab).then((res) => {
-        setIsLoading(true);
-        if (res && res.data) {
-          // groupBy_gameProvider: key為GPcode, value為該GPcode的遊戲
-          const groupBy_gameProvider = filterAndGroupGames(res.data);
-          setGroupByGameProvider(groupBy_gameProvider);
-
-          const filteredGameListWithFavorites =
-            favoriteList.length > 0
-              ? res.data.map((item: GameItem) => ({
-                ...item,
-                isFavorite: favoriteList.includes(item.id),
-              }))
-              : res.data;
-
-          switch (selectedTag) {
-            case "All":
-              setIsLoading(false);
-              return setFilteredGameList(filteredGameListWithFavorites);
-            case "Favorite":
-              setIsLoading(false);
-              return setFilteredGameList(
-                filteredGameListWithFavorites.filter((item: GameItem) =>
-                  favoriteList.includes(item.id)
-                )
-              );
-            case "Hot":
-              setIsLoading(false);
-              return setFilteredGameList(
-                filteredGameListWithFavorites.filter(
-                  (item: GameItem) => item.tag.hot
-                )
-              );
-            case "New":
-              setIsLoading(false);
-              return setFilteredGameList(
-                filteredGameListWithFavorites.filter(
-                  (item: GameItem) => item.tag.new
-                )
-              );
-            case "Recommend":
-              setIsLoading(false);
-              return setFilteredGameList(
-                filteredGameListWithFavorites.filter(
-                  (item: GameItem) => item.tag.recommend
-                )
-              );
-            case selectedTag:
-              setIsLoading(false);
-              return setFilteredGameList(groupBy_gameProvider[selectedTag]);
-            default:
-              setIsLoading(false);
-              return setFilteredGameList(filteredGameListWithFavorites);
-          }
-        }
-      });
-    }
-  }, [activeGameTypeTab, selectedTag]);
-
-  useEffect(() => {
-    const searchLowerCase = searchString.toLowerCase();
-
-    if (!searchString) {
-      setFilteredMatchGames(filteredGameList);
-    } else {
-      const filteredGames = filteredGameList.filter((item) => {
-        const gameName = item.name.toLowerCase();
-        return gameName.includes(searchLowerCase);
-      });
-
-      setFilteredMatchGames(filteredGames);
-    }
-  }, [searchString, filteredGameList]);
 
   useEffect(() => {
     window.scrollTo({
@@ -331,7 +163,7 @@ const Main = (props: Props) => {
 
       {isEnterLobby && (
         <Category
-          gameTypeData={groupBy_gameType[activeGameTypeTab] || []}
+          gameTypeData={groupBy_gameType[activeGameTypeTab]}
           gameTypeName={
             gameTypeList.find((item) => item.gameType === activeGameTypeTab)
               ?.key || ""
@@ -344,7 +176,7 @@ const Main = (props: Props) => {
       {!isEnterLobby && !!activeGameTypeTab && !isLoading && (
         <>
           <GameFilterTag
-            tagList={tagList.filter((tag) => tag !== null) || []}
+            tagList={tagList.filter((tag) => tag !== null)}
             selectedTag={selectedTag}
             setSelectedTag={setSelectedTag}
           />
