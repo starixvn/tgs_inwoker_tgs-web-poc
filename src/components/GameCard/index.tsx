@@ -2,15 +2,17 @@ import playIcon from "@/assets/t18/images/home/mobile/play.svg";
 import config from "@/config/config";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import { useGameStore } from "@/hooks/stores/useGameStore";
+import useDynamicFontSize from "@/hooks/useDynamicFontSize";
 import { useRwd } from "@/hooks/useRwd";
 import { media } from "@/theme/breakpoints";
 import Common from "@/utils/Common";
-import { MouseEvent } from "react";
+import { MouseEvent, useEffect, useRef } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { badgeList } from "../../constants/games";
 import Favorite from "../Favorite";
 
+// -------- hover effect for desktop--------------
 const CardHoverBg = styled.div`
   position: absolute;
   width: 100%;
@@ -19,29 +21,51 @@ const CardHoverBg = styled.div`
   top: 0;
   background: rgb(0 0 0 / 80%);
   border-radius: 10px;
+  padding: 0 5px;
   display: none;
-  text-align: center;
-  cursor: pointer;
+  white-space: pre-line;
 `;
 
 const GameCardWrapper = styled.div`
   width: calc(50% - 8px);
-  height: 184px;
   position: relative;
-  border: 1px solid ${(props) => props.theme.tertiary};
   border-radius: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+
+    &::before {
+      content: '';
+      display: block;
+      padding-top: calc(184px / 184px * 100%);
+      width: 100%;
+    }
 
   ${media.sm} {
     width: calc(25% - 12px);
+    min-width: 184px;
 
-    &:hover ${CardHoverBg} {
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    &:hover {
+      ${CardHoverBg} {
+        z-index: 1;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
+`;
+
+const HoverGameName = styled(GameCardWrapper)`
+  color: ${(props) => props.theme.white};
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 16px;
+`;
+
+const PlayIcon = styled.img`
+  width: 65px;
+  height: 65px;
 `;
 
 const GameImage = styled.img`
@@ -49,19 +73,6 @@ const GameImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-`;
-
-const LikeIcon = styled.div<{ $imageUrl: string }>`
-  width: 30px;
-  height: 30px;
-  background-image: url(${({ $imageUrl }) => $imageUrl});
-  background-size: cover;
-  box-sizing: border-box;
-  position: absolute;
-  top: 6px;
-  right: 8px;
-  border-radius: 50%;
-  background-color: #ffffff1f;
 `;
 
 const BadgeIcon = styled.div<{ $imageUrl: string }>`
@@ -93,14 +104,6 @@ const GameName = styled.div`
   left: 0;
   color: ${(props) => props.theme.tertiary};
   font-size: 1.25rem;
-`;
-
-const HoverGameName = styled.div`
-  color: ${(props) => props.theme.white};
-  text-align: center;
-  font-size: 1rem;
-  text-transform: uppercase;
-  margin-bottom: 16px;
 `;
 
 const MaintenanceBg = styled.div`
@@ -168,6 +171,8 @@ const GameCard = ({
   const { account } = useAccountStore();
   const history = useHistory();
   const { isDesktopSize, isMobileSize } = useRwd();
+  const gameNameRef = useRef<HTMLDivElement | null>(null);
+  const { resizeText } = useDynamicFontSize();
 
   const launchGame = () => {
     if (!account.token) {
@@ -195,6 +200,16 @@ const GameCard = ({
       }
     }
   };
+
+  useEffect(() => {
+    if (gameNameRef.current) {
+      resizeText({ container: gameNameRef.current, text: gameNameRef.current });
+    }
+    if (gameNameRef.current) {
+      resizeText({ container: gameNameRef.current, text: gameNameRef.current });
+    }
+  }, [resizeText, gameNameRef.current, gameNameRef.current]);
+
 
   return (
     <>
@@ -245,8 +260,8 @@ const GameCard = ({
               gameItemId={gameItem.id}
             />
           )}
-          {gameItem.name && <HoverGameName>{gameItem.name}</HoverGameName>}
-          <img src={playIcon} alt={"play"} />
+          {gameItem.name && <HoverGameName ref={gameNameRef}>{gameItem.name}</HoverGameName>}
+          <PlayIcon src={playIcon} alt={"play"} />
         </CardHoverBg>
       </GameCardWrapper>
     </>
