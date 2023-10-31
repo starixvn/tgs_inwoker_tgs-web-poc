@@ -11,10 +11,11 @@ const AffiliateInfoRowContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  position: relative;
 
   & .label {
-    min-width: 110px;
-    margin-right: 8px;
+    width: 20%;
+    min-width: 80px;
     font-weight: 400;
     font-size: 1.125rem;
     line-height: 1.318rem;
@@ -22,13 +23,14 @@ const AffiliateInfoRowContainer = styled.div`
   }
 
   & .value {
+    width: calc(80% - 86px);
     font-weight: 400;
     font-size: 0.937rem;
     line-height: 1.098rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    margin-right: 6px;
+    margin: 0 6px;
   }
 
   & .button {
