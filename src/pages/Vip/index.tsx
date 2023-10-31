@@ -1,3 +1,4 @@
+import Loading from "@/components/UI/Loading";
 import { useAccountStore } from "@/hooks/stores/useAccountStore";
 import useVipStore from "@/hooks/useVipStore";
 import { media } from "@/theme/breakpoints";
@@ -11,8 +12,6 @@ const VipScrollableContainer = styled.div`
   display: flex;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
-  padding: 20px;
-  margin: 0 20px;
   background-color: ${(props) => props.theme.primaryDark};
   color: ${(props) => props.theme.white};
   box-sizing: border-box;
@@ -68,12 +67,13 @@ const VIP = () => {
 
   // to-do: 多抽一層資料處理hooks/vip for useVipDataHandler.ts 把資料和UI切分乾淨
 
+  if (isLoading) return <Loading show={true} />;
+
   return (
     <VipScrollableContainer>
       {updatedVipSortingData &&
         updatedVipSortingData.map((vipCardItem, index) => {
           const isCurrentLevel = index === accountLevel - 1;
-
           return (
             <VipSingleItem
               key={vipCardItem.levelStyle.level}

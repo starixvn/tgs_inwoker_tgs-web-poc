@@ -1,7 +1,5 @@
 import { media } from "@/theme/breakpoints";
-import formatAmount from "@/utils/getFormatAmount";
 import styled from "styled-components";
-import LockerSvgIcon from "../LockerSvgIcon";
 
 type Props = {
   bonusColor?: string;
@@ -120,8 +118,13 @@ type VipBonusStampNumberProps = {
 const VipBonusStampNumber = styled.div<VipBonusStampNumberProps>`
   color: ${(props: VipBonusStampNumberProps) => props.$bonusTextColor};
   font-weight: 700;
-  font-size: 1.125rem;
-  line-height: 1.125rem;
+  font-size: 1rem;
+  line-height: 1rem;
+
+  @media (max-width: 400px) {
+    font-size: 0.875rem;
+  line-height: 0.875rem;
+  }
 `;
 
 type BonusIconTypes = {
@@ -149,7 +152,6 @@ const VipBonusStampGrid = ({
   bonusTextColor,
   bonusTextTitle,
   iconUrl,
-  lockerIconColor,
   vipBonus,
 }: Props) => {
   return (
@@ -174,12 +176,9 @@ const VipBonusStampGrid = ({
               ></BonusIcon>
 
               <VipBonusStampNumber $bonusTextColor={bonusTextColor}>
-                {vipBonus && formatAmount(vipBonus[index])}
+                {vipBonus && (vipBonus[index]).toLocaleString()}
               </VipBonusStampNumber>
             </VipBonusStampAbove>
-            <VipBonusStampBelow>
-              <LockerSvgIcon $color={lockerIconColor}></LockerSvgIcon>
-            </VipBonusStampBelow>
           </VipBonusStampContainer>
         ))}
     </VipBonusStampGridContainer>

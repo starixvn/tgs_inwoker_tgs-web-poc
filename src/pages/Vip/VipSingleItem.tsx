@@ -1,10 +1,8 @@
 import bdcakeIcon from "@/assets/t18/images/vip/bdcake.svg";
 import calendarIcon from "@/assets/t18/images/vip/calendar.svg";
 import rocketIcon from "@/assets/t18/images/vip/rocket.svg";
-import uncompletedIcon from "@/assets/t18/images/vip/uncompleted.svg";
 import VipBonusStampGrid from "@/components/VipBonusStampGrid";
 import { media } from "@/theme/breakpoints";
-import formatAmount from "@/utils/getFormatAmount";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
@@ -34,7 +32,7 @@ const VipScrollableItem = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  margin-right: 20px;
+  padding: 20px;
 
   ${media.sm} {
     width: 100%;
@@ -222,8 +220,20 @@ const VipSingleItem = ({
 
   useEffect(() => {
     if (!isCurrentLevel) return;
-
     if (!currentItemRef.current) return;
+
+    const container = currentItemRef.current.parentElement;
+
+    if (container) {
+      const scrollLeft = currentItemRef.current.offsetLeft - (container.clientWidth - currentItemRef.current.clientWidth) / 2;
+
+      container.scrollTo({
+        behavior: "smooth",
+        top: 60,
+        left: scrollLeft,
+      });
+    }
+
   }, [currentItemRef.current, isCurrentLevel]);
 
   return (
@@ -233,18 +243,13 @@ const VipSingleItem = ({
           <LevelText $levelColor={item.levelStyle.levelColor}>
             {item.levelStyle.level}
           </LevelText>
-          {isCurrentLevel ? (
+          {isCurrentLevel &&
             <CurrentLevelText
               $levelStatusColor={item.levelStyle.levelStatusColor}
             >
               Current level
             </CurrentLevelText>
-          ) : (
-            <LevelStatusTag>
-              <img src={uncompletedIcon} alt="uncompleted" />
-              Uncompleted
-            </LevelStatusTag>
-          )}
+          }
         </VipCardLevelText>
 
         <VipBadge $badgeImage={item.levelStyle.badgeImage} />
@@ -281,13 +286,13 @@ const VipSingleItem = ({
           <VipPrivilegeItem>
             <VipPrivilegeItemText>Deposit</VipPrivilegeItemText>
             <VipPrivilegeItemNumber>
-              {formatAmount(item.levelUpAccumulateDeposit)}/ Daily
+              {(item.levelUpAccumulateDeposit).toLocaleString()}/ Daily
             </VipPrivilegeItemNumber>
           </VipPrivilegeItem>
           <VipPrivilegeItem>
             <VipPrivilegeItemText>Betting</VipPrivilegeItemText>
             <VipPrivilegeItemNumber>
-              {formatAmount(item.levelUpAccumulateBetAmount)}/ Daily
+              {(item.levelUpAccumulateBetAmount).toLocaleString()}/ Daily
             </VipPrivilegeItemNumber>
           </VipPrivilegeItem>
         </VipPrivilegeItemWrapper>
@@ -298,13 +303,13 @@ const VipSingleItem = ({
           <VipPrivilegeItem>
             <VipPrivilegeItemText>Deposit</VipPrivilegeItemText>
             <VipPrivilegeItemNumber>
-              {formatAmount(item.levelKeepAccumulateDeposit)}/ Quarterly
+              {(item.levelKeepAccumulateDeposit).toLocaleString()}/ Quarterly
             </VipPrivilegeItemNumber>
           </VipPrivilegeItem>
           <VipPrivilegeItem>
             <VipPrivilegeItemText>Betting</VipPrivilegeItemText>
             <VipPrivilegeItemNumber>
-              {formatAmount(item.levelKeepAccumulateBetAmount)}/ Quarterly
+              {(item.levelKeepAccumulateBetAmount).toLocaleString()}/ Quarterly
             </VipPrivilegeItemNumber>
           </VipPrivilegeItem>
         </VipPrivilegeItemWrapper>
