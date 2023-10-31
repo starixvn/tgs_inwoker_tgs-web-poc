@@ -86,8 +86,6 @@ const DatePickerContainer = styled.div<CustomDatepickerProps>`
   }}
   background: none;
   border-radius: 5px;
-  margin-top: 10px;
-  border: 1px solid ${({ theme }) => theme.tertiary};
 
   .MuiInputBase-input {
     background: none;
@@ -102,10 +100,11 @@ const DatePickerContainer = styled.div<CustomDatepickerProps>`
 
 type Props = {
   disabled?: boolean;
+  containerStyle?: React.CSSProperties;
 } & DatePickerProps<any>;
-const DatePicker = ({ disabled, ...others }: Props) => {
+const DatePicker = ({ disabled, containerStyle, ...others }: Props) => {
   return (
-    <DatePickerContainer $disabled={!!disabled}>
+    <DatePickerContainer $disabled={!!disabled} style={containerStyle}>
       <StyledDatePicker {...others} />
     </DatePickerContainer>
   );
