@@ -122,6 +122,7 @@ const useGameApi = ({
     if (activeGameTypeTab && !isEnterLobby) {
       GameService.GetGameList('', activeGameTypeTab).then((res) => {
         setIsLoading(true);
+
         if (res && res.data) {
           const groupByGameProvider = filterAndGroupGames(res.data);
           setGroupByGameProvider(groupByGameProvider);
@@ -133,44 +134,38 @@ const useGameApi = ({
                 isFavorite: favoriteList.includes(item.id),
               }))
               : res.data;
+          setIsLoading(false);
 
           switch (selectedTag) {
             case 'All':
-              setIsLoading(false);
               return setFilteredGameList(filteredGameListWithFavorites);
             case 'Favorite':
-              setIsLoading(false);
               return setFilteredGameList(
                 filteredGameListWithFavorites.filter((item: GameItem) =>
                   favoriteList.includes(item.id)
                 )
               );
             case 'Hot':
-              setIsLoading(false);
               return setFilteredGameList(
                 filteredGameListWithFavorites.filter(
                   (item: GameItem) => item.tag.hot
                 )
               );
             case 'New':
-              setIsLoading(false);
               return setFilteredGameList(
                 filteredGameListWithFavorites.filter(
                   (item: GameItem) => item.tag.new
                 )
               );
             case 'Recommend':
-              setIsLoading(false);
               return setFilteredGameList(
                 filteredGameListWithFavorites.filter(
                   (item: GameItem) => item.tag.recommend
                 )
               );
             case selectedTag:
-              setIsLoading(false);
               return setFilteredGameList(groupByGameProvider[selectedTag]);
             default:
-              setIsLoading(false);
               return setFilteredGameList(filteredGameListWithFavorites);
           }
         }

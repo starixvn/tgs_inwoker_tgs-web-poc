@@ -125,25 +125,23 @@ const LobbyTagCategory = ({
     if (gameType && gameTag) {
       GameService.GetGameList("", gameType).then((res) => {
         setIsLoading(true);
+
         if (res && res.data) {
+          setIsLoading(false);
           switch (gameTag) {
             case "Hot":
-              setIsLoading(false);
               return setFilteredGameList(
                 res.data?.filter((item: GameItem) => item.tag.hot)
               );
             case "New":
-              setIsLoading(false);
               return setFilteredGameList(
                 res.data?.filter((item: GameItem) => item.tag.new)
               );
             case "Recommend":
-              setIsLoading(false);
               return setFilteredGameList(
                 res.data?.filter((item: GameItem) => item.tag.recommend)
               );
             default:
-              setIsLoading(false);
               return setFilteredGameList(res.data);
           }
         }
