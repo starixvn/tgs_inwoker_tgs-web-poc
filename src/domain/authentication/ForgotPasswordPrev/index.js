@@ -29,6 +29,13 @@ const PhoneContainer = styled.div`
   overflow: visible;
 `;
 
+const AreaCodeSelect = styled(Select)`
+  width: 100%;
+  select {
+    padding: 14px !important;
+  }
+`;
+
 class ForgotPasswordPrev extends Component {
   state = {
     email: "",
@@ -139,9 +146,9 @@ class ForgotPasswordPrev extends Component {
           <>
             {/* 手機驗證 */}
             <PhoneContainer>
-              <GrayInputWrapper style={{ width: "20%" }}>
-                <Select
-                  style={{ width: "100%" }}
+              <GrayInputWrapper style={{ width: "20%"}}>
+                <AreaCodeSelect
+                  style={{ width: "100%"}}
                   native
                   value={this.state.areaCode}
                   onChange={(e) => {
@@ -155,7 +162,7 @@ class ForgotPasswordPrev extends Component {
                   <option value={config.features.PhonePrefix}>
                     {config.features.PhonePrefix}
                   </option>
-                </Select>
+                </AreaCodeSelect>
               </GrayInputWrapper>
 
               <GrayInputWrapper style={{ width: "80%" }}>

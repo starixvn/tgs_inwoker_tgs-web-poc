@@ -311,6 +311,7 @@ const Main = (props: Props) => {
     });
   }, [activeGameTypeTab]);
 
+  const hasFilteredMatchGames = !!filteredMatchGames.length
   return (
     <MainWrapper>
       {!!general.banner.length && <Slider />}
@@ -359,7 +360,7 @@ const Main = (props: Props) => {
           )}
 
           <GameCardContainer>
-            {filteredMatchGames.length &&
+            {hasFilteredMatchGames &&
               filteredMatchGames.map((item: GameItem) => (
                 <GameCard
                   key={item.id}
@@ -371,7 +372,7 @@ const Main = (props: Props) => {
                   isActive={item.isactive}
                 />
               ))}
-            {!filteredMatchGames.length && <div>No data</div>}
+            {!hasFilteredMatchGames && <div>No data</div>}
           </GameCardContainer>
         </>
       )}
