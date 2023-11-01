@@ -1,21 +1,18 @@
-import searchIcon from "@/assets/t18/images/home/mobile/search.svg";
+
 import vendorsIcon from "@/assets/t18/images/home/mobile/vendors.png";
 import CardPrompt from "@/components/CardPrompt";
 import Category from "@/components/Category";
-import GameCard from "@/components/GameCard";
-import GameFilterTag from "@/components/GameFilterTag";
 import GameTypeTab from "@/components/GameTypeTab";
-import Input from "@/components/Input";
 import Lobby from "@/components/Lobby";
 import Slider from "@/components/Slider";
 import SocialMedia from "@/components/SocialMedia";
 import TabPanel from "@/components/TabPanel";
+import TagCategory from "@/components/TagCategory";
 import { gameTypeList, isNotEnterLobby } from "@/constants/gameType";
 import useGameApi from "@/hooks/home/useGameApi";
 import { useGeneralStore } from "@/hooks/stores/useGeneralStore";
 import { useRwd } from "@/hooks/useRwd";
 import { media } from "@/theme/breakpoints";
-import i18n from "@/utils/i18n";
 import React, {
   ChangeEvent,
   useEffect,
@@ -79,14 +76,6 @@ const MainWrapper = styled.div<{ theme: Theme }>`
   }
 `;
 
-const GameCardContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  gap: 16px;
-  width: 100%;
-  margin: 15px 0;
-`;
 
 const VendorIconContainer = styled.div`
   width: 100%;
@@ -174,38 +163,16 @@ const Main = (props: Props) => {
 
       {/* Slot / Fishing / Egame */}
       {!isEnterLobby && !!activeGameTypeTab && !isLoading && (
-        <>
-          <GameFilterTag
-            tagList={tagList.filter((tag) => tag !== null)}
-            selectedTag={selectedTag}
-            setSelectedTag={setSelectedTag}
-          />
-
-          {isMobileSize && (
-            <Input
-              placeholder={i18n.t("slot.search")}
-              imageUrl={searchIcon}
-              handleChange={handleSearch}
-              value={searchString}
-            />
-          )}
-
-          <GameCardContainer>
-            {filteredMatchGames.length &&
-              filteredMatchGames.map((item: GameItem) => (
-                <GameCard
-                  key={item.id}
-                  gameItem={item}
-                  selectedTag={selectedTag}
-                  favoriteList={favoriteList}
-                  fetchFavoriteList={fetchFavoriteList}
-                  isFavorite={favoriteList.includes(item.id)}
-                  isActive={item.isactive}
-                />
-              ))}
-            {!filteredMatchGames.length && <div>No data</div>}
-          </GameCardContainer>
-        </>
+        <TagCategory
+          tagList={tagList}
+          selectedTag={selectedTag}
+          setSelectedTag={setSelectedTag}
+          handleSearch={handleSearch}
+          searchString={searchString}
+          filteredMatchGames={filteredMatchGames}
+          favoriteList={favoriteList}
+          fetchFavoriteList={fetchFavoriteList}
+        />
       )}
       {isLoading && <div>Loading...</div>}
       <TabPanel />
