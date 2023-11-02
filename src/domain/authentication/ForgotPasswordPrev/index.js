@@ -36,6 +36,15 @@ const AreaCodeSelect = styled(Select)`
   }
 `;
 
+const VerificationContainer = styled.div`
+  .MuiTextField-root {
+    width: calc(100% - 100px);
+  }
+  .MuiInputBase-input {
+    padding-right: 0;
+  }
+`
+
 class ForgotPasswordPrev extends Component {
   state = {
     email: "",
@@ -176,17 +185,20 @@ class ForgotPasswordPrev extends Component {
               </GrayInputWrapper>
             </PhoneContainer>
             {/* 發送驗證碼 */}
-            <GrayInputWrapper style={{ marginBottom: "20px" }}>
-              <TextFieldWithButton
-                buttonlabel={i18n.t("common.msgSendToken")}
-                value={this.state.code}
-                onChange={this.handleCodeChange}
-                placeholder={i18n.t("common.msgEnterCode")}
-                // label={i18n.t("common.token")}
-                onClick={this.handleGetCodeClick}
-                type={"text"}
-              />
-            </GrayInputWrapper>
+
+            <VerificationContainer>
+              <GrayInputWrapper style={{ marginBottom: "20px" }}>
+                <TextFieldWithButton
+                  buttonlabel={i18n.t("common.msgSendToken")}
+                  value={this.state.code}
+                  onChange={this.handleCodeChange}
+                  placeholder={i18n.t("common.msgEnterCode")}
+                  // label={i18n.t("common.token")}
+                  onClick={this.handleGetCodeClick}
+                  type={"text"}
+                />
+              </GrayInputWrapper>
+            </VerificationContainer>
           </>
         ) : (
           <>
