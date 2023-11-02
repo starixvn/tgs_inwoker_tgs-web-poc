@@ -70,6 +70,19 @@ const FormPromotionCode = ({ formInput, formik, showErrorOn }: Props) => {
             value={formik.values["userType"]}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  bgcolor: (theme) => {
+                    return theme.palette.tertiary.dark;
+                  },
+    
+                  "& .MuiMenuItem-root": {
+                    padding: 2,
+                  },
+                },
+              },
+            }}
           >
             <MenuItem value={UserTypeEnum.AGENT}>
               {i18n.t("usertype.agent")}
