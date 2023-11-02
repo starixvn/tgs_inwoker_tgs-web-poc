@@ -12,8 +12,7 @@ const Container = styled.div`
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   height: 100%;
-  background: ${(props: { theme: { primaryLight: any } }) =>
-    props.theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight};
   white-space: nowrap;
   word-break: keep-all;
   border-radius: 5px;
