@@ -6,23 +6,40 @@ import config from "@/config/config";
 import { AccountService } from "@/api-services/services/AccountService";
 import { Textfit } from "react-textfit";
 import { useNotifications } from "@/hooks/pageProps/useNotifications";
+import { GrayInputWrapper, TextField } from "@/components/UI/TextField";
+import { Button } from "@/components/UI/Button";
+import { Select } from "@/components/UI/Select";
 
 const Wrapper = styled.div`
-  padding: 20px 10px;
-  min-height: 20vh;
+  width: 100%;
 `;
 
 const CustomDialog = styled(Dialog)`
+  & .MuiPaper-root {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    background: ${({ theme }) => theme.primaryLight};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin: 0;
+    overflow: visible;
+    position: relative;
+  }
   .MuiPaper-rounded {
     border-radius: 20px;
   }
 `;
 
 const Title = styled.div`
-  font-size: 3.5rem;
+  font-size: 1.8rem;
   width: 100%;
   text-align: center;
-  padding: 10px 10px 20px 10px;
+  padding: 30px 10px 20px 10px;
   font-weight: bold;
 `;
 
@@ -31,6 +48,10 @@ const InputRow = styled.div`
   gap: 5px;
   padding: 5px 30px;
   grid-template-columns: 30% 70%;
+
+  select, input {
+    height: 25px;
+  }
 `;
 
 const AnotherRow = styled.div`
@@ -38,65 +59,25 @@ const AnotherRow = styled.div`
   display: grid;
   gap: 5px;
   grid-template-columns: 70% 30%;
+
+  select, input {
+    height: 25px;
+    // font-size: 1.5rem;
+  }
 `;
 
 const ButtonRow = styled.div`
   padding: 10px 30px;
   height: 100px;
+  width: 100%;
 `;
 
-const CustomSelect = styled.select`
-  border-radius: 12px;
-  border: solid 1px #676666;
-  box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 10%);
-  height: 80px;
-  font-size: 1.8rem;
-  padding: 0px 8px;
-`;
-
-const CustomTextField = styled.input`
-  border-radius: 12px;
-  border: solid 1px #676666;
-  box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 10%);
-  padding: 0px 10px;
-  height: 78.5px;
-  display: flex;
-  flex: 1;
-  font-size: 1.8rem;
-  ::placeholder {
-    color: rgba(0, 0, 0, 0.5);
-    font-size: 1.8rem;
+const CustomSelect = styled(Select)`
+  width: 100%;
+  select {
+    padding: 14px !important;
   }
 `;
-
-const CustomButton = styled.div`
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  white-space: nowrap;
-  padding: 0 10px;
-  height: 100%;
-  width: 100%;
-  flex: 1;
-  font-size: 1.8rem;
-
-  ${({ theme }: { theme: { primaryGradient: string; primary: string } }) => {
-    return (
-      "background-image: linear-gradient(to top, " +
-      theme.primaryGradient +
-      ", " +
-      theme.primary +
-      ");"
-    );
-  }}
-
-  ${({ disabled }: { disabled: boolean }) => {
-    return disabled && `filter: grayscale(01);pointer-events: none;`;
-  }}
-
-  color: #ffffff;
-}`;
 
 type ForcedVerificationProps = {
   forceVerify: boolean;
@@ -212,23 +193,27 @@ const ForcedVerification = ({ forceVerify }: ForcedVerificationProps) => {
     <CustomDialog open={open} maxWidth="" fullWidth="xs">
       <Wrapper>
         <Title>{i18n.t("web.register.activation")}</Title>
-
         <InputRow>
-          <CustomSelect>
-            <option>{areaCode}</option>
-          </CustomSelect>
-          <CustomTextField
-            type="text"
-            value={phone}
-            placeholder={i18n.t("forgotPassword.plsEnterPhoneNumber")}
-            onChange={(e) => {
-              setPhone(e.target.value);
-            }}
-          />
+          <GrayInputWrapper >
+            <CustomSelect style={{ width: "100%"}} native>
+              <option>{areaCode}</option>
+            </CustomSelect>
+          </GrayInputWrapper>
+          <GrayInputWrapper>
+            <TextField
+              type="text"
+              value={phone}
+              placeholder={i18n.t("forgotPassword.plsEnterPhoneNumber")}
+              onChange={(e) => {
+                setPhone(e.target.value);
+              }}
+            />
+          </GrayInputWrapper>
         </InputRow>
         {!config.features.SkipSMSVerification && (
           <AnotherRow>
-            <CustomTextField
+            <GrayInputWrapper>
+            <TextField
               type="text"
               value={code}
               placeholder={i18n.t("common.msgEnterCode")}
@@ -236,7 +221,8 @@ const ForcedVerification = ({ forceVerify }: ForcedVerificationProps) => {
                 setCode(e.target.value);
               }}
             />
-            <CustomButton onClick={handleGetCodeClick} disabled={countdown > 0}>
+            </GrayInputWrapper>
+            <Button onClick={handleGetCodeClick} disabled={countdown > 0} >
               <Textfit>
                 {countdown <= 0
                   ? i18n.t("common.msgSendToken")
@@ -245,13 +231,13 @@ const ForcedVerification = ({ forceVerify }: ForcedVerificationProps) => {
                     countdown +
                     "s)"}
               </Textfit>
-            </CustomButton>
+            </Button>
           </AnotherRow>
         )}
         <ButtonRow>
-          <CustomButton onClick={handleActivationClick}>
+          <Button onClick={handleActivationClick} style={{width: "100%"}}>
             {i18n.t("common.submit")}
-          </CustomButton>
+          </Button>
         </ButtonRow>
       </Wrapper>
     </CustomDialog>
