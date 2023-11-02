@@ -62,7 +62,6 @@ const AnotherRow = styled.div`
 
   select, input {
     height: 25px;
-    // font-size: 1.5rem;
   }
 `;
 
