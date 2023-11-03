@@ -70,12 +70,13 @@ const Content = styled.div`
 `;
 
 const Button = styled.div`
+  cursor: pointer;
   width: 90%;
   height: 52px;
   text-align: center;
-  font-size: 1.6rem
-  color: #ffffff; 
-  background: #6152DD;
+  font-size: 1.6rem;
+  color: #ffffff;
+  background: #6152dd;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,7 +146,11 @@ const PopupAnnouncement = ({
   if (isEmptyData || disableDialog) return null;
 
   return (
-    <DialogContainer open={open} TransitionComponent={UpTransition}>
+    <DialogContainer
+      open={open}
+      onClose={handleCloseDialog}
+      TransitionComponent={UpTransition}
+    >
       <ChildContainer>
         <Carousel>
           {announcementList

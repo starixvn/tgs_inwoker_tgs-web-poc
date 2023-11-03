@@ -8,13 +8,12 @@ const Wrapper = styled.div`
   padding: 4px 10px;
   border-radius: 5px;
   font-size: 0.875rem;
-  background: ${(props: { theme: { primaryLight: any } }) =>
-    props.theme.primaryLight};
+  background: ${({ theme }) => theme.primaryLight}
   width: 120px;
 `;
 
 const Text = styled.div`
-  color: ${(props: { theme: { white: any } }) => props.theme.white};
+  color: ${({ theme }) => theme.white};
   margin-left: 7px;
 `;
 

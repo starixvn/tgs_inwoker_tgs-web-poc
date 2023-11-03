@@ -7,7 +7,7 @@ import { media } from "@/theme/breakpoints";
 import { useRwd } from "@/hooks/useRwd";
 
 const AccountPaperContainer = styled.div`
-  padding: 20px 0;
+  padding: 0 0 20px 0;
   border-radius: 20px;
 
   ${media.sm} {
