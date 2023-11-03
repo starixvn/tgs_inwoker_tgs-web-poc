@@ -80,9 +80,11 @@ const Category = ({ gameTypeData, gameTypeName, gameType }: Props) => {
     }
   };
 
+  const hasGameTypeData = !!gameTypeData.length;
+
   return (
     <CategoryContent>
-      {!!gameTypeData.length &&
+      {hasGameTypeData &&
         gameTypeData.map((game) => {
           if (game?.gpcode === "BC") return null;
           return (
@@ -96,7 +98,7 @@ const Category = ({ gameTypeData, gameTypeName, gameType }: Props) => {
             />
           );
         })}
-      {!gameTypeData.length && <div>No data</div>}
+      {!hasGameTypeData && <div>No data</div>}
     </CategoryContent>
   );
 };

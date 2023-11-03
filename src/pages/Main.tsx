@@ -182,12 +182,16 @@ const Main = (props: Props) => {
 
     const gpCodeBy_gameProvider = Object.keys(groupByGameProvider);
 
-    const filteredTags = gpCodeBy_gameProvider
-      .filter((key) => typeof key === "string")
-      .map((provider) => {
-        const matchedProviderName = groupBy_gameType[activeGameTypeTab].find(targetGames => targetGames.gpcode === provider);
-        return matchedProviderName ? { name: matchedProviderName.name, gpCode: matchedProviderName.gpcode } : null;
-      });
+    const filteredTags = activeGameTypeTab
+      ? gpCodeBy_gameProvider
+        .filter((key) => typeof key === "string")
+        .map((provider) => {
+          const matchedProviderName = groupBy_gameType[
+            activeGameTypeTab
+          ]?.find((targetGames) => targetGames.gpcode === provider);
+          return matchedProviderName ? { name: matchedProviderName.name, gpCode: matchedProviderName.gpcode } : null;
+        })
+      : [];
     // provider:為provider的gpcode，需找對應的provider name
 
     const additionalTags = [
@@ -199,7 +203,7 @@ const Main = (props: Props) => {
       ...filteredTags,
     ];
     return additionalTags.filter((tag) => tag !== null);
-  }, [groupByGameProvider, account.token]);
+  }, [JSON.stringify(groupByGameProvider), account.token]);
 
   const filterAndGroupGames = (gameList: any[]) => {
     const groupBy_gpCode = gameList?.reduce((accumulator, game) => {
@@ -300,11 +304,14 @@ const Main = (props: Props) => {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'instant',
+      behavior: "instant",
     });
   }, [activeGameTypeTab]);
 
-  const hasFilteredMatchGames = !!filteredMatchGames.length
+  const hasFilteredMatchGames = !!filteredMatchGames.length;
+
+  // if (isLoading) return <Loading show={isLoading} />
+  // 取遊戲圖片如果有錯誤，會一直卡在loading狀態，所以先註解掉
 
   return (
     <MainWrapper>
@@ -366,11 +373,11 @@ const Main = (props: Props) => {
                   isActive={item.isactive}
                 />
               ))}
-            {!hasFilteredMatchGames && <div>No data</div>}
+
+            {!hasFilteredMatchGames && !isLoading && <div>No data</div>}
           </GameCardContainer>
         </>
       )}
-      {isLoading && <div>Loading...</div>}
       <TabPanel />
       {isMobileSize && <SocialMedia />}
       {isMobileSize && (
