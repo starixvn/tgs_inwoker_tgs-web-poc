@@ -186,16 +186,16 @@ const Main = (props: Props) => {
       .filter((key) => typeof key === "string")
       .map((provider) => {
         const matchedProviderName = groupBy_gameType[activeGameTypeTab].find(targetGames => targetGames.gpcode === provider);
-        return matchedProviderName ? { name: matchedProviderName.name } : null;
+        return matchedProviderName ? { name: matchedProviderName.name, gpCode: matchedProviderName.gpcode } : null;
       });
     // provider:為provider的gpcode，需找對應的provider name
 
     const additionalTags = [
-      { name: "All" },
-      account.token ? { name: "Favorite" } : null,
-      { name: "Hot" },
-      { name: "New" },
-      { name: "Recommend" },
+      { name: "All", gpCode: "All" },
+      account.token ? { name: "Favorite", gpCode: "Favorite" } : null,
+      { name: "Hot", gpCode: "Hot" },
+      { name: "New", gpCode: "New" },
+      { name: "Recommend", gpCode: "Recommend" },
       ...filteredTags,
     ];
     return additionalTags.filter((tag) => tag !== null);
@@ -243,45 +243,38 @@ const Main = (props: Props) => {
                 isFavorite: favoriteList.includes(item.id),
               }))
               : res.data;
-
+          setIsLoading(false);
           switch (selectedTag) {
+            default:
+              return setFilteredGameList(filteredGameListWithFavorites);
             case "All":
-              setIsLoading(false);
               return setFilteredGameList(filteredGameListWithFavorites);
             case "Favorite":
-              setIsLoading(false);
               return setFilteredGameList(
                 filteredGameListWithFavorites.filter((item: GameItem) =>
                   favoriteList.includes(item.id)
                 )
               );
             case "Hot":
-              setIsLoading(false);
               return setFilteredGameList(
                 filteredGameListWithFavorites.filter(
                   (item: GameItem) => item.tag.hot
                 )
               );
             case "New":
-              setIsLoading(false);
               return setFilteredGameList(
                 filteredGameListWithFavorites.filter(
                   (item: GameItem) => item.tag.new
                 )
               );
             case "Recommend":
-              setIsLoading(false);
               return setFilteredGameList(
                 filteredGameListWithFavorites.filter(
                   (item: GameItem) => item.tag.recommend
                 )
               );
             case selectedTag:
-              setIsLoading(false);
               return setFilteredGameList(groupBy_gameProvider[selectedTag]);
-            default:
-              setIsLoading(false);
-              return setFilteredGameList(filteredGameListWithFavorites);
           }
         }
       });
@@ -312,6 +305,7 @@ const Main = (props: Props) => {
   }, [activeGameTypeTab]);
 
   const hasFilteredMatchGames = !!filteredMatchGames.length
+
   return (
     <MainWrapper>
       {!!general.banner.length && <Slider />}
