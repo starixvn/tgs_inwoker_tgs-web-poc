@@ -62,6 +62,7 @@ const HoverGameName = styled(GameCardWrapper)`
   font-size: 1rem;
   text-align: center;
   margin-bottom: 16px;
+  border: none;
 `;
 
 const PlayIcon = styled.img`
