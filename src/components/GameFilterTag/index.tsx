@@ -34,7 +34,7 @@ const TagContainer = styled.div`
   }
 `;
 
-type Tag = { name: string };
+type Tag = { name: string, gpCode: string };
 
 type Props = {
   tagList: (Tag | null)[];
@@ -49,14 +49,15 @@ const GameFilterTag = ({ tagList, selectedTag, setSelectedTag }: Props) => {
       {tagList
         .map(gameTagItem => {
           const name = gameTagItem?.name ?? "";
+          const gpCode = gameTagItem?.gpCode ?? "";
 
           return (
             <Tag
               key={name}
               text={name}
-              isActive={name === selectedTag && !!name}
+              isActive={gpCode === selectedTag && !!gpCode}
               isShowIcon={gameTagList.some((tag) => tag.text === name)}
-              onClick={() => setSelectedTag(name)}
+              onClick={() => setSelectedTag(gpCode)}
             />
           );
         })}

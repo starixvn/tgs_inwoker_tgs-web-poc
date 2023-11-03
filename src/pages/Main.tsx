@@ -49,7 +49,7 @@ type GameItem = {
   isFavorite: boolean;
 };
 
-type Tag = { name: string };
+type Tag = { name: string, gpCode: string };
 interface Theme {
   primaryDark: string;
   white: string;
@@ -76,7 +76,7 @@ const MainWrapper = styled.div<{ theme: Theme }>`
   background-color: ${({ theme }: { theme: Theme }) => theme.primaryDark};
   color: ${({ theme }: { theme: Theme }) => theme.white};
   gap: 15px;
-
+  
   ${media.sm} {
     max-width: 870px;
     margin: 0 auto;
@@ -179,32 +179,27 @@ const Main = (props: Props) => {
   }, [game.homePageGameList]);
 
   const tagList: (Tag | null)[] = useMemo(() => {
+
     const gpCodeBy_gameProvider = Object.keys(groupByGameProvider);
 
-    const filteredTags = activeGameTypeTab
-      ? gpCodeBy_gameProvider
-          .filter((key) => typeof key === "string")
-          .map((provider) => {
-            const matchedProviderName = groupBy_gameType[
-              activeGameTypeTab
-            ]?.find((targetGames) => targetGames.gpcode === provider);
-            return matchedProviderName
-              ? { name: matchedProviderName.name }
-              : null;
-          })
-      : [];
+    const filteredTags = gpCodeBy_gameProvider
+      .filter((key) => typeof key === "string")
+      .map((provider) => {
+        const matchedProviderName = groupBy_gameType[activeGameTypeTab].find(targetGames => targetGames.gpcode === provider);
+        return matchedProviderName ? { name: matchedProviderName.name, gpCode: matchedProviderName.gpcode } : null;
+      });
     // provider:為provider的gpcode，需找對應的provider name
 
     const additionalTags = [
-      { name: "All" },
-      account.token ? { name: "Favorite" } : null,
-      { name: "Hot" },
-      { name: "New" },
-      { name: "Recommend" },
+      { name: "All", gpCode: "All" },
+      account.token ? { name: "Favorite", gpCode: "Favorite" } : null,
+      { name: "Hot", gpCode: "Hot" },
+      { name: "New", gpCode: "New" },
+      { name: "Recommend", gpCode: "Recommend" },
       ...filteredTags,
     ];
     return additionalTags.filter((tag) => tag !== null);
-  }, [JSON.stringify(groupByGameProvider), account.token]);
+  }, [groupByGameProvider, account.token]);
 
   const filterAndGroupGames = (gameList: any[]) => {
     const groupBy_gpCode = gameList?.reduce((accumulator, game) => {
@@ -244,49 +239,42 @@ const Main = (props: Props) => {
           const filteredGameListWithFavorites =
             favoriteList.length > 0
               ? res.data.map((item: GameItem) => ({
-                  ...item,
-                  isFavorite: favoriteList.includes(item.id),
-                }))
+                ...item,
+                isFavorite: favoriteList.includes(item.id),
+              }))
               : res.data;
-
+          setIsLoading(false);
           switch (selectedTag) {
+            default:
+              return setFilteredGameList(filteredGameListWithFavorites);
             case "All":
-              setIsLoading(false);
               return setFilteredGameList(filteredGameListWithFavorites);
             case "Favorite":
-              setIsLoading(false);
               return setFilteredGameList(
                 filteredGameListWithFavorites.filter((item: GameItem) =>
                   favoriteList.includes(item.id)
                 )
               );
             case "Hot":
-              setIsLoading(false);
               return setFilteredGameList(
                 filteredGameListWithFavorites.filter(
                   (item: GameItem) => item.tag.hot
                 )
               );
             case "New":
-              setIsLoading(false);
               return setFilteredGameList(
                 filteredGameListWithFavorites.filter(
                   (item: GameItem) => item.tag.new
                 )
               );
             case "Recommend":
-              setIsLoading(false);
               return setFilteredGameList(
                 filteredGameListWithFavorites.filter(
                   (item: GameItem) => item.tag.recommend
                 )
               );
             case selectedTag:
-              setIsLoading(false);
               return setFilteredGameList(groupBy_gameProvider[selectedTag]);
-            default:
-              setIsLoading(false);
-              return setFilteredGameList(filteredGameListWithFavorites);
           }
         }
       });
@@ -312,11 +300,12 @@ const Main = (props: Props) => {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: "instant",
+      behavior: 'instant',
     });
   }, [activeGameTypeTab]);
 
-  const hasFilteredMatchGames = !!filteredMatchGames.length;
+  const hasFilteredMatchGames = !!filteredMatchGames.length
+
   return (
     <MainWrapper>
       {!!general.banner.length && <Slider />}
