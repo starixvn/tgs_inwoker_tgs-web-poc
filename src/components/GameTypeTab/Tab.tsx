@@ -17,6 +17,7 @@ const Wrapper = styled.div<{
   $text: string;
   $isActive: boolean;
 }>`
+  cursor: pointer;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
@@ -36,14 +37,14 @@ const Wrapper = styled.div<{
     height: 32px;
     flex-direction: row;
     background-image: ${({ $isActive }) =>
-    $isActive ? `url(${desktopActiveTabBgUrl})` : null};
+      $isActive ? `url(${desktopActiveTabBgUrl})` : null};
     background-color: transparent;
     border-radius: 5px;
     margin-right: 5px;
     cursor: pointer;
     & :hover {
-    color: ${({ theme }) => theme.white};
-   }
+      color: ${({ theme }) => theme.white};
+    }
   }
 `;
 

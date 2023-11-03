@@ -141,7 +141,11 @@ const PopupPromotion = ({
 
   return (
     <>
-      <DialogPopup open={open} TransitionComponent={UpTransition}>
+      <DialogPopup
+        open={open}
+        onClose={handleCloseDialog}
+        TransitionComponent={UpTransition}
+      >
         <ChildContainer>
           <Carousel>
             {displayPromotionList.map((promotionData: Promotion) => (

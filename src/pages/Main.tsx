@@ -76,7 +76,7 @@ const MainWrapper = styled.div<{ theme: Theme }>`
   background-color: ${({ theme }: { theme: Theme }) => theme.primaryDark};
   color: ${({ theme }: { theme: Theme }) => theme.white};
   gap: 15px;
-  
+
   ${media.sm} {
     max-width: 870px;
     margin: 0 auto;
@@ -179,15 +179,20 @@ const Main = (props: Props) => {
   }, [game.homePageGameList]);
 
   const tagList: (Tag | null)[] = useMemo(() => {
-
     const gpCodeBy_gameProvider = Object.keys(groupByGameProvider);
 
-    const filteredTags = gpCodeBy_gameProvider
-      .filter((key) => typeof key === "string")
-      .map((provider) => {
-        const matchedProviderName = groupBy_gameType[activeGameTypeTab].find(targetGames => targetGames.gpcode === provider);
-        return matchedProviderName ? { name: matchedProviderName.name } : null;
-      });
+    const filteredTags = activeGameTypeTab
+      ? gpCodeBy_gameProvider
+          .filter((key) => typeof key === "string")
+          .map((provider) => {
+            const matchedProviderName = groupBy_gameType[
+              activeGameTypeTab
+            ]?.find((targetGames) => targetGames.gpcode === provider);
+            return matchedProviderName
+              ? { name: matchedProviderName.name }
+              : null;
+          })
+      : [];
     // provider:為provider的gpcode，需找對應的provider name
 
     const additionalTags = [
@@ -199,7 +204,7 @@ const Main = (props: Props) => {
       ...filteredTags,
     ];
     return additionalTags.filter((tag) => tag !== null);
-  }, [groupByGameProvider, account.token]);
+  }, [JSON.stringify(groupByGameProvider), account.token]);
 
   const filterAndGroupGames = (gameList: any[]) => {
     const groupBy_gpCode = gameList?.reduce((accumulator, game) => {
@@ -239,9 +244,9 @@ const Main = (props: Props) => {
           const filteredGameListWithFavorites =
             favoriteList.length > 0
               ? res.data.map((item: GameItem) => ({
-                ...item,
-                isFavorite: favoriteList.includes(item.id),
-              }))
+                  ...item,
+                  isFavorite: favoriteList.includes(item.id),
+                }))
               : res.data;
 
           switch (selectedTag) {
@@ -307,11 +312,11 @@ const Main = (props: Props) => {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'instant',
+      behavior: "instant",
     });
   }, [activeGameTypeTab]);
 
-  const hasFilteredMatchGames = !!filteredMatchGames.length
+  const hasFilteredMatchGames = !!filteredMatchGames.length;
   return (
     <MainWrapper>
       {!!general.banner.length && <Slider />}

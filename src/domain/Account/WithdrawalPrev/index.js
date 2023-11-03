@@ -418,7 +418,10 @@ class WithdrawalPrev extends Component {
               />
             </ItemContainer>
           )}
-        }{/*玩家備註*/}
+        {/*TODO: remove this will cause tons of ts issue, fix it later*/}
+        <span style={{ display: "none" }}>}</span>
+
+        {/*玩家備註*/}
         {config.features.Deposit_Withdrawal_PlayerNote &&
           this.handleFilterCardList(this.props.wallet.bankCardList)[
             this.state.selectedBankCardIndex

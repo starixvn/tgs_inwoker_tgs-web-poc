@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { RouteCategoryEnum } from "@/router";
 
 const BottomNavContainer = styled.div<{ $isSelected: boolean }>`
+  cursor: pointer;
   flex: 1;
   display: flex;
   flex-direction: column;
