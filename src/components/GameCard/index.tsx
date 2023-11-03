@@ -11,6 +11,7 @@ import styled from "styled-components";
 import { badgeList } from "../../constants/games";
 import Favorite from "../Favorite";
 
+// -------- hover effect for desktop--------------
 const CardHoverBg = styled.div`
   position: absolute;
   width: 100%;
@@ -20,28 +21,52 @@ const CardHoverBg = styled.div`
   background: rgb(0 0 0 / 80%);
   border-radius: 10px;
   display: none;
+  white-space: pre-line;
   text-align: center;
   cursor: pointer;
 `;
 
 const GameCardWrapper = styled.div`
   width: calc(50% - 8px);
-  height: 184px;
   position: relative;
   border: 1px solid ${(props) => props.theme.tertiary};
   border-radius: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+
+    &::before {
+      content: '';
+      display: block;
+      padding-top: calc(184px / 184px * 100%);
+      width: 100%;
+    }
 
   ${media.sm} {
     width: calc(25% - 12px);
+    min-width: 184px;
 
-    &:hover ${CardHoverBg} {
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    &:hover {
+      ${CardHoverBg} {
+        z-index: 1;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
+`;
+
+const HoverGameName = styled(GameCardWrapper)`
+  color: ${(props) => props.theme.white};
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 16px;
+`;
+
+const PlayIcon = styled.img`
+  width: 65px;
+  height: 65px;
 `;
 
 const GameImage = styled.img`
@@ -93,14 +118,6 @@ const GameName = styled.div`
   left: 0;
   color: ${(props) => props.theme.tertiary};
   font-size: 1.25rem;
-`;
-
-const HoverGameName = styled.div`
-  color: ${(props) => props.theme.white};
-  text-align: center;
-  font-size: 1rem;
-  text-transform: uppercase;
-  margin-bottom: 16px;
 `;
 
 const MaintenanceBg = styled.div`
@@ -246,7 +263,7 @@ const GameCard = ({
             />
           )}
           {gameItem.name && <HoverGameName>{gameItem.name}</HoverGameName>}
-          <img src={playIcon} alt={"play"} />
+          <PlayIcon src={playIcon} alt={"play"} />
         </CardHoverBg>
       </GameCardWrapper>
     </>
