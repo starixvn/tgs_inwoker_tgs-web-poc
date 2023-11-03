@@ -304,11 +304,14 @@ const Main = (props: Props) => {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'instant',
+      behavior: "instant",
     });
   }, [activeGameTypeTab]);
 
-  const hasFilteredMatchGames = !!filteredMatchGames.length
+  const hasFilteredMatchGames = !!filteredMatchGames.length;
+
+  // if (isLoading) return <Loading show={isLoading} />
+  // 取遊戲圖片如果有錯誤，會一直卡在loading狀態，所以先註解掉
 
   return (
     <MainWrapper>
